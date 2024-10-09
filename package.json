@@ -1,0 +1,28 @@
+{
+  "name": "koishi-plugin-dew-bot",
+  "description": "",
+  "version": "1.0.1",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "chatbot",
+    "koishi",
+    "plugin",
+    "game"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Liu26609/dew.git"
+  },
+  "peerDependencies": {
+    "koishi": "^4.17.11"
+  },
+  "dependencies": {
+    "uuid": "^10.0.0"
+  }
+}
