@@ -1,11 +1,8 @@
 import { Context, Schema } from 'koishi'
-import { unity } from './lib/unity/unity'
 import { test_battle } from './lib/battle/test.battle'
 import word from './lib/word'
 import { battle_d } from './lib/battle/battle'
 import { battle_group } from './lib/face/FACE_BODY'
-import common from './lib/common'
-import message from './trigger/message'
 import bot_logic from './trigger/bot_logic'
 export const name = 'dew-bot'
 
