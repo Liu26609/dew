@@ -6,12 +6,12 @@ export enum ET_K{
     battle_destroy,
     /**战斗结束 */
     battle_over,
+    input_message,
 }
 // 创建事件管理器实例
 class ET extends EventEmitter {
     constructor() {
         super();
-        console.log(this)
     }
 
     // 监听事件

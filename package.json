@@ -16,6 +16,7 @@
   },
   "author": "楚轩",
   "license": "MIT",
+  "preview":true,
   "keywords": [
     "chatbot",
     "koishi",

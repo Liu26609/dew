@@ -1,3 +1,5 @@
+import common from "../lib/common";
+
 /**
  * 消息事件分发处理
  */
@@ -11,26 +13,22 @@ export default class bot_logic {
     private start(ctx: any) {
         // 类型判断
         try {
-        let pf = this._platform(ctx)
-        // 根据平台名称去引入对应的类
-        const classPath = path.resolve(__dirname, `./logic/${pf}`);
-        const effectModule = require(`${classPath}.ts`);
-        const EffectClass = effectModule.default;
-        this.cls =  new EffectClass(ctx)
-         
-        let type = this.cls.getType(ctx);
-        const typePath = path.resolve(__dirname, `./${type}/${pf}`);
-        const typeModule = require(`${typePath}.ts`);
-        const typeClass = typeModule.default;
-        new typeClass(ctx)
-        }catch(e){ 
-            console.error('事件分析错误')
+            let pf = this._platform(ctx)
+            // 根据平台名称去引入对应的类
+            const classPath = path.resolve(__dirname, `./logic/${pf}`);
+            this.cls = common.importClass(classPath, [ctx])
+            let type = this.cls.getType(ctx);
+            const typePath = path.resolve(__dirname, `./${type}/${pf}`);
+            common.importClass(typePath, [ctx])
+        } catch (e) {
+            ctx.send('事件分析错误')
+            console.error('事件分析错误',e)
         }
     }
     // 平台分析
     private _platform(ctx: any) {
         let p = 'none';
-        if(ctx.platform.includes('sandbox:')){
+        if (ctx.platform.includes('sandbox:')) {
             return 'koishi';
         }
         switch (ctx.platform) {

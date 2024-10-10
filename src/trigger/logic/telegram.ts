@@ -1,6 +1,4 @@
 export default class {
-    constructor(ctx: any) {
-    }
     getType(ctx: any) {
         let t = 'none';
         switch (ctx.type) {

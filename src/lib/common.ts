@@ -15,5 +15,11 @@ class common {
     random(min: number, max: number): number {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+    // 引入指定类
+    importClass(path: string,agm?){
+        const effectModule = require(`${path}.ts`);
+        const EffectClass = effectModule.default;
+        return new EffectClass(...agm);
+    }
 }
 export default new common()

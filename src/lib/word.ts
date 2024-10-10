@@ -1,4 +1,5 @@
 import { logger } from "../index";
+import inputManage from "../inputManage";
 import { battle_d } from "./battle/battle";
 import common from "./common";
 import ET, { ET_K } from "./ET";
@@ -35,6 +36,7 @@ class word {
         await this._initSkillCl();
         this._startBattleTick();
         this._et();
+        inputManage.init(); // 初始化输入管理器
     }
 
     private register_battle(data: battle_d) {
@@ -90,7 +92,7 @@ class word {
                 const EffectClass = effectModule.default;
                 this.effectTempMap.set(`${key}_${effectType}`, EffectClass);
             } catch (error) {
-                console.error(`[技能注册]未实现效果:${key}/${effectType}`);
+                console.error(`[技能注册]${key}/${effectType}`);
             }
         }
     }

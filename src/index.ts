@@ -20,7 +20,6 @@ export const Config: Schema<Config> = Schema.object({
 export function apply(ctx: Context) {
   logger = ctx.logger('[game]')
   console.log('[bot]启动',ctx)
-  // write your plugin here
   word.start();
 
   let test = new test_battle();
