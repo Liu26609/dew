@@ -15,7 +15,7 @@ cfg.push({
     path:'atAll'
 })
 cfg.push({
-    key: 'menu',
+    key: '基础指令',
     match_rule: matchRule.完全匹配,
     path:'menu'
 })
