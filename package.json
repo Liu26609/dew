@@ -1,15 +1,17 @@
 {
   "name": "koishi-plugin-dew-bot",
   "description": "",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
     "lib",
     "dist"
   ],
+  
   "scripts": {
     "build": "tsc",
+    "prepub": "npm version patch",
     "pub": "npm publish --access public"
   },
   "author": "楚轩",
