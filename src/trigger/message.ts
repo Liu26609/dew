@@ -4,18 +4,32 @@ import ET, { ET_K } from "../lib/ET";
  * 多平台消息处理中间件
  */
 export default class message {
-    platform:any;
+    platform:string;
     temp:any[] = [];
     session:any;
-    constructor(ctx:any) {
+    constructor(ctx:any,p?:string) {
         this.session = ctx;
-        ET.fire(ET_K.input_message,this)
+        this.platform = p || '未知平台';
+
+        setTimeout(() => {ET.fire(ET_K.input_message,this)}, 0);
+        
     }
+
     addLine(str:string){
         this.temp.push({type:'text',data:str})
     }
-    getContent(){
+    get_name(){
+        return this.session.author.username
+    }
+    get_userId(){
+        return this.session.userId
+    }
+    get_content(){
         return this.session.content
+    }
+    // 判断是否为私信
+    jude_private(){
+        return !!this.session.guildId
     }
     send(){
         let str = '';

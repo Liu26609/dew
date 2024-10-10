@@ -19,4 +19,9 @@ cfg.push({
     match_rule: matchRule.完全匹配,
     path:'menu'
 })
+cfg.push({
+    key: 'sys',
+    match_rule: matchRule.完全匹配,
+    path:'info'
+})
 export default cfg;

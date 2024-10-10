@@ -14,7 +14,7 @@ class inputManage {
     input_msg(cls: message) {
         console.log('input_msg', cls)
         // 根据配置分析内容
-        let str = cls.getContent();
+        let str = cls.get_content();
         for (let index = 0; index < actionCfg.length; index++) {
             const element = actionCfg[index];
             if (element.match_rule == matchRule.完全匹配) {
