@@ -8,6 +8,11 @@
     "lib",
     "dist"
   ],
+  "scripts": {
+    "build": "tsc",
+    "pub": "npm publish --access public"
+  },
+  "author": "楚轩",
   "license": "MIT",
   "keywords": [
     "chatbot",
