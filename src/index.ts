@@ -22,9 +22,4 @@ export async function apply(ctx: Context) {
   ctx.on('message', async (session) => {
     new bot_logic(session)
   })
-
-  ctx.before('disconnect' as any, () => {
-    console.log('插件热重载');
-    ET.removeAllListeners() 
-  })
 }
