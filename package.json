@@ -8,7 +8,6 @@
     "lib",
     "dist"
   ],
-  
   "scripts": {
     "build": "tsc",
     "prepub": "npm version patch",
@@ -16,7 +15,7 @@
   },
   "author": "楚轩",
   "license": "MIT",
-  "preview":true,
+  "preview": true,
   "keywords": [
     "chatbot",
     "koishi",

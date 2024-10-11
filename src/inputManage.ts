@@ -7,7 +7,7 @@ import message from "./trigger/message";
 class inputManage {
     skipMap: Map<string, boolean> = new Map();
     constructor() {
-
+        
     }
     init() {
         ET.listen(ET_K.input_message, this.input_msg.bind(this))

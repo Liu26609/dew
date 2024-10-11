@@ -1,0 +1,10 @@
+node_modules
+./src/shared
+db/*
+Build
+resources
+output/*
+html/*
+client/html/output_html/*
+client/html/output_png/*
+client/output/html/*

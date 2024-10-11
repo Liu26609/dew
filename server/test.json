@@ -1,0 +1,1899 @@
+{
+    "P": {
+        "a": 528.03,
+        "b": 1,
+        "c": 1,
+        "d": 1,
+        "Hp_Max": 10,
+        "Magic_Attack_max": 3,
+        "Magic_Attack_min": 2,
+        "Physical_defense": 75,
+        "Physical_Attack_max": 2,
+        "Physical_Attack_min": 1
+    },
+    "Job": {
+        "a": 52.75,
+        "b": 27.219531499501773,
+        "c": 99.02706142076435,
+        "d": 32.00340707973386
+    },
+    "bag": {
+        "items": [
+            {
+                "num": 1,
+                "data": {
+                    "id": "1",
+                    "leve": 276,
+                    "lock": 1,
+                    "name": "测试木桩",
+                    "skills": "普通攻击-木头撞击",
+                    "style_id": "1"
+                },
+                "from": "主神空间",
+                "uuid": "362mcKFvYBXCbN1kVHWvGR",
+                "score": 177024.2612355891,
+                "value": 177024.2612355891,
+                "cfg_id": "1",
+                "haveSup": false,
+                "min_type": 4
+            },
+            {
+                "num": 1,
+                "data": {
+                    "id": "1",
+                    "leve": 276,
+                    "lock": 1,
+                    "name": "测试木桩",
+                    "skills": "普通攻击-木头撞击",
+                    "style_id": "1"
+                },
+                "from": "主神空间",
+                "uuid": "tt65xhcmiSfR5x5Urj7VfF",
+                "score": 92997.2445153931,
+                "value": 92997.2445153931,
+                "cfg_id": "1",
+                "haveSup": false,
+                "min_type": 4
+            },
+            {
+                "num": 1,
+                "data": {
+                    "cd": 120,
+                    "id": "skill_63yhLXTJV6obUNh4iun1EF",
+                    "data": {},
+                    "desc": "对敌人造成一定的魔法伤害",
+                    "leve": {
+                        "max": 100,
+                        "now": 0,
+                        "num": 1
+                    },
+                    "name": "强化攻击",
+                    "type": 0,
+                    "score": 932,
+                    "useUp": "mp-/-5",
+                    "effect": [
+                        {
+                            "tag": 1,
+                            "data": {
+                                "input": [
+                                    {
+                                        "val": 6.6306467661691535,
+                                        "loca": 6295.559897753909,
+                                        "read": "me.read_key(\"物理攻击\")",
+                                        "type": "*",
+                                        "leve_sup": 0.486,
+                                        "leve_type": "+"
+                                    }
+                                ],
+                                "formula": "0"
+                            },
+                            "rang": 1,
+                            "effect": 1,
+                            "condition": 0,
+                            "effect_key": 16
+                        }
+                    ],
+                    "rename": "待命名技能",
+                    "exp_max": 100,
+                    "exp_now": 0,
+                    "minType": 1,
+                    "icon_img": "../../resources/img/skill/style/test.jpg",
+                    "useNumVaule": 5
+                },
+                "from": "宠物大陆-闪焰王牌掉落",
+                "icon": "📘",
+                "uuid": "dZYHceG4S4YKHwP6LbAsya",
+                "score": 932,
+                "value": 932,
+                "cfg_id": "skill_63yhLXTJV6obUNh4iun1EF",
+                "haveSup": true,
+                "min_type": 3
+            },
+            {
+                "num": 1,
+                "data": {
+                    "cd": 75,
+                    "id": "skill_9jsjURtChCGgp6K63FtLkv",
+                    "data": {},
+                    "desc": "对目标造成伤害并沉默一段时间",
+                    "leve": {
+                        "max": 100,
+                        "now": 0,
+                        "num": 1
+                    },
+                    "name": "单体沉默",
+                    "type": 0,
+                    "score": 30,
+                    "useUp": "mp-/-10",
+                    "effect": [
+                        {
+                            "tag": 1,
+                            "data": {
+                                "input": [
+                                    {
+                                        "val": 1,
+                                        "loca": 989.3936280564662,
+                                        "read": "me.read_key(\"物理攻击\")",
+                                        "type": "*",
+                                        "leve_sup": 0.003,
+                                        "leve_type": "+"
+                                    }
+                                ],
+                                "formula": "0"
+                            },
+                            "rang": 1,
+                            "effect": 1,
+                            "condition": 0,
+                            "effect_key": 3
+                        },
+                        {
+                            "tag": 2,
+                            "data": {
+                                "input": [
+                                    {
+                                        "val": 16.363636363636363,
+                                        "read": "",
+                                        "type": "+",
+                                        "leve_sup": 0,
+                                        "leve_type": "+"
+                                    }
+                                ],
+                                "formula": "0"
+                            },
+                            "rang": 1,
+                            "effect": 6,
+                            "condition": 0,
+                            "effect_key": 5
+                        }
+                    ],
+                    "rename": "待命名技能",
+                    "exp_max": 100,
+                    "exp_now": 0,
+                    "minType": 1,
+                    "icon_img": "../../resources/img/skill/style/test.jpg",
+                    "useNumVaule": 10
+                },
+                "from": "林中小屋-测试木桩掉落",
+                "icon": "📘",
+                "uuid": "5WP25KpquLS25NtkAYLQWi",
+                "score": 30,
+                "value": 30,
+                "cfg_id": "skill_9jsjURtChCGgp6K63FtLkv",
+                "haveSup": true,
+                "min_type": 3
+            },
+            {
+                "num": 1,
+                "data": {
+                    "cd": 120,
+                    "id": "skill_gtgpKE1et3ejkVeR7ysWkc",
+                    "data": {},
+                    "desc": "对敌人造成一定的魔法伤害",
+                    "leve": {
+                        "max": 100,
+                        "now": 0,
+                        "num": 1
+                    },
+                    "name": "死亡一指",
+                    "type": 0,
+                    "score": 34,
+                    "useUp": "mp-/-5",
+                    "effect": [
+                        {
+                            "tag": 1,
+                            "data": {
+                                "input": [
+                                    {
+                                        "val": 1,
+                                        "loca": 256.1405739485058,
+                                        "read": "me.read_key(\"魔法攻击\")",
+                                        "type": "*",
+                                        "leve_sup": 0.18571428571428572,
+                                        "leve_type": "+"
+                                    }
+                                ],
+                                "formula": "0"
+                            },
+                            "rang": 1,
+                            "effect": 2,
+                            "condition": 0,
+                            "effect_key": 14
+                        }
+                    ],
+                    "rename": "待命名技能",
+                    "exp_max": 100,
+                    "exp_now": 0,
+                    "minType": 1,
+                    "icon_img": "../../resources/img/skill/style/test.jpg",
+                    "useNumVaule": 5
+                },
+                "from": "主神商店",
+                "icon": "📘",
+                "uuid": "4tDrvbNgG8ay6FkVZZbMKi",
+                "score": 34,
+                "value": 34,
+                "cfg_id": "skill_gtgpKE1et3ejkVeR7ysWkc",
+                "haveSup": true,
+                "min_type": 3
+            },
+            {
+                "num": 1,
+                "data": {
+                    "cd": 120,
+                    "id": "skill_5YBj3t6ug2SZAewAVKckoz",
+                    "data": {},
+                    "desc": "召唤出一定数量的亡灵协助作战,亡灵会直到战死或战斗结束才会消失",
+                    "leve": {
+                        "max": 100,
+                        "now": 0,
+                        "num": 1
+                    },
+                    "name": "黑暗契约",
+                    "type": 0,
+                    "score": 146,
+                    "useUp": "mp-/-50",
+                    "effect": [
+                        {
+                            "tag": 3,
+                            "data": {
+                                "input": [
+                                    {
+                                        "val": 1,
+                                        "read": "me.read_key(\"无\")",
+                                        "type": "+",
+                                        "leve_sup": 25,
+                                        "leve_type": "+"
+                                    }
+                                ],
+                                "formula": "0",
+                                "create_id": "1"
+                            },
+                            "rang": 1,
+                            "effect": 23,
+                            "condition": 0,
+                            "effect_key": 11
+                        },
+                        {
+                            "tag": 3,
+                            "data": {
+                                "input": [
+                                    {
+                                        "val": 1,
+                                        "read": "me.read_key(\"无\")",
+                                        "type": "+",
+                                        "leve_sup": 16,
+                                        "leve_type": "+"
+                                    }
+                                ],
+                                "formula": "0",
+                                "create_id": "2"
+                            },
+                            "rang": 1,
+                            "effect": 23,
+                            "condition": 0,
+                            "effect_key": 12
+                        }
+                    ],
+                    "rename": "待命名技能",
+                    "exp_max": 100,
+                    "exp_now": 0,
+                    "minType": 1,
+                    "icon_img": "../../resources/img/skill/style/test.jpg",
+                    "useNumVaule": 50
+                },
+                "from": "主神商店",
+                "icon": "📘",
+                "uuid": "tSoEHCk44x3RcsCNkiTxDj",
+                "score": 146,
+                "value": 146,
+                "cfg_id": "skill_5YBj3t6ug2SZAewAVKckoz",
+                "haveSup": true,
+                "min_type": 3
+            },
+            {
+                "num": 1,
+                "data": {
+                    "cd": 120,
+                    "id": "skill_voVLUYXYUY2fq5niWtjuaG",
+                    "data": {},
+                    "desc": "对敌人造成一定的魔法伤害",
+                    "leve": {
+                        "max": 100,
+                        "now": 0,
+                        "num": 1
+                    },
+                    "name": "横扫千军",
+                    "type": 0,
+                    "score": 159,
+                    "useUp": "mp-/-5",
+                    "effect": [
+                        {
+                            "tag": 1,
+                            "data": {
+                                "input": [
+                                    {
+                                        "val": 1.31,
+                                        "loca": 1233.315722753971,
+                                        "read": "me.read_key(\"物理攻击\")",
+                                        "type": "*",
+                                        "leve_sup": 0.094,
+                                        "leve_type": "+"
+                                    }
+                                ],
+                                "formula": "0"
+                            },
+                            "rang": 1,
+                            "effect": 1,
+                            "condition": 0,
+                            "effect_key": 16
+                        }
+                    ],
+                    "rename": "待命名技能",
+                    "exp_max": 100,
+                    "exp_now": 0,
+                    "minType": 1,
+                    "icon_img": "../../resources/img/skill/style/test.jpg",
+                    "useNumVaule": 5
+                },
+                "from": "主神商店",
+                "icon": "📘",
+                "uuid": "739uuqhH45cMrr53MUVtHN",
+                "score": 159,
+                "value": 159,
+                "cfg_id": "skill_voVLUYXYUY2fq5niWtjuaG",
+                "haveSup": true,
+                "min_type": 3
+            },
+            {
+                "num": 1,
+                "data": {
+                    "cd": 120,
+                    "id": "skill_gQGK4beWCT1Go4QbXch69v",
+                    "data": {},
+                    "desc": "对敌人造成一定的魔法伤害",
+                    "leve": {
+                        "max": 100,
+                        "now": 0,
+                        "num": 1
+                    },
+                    "name": "强化攻击",
+                    "type": 0,
+                    "score": 833,
+                    "useUp": "mp-/-5",
+                    "effect": [
+                        {
+                            "tag": 1,
+                            "data": {
+                                "input": [
+                                    {
+                                        "val": 4.310049751243781,
+                                        "loca": 4402.379422377502,
+                                        "read": "me.read_key(\"物理攻击\")",
+                                        "type": "*",
+                                        "leve_sup": 0.135,
+                                        "leve_type": "+"
+                                    }
+                                ],
+                                "formula": "0"
+                            },
+                            "rang": 1,
+                            "effect": 1,
+                            "condition": 0,
+                            "effect_key": 16
+                        }
+                    ],
+                    "rename": "待命名技能",
+                    "exp_max": 100,
+                    "exp_now": 0,
+                    "minType": 1,
+                    "icon_img": "../../resources/img/skill/style/test.jpg",
+                    "useNumVaule": 5
+                },
+                "from": "主神商店",
+                "icon": "📘",
+                "uuid": "uAPzo2M5kCz1d9gaTsxnwx",
+                "score": 833,
+                "value": 833,
+                "cfg_id": "skill_gQGK4beWCT1Go4QbXch69v",
+                "haveSup": true,
+                "min_type": 3
+            },
+            {
+                "num": 1,
+                "data": {
+                    "cd": 12,
+                    "id": "skill_d5XjPaEJjzzvQxoXASV2Gf",
+                    "data": {},
+                    "desc": "普通攻击时有概率永久增加自身最大生命",
+                    "leve": {
+                        "max": 100,
+                        "now": 0,
+                        "num": 1
+                    },
+                    "name": "不灭之握",
+                    "type": 1,
+                    "score": 846,
+                    "useUp": "",
+                    "effect": [
+                        {
+                            "tag": 3,
+                            "data": {
+                                "input": [
+                                    {
+                                        "val": 0.23,
+                                        "loca": 0.24,
+                                        "read": "",
+                                        "type": "+",
+                                        "leve_sup": 0.01,
+                                        "leve_type": "+"
+                                    }
+                                ],
+                                "formula": "0"
+                            },
+                            "dice": 1,
+                            "rang": 1,
+                            "effect": 5,
+                            "condition": 2,
+                            "effect_key": 0
+                        }
+                    ],
+                    "rename": "待命名技能",
+                    "exp_max": 100,
+                    "exp_now": 0,
+                    "minType": 1,
+                    "icon_img": "../../resources/img/skill/style/test.jpg",
+                    "useNumVaule": 0
+                },
+                "from": "主神商店",
+                "icon": "📘",
+                "uuid": "177ADGUQKh8wgCWBjAfS4n",
+                "score": 846,
+                "value": 846,
+                "cfg_id": "skill_d5XjPaEJjzzvQxoXASV2Gf",
+                "haveSup": true,
+                "min_type": 3
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "“克苏鲁之眼”是一件源自于 H.P. 洛夫克拉夫特（H.P. Lovecraft）的 Cthulhu Mythos（克苏鲁神话）系列作品中的古老邪恶物品。在这个神话体系中，克苏鲁是一位沉睡的古老之神，拥有巨大的触手和龙样的外貌，被描述为远古宇宙中的一位至高存在。\n\n据传说，克苏鲁之眼是一件召唤类的装备，具有强大的神秘力量。它常被描述为一块古老的绿色宝石或者眼球形状的物品，被认为是与克苏鲁本体或其远古力量相关联的物品。持有者可以通过使用克苏鲁之眼进行召唤仪式，唤醒或召唤克苏鲁或其信徒，以及其他与神话中相关的邪恶生物或力量。\n\n然而，使用克苏鲁之眼通常会导致可怕的后果，可能引发灾难性的事件或者吸引其他邪恶力量的注意。因此，克苏鲁之眼往往被描绘为危险且诡异的物品，它的出现常常伴随着无尽的恐怖和噩梦般的后果。",
+                    "from": "世界任务",
+                    "icon": "👁︎",
+                    "leve": {
+                        "max": 127712,
+                        "now": 0,
+                        "num": 1
+                    },
+                    "name": "克苏鲁之眼",
+                    "type": 8,
+                    "uuid": "gdRJAo98A9cYkRwc9uyEf6",
+                    "score": 117,
+                    "skills": [],
+                    "tpl_id": "equip",
+                    "attributes": {
+                        "Mp_Max": 9.145433968659868,
+                        "Mp_res": 0.02001814808191328,
+                        "Calls_cont": 0.005092631814375673,
+                        "Calls_sore": 0.8871331044885216,
+                        "Calls_leveMax": 0.7681779395515471,
+                        "Calls_leveMin": 15.190447643186127
+                    }
+                },
+                "from": "世界任务",
+                "icon": "⚔️",
+                "uuid": "eDAWGMryXwJ9C1mvjQ5Pzd",
+                "score": 117,
+                "value": 117,
+                "cfg_id": "equip",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "《英雄联盟》（League of Legends）中的一款虚构装备，属于游戏角色的防具，提供生命值和生命回复属性，象征着持久力与生存能力。",
+                    "from": "注册赠送",
+                    "icon": "🎽",
+                    "leve": {
+                        "max": 1599566,
+                        "now": 1221720.7084393436,
+                        "num": 5
+                    },
+                    "name": "狂徒铠甲",
+                    "type": 7,
+                    "uuid": "ujCtLH6z5gMv7WfHrA9fod",
+                    "score": 300,
+                    "skills": [],
+                    "tpl_id": "equip-8",
+                    "attributes": {
+                        "Hp_Max": 150,
+                        "Hp_res": 0.15
+                    }
+                },
+                "from": "注册赠送",
+                "icon": "⚔️",
+                "uuid": "khbbwspVppmVgocqJX3GrA",
+                "score": 300,
+                "value": 300,
+                "cfg_id": "equip-8",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "在遥远的古代时期，世界陷入了一场毁灭性的战争，邪恶势力与正义之士展开了殊死搏斗。为了抵御黑暗势力的入侵，一位传说中的守护者利用他的智慧和力量打造了一件神秘的装备——守护者号角。\n\n守护者号角是由稀有的宝石和神秘金属铸造而成，号角本身散发着神圣的光芒，仿佛拥有生命般的活力。这件双抗防御装备被赋予了保护和抵御邪恶力量的能力，在战斗中可以为佩戴者带来强大的防御和抵抗力。\n\n据传言，守护者号角不仅可以抵御物理攻击，还能够抵御邪恶魔法和黑暗力量的侵袭。当佩戴者面临危险时，号角会发出嘹亮的号角声，唤起勇气和信念，为战斗带来希望和坚定。",
+                    "from": "主神商店",
+                    "icon": "📯",
+                    "leve": {
+                        "max": 1065714,
+                        "now": 167418.8125,
+                        "num": 1
+                    },
+                    "name": "守护者号角",
+                    "type": 6,
+                    "uuid": "4H3McQQjeCFQ519bkbLht7",
+                    "score": 477.2042192566817,
+                    "skills": [],
+                    "tpl_id": "equip",
+                    "attributes": {
+                        "Hp_Max": 145.98036317210767,
+                        "Hp_res": 0.022873904132364942,
+                        "Magic_defense": 3.0513466564664125,
+                        "Physical_defense": 21.420871752439073
+                    }
+                },
+                "from": "主神商店",
+                "icon": "⚔️",
+                "uuid": "sMDha22AgosehVVkadJTZL",
+                "score": 477.2042192566817,
+                "value": 477.2042192566817,
+                "cfg_id": "equip",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "炼妖壶，古称九黎壶。能炼化万物。相传最早为九黎族酋长蚩尤所拥有，乃拥有不可思议之力，据说能造就一切万物，也有惊人之毁坏力量。内部有著奇异之空间，空间之大似能将天地收纳于内。\n\n女娲创造苍穹各生命，却又发觉本性大多凶猛残暴。为不破坏天地太极均势，便铸造一能净化凶残之气的青铜壶，望藉壶之炼化，将过于残暴之妖、兽、魔物等升华，以维大地之和谐",
+                    "from": "终老·签到获得",
+                    "icon": "🕎",
+                    "leve": {
+                        "max": 162254,
+                        "now": 0,
+                        "num": 1
+                    },
+                    "name": "炼妖壶",
+                    "type": 8,
+                    "uuid": "jb7nr57cEjjKVKPiHAzScq",
+                    "score": 192,
+                    "skills": [],
+                    "tpl_id": "equip",
+                    "attributes": {
+                        "Mp_Max": 24.85714035687488,
+                        "Mp_res": 0.05431077320407688,
+                        "Calls_cont": 0.028261295217300017,
+                        "Calls_sore": 2.2857142857142856,
+                        "Calls_leveMax": 0.011586936004802696,
+                        "Calls_leveMin": 7.751645945828294
+                    }
+                },
+                "from": "终老·签到获得",
+                "icon": "⚔️",
+                "uuid": "kZyJo5kYu1Pku3wJ6ZcPVc",
+                "score": 192,
+                "value": 192,
+                "cfg_id": "equip",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "妖刀村雨，是日本文化尤其是民间传说和文艺作品中的一把著名神兵利器，以其神秘而富有诗意的名字闻名遐迩。在不同的故事版本中，村雨被赋予了多种特殊能力与传奇色彩。\n\n传说中，村雨之所以得名，是因为这把刀在斩击之时，犹如天空洒落的雨水般迅速洗净刀身上的血迹，给人留下深刻印象。它往往被视为一把带有诅咒或强大灵力的妖刀，有时会带给持有者无尽的荣耀与战功，但也可能带来不幸与灾祸，反映了日本人对武器既敬畏又恐惧的复杂情感。",
+                    "from": "世界任务",
+                    "icon": "🗡",
+                    "leve": {
+                        "max": 131650,
+                        "now": 0,
+                        "num": 1
+                    },
+                    "name": "妖刀村雨",
+                    "type": 2,
+                    "uuid": "wCjYmo3zyWiGJt1mo7FM8Z",
+                    "score": 150,
+                    "skills": [],
+                    "tpl_id": "equip",
+                    "attributes": {
+                        "Mp_Max": 28.18162023654356,
+                        "Magic_crit": 1.3909795723102814,
+                        "Magic_Attack_max": 0.8920643900508544,
+                        "Magic_Attack_min": 2.3582844301055372
+                    }
+                },
+                "from": "世界任务",
+                "icon": "⚔️",
+                "uuid": "g4Pgjg1cBJ68bvGhK6QxpE",
+                "score": 150,
+                "value": 150,
+                "cfg_id": "equip",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "妖刀村雨，是日本文化尤其是民间传说和文艺作品中的一把著名神兵利器，以其神秘而富有诗意的名字闻名遐迩。在不同的故事版本中，村雨被赋予了多种特殊能力与传奇色彩。\n\n传说中，村雨之所以得名，是因为这把刀在斩击之时，犹如天空洒落的雨水般迅速洗净刀身上的血迹，给人留下深刻印象。它往往被视为一把带有诅咒或强大灵力的妖刀，有时会带给持有者无尽的荣耀与战功，但也可能带来不幸与灾祸，反映了日本人对武器既敬畏又恐惧的复杂情感。",
+                    "from": "主神商店",
+                    "icon": "🗡",
+                    "leve": {
+                        "max": 338630,
+                        "now": 0,
+                        "num": 1
+                    },
+                    "name": "妖刀村雨",
+                    "type": 2,
+                    "uuid": "m7fqWBKfRfTBHGn5qyW6kM",
+                    "score": 308,
+                    "skills": [],
+                    "tpl_id": "equip",
+                    "attributes": {
+                        "Mp_Max": 0.6780690372034615,
+                        "Magic_crit": 3.4542479437711404,
+                        "Magic_Attack_max": 17.11111111111111,
+                        "Magic_Attack_min": 6.328546141234574
+                    }
+                },
+                "from": "主神商店",
+                "icon": "⚔️",
+                "uuid": "3edmnVJBdCE6GTAaya2WhK",
+                "score": 308,
+                "value": 308,
+                "cfg_id": "equip",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "“克苏鲁之眼”是一件源自于 H.P. 洛夫克拉夫特（H.P. Lovecraft）的 Cthulhu Mythos（克苏鲁神话）系列作品中的古老邪恶物品。在这个神话体系中，克苏鲁是一位沉睡的古老之神，拥有巨大的触手和龙样的外貌，被描述为远古宇宙中的一位至高存在。\n\n据传说，克苏鲁之眼是一件召唤类的装备，具有强大的神秘力量。它常被描述为一块古老的绿色宝石或者眼球形状的物品，被认为是与克苏鲁本体或其远古力量相关联的物品。持有者可以通过使用克苏鲁之眼进行召唤仪式，唤醒或召唤克苏鲁或其信徒，以及其他与神话中相关的邪恶生物或力量。\n\n然而，使用克苏鲁之眼通常会导致可怕的后果，可能引发灾难性的事件或者吸引其他邪恶力量的注意。因此，克苏鲁之眼往往被描绘为危险且诡异的物品，它的出现常常伴随着无尽的恐怖和噩梦般的后果。",
+                    "from": "主神商店",
+                    "icon": "👁︎",
+                    "leve": {
+                        "max": 828660,
+                        "now": 0,
+                        "num": 1
+                    },
+                    "name": "克苏鲁之眼",
+                    "type": 8,
+                    "uuid": "wJ4iWa46ypQiZTN7uLeapX",
+                    "score": 917,
+                    "skills": [],
+                    "tpl_id": "equip",
+                    "attributes": {
+                        "Mp_Max": 33.42501552038995,
+                        "Mp_res": 0.06719912052626496,
+                        "Calls_cont": 0.11552019930568937,
+                        "Calls_sore": 28.12732929549399,
+                        "Calls_leveMax": 1.6742436205767384,
+                        "Calls_leveMin": 63.85097941399096
+                    }
+                },
+                "from": "主神商店",
+                "icon": "⚔️",
+                "uuid": "4xSvksweZbVxeTRU5v5v3Z",
+                "score": 917,
+                "value": 917,
+                "cfg_id": "equip",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "传国玉玺是皇帝的印玺。其方圆四寸，上钮交五龙，正面刻有“授命于天，既寿永昌”八篆字，以作为“皇权天授、正统合法”之信物。得此物乃天命所归。",
+                    "from": "主神商店",
+                    "icon": "💎",
+                    "leve": {
+                        "max": 20008,
+                        "now": 0,
+                        "num": 1
+                    },
+                    "name": "传国玉玺",
+                    "type": 11,
+                    "uuid": "kZfMYXAg9qTV1jpB6ouWGW",
+                    "score": 19,
+                    "skills": [],
+                    "tpl_id": "equip",
+                    "attributes": {
+                        "Hp_Max": 0.929817256467264,
+                        "Hp_res": 0.0017588386705358783,
+                        "Mp_Max": 0.7209454183481822,
+                        "Mp_res": 0.0012937134566111833,
+                        "Magic_Ls": 0.18996986954587863,
+                        "Calls_cont": 0.00025625686730208053,
+                        "Calls_sore": 0.06795903479945768,
+                        "Magic_crit": 0.022727124899673178,
+                        "Physical_Ls": 0.0009188791970223878,
+                        "Attack_Speed": 0.01222889441566852,
+                        "Calls_leveMax": 0.02375,
+                        "Magic_defense": 0.07302967307012963,
+                        "Physical_crit": 0.003785742517117388,
+                        "Magic_Attack_max": 0.08293371678464176,
+                        "Magic_Attack_min": 0.10009659722075964,
+                        "Physical_Attack_max": 0.1995721080747586,
+                        "Physical_Attack_min": 0.03186544610033506
+                    }
+                },
+                "from": "主神商店",
+                "icon": "⚔️",
+                "uuid": "4DJKiZr2HhCVJPnqiMTen3",
+                "score": 19,
+                "value": 19,
+                "cfg_id": "equip",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "在遥远的古代神话世界——九黎大陆上，流传着一把闻名遐迩的绝世神兵——虎魄刀。传说这把刀源于上古时期，由天地间最炽烈的猛虎之魂所化，凝聚了百兽之王的威严与力量。\n\n远古之时，九黎大陆上有一只修炼千年、身披金鳞、口含天火的神虎——炽炎霸主，在一场与邪恶势力的大战中，为了保护世间生灵免受侵害，毅然舍身成仁，用自己的生命之力封印了强大的恶魔。其临终之际，灵魂化为一团璀璨的光芒，最终凝结成一柄闪烁着金红火焰的刀，便是虎魄刀。\n\n虎魄刀不仅拥有摧毁一切邪恶的力量，还蕴含着唤醒勇气与正义的意志。凡持有者，不仅能激发出自身潜藏的无尽力量，更能感应到神虎的英勇精神，进而激发无比的斗志和坚韧不屈的信念。\n\n随着时间推移，虎魄刀成为了九黎大陆上的传世神器，历任主人都是豪杰英雄，他们挥舞此刀，斩妖除魔，捍卫和平。然而，虎魄刀并非易得之物，只有真正心怀正义、勇往直前之人，方能在机缘巧合之下触动刀中的神虎魂魄，获得它的认可，从而成为新一代的虎魄刀主，肩负起维护九黎大陆安宁的重任。而每一位寻找虎魄刀的勇士，都将踏上一条充满挑战与传奇的旅程……",
+                    "from": "主神商店",
+                    "icon": "🔪",
+                    "leve": {
+                        "max": 1108011,
+                        "now": 220470.88888888896,
+                        "num": 2
+                    },
+                    "name": "虎魄刀",
+                    "type": 3,
+                    "uuid": "dBpbxiEZoRtFts61kWW264",
+                    "score": 550,
+                    "skills": [],
+                    "tpl_id": "equip",
+                    "attributes": {
+                        "Magic_crit": 3.5893276905623734,
+                        "Physical_crit": 0.7253650132526092,
+                        "Magic_Attack_max": 21.54529133255933,
+                        "Magic_Attack_min": 8.183073373501925,
+                        "Physical_Attack_min": 9.166666666666668
+                    }
+                },
+                "from": "主神商店",
+                "icon": "⚔️",
+                "uuid": "cdbsci2aSz25sDqJCzvWMZ",
+                "score": 550,
+                "value": 550,
+                "cfg_id": "equip",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "“克苏鲁之眼”是一件源自于 H.P. 洛夫克拉夫特（H.P. Lovecraft）的 Cthulhu Mythos（克苏鲁神话）系列作品中的古老邪恶物品。在这个神话体系中，克苏鲁是一位沉睡的古老之神，拥有巨大的触手和龙样的外貌，被描述为远古宇宙中的一位至高存在。\n\n据传说，克苏鲁之眼是一件召唤类的装备，具有强大的神秘力量。它常被描述为一块古老的绿色宝石或者眼球形状的物品，被认为是与克苏鲁本体或其远古力量相关联的物品。持有者可以通过使用克苏鲁之眼进行召唤仪式，唤醒或召唤克苏鲁或其信徒，以及其他与神话中相关的邪恶生物或力量。\n\n然而，使用克苏鲁之眼通常会导致可怕的后果，可能引发灾难性的事件或者吸引其他邪恶力量的注意。因此，克苏鲁之眼往往被描绘为危险且诡异的物品，它的出现常常伴随着无尽的恐怖和噩梦般的后果。",
+                    "from": "主神空间-测试木桩掉落",
+                    "icon": "👁︎",
+                    "leve": {
+                        "max": 2318886,
+                        "now": 8913.067268481576,
+                        "num": 12
+                    },
+                    "name": "克苏鲁之眼",
+                    "type": 8,
+                    "uuid": "ja7hhHFZntK7mUAvRFcbBW",
+                    "score": 191,
+                    "skills": [],
+                    "tpl_id": "equip",
+                    "attributes": {
+                        "Mp_Max": 13.509378740282289,
+                        "Mp_res": 0.04159058824364303,
+                        "Calls_cont": 0.017685185185185186,
+                        "Calls_sore": 1.2791041548790043,
+                        "Calls_leveMax": 0.6768050757482693,
+                        "Calls_leveMin": 26.94788869647542
+                    }
+                },
+                "from": "主神空间-测试木桩掉落",
+                "icon": "⚔️",
+                "uuid": "imMcVrUS54odACDX9UoYdN",
+                "score": 191,
+                "value": 191,
+                "cfg_id": "equip",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "在遥远的古代时期，世界陷入了一场毁灭性的战争，邪恶势力与正义之士展开了殊死搏斗。为了抵御黑暗势力的入侵，一位传说中的守护者利用他的智慧和力量打造了一件神秘的装备——守护者号角。\n\n守护者号角是由稀有的宝石和神秘金属铸造而成，号角本身散发着神圣的光芒，仿佛拥有生命般的活力。这件双抗防御装备被赋予了保护和抵御邪恶力量的能力，在战斗中可以为佩戴者带来强大的防御和抵抗力。\n\n据传言，守护者号角不仅可以抵御物理攻击，还能够抵御邪恶魔法和黑暗力量的侵袭。当佩戴者面临危险时，号角会发出嘹亮的号角声，唤起勇气和信念，为战斗带来希望和坚定。",
+                    "from": "注册赠送",
+                    "icon": "📯",
+                    "leve": {
+                        "max": 2833920.562512001,
+                        "now": 2831805.189113717,
+                        "num": 10
+                    },
+                    "name": "守护者号角",
+                    "type": 6,
+                    "uuid": "3hcWTfYt1XndnDihDRp4fC",
+                    "score": 244.42357031400007,
+                    "skills": [],
+                    "tpl_id": "equip-13",
+                    "attributes": {
+                        "Hp_Max": 99.27099029647998,
+                        "Hp_res": 0.037394465142971525,
+                        "Magic_defense": 8.357732236784692,
+                        "Physical_defense": 0.19449910246519517
+                    }
+                },
+                "from": "注册赠送",
+                "icon": "⚔️",
+                "uuid": "hi7FNp2J919j2G3AzLD1Ys",
+                "score": 244.42357031400007,
+                "value": 244.42357031400007,
+                "cfg_id": "equip-13",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "八坂琼曲玉，也译作八坂瓊勾玉或八阪瓊曲玉，是日本神话传说中的三大神器之一，另外两件分别为草剃剑（Kusanagi-no-Tsurugi）和八咫镜（Yata no Kagami）。八坂琼曲玉象征着生命、丰饶与和谐的力量。",
+                    "from": "世界任务",
+                    "icon": "💎",
+                    "leve": {
+                        "max": 1821819.2986138149,
+                        "now": 1362122.1724797303,
+                        "num": 18
+                    },
+                    "name": "八坂琼曲玉",
+                    "type": 11,
+                    "uuid": "tKn8xqYjtxGop7dAFKZRLH",
+                    "score": 84.66370129262603,
+                    "skills": [],
+                    "tpl_id": "equip",
+                    "attributes": {
+                        "Hp_Max": 3.1763942552765196,
+                        "Hp_res": 0.0032062174987191176,
+                        "Mp_Max": 0.4902875366190816,
+                        "Mp_res": 0.008887343336885454,
+                        "Magic_Ls": 0.39894681434994334,
+                        "Calls_cont": 0.003948649081018771,
+                        "Calls_sore": 0.3631026402932025,
+                        "Magic_crit": 0.19033589553121208,
+                        "Physical_Ls": 0.00551140337922058,
+                        "Attack_Speed": 0.02509323247487421,
+                        "Calls_leveMax": 0.110567333955248,
+                        "Magic_defense": 0.2714274971790938,
+                        "Physical_crit": 0.04802961354031536,
+                        "Magic_Attack_max": 0.7275445703794348,
+                        "Magic_Attack_min": 0.30448231743359844,
+                        "Physical_defense": 0.13509773237042808,
+                        "Physical_Attack_max": 0.27524101202247625,
+                        "Physical_Attack_min": 0.4826097267067455
+                    }
+                },
+                "from": "世界任务",
+                "icon": "⚔️",
+                "uuid": "vrSX93zq8WJwg9JmVgTDQU",
+                "score": 84.66370129262603,
+                "value": 84.66370129262603,
+                "cfg_id": "equip",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "昊天塔具有“吸星换月”的能力，象征着无边的神力，能够降服一切妖魔鬼怪，甚至是神仙。昊天塔常被赋予守护天下苍生、平衡正邪力量的使命,其威力巨大,常常成为各方势力争夺的目标.",
+                    "from": "终老·签到获得",
+                    "icon": "🗼",
+                    "leve": {
+                        "max": 1281668,
+                        "now": 765015.7071152356,
+                        "num": 22
+                    },
+                    "name": "昊天塔",
+                    "type": 7,
+                    "uuid": "rtsbzj449ZZecALHYJBPUs",
+                    "score": 53,
+                    "skills": [],
+                    "tpl_id": "equip",
+                    "attributes": {
+                        "Hp_Max": 26.5,
+                        "Hp_res": 0.0265
+                    }
+                },
+                "from": "终老·签到获得",
+                "icon": "⚔️",
+                "uuid": "bgrNuGRBcdMwNbL2LErAAz",
+                "score": 53,
+                "value": 53,
+                "cfg_id": "equip",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 1,
+                "data": {
+                    "desc": "在遥远的古代时期，世界陷入了一场毁灭性的战争，邪恶势力与正义之士展开了殊死搏斗。为了抵御黑暗势力的入侵，一位传说中的守护者利用他的智慧和力量打造了一件神秘的装备——守护者号角。\n\n守护者号角是由稀有的宝石和神秘金属铸造而成，号角本身散发着神圣的光芒，仿佛拥有生命般的活力。这件双抗防御装备被赋予了保护和抵御邪恶力量的能力，在战斗中可以为佩戴者带来强大的防御和抵抗力。\n\n据传言，守护者号角不仅可以抵御物理攻击，还能够抵御邪恶魔法和黑暗力量的侵袭。当佩戴者面临危险时，号角会发出嘹亮的号角声，唤起勇气和信念，为战斗带来希望和坚定。",
+                    "from": "主神商店",
+                    "icon": "📯",
+                    "leve": {
+                        "max": 3983230,
+                        "now": 1387148.7003784026,
+                        "num": 4
+                    },
+                    "name": "守护者号角",
+                    "type": 6,
+                    "uuid": "3ydTQYeBj7nbXbh4i6U8ki",
+                    "score": 915.8947442404228,
+                    "skills": [],
+                    "tpl_id": "equip",
+                    "attributes": {
+                        "Hp_Max": 111.41040338558712,
+                        "Hp_res": 0.10132489157887262,
+                        "Magic_defense": 45.87280012226291,
+                        "Physical_defense": 9.9335053758294
+                    }
+                },
+                "from": "主神商店",
+                "icon": "⚔️",
+                "uuid": "hF4smiTYetEjyLbwpPzCyD",
+                "score": 794.8947442404228,
+                "value": 794.8947442404228,
+                "cfg_id": "equip",
+                "haveSup": true,
+                "min_type": 2
+            },
+            {
+                "num": 2,
+                "data": {
+                    "id": "att-2",
+                    "key": "b",
+                    "desc": "使用后将增加1点敏捷",
+                    "icon": "📕",
+                    "name": "敏捷书",
+                    "value": 154.670987038883,
+                    "instruct": "使用 + 道具ID",
+                    "instruct_tips": "使用2"
+                },
+                "from": "宠物大陆-武松猫掉落",
+                "icon": "📕",
+                "uuid": "hPEnEJwQPzU2BVMhh7io2h",
+                "score": 323,
+                "value": 154.670987038883,
+                "cfg_id": "att-2",
+                "haveSup": true,
+                "min_type": 1
+            },
+            {
+                "num": 1,
+                "data": {
+                    "id": "att-1",
+                    "key": "a",
+                    "desc": "使用后将增加1点力量",
+                    "icon": "📕",
+                    "name": "力量书",
+                    "value": 154.965452847806,
+                    "instruct": "使用 + 道具ID",
+                    "instruct_tips": "使用2"
+                },
+                "from": "主神空间-测试木桩掉落",
+                "icon": "📕",
+                "uuid": "59pETdkQ4A17zzBieBDRC9",
+                "score": 199,
+                "value": 154.965452847806,
+                "cfg_id": "att-1",
+                "haveSup": true,
+                "min_type": 1
+            },
+            {
+                "num": 1,
+                "data": {
+                    "id": "att-9",
+                    "key": "Magic_Attack_max",
+                    "desc": "使用后将增加1点魔攻",
+                    "icon": "📕",
+                    "name": "最大魔攻书",
+                    "value": 450,
+                    "instruct": "使用 + 道具ID",
+                    "instruct_tips": "使用2"
+                },
+                "from": "主神空间-测试木桩掉落",
+                "icon": "📕",
+                "uuid": "bciuEEu8Ruvwxq4FGJfont",
+                "score": 159,
+                "value": 450,
+                "cfg_id": "att-9",
+                "haveSup": true,
+                "min_type": 1
+            },
+            {
+                "num": 1,
+                "data": {
+                    "id": "att-5",
+                    "key": "Hp_Max",
+                    "desc": "使用后将增加1点生命",
+                    "icon": "📕",
+                    "name": "生命书",
+                    "value": 100,
+                    "instruct": "使用 + 道具ID",
+                    "instruct_tips": "使用2"
+                },
+                "from": "主神空间-测试木桩掉落",
+                "icon": "📕",
+                "uuid": "aVMAmf3dQhfrNSgGF9KwaS",
+                "score": 163,
+                "value": 100,
+                "cfg_id": "att-5",
+                "haveSup": true,
+                "min_type": 1
+            },
+            {
+                "num": 2251,
+                "data": {
+                    "id": "prop-1",
+                    "desc": "用于复活自身,当没有此道具时，复活将花费💰️",
+                    "icon": "🪙",
+                    "name": "复活币",
+                    "value": 100,
+                    "instruct": "复活",
+                    "instruct_sys": "",
+                    "instruct_tips": "复活"
+                },
+                "from": "主神空间",
+                "icon": "🪙",
+                "uuid": "17zUvXppFuNTm42D5Uytpw",
+                "score": 0,
+                "value": 100,
+                "cfg_id": "prop-1",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 333,
+                "data": {
+                    "id": "prop-5",
+                    "desc": "当玩家使用精灵球捕捉怪物时，它就像是投射出去的希望之球，一束神秘的光芒环绕着目标，将其包裹其中。在这一刻，时间仿佛凝固了，所有的期待与未知都聚集在这个微小的球体内。当精灵球成功捕捉到怪物后，怪物化为一颗宠物蛋，蕴含着无限可能与未来的冒险。每一个宠物蛋都是一个未知的谜团，等待着玩家亲手孵化，培养出属于自己的独特伙伴。在这个神奇的世界里，精灵球不仅代表着捕捉和征服，更象征着友情与成长的开始。让我们一起揭开这些神奇宠物蛋背后的故事吧！",
+                    "icon": "🔮",
+                    "name": "精灵球",
+                    "value": 1000,
+                    "instruct": "捕捉+怪物ID",
+                    "instruct_sys": "",
+                    "instruct_tips": "捕捉1"
+                },
+                "from": "新手任务·完成赠送",
+                "icon": "🔮",
+                "uuid": "qF4bnSKKd3uf7KFsFmNwUG",
+                "score": 100,
+                "value": 1000,
+                "cfg_id": "prop-5",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 529,
+                "data": {
+                    "id": "prop-12",
+                    "desc": "使用后将重新随机称号加成全部加成",
+                    "icon": "💳",
+                    "name": "称号重置卡",
+                    "value": 100,
+                    "instruct": "",
+                    "instruct_sys": "Random_TitleAtt",
+                    "instruct_tips": ""
+                },
+                "from": "新手任务·完成赠送",
+                "icon": "💳",
+                "uuid": "mQpHK2736v3kjoNxrUjYRt",
+                "score": 100,
+                "value": 100,
+                "cfg_id": "prop-12",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 2863,
+                "data": {
+                    "id": "prop-19",
+                    "desc": "使用后将恢复百分之20最大生命,恢复百分之20最大蓝量",
+                    "icon": "💖",
+                    "name": "圣经",
+                    "value": 100,
+                    "instruct": "祈祷",
+                    "instruct_sys": "Use_resState",
+                    "instruct_tips": "祈祷"
+                },
+                "from": "轮回者#47·盲盒开启",
+                "icon": "💖",
+                "uuid": "esyKmrGt9bLEKierGsGmtB",
+                "score": 59,
+                "value": 100,
+                "cfg_id": "prop-19",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 13,
+                "data": {
+                    "id": "prop-3",
+                    "desc": "可用于在世界中传送到指定坐标点\n注意！如目标点无法传送将传送失败并消耗掉卷轴",
+                    "icon": "📄",
+                    "name": "传送卷轴",
+                    "value": 500,
+                    "instruct": "传送XcY",
+                    "instruct_sys": "",
+                    "instruct_tips": "传送1c4"
+                },
+                "from": "轮回者#47·盲盒开启",
+                "icon": "📄",
+                "uuid": "51oG96oXjr3wvN91SUKCFL",
+                "score": 92,
+                "value": 500,
+                "cfg_id": "prop-3",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 786,
+                "data": {
+                    "id": "prop-18",
+                    "desc": "你可以使用此道具向全服在线玩家发消息",
+                    "icon": "📢",
+                    "name": "小喇叭",
+                    "value": 10,
+                    "instruct": "所有人+内容",
+                    "instruct_sys": "",
+                    "instruct_tips": "所有人+大家好"
+                },
+                "from": "轮回者#47·盲盒开启",
+                "icon": "📢",
+                "uuid": "bM1PdfpSchUpLQMbY22WwB",
+                "score": 165,
+                "value": 10,
+                "cfg_id": "prop-18",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 20486,
+                "data": {
+                    "id": "prop-11",
+                    "desc": "使用后将随机更换称号样式,并且永久增加1点最大生命值💖",
+                    "icon": "💳",
+                    "name": "称号样式卡",
+                    "value": 30,
+                    "instruct": "",
+                    "instruct_sys": "Random_TitleStyle",
+                    "instruct_tips": ""
+                },
+                "from": "轮回者#47·盲盒开启",
+                "icon": "💳",
+                "uuid": "e6TjKuCY7LPgMoWSpJVJF6",
+                "score": 364,
+                "value": 30,
+                "cfg_id": "prop-11",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 0,
+                "data": {
+                    "id": "prop-10",
+                    "desc": "使用后将刷新重置每日委托任务的内容",
+                    "icon": "✅︎",
+                    "name": "委托书",
+                    "value": 100,
+                    "instruct": "",
+                    "instruct_sys": "Random_EntrustTask",
+                    "instruct_tips": ""
+                },
+                "from": "轮回者#47·盲盒开启",
+                "icon": "✅︎",
+                "uuid": "geW1TfHiQkjUQenjBzDRug",
+                "score": 497,
+                "value": 100,
+                "cfg_id": "prop-10",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 462,
+                "data": {
+                    "id": "prop-13",
+                    "desc": "使用后将重置血统,重置后有概率降低等级",
+                    "icon": "💳",
+                    "name": "血统重置卡",
+                    "value": 100,
+                    "instruct": "",
+                    "instruct_sys": "Random_Job",
+                    "instruct_tips": ""
+                },
+                "from": "轮回者#47·盲盒开启",
+                "icon": "💳",
+                "uuid": "9KSZHdTUtU5ruJ3Lt8Z8xw",
+                "score": 289,
+                "value": 100,
+                "cfg_id": "prop-13",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 195,
+                "data": {
+                    "id": "prop-4",
+                    "desc": "天赋重置卡是一种神奇的道具，它让人们可以像在游戏中一样随意重置自己的天赋。无论是在现实生活中还是在虚拟世界中，天赋重置卡都能为人们提供机会重新评估和调整自己的才能、技能和特点。不再受限于一成不变的天赋，人们可以以全新的方式探索自己的潜力，并通过重新分配天赋点数来开拓不同的道路。天赋证明为人们创造了独特而有趣的体验，使人们能够在人生的旅程中获得更多的自由和掌控力。\n注意:一旦使用你将无法回到过去.\n",
+                    "icon": "💳",
+                    "name": "天赋重置卡",
+                    "value": 2000,
+                    "instruct": "",
+                    "instruct_sys": "Random_talent",
+                    "instruct_tips": ""
+                },
+                "from": "轮回者#47·盲盒开启",
+                "icon": "💳",
+                "uuid": "8MA6C7UxtDBfMiJ5YKgg2s",
+                "score": 46,
+                "value": 2000,
+                "cfg_id": "prop-4",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 77,
+                "data": {
+                    "id": "prop-20",
+                    "desc": "用于[强化炉]强化装备,通过砍树可获得此道具",
+                    "icon": "💎",
+                    "name": "灵魂结晶",
+                    "value": 500,
+                    "instruct": "强化炉",
+                    "instruct_sys": "",
+                    "instruct_tips": "强化炉"
+                },
+                "from": "砍树获得",
+                "icon": "💎",
+                "uuid": "k974igHi5DSTMQyNGTCoLz",
+                "score": 0,
+                "value": 500,
+                "cfg_id": "prop-20",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 5649,
+                "data": {
+                    "id": "prop-15",
+                    "desc": "为保证您的钱财不会丢失，所以金币通常会先经过[银行]进行托管转换为支票给您。使用后将获得1金币，金币是主神空间内唯一流通的货币",
+                    "icon": "🎫",
+                    "name": "金币支票",
+                    "value": 1,
+                    "instruct": "",
+                    "instruct_sys": "Exchange_gold",
+                    "instruct_tips": ""
+                },
+                "from": "系统邮件",
+                "icon": "🎫",
+                "uuid": "rTRQEBGzsLf1g3xzyWzztQ",
+                "score": 0,
+                "value": 1,
+                "cfg_id": "prop-15",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 1787,
+                "data": {
+                    "id": "prop-17",
+                    "desc": "使用后将增加100经验值，可叠加使用",
+                    "icon": "📙",
+                    "name": "经验书",
+                    "value": 2,
+                    "instruct": "",
+                    "instruct_sys": "Open_ExpBook",
+                    "instruct_tips": ""
+                },
+                "from": "宠物大陆-敲音猴掉落",
+                "icon": "📙",
+                "uuid": "rP9pRpDJ5tm3S5SWkiCFER",
+                "score": 873,
+                "value": 2,
+                "cfg_id": "prop-17",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 69,
+                "data": {
+                    "id": "prop-8",
+                    "desc": "打开后可随机获得1-200金币",
+                    "icon": "💰",
+                    "name": "D级支线剧情",
+                    "value": 100,
+                    "instruct": "",
+                    "instruct_sys": "Open_story",
+                    "instruct_tips": ""
+                },
+                "from": "终老·盲盒开启",
+                "icon": "💰",
+                "uuid": "3ST4Z6FrQ5gUtbza6RqaGw",
+                "score": 108,
+                "value": 100,
+                "cfg_id": "prop-8",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 101,
+                "data": {
+                    "id": "prop-7",
+                    "desc": "打开后可随机获得1-100金币",
+                    "icon": "💰",
+                    "name": "E级支线剧情",
+                    "value": 50,
+                    "instruct": "",
+                    "instruct_sys": "Open_story",
+                    "instruct_tips": ""
+                },
+                "from": "挂机获得",
+                "icon": "💰",
+                "uuid": "mmwyNVTi6vPWyxhqS91Wtc",
+                "score": 1,
+                "value": 50,
+                "cfg_id": "prop-7",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 0,
+                "data": {
+                    "id": "prop-2",
+                    "desc": "盲盒，承载着无限可能的神秘魔匣，等待着你去挑战命运的轮盘，探索未知的奇迹。",
+                    "icon": "🎁",
+                    "name": "盲盒",
+                    "value": 1487.1,
+                    "instruct": "",
+                    "instruct_sys": "OpenBlindBox",
+                    "instruct_tips": ""
+                },
+                "from": "挂机获得",
+                "icon": "🎁",
+                "uuid": "j527uYbh3xUH86fgGUqnEN",
+                "score": 1,
+                "value": 1487.1,
+                "cfg_id": "prop-2",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 202,
+                "data": {
+                    "id": "prop-9",
+                    "desc": "使用后将随机更换人物形象,并且永久增加1点最大生命值",
+                    "icon": "💳",
+                    "name": "涩涩卡",
+                    "value": 30,
+                    "instruct": "",
+                    "instruct_sys": "Random_BodyStyle",
+                    "instruct_tips": ""
+                },
+                "from": "宠物大陆-啪咚猴掉落",
+                "icon": "💳",
+                "uuid": "fXmetUX4raQhQLBsbgQuDH",
+                "score": 684,
+                "value": 30,
+                "cfg_id": "prop-9",
+                "haveSup": true,
+                "min_type": 0
+            },
+            {
+                "num": 0,
+                "data": {
+                    "id": "prop-14",
+                    "desc": "此道具可用于[装备重铸][重铸背包装备],装备重铸可重置装备属性\n注意:一旦使用你将无法撤销.",
+                    "icon": "💳",
+                    "name": "装备重铸卡",
+                    "value": 50,
+                    "instruct": "铁匠铺",
+                    "instruct_sys": "",
+                    "instruct_tips": "铁匠铺"
+                },
+                "from": "终老·盲盒开启",
+                "icon": "💳",
+                "uuid": "7RzP2dk6D6ozrJS4Pk5LRW",
+                "score": 18,
+                "value": 50,
+                "cfg_id": "prop-14",
+                "haveSup": true,
+                "min_type": 0
+            }
+        ]
+    },
+    "log": {
+        "sign_cont": 3,
+        "fishing_cont": 2936,
+        "chopping_cont": 100,
+        "log_move_cont": 1050,
+        "newBie_endTime": 166,
+        "sign_last_time": 1711907423778,
+        "log_onhoon_time": 3392,
+        "log_opengiftbox": 0,
+        "everdayTask_cont": 3,
+        "everweekTask_cont": 2,
+        "log_boss_kill_cont": 0,
+        "log_pet_catch_cont": 78,
+        "log_kill_enemy_cont": 454,
+        "log_entrustTask_cont": 52
+    },
+    "icon": "🧙",
+    "leve": {
+        "max": 543000,
+        "now": 471895.6454491128,
+        "num": 543
+    },
+    "mail": [],
+    "name": "终老",
+    "pets": [],
+    "uuid": "qg_0CFD4223EA75971154766EF0A50752D7",
+    "Hp_now": 9294.879616,
+    "Job_id": "16",
+    "Mp_now": 4085.652639649216,
+    "Talent": {
+        "a": 0.8,
+        "b": 0.16,
+        "c": 0.98,
+        "d": 0.39
+    },
+    "wallet": [
+        60031,
+        0
+    ],
+    "team_id": "team-4",
+    "Job_leve": {
+        "max": 1115398,
+        "now": 957326.5645449192,
+        "num": 22
+    },
+    "style_id": "43",
+    "Talent_id": "40",
+    "Talent_leve": {
+        "max": 2923446,
+        "now": 2494184.5645448966,
+        "num": 11
+    },
+    "entrustTask": {
+        "id": "6eTgL3jdCtUj6aDcpDLspL",
+        "end": true,
+        "list": [
+            {
+                "v": 89,
+                "now": 89,
+                "type": 0
+            }
+        ],
+        "title": "每日委托",
+        "baseGift": 890,
+        "gift_exp": 890000
+    },
+    "everdayTask": {
+        "end": false,
+        "list": [
+            {
+                "v": 8,
+                "now": 0,
+                "type": 0
+            },
+            {
+                "v": 1,
+                "now": 0,
+                "type": 1
+            },
+            {
+                "v": 2,
+                "now": 1,
+                "type": 2
+            },
+            {
+                "v": 2,
+                "now": 0,
+                "type": 3
+            },
+            {
+                "v": 1,
+                "now": 0,
+                "type": 4
+            },
+            {
+                "v": 34,
+                "now": 0,
+                "type": 7
+            },
+            {
+                "v": 5,
+                "now": 0,
+                "type": 8
+            }
+        ],
+        "title": "每日任务",
+        "baseGift": 294,
+        "gift_exp": 543000,
+        "createTime": 1712164222435
+    },
+    "skills_body": [
+        {
+            "cd": 12,
+            "id": "skill_6ZPC3mr6gEokycVW1jJ39h",
+            "data": {},
+            "desc": "普通攻击时有概率永久增加自身最大生命",
+            "leve": {
+                "max": 87302,
+                "now": 321971.8787409698,
+                "num": 43
+            },
+            "name": "不灭之握",
+            "type": 1,
+            "score": 938,
+            "useUp": "",
+            "effect": [
+                {
+                    "tag": 3,
+                    "data": {
+                        "input": [
+                            {
+                                "val": 1.05,
+                                "loca": 1.47,
+                                "read": "",
+                                "type": "+",
+                                "leve_sup": 0.01,
+                                "leve_type": "+"
+                            }
+                        ],
+                        "formula": "0"
+                    },
+                    "dice": 11,
+                    "rang": 1,
+                    "effect": 5,
+                    "condition": 2,
+                    "effect_key": 0
+                }
+            ],
+            "rename": "待命名技能",
+            "exp_max": 100,
+            "exp_now": 0,
+            "minType": 1,
+            "icon_img": "../../resources/img/skill/style/test.jpg",
+            "useNumVaule": 0
+        },
+        {
+            "cd": 12,
+            "id": "skill_99F9EVb3M3oaCWM6iGgfwj",
+            "data": {},
+            "desc": "普通攻击时有概率永久增加自身最大生命",
+            "leve": {
+                "max": 33396,
+                "now": 427450.08926728566,
+                "num": 104
+            },
+            "name": "不灭之握",
+            "type": 1,
+            "score": 148,
+            "useUp": "",
+            "effect": [
+                {
+                    "tag": 3,
+                    "data": {
+                        "input": [
+                            {
+                                "val": 0.03,
+                                "loca": 1.04,
+                                "read": "",
+                                "type": "+",
+                                "leve_sup": 0.01,
+                                "leve_type": "+"
+                            }
+                        ],
+                        "formula": "0"
+                    },
+                    "dice": 12,
+                    "rang": 1,
+                    "effect": 5,
+                    "condition": 2,
+                    "effect_key": 0
+                }
+            ],
+            "rename": "待命名技能",
+            "exp_max": 100,
+            "exp_now": 0,
+            "minType": 1,
+            "icon_img": "../../resources/img/skill/style/test.jpg",
+            "useNumVaule": 0
+        },
+        {
+            "cd": 120,
+            "id": "skill_oDoKPsQDJSD3vnKCtVYSmV",
+            "data": {},
+            "desc": "生成一面屏障,屏障未击破前将不会受到伤害",
+            "leve": {
+                "max": 4785,
+                "now": 508659.15789473685,
+                "num": 5
+            },
+            "name": "屏障",
+            "type": 0,
+            "score": 472,
+            "useUp": "mp-/-10",
+            "effect": [
+                {
+                    "tag": 3,
+                    "data": {
+                        "input": [
+                            {
+                                "val": 144,
+                                "loca": 156,
+                                "read": "",
+                                "type": "+",
+                                "leve_sup": 4,
+                                "leve_type": "+"
+                            }
+                        ],
+                        "formula": "0"
+                    },
+                    "rang": 1,
+                    "effect": 7,
+                    "condition": 0,
+                    "effect_key": 10
+                }
+            ],
+            "rename": "待命名技能",
+            "exp_max": 100,
+            "exp_now": 0,
+            "minType": 1,
+            "icon_img": "../../resources/img/skill/style/test.jpg",
+            "useNumVaule": 10
+        },
+        {
+            "cd": 100,
+            "id": "skill_9hjGJPP88JGTq2MhXtjfuB",
+            "data": {},
+            "desc": "对周围的友军恢复生命值",
+            "leve": {
+                "max": 6943,
+                "now": 505668.15789473685,
+                "num": 5
+            },
+            "name": "生命避难所",
+            "type": 0,
+            "score": 617,
+            "useUp": "mp-%-10",
+            "effect": [
+                {
+                    "tag": 0,
+                    "data": {
+                        "input": [
+                            {
+                                "val": 135,
+                                "loca": 335,
+                                "read": "",
+                                "type": "+",
+                                "leve_sup": 100,
+                                "leve_type": "+"
+                            }
+                        ],
+                        "formula": "0"
+                    },
+                    "rang": 1.028333333333333,
+                    "effect": 3,
+                    "condition": 0,
+                    "effect_key": 1
+                }
+            ],
+            "rename": "待命名技能",
+            "exp_max": 100,
+            "exp_now": 0,
+            "minType": 1,
+            "icon_img": "../../resources/img/skill/style/test.jpg",
+            "useNumVaule": 10
+        }
+    ],
+    "title_style": "1",
+    "title_value": {
+        "Hp_Max": 1.12,
+        "Hp_res": 0.56,
+        "Mp_Max": 1.72,
+        "Mp_res": 0.74,
+        "Magic_Ls": 3.1,
+        "Pet_cont": 6.96,
+        "Calls_cont": 8.87,
+        "Calls_sore": 0.97,
+        "Magic_crit": 1.63,
+        "Physical_Ls": 1.63,
+        "Attack_Speed": 3.02,
+        "Calls_leveMax": 1.37,
+        "Calls_leveMin": 6.21,
+        "Magic_defense": 0.51,
+        "Physical_crit": 1.12,
+        "Magic_Attack_max": 0.03,
+        "Magic_Attack_min": 3.43,
+        "Physical_defense": 5.39,
+        "Physical_Attack_max": 1.56,
+        "Physical_Attack_min": 0.14
+    },
+    "everweekTask": {
+        "end": false,
+        "list": [
+            {
+                "v": 96,
+                "now": 0,
+                "type": 0
+            },
+            {
+                "v": 20,
+                "now": 0,
+                "type": 2
+            },
+            {
+                "v": 1,
+                "now": 0,
+                "type": 3
+            },
+            {
+                "v": 2,
+                "now": 0,
+                "type": 4
+            },
+            {
+                "v": 111,
+                "now": 0,
+                "type": 7
+            },
+            {
+                "v": 25,
+                "now": 0,
+                "type": 8
+            }
+        ],
+        "title": "每周任务",
+        "baseGift": 10880.28999999999,
+        "gift_exp": 228060000,
+        "createTime": 1712215407179
+    },
+    "equip_ordinary": [
+        {
+            "desc": "魔刀千刃，是国漫《刺客伍六七》系列中的一把强力武器。是玄武国首席暗影刺客柒的佩刀，神锻国的国宝之一，被千年恶灵看守。刀刃是由上千块碎片组成，黑色刀柄半截刀身，刀身上有蓝色条纹，显现出的是恶灵的图案，可以发出蓝色或紫色的光。只有条纹发光，才可以发挥出强大的力量。\n世人对魔刀千刃的评价是“只攻不防，天下无双”。但在伍六七和无眼法师的对决中，魔刀千刃为了保护梅花十三，第一次呈现出防御状态。",
+            "from": "世界任务",
+            "icon": "🔪",
+            "leve": {
+                "max": 2303811.65590182,
+                "now": 712879.1131429534,
+                "num": 12
+            },
+            "name": "魔刀千刃",
+            "type": 1,
+            "uuid": "6wKaAbA2oHfoMXqgcRGw6c",
+            "score": 201.23256832310625,
+            "skills": [
+                {
+                    "cd": 0,
+                    "id": "skill_bypJz61WnVx883jSUfWrhv",
+                    "data": {},
+                    "desc": "对敌人造成一定的物理伤害",
+                    "leve": {
+                        "max": 62344,
+                        "now": 385495.6659444991,
+                        "num": 452
+                    },
+                    "name": "普通攻击",
+                    "type": 0,
+                    "score": 57,
+                    "useUp": "",
+                    "effect": [
+                        {
+                            "tag": 1,
+                            "data": {
+                                "input": [
+                                    {
+                                        "val": 1,
+                                        "loca": 998.2908957118028,
+                                        "read": "me.read_key(\"物理攻击\")",
+                                        "type": "*",
+                                        "leve_sup": 0.001,
+                                        "leve_type": "+"
+                                    }
+                                ],
+                                "formula": "0"
+                            },
+                            "rang": 1,
+                            "effect": 1,
+                            "condition": 0,
+                            "effect_key": 3
+                        }
+                    ],
+                    "rename": "人刀合一",
+                    "exp_max": 100,
+                    "exp_now": 0,
+                    "minType": 0,
+                    "icon_img": "../../resources/img/skill/style/test.jpg",
+                    "useNumVaule": 0
+                },
+                {
+                    "cd": 120,
+                    "id": "skill_vCdS2dYvVn8VL7nhAnTBtH",
+                    "data": {},
+                    "desc": "生成一面屏障,屏障未击破前将不会受到伤害",
+                    "leve": {
+                        "max": 29490,
+                        "now": 1958151.665944514,
+                        "num": 827
+                    },
+                    "name": "屏障",
+                    "type": 0,
+                    "score": 15,
+                    "useUp": "mp-/-10",
+                    "effect": [
+                        {
+                            "tag": 3,
+                            "data": {
+                                "input": [
+                                    {
+                                        "val": 4,
+                                        "loca": 6532,
+                                        "read": "",
+                                        "type": "+",
+                                        "leve_sup": 8,
+                                        "leve_type": "+"
+                                    }
+                                ],
+                                "formula": "0"
+                            },
+                            "rang": 1,
+                            "effect": 7,
+                            "condition": 0,
+                            "effect_key": 10
+                        }
+                    ],
+                    "rename": "能量屏障",
+                    "exp_max": 100,
+                    "exp_now": 0,
+                    "minType": 1,
+                    "icon_img": "../../resources/img/skill/style/test.jpg",
+                    "useNumVaule": 10
+                }
+            ],
+            "tpl_id": "equip",
+            "attributes": {
+                "Physical_Attack_max": 5.540998568565389,
+                "Physical_Attack_min": 15.690457977458314
+            }
+        },
+        null,
+        null,
+        null,
+        null,
+        null
+    ],
+    "lastActiveTime": 1712215597291,
+    "enterCopyGameDownTime": 1711703519694,
+    "enterCopyGameDownTimeLastSendTime": 1712121340725
+}

@@ -4,6 +4,8 @@ import word from './lib/word'
 import { battle_d } from './lib/battle/battle'
 import { battle_group } from './lib/face/FACE_BODY'
 import bot_logic from './trigger/bot_logic'
+import ET from './lib/ET'
+import server from './server'
 export const name = 'dew-bot'
 
 export interface Config {
@@ -14,13 +16,15 @@ export const Config: Schema<Config> = Schema.object({
   测试参数: Schema.string().default('测试')
 })
 
-export function apply(ctx: Context) {
+export async function apply(ctx: Context) {
   logger = ctx.logger('[game]')
   word.start();
 
-
-
+  await server.setWsUrl('ws://127.0.0.1:8848');
+  server.api('Ping',{});
   let test = new test_battle();
+  let u_1 = test.create_unity();
+  console.log(u_1)
   ctx.on('message', async (session) => {
     new bot_logic(session)
     return;
@@ -36,5 +40,10 @@ export function apply(ctx: Context) {
     }
     bt.start();
 
+  })
+
+  ctx.before('disconnect' as any, () => {
+    console.log('插件热重载');
+    ET.removeAllListeners() 
   })
 }

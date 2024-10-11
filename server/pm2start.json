@@ -1,0 +1,19 @@
+{
+    "apps": [
+      {
+        "name": "mail",
+        "script": "./dist/index_mail.js",
+        "exec_mode": "fork"
+      },
+      {
+        "name": "rank",
+        "script": "./dist/index_rank.js",
+        "exec_mode": "fork"
+      },
+      {
+        "name": "master",
+        "script": "./dist/index_word.js",
+        "exec_mode": "fork"
+      }
+    ]
+  }
