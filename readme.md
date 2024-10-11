@@ -2,7 +2,12 @@
 
 [![npm](https://img.shields.io/npm/v/koishi-plugin-dew-bot?style=flat-square)](https://www.npmjs.com/package/koishi-plugin-dew-bot)
 
+# 简介
+RPG大型多人文字RPG游戏
+# 平台支持
+- [ ] qq
+- [ ] koishi沙箱调试
+- [ ] telegram
 
-# task
 如果你还想要使用 GPU 版本，可以安装 GPU 加速库：
 npm install @tensorflow/tfjs-node-gpu
