@@ -3,6 +3,7 @@ import xlsxToJson from "./model/xlsxToJson"
 import server_mail from "./server_mail";
 import server_rank from "./server_rank";
 import db from "./model/db/db";
+import { test_battle } from "./master/lib/battle/test.battle";
 const http = require('https');
 async function start() {
     xlsxToJson.init()
@@ -10,6 +11,8 @@ async function start() {
     try {
         // await server_mail.startServer(true);
         await master.startServer();
+        let t = new test_battle()
+        console.log(t.create_unity())
         master.s_wss.callApi('Ping',{})
         // await server_rank.startServer(true);
         // Pull()
