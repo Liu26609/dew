@@ -1,6 +1,5 @@
 import master from "./master"
 import xlsxToJson from "./model/xlsxToJson"
-import { _getEffect, cfg_effectKey } from "./intoSkill/cfg_effect";
 import db from "./model/db/db";
 import server_mail from "./server_mail";
 import server_rank from "./server_rank";

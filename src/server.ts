@@ -1,6 +1,7 @@
 import { HttpClient, WsClient } from "tsrpc";
 import { ServiceType, serviceProto } from "./shared/master/serviceProto";
 import { logger } from ".";
+import message from "./trigger/message";
 class server {
     private httpClient!: HttpClient<ServiceType>;
     private apiUrl!: string;
@@ -73,13 +74,13 @@ class server {
             }
         })
     }
-    async api<T extends keyof ServiceType['api']>(apiName: T, posData: ServiceType['api'][T]['req'], msg?: any): Promise<ServiceType['api'][T]['res'] | undefined> {
+    async api<T extends keyof ServiceType['api']>(apiName: T, posData: ServiceType['api'][T]['req'], msg?: message): Promise<ServiceType['api'][T]['res'] | undefined> {
         let client = this.wsClient || this.httpClient;
-        posData = Object.assign(posData, { _platform: 'qg' });
         if (msg) {
             posData = Object.assign(posData, {
-                _onlyid:msg.getAuthId(),
-                _fromid: msg.getFormId(),
+                _onlyid:msg.get_userId(),
+                _fromid: msg.get_userId(),
+                _platform: msg.platform
             });
         }
         let req = await client.callApi(apiName, posData);

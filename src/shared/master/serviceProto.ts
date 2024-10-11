@@ -1,8 +1,13 @@
 import { ServiceProto } from 'tsrpc-proto';
+import { ReqAtt, ResAtt } from './get/PtlAtt';
 import { ReqPing, ResPing } from './PtlPing';
 
 export interface ServiceType {
     api: {
+        "get/Att": {
+            req: ReqAtt,
+            res: ResAtt
+        },
         "Ping": {
             req: ReqPing,
             res: ResPing
@@ -14,7 +19,16 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
+    "version": 1,
     "services": [
+        {
+            "id": 1,
+            "name": "get/Att",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
         {
             "id": 0,
             "name": "Ping",
@@ -25,7 +39,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
         }
     ],
     "types": {
-        "PtlPing/ReqPing": {
+        "get/PtlAtt/ReqAtt": {
             "type": "Interface",
             "extends": [
                 {
@@ -74,7 +88,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "PtlPing/ResPing": {
+        "get/PtlAtt/ResAtt": {
             "type": "Interface",
             "extends": [
                 {
@@ -88,6 +102,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
         },
         "../protocols/master_base/BaseResponse": {
             "type": "Interface"
+        },
+        "PtlPing/ReqPing": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "PtlPing/ResPing": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
         }
     }
 };
