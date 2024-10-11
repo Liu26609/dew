@@ -7,9 +7,9 @@ export default class {
         const totalMemory = os.totalmem();
         const userName = cls.get_name();
         const memoryUsage = ((totalMemory - freeMemory) / totalMemory) * 100;
-        cls.addLine(`来源:[${cls.platform}][${cls.jude_private() ? '群组' : '私信'}]`)
-        cls.addLine(`昵称:${userName}`)
-        cls.addLine(`ID:${cls.get_userId()}`)
+        cls.addLine(`[from]${cls.platform}-[${cls.jude_private() ? '群组' : '私信'}]`)
+        cls.addLine(`[bot]${cls.get_botName()}`)
+        cls.addLine(`[user]${userName}-${cls.get_userId()}`)
         cls.addLine(`内存率: ${memoryUsage.toFixed(2)}%`)
         cls.send()
     }

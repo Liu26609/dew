@@ -14,4 +14,8 @@ export default class extends message {
     get_name() {
         return '匿名用户';
     }
+    At(): string {
+        return '@' + this.get_name();
+    }
+    
 }

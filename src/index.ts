@@ -1,4 +1,4 @@
-import { Context, Schema } from 'koishi'
+import { Context, Schema,Time  } from 'koishi'
 import { test_battle } from './lib/battle/test.battle'
 import word from './lib/word'
 import { battle_d } from './lib/battle/battle'
@@ -16,8 +16,9 @@ export const Config: Schema<Config> = Schema.object({
 
 export function apply(ctx: Context) {
   logger = ctx.logger('[game]')
-  console.log('[bot]启动',ctx)
   word.start();
+
+
 
   let test = new test_battle();
   ctx.on('message', async (session) => {
