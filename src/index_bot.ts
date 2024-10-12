@@ -1,9 +1,4 @@
 import { Context, Schema } from 'koishi'
-import { unity } from './lib/unity/unity'
-import { test_battle } from './lib/battle/test.battle'
-import word from './lib/word'
-import { battle_d } from './lib/battle/battle'
-import { battle_group } from './lib/face/FACE_BODY'
 import common from './lib/common'
 export const name = 'dew-bot'
 
@@ -18,9 +13,7 @@ export const Config: Schema<Config> = Schema.object({
 export function apply(ctx: Context) {
   logger = ctx.logger('[game]')
   // write your plugin here
-  word.start();
 
-  let test = new test_battle();
   let ls = [
     'telegram/callback-query',
     'telegram/channel-post',//

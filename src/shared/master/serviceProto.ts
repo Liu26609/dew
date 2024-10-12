@@ -1,6 +1,7 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { ReqAtt, ResAtt } from './get/PtlAtt';
 import { ReqPing, ResPing } from './PtlPing';
+import { ReqBuild, ResBuild } from './work/PtlBuild';
 
 export interface ServiceType {
     api: {
@@ -11,6 +12,10 @@ export interface ServiceType {
         "Ping": {
             req: ReqPing,
             res: ResPing
+        },
+        "work/Build": {
+            req: ReqBuild,
+            res: ResBuild
         }
     },
     msg: {
@@ -19,7 +24,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 1,
+    "version": 2,
     "services": [
         {
             "id": 1,
@@ -32,6 +37,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 0,
             "name": "Ping",
+            "type": "api",
+            "conf": {
+                "check_onlyid": false
+            }
+        },
+        {
+            "id": 2,
+            "name": "work/Build",
             "type": "api",
             "conf": {
                 "check_onlyid": false
@@ -116,6 +129,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "PtlPing/ResPing": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "work/PtlBuild/ReqBuild": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "work/PtlBuild/ResBuild": {
             "type": "Interface",
             "extends": [
                 {

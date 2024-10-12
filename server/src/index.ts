@@ -4,16 +4,25 @@ import server_mail from "./server_mail";
 import server_rank from "./server_rank";
 import db from "./model/db/db";
 import { test_battle } from "./master/lib/battle/test.battle";
+import { battle } from "./master/lib/battle/battle";
+import { battle_group } from "./master/lib/face/FACE_BODY";
+import word from "./master/lib/word";
 const http = require('https');
 async function start() {
     xlsxToJson.init()
     await db.init();
     try {
         // await server_mail.startServer(true);
+        word.start()
         await master.startServer();
         let t = new test_battle()
-        console.log(t.create_unity())
-        master.s_wss.callApi('Ping',{})
+
+        let a = t.create_unity()
+        let b = t.create_unity()
+        let c = new battle()
+        c.join(battle_group.主场, a)
+        c.join(battle_group.客场, b)
+        c.start()
         // await server_rank.startServer(true);
         // Pull()
     } catch (error) {

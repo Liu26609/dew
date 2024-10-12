@@ -8,7 +8,17 @@ interface actionCfg {
     path:string;
 }
 let cfg:actionCfg[] = [];
-
+// work
+cfg.push({
+    key: '打包正式服',
+    match_rule: matchRule.完全匹配,
+    path:'work/打包正式服'
+})
+cfg.push({
+    key: '前端打包测试服',
+    match_rule: matchRule.完全匹配,
+    path:'work/前端打包测试服'
+})
 cfg.push({
     key: 'all',
     match_rule: matchRule.完全匹配,

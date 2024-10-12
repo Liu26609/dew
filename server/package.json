@@ -9,6 +9,7 @@
     "git": "npm run build && git add . && git commit -m '任务模版' && git push origin master"
   },
   "dependencies": {
+    "child_process": "^1.0.2",
     "mysql": "^2.18.1",
     "mysql2": "^3.9.2",
     "node-cron": "^3.0.3",
