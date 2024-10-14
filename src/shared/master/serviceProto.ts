@@ -1,5 +1,8 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { ReqAtt, ResAtt } from './get/PtlAtt';
+import { MsgAction } from './MsgAction';
+import { ReqSetName, ResSetName } from './player/info/PtlSetName';
+import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
 import { ReqBuild, ResBuild } from './work/PtlBuild';
 
@@ -8,6 +11,14 @@ export interface ServiceType {
         "get/Att": {
             req: ReqAtt,
             res: ResAtt
+        },
+        "player/info/SetName": {
+            req: ReqSetName,
+            res: ResSetName
+        },
+        "Miss": {
+            req: ReqMiss,
+            res: ResMiss
         },
         "Ping": {
             req: ReqPing,
@@ -19,16 +30,38 @@ export interface ServiceType {
         }
     },
     msg: {
-
+        "Action": MsgAction
     }
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 2,
+    "version": 3,
     "services": [
         {
             "id": 1,
             "name": "get/Att",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 3,
+            "name": "Action",
+            "type": "msg",
+            "conf": {}
+        },
+        {
+            "id": 4,
+            "name": "player/info/SetName",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 5,
+            "name": "Miss",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -84,8 +117,8 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "optional": true
                 },
                 {
-                    "id": 2,
-                    "name": "_fromid",
+                    "id": 4,
+                    "name": "_messageid",
                     "type": {
                         "type": "String"
                     },
@@ -115,6 +148,107 @@ export const serviceProto: ServiceProto<ServiceType> = {
         },
         "../protocols/master_base/BaseResponse": {
             "type": "Interface"
+        },
+        "MsgAction/MsgAction": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/base/BaseMessage"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "template",
+                    "type": {
+                        "type": "Reference",
+                        "target": "MsgAction/template"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "messageId",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "data",
+                    "type": {
+                        "type": "Any"
+                    },
+                    "optional": true
+                }
+            ]
+        },
+        "../protocols/base/BaseMessage": {
+            "type": "Interface"
+        },
+        "MsgAction/template": {
+            "type": "Enum",
+            "members": [
+                {
+                    "id": 0,
+                    "value": 0
+                },
+                {
+                    "id": 1,
+                    "value": 1
+                }
+            ]
+        },
+        "player/info/PtlSetName/ReqSetName": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/info/PtlSetName/ResSetName": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "PtlMiss/ReqMiss": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "PtlMiss/ResMiss": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
         },
         "PtlPing/ReqPing": {
             "type": "Interface",

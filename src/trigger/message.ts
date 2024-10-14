@@ -50,6 +50,9 @@ export default class message {
     get_userId() {
         return this.session.userId
     }
+    get_msgId(){
+        return this.session.messageId
+    }
     get_content() {
         return this.session.content
     }

@@ -1,6 +1,10 @@
 import { WsClient } from "tsrpc";
 import master from ".";
 import { ServiceType } from "../shared/master/serviceProto";
+import user from "./manage/user";
+import db from "../model/db/db";
+import { player } from "./lib/unity/player";
+import { template } from "../shared/master/MsgAction";
 // import { template } from "../shared/master/MsgAction";
 class logic {
     stop: boolean = false;
@@ -29,17 +33,22 @@ class logic {
                     return
                 }
                 console.log('收到请求---')
-                // let onlyid = `${call.req._platform}_${user_id}`
-                // let onLine = manage_user.locaHas(onlyid);
-                // let user = onLine || await manage_user.has(onlyid)
-                // if (!user) {
-                //     (call.conn as WsClient<ServiceType>).sendMsg('Action', {
-                //         template: template.PleaseRegister,
-                //         tolocation: fromid
-                //     });
-                //     call.error("用户不存在")
-                //     return undefined;
-                // }
+                let onlyid = `${call.req._platform}_${user_id}`
+                let onLine = user.locaHas(onlyid);
+                let _user: any;
+                if(!onLine){
+                    _user = await user.sqHas(onlyid)
+                }else{
+                    _user = onLine;
+                }
+                if (!_user) {
+                    (call.conn as WsClient<ServiceType>).sendMsg('Action', {
+                        template: template.未注册,
+                        messageId: call.req._messageId,
+                    });
+                    call.error("用户不存在")
+                    return undefined;
+                }
                 // if (typeof (call.sn) == 'number') {
                 //     user.setConn(call.conn);
                 //     user.setLastLocation(fromid)

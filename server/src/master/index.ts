@@ -1,4 +1,4 @@
-import { HttpClient, WsClient } from "tsrpc";
+import { HttpClient, WsClient, WsServer } from "tsrpc";
 import { serverBase } from "../model/server/serverBase";
 import { ServiceType, serviceProto } from "../shared/master/serviceProto";
 import logic from "./logic";
@@ -6,6 +6,7 @@ import logic from "./logic";
 class index extends serverBase {
     c_http!: HttpClient<ServiceType>;
     c_wss!: WsClient<ServiceType>;
+    s_wss!: WsServer<ServiceType>;
     constructor() {
         super();
     }
@@ -29,6 +30,7 @@ class index extends serverBase {
         //     server: `ws://${ip}:${port}`
         // }) as unknown as WsClient<ServiceType>;
         // this.test()
+        this.s_wss.callApi('Miss',{})
     }
 
 

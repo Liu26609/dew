@@ -1,58 +1,74 @@
+import Datastore from 'nedb';
 
-import mysql from 'mysql2'
 class db {
-    connection: any
-    private lastActive: number = Date.now();
+    private _dbMap: Map<string, Datastore> = new Map();
     constructor() {
-
+      
     }
+
     async init() {
-        // await this.createConnection()
+        // NeDB 会自动加载数据文件，无需额外初始化
+    }
+    // 添加一个插入数据的方法
+    async insert(k: string, doc: any): Promise<any> {
+        this.hasMap(k)
+        return new Promise((resolve, reject) => {
+            this._dbMap.get(k).insert(doc, (err, newDoc) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(newDoc);
+                }
+            });
+        });
+    }
+    private hasMap(k:string){
+        if (!this._dbMap.has(k)) {
+            const datastore = new Datastore({ filename: `${k}.json`, autoload: true });
+            this._dbMap.set(k, datastore);
+        }
+    }
+    // 添加一个查询数据的方法
+    async find(k: string, query: any): Promise<any[]> {
+        this.hasMap(k)
+        return new Promise((resolve, reject) => {
+            this._dbMap.get(k).find(query, (err, docs) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(docs);
+                }
+            });
+        });
+    }
 
+    // 添加一个更新数据的方法
+    async update(k: string, query: any, update: any): Promise<number> {
+        this.hasMap(k)
+        return new Promise((resolve, reject) => {
+            this._dbMap.get(k).update(query, update, {}, (err, numReplaced) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(numReplaced);
+                }
+            });
+        });
     }
-    createConnection() {
-        // this.connection = mysql.createPool({
-        //     host: '43.136.14.72',
-        //     user: 'rank',
-        //     password: 'F7dw7dEHwPiLJKjJ',
-        //     database: 'rank',
-        //     waitForConnections: true,
-        // });
-        // this.connection = mysql.createPool({
-        //     host: '43.136.14.72',
-        //     user: 'dev',
-        //     password: 'WjiYLnsZwGBpSW2R',
-        //     database: 'dev',
-        //     waitForConnections: true,
-        // });
-        // setInterval(() => {
-        //     this.sql(`select  1`, [])
-        // }, 1000)
-    }
-    async sql(sql: string, arry: any[]): Promise<any[]> {
-        debugger;
-        return new Promise(async (resolve, reject) => {
-            const attemptQuery = async () => {
-                this.connection.getConnection((err, connection) => {
-                    if (err) {
-                        setTimeout(() => attemptQuery(), 100); // 间隔100毫秒后重试
-                        return;
-                    }
-                    connection.query(sql, arry, (error, results, fields) => {
-                        connection.release(); // 释放连接
-                        if (error) {
-                            console.error(sql, error);
-                            setTimeout(() => attemptQuery(), 500); // 间隔100毫秒后重试
-                            return;
-                        }
-                        this.lastActive = Date.now();
-                        resolve(results);
-                    });
-                });
-            };
-    
-            attemptQuery();
+
+    // 添加一个删除数据的方法
+    async remove(k: string, query: any): Promise<number> {
+        this.hasMap(k)
+        return new Promise((resolve, reject) => {
+            this._dbMap.get(k).remove(query, { multi: true }, (err, numRemoved) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(numRemoved);
+                }
+            });
         });
     }
 }
+
 export default new db();

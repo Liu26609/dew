@@ -42,6 +42,6 @@ cfg.push({
 cfg.push({
     key: '属性',
     match_rule: matchRule.完全匹配,
-    path:'我的属性'
+    path:'属性'
 })
 export default cfg;

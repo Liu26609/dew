@@ -19,6 +19,9 @@ export async function apply(ctx: Context) {
 
   await server.setWsUrl('ws://127.0.0.1:8848');
   server.api('Ping',{});
+  server.lisentMsg('Action',async (data)=>{
+    console.log('收到server消息',data)
+  },this)
   ctx.on('message', async (session) => {
     new bot_logic(session)
   })

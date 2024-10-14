@@ -7,9 +7,10 @@ import { test_battle } from "./master/lib/battle/test.battle";
 import { battle } from "./master/lib/battle/battle";
 import { battle_group } from "./master/lib/face/FACE_BODY";
 import word from "./master/lib/word";
+import common from "./master/lib/common";
 const http = require('https');
 async function start() {
-    xlsxToJson.init()
+    // xlsxToJson.init()
     await db.init();
     try {
         // await server_mail.startServer(true);
@@ -39,10 +40,10 @@ async function Pull() {
         res.on('end', async () => {
             let result = JSON.parse(data);
 
-            let res = await db.sql(`INSERT INTO oneMore (str, auth)
-            SELECT ?, ?
-            FROM dual
-            WHERE NOT EXISTS (SELECT * FROM oneMore WHERE str = ?)`, [result.hitokoto, result.from, result.hitokoto]);
+            // let res = await db.sql(`INSERT INTO oneMore (str, auth)
+            // SELECT ?, ?
+            // FROM dual
+            // WHERE NOT EXISTS (SELECT * FROM oneMore WHERE str = ?)`, [result.hitokoto, result.from, result.hitokoto]);
             console.log(result.hitokoto);
         });
     }).on('error', (err) => {

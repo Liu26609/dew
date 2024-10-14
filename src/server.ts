@@ -79,7 +79,7 @@ class server {
         if (msg) {
             posData = Object.assign(posData, {
                 _onlyid:msg.get_userId(),
-                _fromid: msg.get_userId(),
+                _messageid: msg.get_msgId(),
                 _platform: msg.platform
             });
         }
