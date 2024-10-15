@@ -12,7 +12,6 @@ const http = require('https');
 async function start() {
     // xlsxToJson.init()
     await db.init();
-    try {
         // await server_mail.startServer(true);
         word.start()
         await master.startServer();
@@ -26,9 +25,7 @@ async function start() {
         c.start()
         // await server_rank.startServer(true);
         // Pull()
-    } catch (error) {
-        debugger;
-    }
+
 }
 async function Pull() {
     // 请求get 地址https://v1.hitokoto.cn/

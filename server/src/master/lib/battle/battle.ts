@@ -11,8 +11,9 @@ export class battle {
     private groupMap: Map<string, body_base>[] = [new Map(), new Map()];
     id: number = counter++
     private _active: boolean = false;
-    private _log:string[] = [];
-    moment:boolean = false;
+    private _log: any = [{}, {}]; // Initialize _log as an array of objects
+    moment: boolean = false;
+    private _listen = {};
     /**
      * 是否瞬间完成
      * @param moment 
@@ -22,23 +23,45 @@ export class battle {
         this.createTime = Date.now();
         console.info(`[战场]创建:${this.id}#${this.createTime}`)
 
-        ET.fire(ET_K.battle_create,this)
+        ET.fire(ET_K.battle_create, this)
     }
-    log(log:string){
-        this._log.push(log);
+    log(group: battle_group, useName: string, skName: string, logs: { key: string, val: any }[]) {
+        try {
+            if (!this._log[group][useName]) {
+                this._log[group][useName] = {};
+            }
+
+            if (!this._log[group][useName][skName]) {
+                this._log[group][useName][skName] = [];
+            }
+
+            logs.forEach(log => {
+                const existingLog = this._log[group][useName][skName].find((l: { key: string, val: any }) => l.key === log.key);
+                if (existingLog && typeof existingLog.val === 'number' && typeof log.val === 'number') {
+                    existingLog.val += log.val;
+                } else {
+                    this._log[group][useName][skName].push(log);
+                }
+            });
+        } catch (e) {
+            debugger;
+        }
+    }
+    get_log(){
+        return this._log
     }
     /**
      * 执行帧 - 执行一回合
      */
     tick() {
-        if(!this._active){
+        if (!this._active) {
             return;
         }
-        
+
         for (let i = 0; i < this.groupMap.length; i++) {
             const element = this.groupMap[i];
             element.forEach(tick => {
-                if(tick.is_die()){
+                if (tick.is_die()) {
                     // 单位死亡
                     this.out(tick)
                     return;
@@ -53,50 +76,55 @@ export class battle {
         const homeGroupEmpty = this.groupMap[battle_group.主场].size == 0;
         const awayGroupEmpty = this.groupMap[battle_group.客场].size == 0;
 
-        if ((!homeGroupAlive && !awayGroupAlive) || (!homeGroupEmpty && !awayGroupEmpty)) {
+        if ((!homeGroupAlive || !awayGroupAlive) || (homeGroupEmpty && awayGroupEmpty)) {
             console.info(`[战场]战斗结束:${this.id}#${this.createTime}`);
             this.game_over();
         }
     }
-    print_log(){
+    print_log() {
         let str = `------------\n`;
-
-        this._log.forEach(item => {
-            str += `${item}\n`
-        })
+        console.log(this._log[0])
+        console.log(this._log[1])
+ 
         str += `-----------`
         console.info(str)
+        // 玩家|[技能名称]伤害5500[技能名称1]治疗100
     }
-    private game_over(){
-        this.print_log();
-        ET.fire(ET_K.battle_over,this);
+    private game_over() {
+        if(this._listen['game_over']){
+            this._listen['game_over'](this)
+        }
+        ET.fire(ET_K.battle_over, this);
         this.destroy();
     }
-    get_absGroup(g:battle_group){
+    get_absGroup(g: battle_group) {
         // 取相反
         let g2 = g == battle_group.主场 ? battle_group.客场 : battle_group.主场;
         return this.groupMap[g2];
     }
-    start(){
+    start(listen?:{}) {
+        if(listen){
+            this._listen = listen;
+        }
         this.active(true)
 
-        if(this.groupMap[battle_group.主场].size == 0 || this.groupMap[battle_group.客场].size == 0){
+        if (this.groupMap[battle_group.主场].size == 0 || this.groupMap[battle_group.客场].size == 0) {
             console.info('无法启动战斗')
             return;
         }
         console.info(`[战场]战斗开始:${this.id}`)
-        if(this.moment){
-            while(this._active){
+        if (this.moment) {
+            while (this._active) {
                 this.tick();
             }
         }
     }
-    private active(b:boolean){
+    private active(b: boolean) {
         this._active = b;
     }
     destroy() {
         this._active = false;
-        ET.fire(ET_K.battle_destroy,this.id);
+        ET.fire(ET_K.battle_destroy, this.id);
         this.groupMap = [];
     }
     /**
@@ -105,17 +133,16 @@ export class battle {
     join(g: battle_group, b: body_base) {
         b.set_group(g);
         this.groupMap[g].set(b.id, b);
-        this.log(`${b.name}加入了战斗`)
         console.info(`[战场]${b.name}加入战斗#g-${g}`)
     }
     /**
      * 离开战场
      */
     out(b: body_base) {
-        if(b.is_die()){
+        if (b.is_die()) {
             console.log(`${b.name}死亡`)
             // 附加奖励到战场
-        }else{
+        } else {
             console.log(`${b.name}逃离了战场`)
         }
         b.set_group(battle_group.主场);

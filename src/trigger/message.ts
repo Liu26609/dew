@@ -15,6 +15,7 @@ export default class message {
         setTimeout(() => { ET.fire(ET_K.input_message, this) }, 0);
 
     }
+
     clear() {
         this.temp = [];
     }

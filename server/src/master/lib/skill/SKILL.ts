@@ -23,7 +23,7 @@ export class SKILL {
      * tag
      * data
      */
-    private _log: { tpl: string, val: any }[] = [];
+    private _log: { key: string, val: any }[] = [];
     constructor(data: any) {
         this.type = data.type;
         this.name = data.name;
@@ -46,18 +46,20 @@ export class SKILL {
     clearLog() {
         this._log = [];
     }
-    log(tpl: string, val: string | number) {
+    log(_effTags: string[], val: string | number) {
+        // 拼接_effTags数组为字符串
+        let effTags = _effTags.join('_');
         // 查找_log中是否存在tpl
-        let idx = this._log.findIndex((item, idx) => {
-            return item.tpl == tpl
-        })
+        let idx = this._log.findIndex((item) => {
+            return item.key == effTags;
+        });
         if (idx == -1) {
-            this._log.push({ tpl: tpl, val: val })
+            this._log.push({ key: effTags, val: val });
         } else {
-            if (typeof (this._log[idx].val) == 'number' && typeof (val) == 'number') {
+            if (typeof this._log[idx].val == 'number' && typeof val == 'number') {
                 this._log[idx].val += val;
             } else {
-                this._log.push({ tpl: tpl, val: val })
+                this._log.push({ key: effTags, val: val });
             }
         }
     }
@@ -74,21 +76,18 @@ export class SKILL {
 
         for (let i = 0; i < tag_list.length; i++) {
             let _tag = tag_list[i];
+            if(!_tag){
+                console.error('!!!技能目标不存在')
+                return;
+            }
             // 遍历effects
             for (let i = 0; i < this.effects.length; i++) {
                 const element = this.effects[i];
                 element.active(this, use, _tag, forCont)
             }
         }
-
-
-
         if (this._log.length > 0) {
-            bt.log(`[${use.name}] 使用了 [${this.name}]。`)
-            this._log.forEach(item => {
-                let log = item.tpl.replace('$', item.val.toString());
-                bt.log(log)
-            })
+            bt.log(use.get_group(), use.name, this.name, this._log)
         }
     }
     /**

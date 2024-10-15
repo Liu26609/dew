@@ -15,9 +15,14 @@ class e extends effect {
     }
 
     active(sk:SKILL,use: unity, tag: unity, cont: number = 1) {
-        if(tag.is_die()){
-            return;
+        try{
+            if(tag.is_die()){
+                return;
+            }
+        }catch(e){
+            debugger
         }
+   
         let val = this.get_val(use);
         
         // 拿到tag防御
@@ -29,9 +34,9 @@ class e extends effect {
         // 计算伤害
         let damage = val - def_val;
         tag.damage(damage);
-        sk.log(`对${tag.name}造成了$点物理伤害`,damage)
+        sk.log(this.tag,damage)
         if(tag.is_die()){
-            sk.log(`${use.name}击杀了${tag.name}`,'')
+            console.log(`${use.name}使用${sk.name}击杀了${tag.name}`,'')
         }
     }
 }

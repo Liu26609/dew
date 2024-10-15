@@ -22,7 +22,7 @@ class inputManage {
                 return;
             }
             const classPath = path.resolve(__dirname, `./action/server/${data.template}`);
-            common.importClass(classPath, [cls,data])
+            common.importClass(classPath, [cls, data])
         }, this)
     }
     skip(id: string, jude: boolean) {
@@ -50,6 +50,14 @@ class inputManage {
                     ++matchCont;
                     const classPath = path.resolve(__dirname, `./action/${element.path}`);
                     common.importClass(classPath, [cls])
+                }
+            }
+            if (element.match_rule == matchRule.正则匹配) {
+                let reg = new RegExp(element.key);
+                if (reg.test(str)) {
+                    ++matchCont;
+                    const classPath = path.resolve(__dirname, `./action/${element.path}`);
+                    common.importClass(classPath, [cls]);
                 }
             }
         }

@@ -1,3 +1,4 @@
+import common from "../common";
 import { _att_key, battle_group } from "../face/FACE_BODY";
 import { SKILL_rang, SKILL_eff_type, SKILL_eff_type_伤害类, SKILL_type, SKILL_target } from "../face/FACE_SKILL";
 import { body_bar, att_val } from "../unity/base/body_com";
@@ -9,7 +10,7 @@ export class test_battle{
     }
     create_unity(){
         let data:any = {};
-        data.name = '测试单位';
+        data.name = `测试单位${common.random(1000,9999)}`;
         data.attList = [];
         data.attList.push(new body_bar({ name: '生命值', key: _att_key.生命, max: 100, now: 100 }))
         data.attList.push(new att_val({name:'攻击力',key:_att_key.物理攻击,val:10}))

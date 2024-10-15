@@ -4,7 +4,11 @@ import { body_base } from "./base/body_base";
 export class player  extends body_base{
     id: string = common.v4();
     name: string = '新玩家';
-    constructor() {
+    constructor(data) {
         super();
+        this.init(data)
+    }
+    private init(data: any) {
+        this._reload(data);
     }
 }

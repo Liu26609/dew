@@ -14,10 +14,12 @@ class user {
         if(data.length == 0){
             return undefined
         }
-        debugger;
+        let p =new player(data[0]);
+        this.userMap.set(onlyid, p);
+        return p
     }
     create(onlyid: string) {
-        let u = new player();
+        let u = new player({});
         u.id = onlyid;
         this.userMap.set(onlyid, u);
         console.log('创建用户:', onlyid)
