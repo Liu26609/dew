@@ -46,6 +46,7 @@ class logic {
                         template: template.未注册,
                         messageId: call.req._messageId,
                     });
+                    debugger
                     call.error("用户不存在")
                     return undefined;
                 }
