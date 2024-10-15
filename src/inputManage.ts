@@ -3,26 +3,37 @@ import actionCfg, { matchRule } from "./cfg/actionCfg";
 import common from "./lib/common";
 import ET, { ET_K } from "./lib/ET";
 import server from "./server";
+import { MsgAction } from "./shared/master/MsgAction";
 import message from "./trigger/message";
 
 class inputManage {
-    skipMap: Map<string, boolean> = new Map();
+    wait_inputskipMap: Map<string, boolean> = new Map();
     messageMap: Map<string, message> = new Map();
     constructor() {
-        
+
     }
     init() {
         ET.listen(ET_K.input_message, this.input_msg.bind(this))
+        server.lisentMsg('Action', async (data: MsgAction) => {
+            console.log('收到server消息', data)
+            let cls = this.messageMap.get(data.messageId)
+            if (!cls) {
+                console.log('server-引用消息不存在')
+                return;
+            }
+            const classPath = path.resolve(__dirname, `./action/server/${data.template}`);
+            common.importClass(classPath, [cls,data])
+        }, this)
     }
-    skip(id: string,jude:boolean) {
-        if(jude){
-            this.skipMap.set(id, true);
-        }else{
-            this.skipMap.delete(id);
+    skip(id: string, jude: boolean) {
+        if (jude) {
+            this.wait_inputskipMap.set(id, true);
+        } else {
+            this.wait_inputskipMap.delete(id);
         }
     }
     input_msg(cls: message) {
-        if (this.skipMap.has(cls.get_userId())) {
+        if (this.wait_inputskipMap.has(cls.get_userId())) {
             console.log('skip')
             return;
         }
@@ -43,8 +54,8 @@ class inputManage {
             }
         }
 
-        if(!matchCont){
-            server.api('Miss',{},cls)
+        if (!matchCont) {
+            server.api('Miss', {}, cls)
         }
     }
 }

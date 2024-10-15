@@ -12,8 +12,13 @@ export class battle {
     id: number = counter++
     private _active: boolean = false;
     private _log:string[] = [];
-
-    constructor() {
+    moment:boolean = false;
+    /**
+     * 是否瞬间完成
+     * @param moment 
+     */
+    constructor(moment = true) {
+        this.moment = moment;
         this.createTime = Date.now();
         console.info(`[战场]创建:${this.id}#${this.createTime}`)
 
@@ -80,6 +85,11 @@ export class battle {
             return;
         }
         console.info(`[战场]战斗开始:${this.id}`)
+        if(this.moment){
+            while(this._active){
+                this.tick();
+            }
+        }
     }
     private active(b:boolean){
         this._active = b;

@@ -10,7 +10,7 @@ class user {
         return this.userMap.get(onlyid)
     }
     async sqHas(onlyid: string) {
-        let data = await db.find('user', { onlyid: onlyid })
+        let data = await db.find('user', { id: onlyid })
         if(data.length == 0){
             return undefined
         }
@@ -20,7 +20,9 @@ class user {
         let u = new player();
         u.id = onlyid;
         this.userMap.set(onlyid, u);
-        return new player();
+        console.log('创建用户:', onlyid)
+        db.insert('user', u)
+        return u;
     }
 }
 export default new user()

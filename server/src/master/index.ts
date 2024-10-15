@@ -30,7 +30,6 @@ class index extends serverBase {
         //     server: `ws://${ip}:${port}`
         // }) as unknown as WsClient<ServiceType>;
         // this.test()
-        this.s_wss.callApi('Miss',{})
     }
 
 

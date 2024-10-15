@@ -15,13 +15,11 @@ export const Config: Schema<Config> = Schema.object({
 
 export async function apply(ctx: Context) {
   logger = ctx.logger('[game]')
-  inputManage.init()
 
   await server.setWsUrl('ws://127.0.0.1:8848');
-  server.api('Ping',{});
-  server.lisentMsg('Action',async (data)=>{
-    console.log('收到server消息',data)
-  },this)
+  inputManage.init()
+
+ 
   ctx.on('message', async (session) => {
     new bot_logic(session)
   })

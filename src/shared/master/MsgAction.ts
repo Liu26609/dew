@@ -1,7 +1,7 @@
 import { BaseMessage, BaseConf } from "./../protocols/base";
 export enum template{
-    未注册,
-    测试
+    未注册 = '未注册',
+    测试 = '测试'
 }
 export interface MsgAction extends BaseMessage {
     template: template;

@@ -1,4 +1,5 @@
 import { ServiceProto } from 'tsrpc-proto';
+import { ReqBattle, ResBattle } from './debug/PtlBattle';
 import { ReqAtt, ResAtt } from './get/PtlAtt';
 import { MsgAction } from './MsgAction';
 import { ReqSetName, ResSetName } from './player/info/PtlSetName';
@@ -8,6 +9,10 @@ import { ReqBuild, ResBuild } from './work/PtlBuild';
 
 export interface ServiceType {
     api: {
+        "debug/Battle": {
+            req: ReqBattle,
+            res: ResBattle
+        },
         "get/Att": {
             req: ReqAtt,
             res: ResAtt
@@ -38,6 +43,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
     "version": 3,
     "services": [
         {
+            "id": 3,
+            "name": "debug/Battle",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
             "id": 1,
             "name": "get/Att",
             "type": "api",
@@ -46,13 +59,13 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 3,
+            "id": 4,
             "name": "Action",
             "type": "msg",
             "conf": {}
         },
         {
-            "id": 4,
+            "id": 5,
             "name": "player/info/SetName",
             "type": "api",
             "conf": {
@@ -60,7 +73,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 5,
+            "id": 6,
             "name": "Miss",
             "type": "api",
             "conf": {
@@ -85,7 +98,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
         }
     ],
     "types": {
-        "get/PtlAtt/ReqAtt": {
+        "debug/PtlBattle/ReqBattle": {
             "type": "Interface",
             "extends": [
                 {
@@ -134,7 +147,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "get/PtlAtt/ResAtt": {
+        "debug/PtlBattle/ResBattle": {
             "type": "Interface",
             "extends": [
                 {
@@ -148,6 +161,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
         },
         "../protocols/master_base/BaseResponse": {
             "type": "Interface"
+        },
+        "get/PtlAtt/ReqAtt": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "get/PtlAtt/ResAtt": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
         },
         "MsgAction/MsgAction": {
             "type": "Interface",
@@ -194,11 +231,11 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "members": [
                 {
                     "id": 0,
-                    "value": 0
+                    "value": "未注册"
                 },
                 {
                     "id": 1,
-                    "value": 1
+                    "value": "测试"
                 }
             ]
         },
@@ -210,6 +247,15 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Reference",
                         "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "new",
+                    "type": {
+                        "type": "String"
                     }
                 }
             ]

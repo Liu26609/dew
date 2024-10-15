@@ -110,6 +110,9 @@ class word {
                 if (currentId > element.id) {
                     continue;
                 }
+                if(element.moment){
+                    continue;
+                }
                 currentId = element.id;
                 element.tick();
                 batchCont += 1;

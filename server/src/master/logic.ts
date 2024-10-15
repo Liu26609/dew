@@ -30,7 +30,7 @@ class logic {
                     //     tolocation: fromid,
                     //     data: '⚠️服务器暂时关闭,具体关闭原因请查看Q群550620904'
                     // });
-                    return
+                    return;
                 }
                 console.log('收到请求---')
                 let onlyid = `${call.req._platform}_${user_id}`
@@ -41,12 +41,13 @@ class logic {
                 }else{
                     _user = onLine;
                 }
+
                 if (!_user) {
+                    user.create(onlyid);
                     (call.conn as WsClient<ServiceType>).sendMsg('Action', {
                         template: template.未注册,
-                        messageId: call.req._messageId,
+                        messageId: call.req._messageid,
                     });
-                    debugger
                     call.error("用户不存在")
                     return undefined;
                 }
