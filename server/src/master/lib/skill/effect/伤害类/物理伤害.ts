@@ -9,12 +9,13 @@ class e extends effect {
     //     // 数值
     //     val_str: `攻击力*1.5+防御力`
     // }
-    constructor(keys, data) {
-        super(keys, data)
+    constructor(keys,script, data) {
+        super(keys,script, data)
 
     }
 
     active(sk:SKILL,use: unity, tag: unity, cont: number = 1) {
+        // console.log('执行脚本',this.script)
         try{
             if(tag.is_die()){
                 return;
@@ -24,7 +25,10 @@ class e extends effect {
         }
    
         let val = this.get_val(use);
-        
+        if(val <= 0){
+            sk.log(this.tag,0);
+            return;
+        }
         // 拿到tag防御
         let def = tag.get_att(_att_key.物理防御);
         let def_val = 0;

@@ -61,7 +61,7 @@ class word {
      * @param data 
      * @returns 
      */
-    get_effectTemp(keys: string[],data:any):effect | null {
+    get_effectTemp(keys: string[],script:any,data:any):effect | null {
         // 将 keys 数组中的字符串通过 '_' 拼接
         const key = keys.join('_');
         
@@ -70,7 +70,7 @@ class word {
         
         if (EffectClass) {
             // 动态实例化该效果类
-            return new EffectClass(keys,data);
+            return new EffectClass(keys,script,data);
         } else {
             console.info(`!!!Effect class not found for key: ${key}`);
             return null;

@@ -22,7 +22,14 @@ async function start() {
         let c = new battle()
         c.join(battle_group.主场, a)
         c.join(battle_group.客场, b)
-        c.start()
+        c.join(battle_group.客场, t.create_unity())
+        let ls = {
+            game_over: (b: battle) => {
+                let sklog = b.get_log()
+                console.log('战斗结束', sklog)
+            }
+        }
+        c.start(ls)
         // await server_rank.startServer(true);
         // Pull()
 

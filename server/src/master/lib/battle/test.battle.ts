@@ -22,22 +22,34 @@ export class test_battle{
             name:'测试技能',
             type:SKILL_type.主动技能,
             target:SKILL_target.敌人,
+            cd:1,
             rang_type:SKILL_rang.单体伤害,
             rang_num:1,
             effects:[{
                 tag:[SKILL_eff_type.伤害类,SKILL_eff_type_伤害类.物理伤害],
                 data:{
-                    // 范围类型
-                    rang_type:SKILL_rang.单体伤害,
-                    // 范围数量
-                    rang_num:1,
                     // 数值
                     val_str:`攻击力*1.5+测试力`
                 }
             }]
         })
 
-
+        data.sk_active.push({
+            name:'大招',
+            type:SKILL_type.主动技能,
+            target:SKILL_target.敌人,
+            cd:5,
+            rang_type:SKILL_rang.范围伤害,
+            rang_num:1,
+            effects:[{
+                tag:[SKILL_eff_type.伤害类,SKILL_eff_type_伤害类.物理伤害],
+                script:['test'],
+                data:{
+                    // 数值
+                    val_str:`攻击力*2+测试力`
+                }
+            }]
+        })
         return new unity(data)
     }
     attack(a,b){

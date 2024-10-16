@@ -4,8 +4,10 @@ import { SKILL } from "../SKILL";
 
 export class effect {
     data: any
+    script:string[] | undefined
     tag: string[]
-    constructor(tag: string[], data: any) {
+    constructor(tag: string[],script:string[], data: any) {
+        this.script = script
         this.tag = tag;
         this.data = data;
     }

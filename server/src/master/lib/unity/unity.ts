@@ -1,4 +1,5 @@
 import { battle } from "../battle/battle";
+import common from "../common";
 import { body_base } from "./base/body_base";
 
 export class unity extends body_base {
@@ -14,12 +15,15 @@ export class unity extends body_base {
         if (this.is_die()) {
             return;
         }
-        /**
-         * 2.目标选择 - 技能决定
-         * 3.技能释放
-         */
-        // 1.技能选择 - ai训练
-        let sk = this.sk_active[0];
+        // 1.过滤出CD符合的技能
+        let availableSkills = this.sk_active.filter(skill => skill.next_round() == 0);
+        if (availableSkills.length === 0) {
+            console.log('No cd skills');
+            return;
+        }
+        
+        // 1.技能选择 - 根据CD决定
+        let sk = availableSkills[common.random(0,availableSkills.length-1)];
         // 2.技能释放 - 目标选择技能决定
         sk.use(this,bt);
     }

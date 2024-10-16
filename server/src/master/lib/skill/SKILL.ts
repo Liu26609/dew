@@ -10,6 +10,11 @@ export class SKILL {
     name: string;
     id: string = common.v4()
     type: SKILL_type.主动技能
+    /**
+     * cd 为-1时表示无cd
+     */
+    cd: number = -1
+    private _cd: number = 1;
     effects: effect[] = []
     /**
      * 技能目标
@@ -31,10 +36,12 @@ export class SKILL {
         this.target = data.target || SKILL_target.敌人;
         this.rang_type = data.rang_type || SKILL_rang.单体伤害;
         this.rang_num = data.rang_num || 1;
+        this.cd = data.cd || -1;
+        this._cd = this.cd;
         if (data.effects) {
             for (let i = 0; i < data.effects.length; i++) {
                 const element = data.effects[i];
-                const effect = word.get_effectTemp(element.tag, element.data);
+                const effect = word.get_effectTemp(element.tag,element.script, element.data);
                 if (effect) {
                     this.effects.push(effect);
                 }
@@ -63,6 +70,12 @@ export class SKILL {
             }
         }
     }
+    next_round() {
+        if (this.cd > 0) {
+            this.cd -= 1;
+        }
+        return this.cd;
+    }
     /**
      * 是否能够释放技能
      */
@@ -70,13 +83,14 @@ export class SKILL {
 
     }
     use(use: body_base, bt: battle) {
+        this.cd = this._cd;
         this.clearLog();
         let tag_list = this.get_target_rang(use, bt);
         let forCont = this.rang_num > 1 ? this.rang_num : tag_list.length;
 
         for (let i = 0; i < tag_list.length; i++) {
             let _tag = tag_list[i];
-            if(!_tag){
+            if (!_tag) {
                 console.error('!!!技能目标不存在')
                 return;
             }
@@ -118,6 +132,20 @@ export class SKILL {
                     // 随机
                     const random = Math.floor(Math.random() * lifes.length);
                     return [lifes[random]]
+                }
+            case SKILL_rang.范围伤害:
+                {
+                    const tags = this.get_target(use, bt);
+                    // 过滤掉死亡的
+                    const lifes = tags.filter(item => item.is_die() == false)
+                    const randomTargets: body_base[] = [];
+                    for (let i = 0; i < this.rang_num; i++) {
+                        if (lifes.length === 0) break;
+                        const randomIndex = Math.floor(Math.random() * lifes.length);
+                        randomTargets.push(lifes[randomIndex]);
+                        lifes.splice(randomIndex, 1); // Remove the selected target to avoid duplicates
+                    }
+                    return randomTargets;
                 }
             default:
                 {

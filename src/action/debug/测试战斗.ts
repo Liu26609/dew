@@ -7,9 +7,9 @@ export default class {
     }
     async start(cls: message) {
         let req = await server.api('debug/Battle', {}, cls)
-        console.log('战斗日志', req.log)
+        console.log('战斗日志', req.skLog)
         let temp = `╞════🔵我方统计═━┄\n`
-        let A = req.log[0]
+        let A = req.skLog[0]
         for (const userName in A) {
             let line = `🐍${userName}`
             const element = A[userName];
@@ -24,7 +24,7 @@ export default class {
             temp += line + '\n'
         }
         temp += `╞════🔵敌方统计═━┄\n`
-        A = req.log[0]
+        A = req.skLog[0]
         for (const userName in A) {
             let line = `🐍${userName}`
             const element = A[userName];

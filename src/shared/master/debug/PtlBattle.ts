@@ -4,7 +4,7 @@ export interface ReqBattle extends BaseRequest {
 }
 
 export interface ResBattle extends BaseResponse {
-    log: any[]
+    skLog: any[]
     
 }
 

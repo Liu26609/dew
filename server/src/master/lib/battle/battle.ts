@@ -11,7 +11,7 @@ export class battle {
     private groupMap: Map<string, body_base>[] = [new Map(), new Map()];
     id: number = counter++
     private _active: boolean = false;
-    private _log: any = [{}, {}]; // Initialize _log as an array of objects
+    private _sklog: any = [{}, {}]; // Initialize _log as an array of objects
     moment: boolean = false;
     private _listen = {};
     /**
@@ -27,20 +27,20 @@ export class battle {
     }
     log(group: battle_group, useName: string, skName: string, logs: { key: string, val: any }[]) {
         try {
-            if (!this._log[group][useName]) {
-                this._log[group][useName] = {};
+            if (!this._sklog[group][useName]) {
+                this._sklog[group][useName] = {};
             }
 
-            if (!this._log[group][useName][skName]) {
-                this._log[group][useName][skName] = [];
+            if (!this._sklog[group][useName][skName]) {
+                this._sklog[group][useName][skName] = [];
             }
 
             logs.forEach(log => {
-                const existingLog = this._log[group][useName][skName].find((l: { key: string, val: any }) => l.key === log.key);
+                const existingLog = this._sklog[group][useName][skName].find((l: { key: string, val: any }) => l.key === log.key);
                 if (existingLog && typeof existingLog.val === 'number' && typeof log.val === 'number') {
                     existingLog.val += log.val;
                 } else {
-                    this._log[group][useName][skName].push(log);
+                    this._sklog[group][useName][skName].push(log);
                 }
             });
         } catch (e) {
@@ -48,7 +48,7 @@ export class battle {
         }
     }
     get_log(){
-        return this._log
+        return this._sklog
     }
     /**
      * 执行帧 - 执行一回合
@@ -83,8 +83,8 @@ export class battle {
     }
     print_log() {
         let str = `------------\n`;
-        console.log(this._log[0])
-        console.log(this._log[1])
+        console.log(this._sklog[0])
+        console.log(this._sklog[1])
  
         str += `-----------`
         console.info(str)

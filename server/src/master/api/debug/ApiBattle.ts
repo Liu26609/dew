@@ -17,9 +17,9 @@ export default async function (call: ApiCall<ReqBattle, ResBattle>) {
 
     let ls = {
         game_over: (b: battle) => {
-            let log = b.get_log()
-            console.log('战斗结束', log)
-            call.succ({ log: [log[battle_group.主场], log[battle_group.客场]] })
+            let sklog = b.get_log()
+            console.log('战斗结束', sklog)
+            call.succ({ skLog: [sklog[battle_group.主场], sklog[battle_group.客场]] })
 
         }
     }
