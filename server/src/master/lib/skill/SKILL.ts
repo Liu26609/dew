@@ -10,6 +10,7 @@ export class SKILL {
     name: string;
     id: string = common.v4()
     type: SKILL_type.主动技能
+    desc:string = '技能描述'
     /**
      * cd 为-1时表示无cd
      */
@@ -33,6 +34,7 @@ export class SKILL {
         this.type = data.type;
         this.name = data.name;
         this.id = data.id || common.v4();
+        this.desc = data.desc || '技能暂未描述';
         this.target = data.target || SKILL_target.敌人;
         this.rang_type = data.rang_type || SKILL_rang.单体伤害;
         this.rang_num = data.rang_num || 1;
