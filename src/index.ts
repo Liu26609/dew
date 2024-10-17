@@ -20,6 +20,8 @@ export let CFG:Config;
 
 export async function apply(ctx: Context, config: Config) {
   logger = ctx.logger('[game]');
+  // 修复热重载 监听残留
+  ET.removeAllListeners()
   CFG = config;
   await server.setWsUrl(CFG.服务器地址);
   inputManage.init()

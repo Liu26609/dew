@@ -10,7 +10,6 @@ class inputManage {
     wait_inputskipMap: Map<string, boolean> = new Map();
     messageMap: Map<string, message> = new Map();
     constructor() {
-
     }
     init() {
         ET.listen(ET_K.input_message, this.input_msg.bind(this))

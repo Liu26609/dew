@@ -12,7 +12,6 @@ export enum ET_K{
 class ET extends EventEmitter {
     constructor() {
         super();
-        this.removeAllListeners();
     }
 
     // 监听事件
