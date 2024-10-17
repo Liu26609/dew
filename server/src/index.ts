@@ -1,7 +1,5 @@
 import master from "./master"
 import xlsxToJson from "./model/xlsxToJson"
-import server_mail from "./server_mail";
-import server_rank from "./server_rank";
 import db from "./model/db/db";
 import { test_battle } from "./master/lib/battle/test.battle";
 import { battle } from "./master/lib/battle/battle";
