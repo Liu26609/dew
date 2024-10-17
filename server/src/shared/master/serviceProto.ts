@@ -40,7 +40,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 5,
+    "version": 6,
     "services": [
         {
             "id": 3,
@@ -160,12 +160,62 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ],
             "properties": [
                 {
+                    "id": 2,
+                    "name": "round",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
                     "id": 1,
                     "name": "skLog",
                     "type": {
                         "type": "Array",
                         "elementType": {
                             "type": "Any"
+                        }
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "dataLog",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Any"
+                        }
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "killLog",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Interface",
+                            "properties": [
+                                {
+                                    "id": 0,
+                                    "name": "tag",
+                                    "type": {
+                                        "type": "String"
+                                    }
+                                },
+                                {
+                                    "id": 1,
+                                    "name": "round",
+                                    "type": {
+                                        "type": "Number"
+                                    }
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "use",
+                                    "type": {
+                                        "type": "String"
+                                    }
+                                }
+                            ]
                         }
                     }
                 }

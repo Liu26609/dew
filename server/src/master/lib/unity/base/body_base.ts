@@ -1,15 +1,35 @@
 import { battle } from "../../battle/battle";
 import common from "../../common";
 import { _att_key, battle_group } from "../../face/FACE_BODY";
-import { SKILL_type } from "../../face/FACE_SKILL";
+import { SKILL_target, SKILL_type } from "../../face/FACE_SKILL";
 import { SKILL } from "../../skill/SKILL";
 import word from "../../word";
 import { att_line, att_val, body_bar } from "./body_com"
+class Buff {
+    key: string = '';
+    source?: body_base;
+    call: Function = () => { };
+    val: number = 1;
+    round: number = 1; // 持续时间，单位为秒
+    triggerCondition: string = ''; // 触发条件，例如每次攻击时触发、受到伤害时触发等
+    priority: number = 0; // 优先级
+    target: SKILL_target = SKILL_target.自己; // 目标，例如自己、队友或敌人
+    dispellable: boolean = true; // 是否可驱散
+    constructor() {
 
+    }
+}
 export class body_base {
     id: string = '';
     name: string = '未命名的单位';
     attList: (att_line | att_val | body_bar)[] = []
+    private _buff_source: Map<string, Map<string, any>> = new Map();
+    private _buffs: Map<string, any> = new Map();
+    /**
+     * buff 来源
+     * 层数
+     * 具体效果
+     */
     private _group: battle_group = battle_group.主场;
     sk_auto: SKILL[] = [];
     sk_active: SKILL[] = [];
@@ -17,11 +37,41 @@ export class body_base {
     constructor() {
 
     }
+    add_buff(key: string, name: string, round: number = 1, val: number, source: body_base) {
+        let _buff = this._buff_source.get(key) || new Map();
+        let item = _buff.get(name);
+        if (item) {
+            item.round += round;
+            if (val > 0 && item.val < val || val < 0 && item.val > val) {
+                item.val = val;
+                item.source = source;
+            }
+        } else {
+            item = { source: source, round: round, val: val, name: name }
+        }
+        _buff.set(name, item);
+        this._buff_source.set(key, _buff);
+    }
+    get_buffVal(key: string) {
+        let b = this._buff_source.get(key);
+        if(!b){
+            return 0
+        }
+        let val = 0;
+        b.forEach((item, key) => {
+            val += item.val;
+        })
+        return val;
+    }
+
     set_group(g: battle_group) {
         this._group = g;
     }
-    get_group(){
+    get_group() {
         return this._group;
+    }
+    addBuff() {
+
     }
     _reload(data?: any) {
         if (!data) {
@@ -73,12 +123,27 @@ export class body_base {
         this.sk_active.push(data);
     }
     /**此单位战斗回合开始 */
-    battle_round_begins(bt:battle) {
+    battle_round_begins(bt: battle) {
+      
         /**
          * 1.技能选择 - ai训练
          * 2.目标选择 - 技能决定
          * 3.技能释放
          */
+    }
+    battle_round_end(bt: battle) {
+        this._buff_source.forEach((val, key) => {
+            if(val.size == 0){
+                this._buff_source.delete(key);
+            }else{
+                val.forEach((item, key) => {
+                    item.round -= 1;
+                    if (item.round <= 0) {
+                        val.delete(key);
+                    }
+                })
+            }
+        })
     }
     is_die() {
         let att = this.get_att(_att_key.生命)
@@ -99,7 +164,7 @@ export class body_base {
         return this.attList[idx]
     }
     // 受到伤害
-    damage(val:number){
+    damage(val: number,bt?: battle) {
         let att = this.get_att(_att_key.生命)
         if (att) {
             let v = att.getVal();
@@ -107,6 +172,9 @@ export class body_base {
             att.setVal(v);
         } else {
             console.error('Attribute not found:', _att_key.生命);
+        }
+        if(bt){
+            bt.log_data('承伤',this._group,this.name,val)
         }
     }
 }

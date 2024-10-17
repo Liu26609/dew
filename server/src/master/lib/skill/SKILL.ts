@@ -10,7 +10,7 @@ export class SKILL {
     name: string;
     id: string = common.v4()
     type: SKILL_type.主动技能
-    desc:string = '技能描述'
+    desc: string = '技能描述'
     /**
      * cd 为-1时表示无cd
      */
@@ -43,7 +43,7 @@ export class SKILL {
         if (data.effects) {
             for (let i = 0; i < data.effects.length; i++) {
                 const element = data.effects[i];
-                const effect = word.get_effectTemp(element.tag,element.script, element.data);
+                const effect = word.get_effectTemp(element.tag, element.target, element.data);
                 if (effect) {
                     this.effects.push(effect);
                 }
@@ -90,18 +90,23 @@ export class SKILL {
         let tag_list = this.get_target_rang(use, bt);
         let forCont = this.rang_num > 1 ? this.rang_num : tag_list.length;
 
+
+        let _tags: body_base[] = [];
         for (let i = 0; i < tag_list.length; i++) {
             let _tag = tag_list[i];
             if (!_tag) {
                 console.error('!!!技能目标不存在')
-                return;
+                continue;
             }
-            // 遍历effects
-            for (let i = 0; i < this.effects.length; i++) {
-                const element = this.effects[i];
-                element.active(this, use, _tag, forCont)
-            }
+            _tags.push(_tag);
+
         }
+        // 遍历effects
+        for (let i = 0; i < this.effects.length; i++) {
+            const element = this.effects[i];
+            element.active(this, use, _tags, forCont,bt)
+        }
+
         if (this._log.length > 0) {
             bt.log(use.get_group(), use.name, this.name, this._log)
         }

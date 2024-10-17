@@ -1,7 +1,7 @@
 import { battle } from "./battle/battle";
 import common from "./common";
 import ET, { ET_K } from "./ET";
-import { SKILL_rang, SKILL_eff_type, SKILL_eff_type_伤害类 } from "./face/FACE_SKILL";
+import { SKILL_rang, SKILL_eff_type, SKILL_eff_type_伤害类, SKILL_eff_type_增益类 } from "./face/FACE_SKILL";
 import { effect } from "./skill/effect/effect_base";
 const path = require('path');
 const effectMap = {
@@ -79,17 +79,27 @@ class word {
     // 动态创建基于效果类型的实例
     private async _initSkillCl() {
         await this._initSkillCls(SKILL_eff_type.伤害类,SKILL_eff_type_伤害类);
+        await this._initSkillCls(SKILL_eff_type.增益类,SKILL_eff_type_增益类);
     }
     private async _initSkillCls(key:string,types:any) {
         const effectTypes = Object.values(types);
         for (const effectType of effectTypes) {
-            const classPath = path.resolve(__dirname, `./skill/effect/${key}/${effectType}`);
-            try {   
-                const effectModule = require(`${classPath}.ts`);
+            const actionPath = path.resolve(__dirname, `./skill/effect/action/${key}/${effectType}`);
+            try {
+                const effectModule = require(`${actionPath}.ts`);
                 const EffectClass = effectModule.default;
-                this.effectTempMap.set(`${key}_${effectType}`, EffectClass);
+                this.effectTempMap.set(`action_${key}_${effectType}`, EffectClass);
             } catch (error) {
-                console.error(`[技能注册]${key}/${effectType}`);
+                console.error(`[技能注册:action]${key}/${effectType}`);
+            }
+
+            const buffPath = path.resolve(__dirname, `./skill/effect/buff/${key}/${effectType}`);
+            try {
+                const effectModule = require(`${buffPath}.ts`);
+                const EffectClass = effectModule.default;
+                this.effectTempMap.set(`buff_${key}_${effectType}`, EffectClass);
+            } catch (error) {
+                console.error(`[技能注册:buff]${key}/${effectType}`);
             }
         }
     }

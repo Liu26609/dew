@@ -1,5 +1,7 @@
+import common from "../common";
 import ET, { ET_K } from "../ET";
 import { battle_group } from "../face/FACE_BODY";
+import { SKILL_eff_type } from "../face/FACE_SKILL";
 import { body_base } from "../unity/base/body_base";
 let counter = 1;
 /**
@@ -7,11 +9,13 @@ let counter = 1;
  */
 export class battle {
     private createTime: number = Date.now();
-    private round: number = 1;
+    round: number = 1;
     private groupMap: Map<string, body_base>[] = [new Map(), new Map()];
     id: number = counter++
     private _active: boolean = false;
-    private _sklog: any = [{}, {}]; // Initialize _log as an array of objects
+    private _sklog: any = [{}, {}]; // 技能日志
+    private _killlog:Map<string,{tag:string,round:number,use:string}> = new Map();
+    private _datalog: any = [{}, {}]; //战斗总计数据
     moment: boolean = false;
     private _listen = {};
     /**
@@ -25,7 +29,28 @@ export class battle {
 
         ET.fire(ET_K.battle_create, this)
     }
+    log_data(key: string, group: battle_group, name: string, val: number) {
+        if (!this._datalog[group][key]) {
+            this._datalog[group][key] = {};
+        }
+        if (!this._datalog[group][key][name]) {
+            this._datalog[group][key][name] = 0;
+        }
+        this._datalog[group][key][name] += val;
+    }
+    log_kill(name:string,tag:string){
+        this._killlog.set(common.v4(),{tag,round:this.round,use:name})
+    }
     log(group: battle_group, useName: string, skName: string, logs: { key: string, val: any }[]) {
+        // logs.forEach(log => {
+        //     if (log.key.includes(SKILL_eff_type.伤害类)) {
+        //         if(!this._datalog[group][SKILL_eff_type.伤害类]){
+        //             this._datalog[group][SKILL_eff_type.伤害类] = 0;
+        //         }
+        //         this._datalog[group][SKILL_eff_type.伤害类] += log.val;
+        //     }
+        // })
+
         try {
             if (!this._sklog[group][useName]) {
                 this._sklog[group][useName] = {};
@@ -47,8 +72,14 @@ export class battle {
             debugger;
         }
     }
-    get_log(){
+    get_log() {
         return this._sklog
+    }
+    get_killlog(){
+        return [...this._killlog.values()]
+    }
+    get_dataLog() {
+        return this._datalog
     }
     /**
      * 执行帧 - 执行一回合
@@ -57,7 +88,10 @@ export class battle {
         if (!this._active) {
             return;
         }
-
+        if (this.round > 600) {
+            console.log('战斗超时回合超过限制')
+            return
+        }
         for (let i = 0; i < this.groupMap.length; i++) {
             const element = this.groupMap[i];
             element.forEach(tick => {
@@ -67,6 +101,7 @@ export class battle {
                     return;
                 }
                 tick.battle_round_begins(this)
+                tick.battle_round_end(this)
             });
         }
         this.round++;
@@ -77,6 +112,7 @@ export class battle {
         const awayGroupEmpty = this.groupMap[battle_group.客场].size == 0;
 
         if ((!homeGroupAlive || !awayGroupAlive) || (homeGroupEmpty && awayGroupEmpty)) {
+            console.log(this._datalog)
             console.info(`[战场]战斗结束:${this.id}#${this.createTime}`);
             this.game_over();
         }
@@ -85,13 +121,13 @@ export class battle {
         let str = `------------\n`;
         console.log(this._sklog[0])
         console.log(this._sklog[1])
- 
+
         str += `-----------`
         console.info(str)
         // 玩家|[技能名称]伤害5500[技能名称1]治疗100
     }
     private game_over() {
-        if(this._listen['game_over']){
+        if (this._listen['game_over']) {
             this._listen['game_over'](this)
         }
         ET.fire(ET_K.battle_over, this);
@@ -102,8 +138,8 @@ export class battle {
         let g2 = g == battle_group.主场 ? battle_group.客场 : battle_group.主场;
         return this.groupMap[g2];
     }
-    start(listen?:{}) {
-        if(listen){
+    start(listen?: {}) {
+        if (listen) {
             this._listen = listen;
         }
         this.active(true)

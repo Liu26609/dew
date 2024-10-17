@@ -1,23 +1,54 @@
+import { battle } from "../../battle/battle";
+import { _att_key } from "../../face/FACE_BODY";
+import { SKILL_target } from "../../face/FACE_SKILL";
 import { body_base } from "../../unity/base/body_base";
 import { unity } from "../../unity/unity";
 import { SKILL } from "../SKILL";
 
 export class effect {
     data: any
-    script:string[] | undefined
+    target: SKILL_target = SKILL_target.自己
     tag: string[]
-    constructor(tag: string[],script:string[], data: any) {
-        this.script = script
+    constructor(tag: string[], target: SKILL_target, data: any) {
+        this.target = target
         this.tag = tag;
         this.data = data;
+    }
+    get_key() {
+        return this.tag.join('_');
+    }
+    get_attVal(key: _att_key, tag: body_base) {
+        let me = tag.get_att(key);
+        let bf = tag.get_buffVal(key)
+        if (me) {
+            return me.getVal() + bf;
+        }
+        return bf;
+    }
+    get_target(use: body_base, tags: body_base[]) {
+        let list: body_base[] = []
+        switch (this.target) {
+            case SKILL_target.自己:
+                list = [use];
+                break;
+            case SKILL_target.敌人:
+                list = tags;
+                break;
+            default:
+                break;
+        }
+        return list;
+    }
+    add_buff(key: string, use: body_base, tag: body_base, val: number) {
+        tag.add_buff(key, this.data.name, this.data.round, val, use);
     }
     /**
      * 效果生效
      */
-    active(sk:SKILL,use:body_base,tag:body_base,cont:number = 1){
+    active(sk: SKILL, use: body_base, tag: body_base[], cont: number = 1,bt:battle) {
 
     }
-    get_val(use:body_base){
+    get_val(use: body_base) {
         let val_str = this.data.val_str;
         // 将val_str按计算符号分割
         let val_arr = val_str.split(/(\+|\-|\*|\/)/);

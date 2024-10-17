@@ -12,6 +12,7 @@ export class unity extends body_base {
     }
     /**此单位战斗回合开始 */
     battle_round_begins(bt: battle) {
+        super.battle_round_begins(bt);
         if (this.is_die()) {
             return;
         }

@@ -4,8 +4,10 @@ export interface ReqBattle extends BaseRequest {
 }
 
 export interface ResBattle extends BaseResponse {
+    round:number
     skLog: any[]
-    
+    dataLog: any[]
+    killLog:{tag:string,round:number,use:string}[]
 }
 
 export const conf: BaseConf = {
