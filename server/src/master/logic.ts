@@ -16,9 +16,6 @@ class logic {
             // 1.检测请求方是否已经注册
 
             let check_onlyid = call.service.conf.check_onlyid
-            let check_team = call.service.conf.check_team
-            let check_notBattle = call.service.conf.check_notBattle;
-            let check_npc = call.service.conf.check_npc
             if (check_onlyid) {
                 let user_id = call.req._onlyid;
                 let fromid = call.req._fromid;
@@ -43,7 +40,7 @@ class logic {
                 }
 
                 if (!_user) {
-                    user.create(onlyid);
+                    _user = user.create(onlyid);
                     (call.conn as WsClient<ServiceType>).sendMsg('Action', {
                         template: template.未注册,
                         messageId: call.req._messageid,
@@ -76,7 +73,7 @@ class logic {
                 // if (!onLine) {
                 //     user.onLine();
                 // }
-                // call.req._player = user;
+                call.req._player = _user;
                 // user.active();
             }
             return call;

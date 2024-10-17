@@ -70,10 +70,12 @@ export default class {
          * 11->xxx击杀xxx
          * 22->xxx击杀xxx
          */
-        // temp += `╞════🔵战斗收获═━┄\n`
-        /**
-         * 经验值+1000
-         */
+        temp += `╞════🔵战斗收获═━┄\n`
+        let gifts = req.gitfs;
+        for (let index = 0; index < gifts.length; index++) {
+            const element = gifts[index];
+            temp += `🎁${element.name}x${element.cont}\n`
+        }
         console.log(temp)
 
         cls.addLine(temp)

@@ -1,30 +1,14 @@
 import { battle } from "../../battle/battle";
 import common from "../../common";
 import { _att_key, battle_group } from "../../face/FACE_BODY";
-import { SKILL_target, SKILL_type } from "../../face/FACE_SKILL";
+import { SKILL_type } from "../../face/FACE_SKILL";
 import { SKILL } from "../../skill/SKILL";
-import word from "../../word";
 import { att_line, att_val, body_bar } from "./body_com"
-class Buff {
-    key: string = '';
-    source?: body_base;
-    call: Function = () => { };
-    val: number = 1;
-    round: number = 1; // 持续时间，单位为秒
-    triggerCondition: string = ''; // 触发条件，例如每次攻击时触发、受到伤害时触发等
-    priority: number = 0; // 优先级
-    target: SKILL_target = SKILL_target.自己; // 目标，例如自己、队友或敌人
-    dispellable: boolean = true; // 是否可驱散
-    constructor() {
-
-    }
-}
 export class body_base {
     id: string = '';
     name: string = '未命名的单位';
     attList: (att_line | att_val | body_bar)[] = []
     private _buff_source: Map<string, Map<string, any>> = new Map();
-    private _buffs: Map<string, any> = new Map();
     /**
      * buff 来源
      * 层数
@@ -33,9 +17,19 @@ export class body_base {
     private _group: battle_group = battle_group.主场;
     sk_auto: SKILL[] = [];
     sk_active: SKILL[] = [];
-
+    wallet:{key:string,val:number}[] = []
     constructor() {
 
+    }
+    addItem(key:string,val:number){
+        let item = this.wallet.find((item)=>{
+            return item.key == key
+        })
+        if(item){
+            item.val += val
+        }else{
+            this.wallet.push({key:key,val:val})
+        }
     }
     add_buff(key: string, name: string, round: number = 1, val: number, source: body_base) {
         let _buff = this._buff_source.get(key) || new Map();

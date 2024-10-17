@@ -1,4 +1,5 @@
-import message from "../../trigger/message"
+import server from "../../../server";
+import message from "../../../trigger/message"
 
 
 
@@ -18,6 +19,7 @@ export default class {
             cls.send();
             return;
         }
+        await server.api('player/info/SetName',{new:name},cls)
         cls.addLine(`已修改用户名为：${name}`);
         cls.send();
     }

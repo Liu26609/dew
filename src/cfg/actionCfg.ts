@@ -47,7 +47,7 @@ cfg.push({
 cfg.push({
     key: '改名',
     match_rule: matchRule.完全匹配,
-    path:'set/改名'
+    path:'player/info/改名'
 })
 cfg.push({
     key: '属性',

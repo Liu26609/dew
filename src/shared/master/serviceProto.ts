@@ -1,7 +1,7 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { ReqBattle, ResBattle } from './debug/PtlBattle';
-import { ReqAtt, ResAtt } from './get/PtlAtt';
 import { MsgAction } from './MsgAction';
+import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
 import { ReqSetName, ResSetName } from './player/info/PtlSetName';
 import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
@@ -13,9 +13,9 @@ export interface ServiceType {
             req: ReqBattle,
             res: ResBattle
         },
-        "get/Att": {
-            req: ReqAtt,
-            res: ResAtt
+        "player/info/GetBase": {
+            req: ReqGetBase,
+            res: ResGetBase
         },
         "player/info/SetName": {
             req: ReqSetName,
@@ -51,18 +51,18 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 1,
-            "name": "get/Att",
-            "type": "api",
-            "conf": {
-                "check_onlyid": true
-            }
-        },
-        {
             "id": 4,
             "name": "Action",
             "type": "msg",
             "conf": {}
+        },
+        {
+            "id": 7,
+            "name": "player/info/GetBase",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
         },
         {
             "id": 5,
@@ -218,35 +218,37 @@ export const serviceProto: ServiceProto<ServiceType> = {
                             ]
                         }
                     }
+                },
+                {
+                    "id": 5,
+                    "name": "gitfs",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Interface",
+                            "properties": [
+                                {
+                                    "id": 0,
+                                    "name": "name",
+                                    "type": {
+                                        "type": "String"
+                                    }
+                                },
+                                {
+                                    "id": 1,
+                                    "name": "cont",
+                                    "type": {
+                                        "type": "Number"
+                                    }
+                                }
+                            ]
+                        }
+                    }
                 }
             ]
         },
         "../protocols/master_base/BaseResponse": {
             "type": "Interface"
-        },
-        "get/PtlAtt/ReqAtt": {
-            "type": "Interface",
-            "extends": [
-                {
-                    "id": 0,
-                    "type": {
-                        "type": "Reference",
-                        "target": "../protocols/master_base/BaseRequest"
-                    }
-                }
-            ]
-        },
-        "get/PtlAtt/ResAtt": {
-            "type": "Interface",
-            "extends": [
-                {
-                    "id": 0,
-                    "type": {
-                        "type": "Reference",
-                        "target": "../protocols/master_base/BaseResponse"
-                    }
-                }
-            ]
         },
         "MsgAction/MsgAction": {
             "type": "Interface",
@@ -298,6 +300,39 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 1,
                     "value": "测试"
+                }
+            ]
+        },
+        "player/info/PtlGetBase/ReqGetBase": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/info/PtlGetBase/ResGetBase": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
                 }
             ]
         },

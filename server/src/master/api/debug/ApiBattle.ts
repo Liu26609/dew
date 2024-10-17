@@ -25,9 +25,10 @@ export default async function (call: ApiCall<ReqBattle, ResBattle>) {
                 round: b.round,
                 skLog: [sklog[battle_group.主场], sklog[battle_group.客场]],
                 dataLog: [dataLog[battle_group.主场], dataLog[battle_group.客场]],
-                killLog: b.get_killlog()
+                killLog: b.get_killlog(),
+                gitfs:[{name:'金币',cont:1}]
             })
-
+            call.req._player.addItem('金币',99)
         }
     }
     c.start(ls)

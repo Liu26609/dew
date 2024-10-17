@@ -8,6 +8,7 @@ export interface ResBattle extends BaseResponse {
     skLog: any[]
     dataLog: any[]
     killLog:{tag:string,round:number,use:string}[]
+    gitfs:{name:string,cont:number}[]
 }
 
 export const conf: BaseConf = {

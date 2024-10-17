@@ -19,6 +19,10 @@ export class battle {
     moment: boolean = false;
     private _listen = {};
     /**
+     * 战斗各单位奖励
+     */
+    private _gift:Map<string,any[]> = new Map();
+    /**
      * 是否瞬间完成
      * @param moment 
      */
@@ -28,6 +32,9 @@ export class battle {
         console.info(`[战场]创建:${this.id}#${this.createTime}`)
 
         ET.fire(ET_K.battle_create, this)
+    }
+    addGift(id:string,item:any){
+        this._gift.set(id,item)
     }
     log_data(key: string, group: battle_group, name: string, val: number) {
         if (!this._datalog[group][key]) {
