@@ -66,17 +66,17 @@ export function apply(ctx: Context) {
   <button href="https://www.gamecoca.com/" type="link">GameCoca启动！</button>`)
 
 
-    let bt = new battle_d();
-    for (let i = 0; i < 10; i++) {
-      let u_1 = test.create_unity();
-      u_1.name = `玩家${i}`;
-      console.log(u_1)
-      let b_1 = test.create_unity()
-      b_1.name = `敌人${i}`;
-      bt.join(battle_group.主场, u_1)
-      bt.join(battle_group.客场, b_1)
-    }
-    bt.start();
+    // let bt = new battle_d();
+    // for (let i = 0; i < 10; i++) {
+    //   let u_1 = test.create_unity();
+    //   u_1.name = `玩家${i}`;
+    //   console.log(u_1)
+    //   let b_1 = test.create_unity()
+    //   b_1.name = `敌人${i}`;
+    //   bt.join(battle_group.主场, u_1)
+    //   bt.join(battle_group.客场, b_1)
+    // }
+    // bt.start();
 
   })
 }

@@ -1,7 +1,6 @@
 import server from "../../server";
 import message from "../../trigger/message";
 import { exec } from 'child_process';
-import Client from 'ssh2-sftp-client';
 const fs = require('fs');
 const path = require('path');
 
