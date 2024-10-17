@@ -9,6 +9,9 @@ class user {
     locaHas(onlyid: string) {
         return this.userMap.get(onlyid)
     }
+    save(onlyid: string) {
+        db.update('user', { id: onlyid }, this.userMap.get(onlyid))
+    }
     async sqHas(onlyid: string) {
         let data = await db.find('user', { id: onlyid })
         if(data.length == 0){

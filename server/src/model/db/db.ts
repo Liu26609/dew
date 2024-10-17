@@ -46,7 +46,7 @@ class db {
     async update(k: string, query: any, update: any): Promise<number> {
         this.hasMap(k)
         return new Promise((resolve, reject) => {
-            this._dbMap.get(k).update(query, update, {}, (err, numReplaced) => {
+            this._dbMap.get(k).update(query, { $set: update }, { upsert: false, multi: false }, (err, numReplaced) => {
                 if (err) {
                     reject(err);
                 } else {

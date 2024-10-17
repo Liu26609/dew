@@ -1,5 +1,6 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { ReqBattle, ResBattle } from './debug/PtlBattle';
+import { ReqSave, ResSave } from './debug/PtlSave';
 import { MsgAction } from './MsgAction';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
 import { ReqSetName, ResSetName } from './player/info/PtlSetName';
@@ -12,6 +13,10 @@ export interface ServiceType {
         "debug/Battle": {
             req: ReqBattle,
             res: ResBattle
+        },
+        "debug/Save": {
+            req: ReqSave,
+            res: ResSave
         },
         "player/info/GetBase": {
             req: ReqGetBase,
@@ -51,13 +56,21 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
+            "id": 7,
+            "name": "debug/Save",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
             "id": 4,
             "name": "Action",
             "type": "msg",
             "conf": {}
         },
         {
-            "id": 7,
+            "id": 8,
             "name": "player/info/GetBase",
             "type": "api",
             "conf": {
@@ -249,6 +262,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
         },
         "../protocols/master_base/BaseResponse": {
             "type": "Interface"
+        },
+        "debug/PtlSave/ReqSave": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "debug/PtlSave/ResSave": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
         },
         "MsgAction/MsgAction": {
             "type": "Interface",

@@ -78,14 +78,17 @@ export class body_base {
         };
         this.name = data.name;
         this.id = data.id || common.v4();
-        for (let index = 0; index < data.attList.length; index++) {
-            const element = data.attList[index];
-            const TypeClass = typeMap[element.t];
-            if (!TypeClass) {
-                console.error('TypeClass 不存在', element.t)
+        if(data.attList){
+            for (let index = 0; index < data.attList.length; index++) {
+                const element = data.attList[index];
+                const TypeClass = typeMap[element.t];
+                if (!TypeClass) {
+                    console.error('TypeClass 不存在', element.t)
+                }
+                this.attList.push(new TypeClass(element))
             }
-            this.attList.push(new TypeClass(element))
         }
+      
         // 主动技能reload
         if (data.sk_active) {
             for (let i = 0; i < data.sk_active.length; i++) {
