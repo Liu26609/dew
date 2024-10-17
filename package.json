@@ -27,7 +27,16 @@
     "url": "https://github.com/Liu26609/dew.git"
   },
   "peerDependencies": {
-    "koishi": "^4.17.11"
+    "koishi": "^4.18.0"
+  },
+  "koishi": {
+    "service": {
+      "required": [
+        "tsrpc"
+      ],
+      "optional": [],
+      "implements": []
+    }
   },
   "dependencies": {
     "uuid": "^10.0.0"
