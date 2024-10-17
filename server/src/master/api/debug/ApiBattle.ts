@@ -18,14 +18,12 @@ export default async function (call: ApiCall<ReqBattle, ResBattle>) {
     c.join(battle_group.客场, t.create_unity())
     let ls = {
         game_over: (b: battle) => {
-            let sklog = b.get_log()
-            let dataLog = b.get_dataLog()
-            console.log('战斗结束', sklog)
+            let log = b.get_log(a.get_group());
             call.succ({
                 round: b.round,
-                skLog: [sklog[battle_group.主场], sklog[battle_group.客场]],
-                dataLog: [dataLog[battle_group.主场], dataLog[battle_group.客场]],
-                killLog: b.get_killlog(),
+                skLog: log.skLog,
+                dataLog: log.dataLog,
+                killLog: log.killLog,
                 gitfs:[{name:'金币',cont:1}]
             })
             call.req._player.addItem('金币',99)

@@ -1,8 +1,10 @@
+import { template } from "../../../shared/master/MsgAction";
 import common from "../common";
 import ET, { ET_K } from "../ET";
 import { battle_group } from "../face/FACE_BODY";
 import { SKILL_eff_type } from "../face/FACE_SKILL";
 import { body_base } from "../unity/base/body_base";
+import { player } from "../unity/player";
 let counter = 1;
 /**
  * 战场
@@ -14,14 +16,20 @@ export class battle {
     id: number = counter++
     private _active: boolean = false;
     private _sklog: any = [{}, {}]; // 技能日志
-    private _killlog:Map<string,{tag:string,round:number,use:string}> = new Map();
+    private _killlog: Map<string, { tag: string, round: number, use: string }> = new Map();
     private _datalog: any = [{}, {}]; //战斗总计数据
+
+    // 回合日志
+    private _sklog_round: any = [{}, {}];
+    private _killlog_round: Map<string, { tag: string, round: number, use: string }> = new Map();
+    private _datalog_round: any = [{}, {}];
+
     moment: boolean = false;
     private _listen = {};
     /**
      * 战斗各单位奖励
      */
-    private _gift:Map<string,any[]> = new Map();
+    private _gift: Map<string, any[]> = new Map();
     /**
      * 是否瞬间完成
      * @param moment 
@@ -32,9 +40,36 @@ export class battle {
         console.info(`[战场]创建:${this.id}#${this.createTime}`)
 
         ET.fire(ET_K.battle_create, this)
+
     }
-    addGift(id:string,item:any){
-        this._gift.set(id,item)
+    // 通知全体玩家
+    notice_all(msg: string) {
+        this.groupMap.forEach(element => {
+            element.forEach(item => {
+                if (item instanceof player) {
+                    item.sendMessageg('Action',{template:template.文本消息,data:`[战场]${msg}`,messageId:''});
+                }
+            });
+        });
+    }
+    destroy() {
+        this._active = false;
+        ET.fire(ET_K.battle_destroy, this.id);
+        this.groupMap.forEach(element => {
+            element.forEach(item => {
+                item.set_battle(undefined)
+            });
+        });
+        this.groupMap = [];
+        // 销毁对象将其从内存中移除
+        for (let key in this) {
+            if (this.hasOwnProperty(key)) {
+                delete this[key];
+            }
+        }
+    }
+    addGift(id: string, item: any) {
+        this._gift.set(id, item)
     }
     log_data(key: string, group: battle_group, name: string, val: number) {
         if (!this._datalog[group][key]) {
@@ -44,19 +79,23 @@ export class battle {
             this._datalog[group][key][name] = 0;
         }
         this._datalog[group][key][name] += val;
+
+        // 回合数据
+        if (!this._datalog_round[group][key]) {
+            this._datalog_round[group][key] = {};
+        }
+        if (!this._datalog_round[group][key][name]) {
+            this._datalog_round[group][key][name] = 0;
+        }
+        this._datalog_round[group][key][name] += val;
     }
-    log_kill(name:string,tag:string){
-        this._killlog.set(common.v4(),{tag,round:this.round,use:name})
+    log_kill(name: string, tag: string) {
+        this._killlog.set(common.v4(), { tag, round: this.round, use: name })
+
+        // 回合数据
+        this._killlog_round.set(common.v4(), { tag, round: this.round, use: name })
     }
     log(group: battle_group, useName: string, skName: string, logs: { key: string, val: any }[]) {
-        // logs.forEach(log => {
-        //     if (log.key.includes(SKILL_eff_type.伤害类)) {
-        //         if(!this._datalog[group][SKILL_eff_type.伤害类]){
-        //             this._datalog[group][SKILL_eff_type.伤害类] = 0;
-        //         }
-        //         this._datalog[group][SKILL_eff_type.伤害类] += log.val;
-        //     }
-        // })
 
         try {
             if (!this._sklog[group][useName]) {
@@ -78,15 +117,56 @@ export class battle {
         } catch (e) {
             debugger;
         }
+        // 回合数据
+        try {
+            if (!this._sklog_round[group][useName]) {
+                this._sklog_round[group][useName] = {};
+            }
+
+            if (!this._sklog_round[group][useName][skName]) {
+                this._sklog_round[group][useName][skName] = [];
+            }
+
+            logs.forEach(log => {
+                const existingLog = this._sklog_round[group][useName][skName].find((l: { key: string, val: any }) => l.key === log.key);
+                if (existingLog && typeof existingLog.val === 'number' && typeof log.val === 'number') {
+                    existingLog.val += log.val;
+                } else {
+                    this._sklog_round[group][useName][skName].push(log);
+                }
+            });
+        } catch (e) {
+            debugger;
+        }
+
     }
-    get_log() {
-        return this._sklog
+
+
+    get_log(group: battle_group) {
+        let g = group == battle_group.主场 ? [battle_group.主场, battle_group.客场] : [battle_group.客场, battle_group.主场]
+        return {
+            skLog: [this._sklog[g[0]], this._sklog[g[1]]],
+            killLog: [...this._killlog.values()],
+            dataLog: [this._datalog[g[0]], this._datalog[g[1]]]
+        }
     }
-    get_killlog(){
-        return [...this._killlog.values()]
+    /**
+     * 获取回合数据
+     */
+    get_round_log(group: battle_group) {
+        // 将输入的group 排在前面
+        let g = group == battle_group.主场 ? [battle_group.主场, battle_group.客场] : [battle_group.客场, battle_group.主场]
+        return {
+            skLog: [this._sklog_round[g[0]], this._sklog_round[g[1]]],
+            killLog: [...this._killlog_round.values()],
+            dataLog: [this._datalog_round[g[0]], this._datalog_round[g[1]]]
+        }
     }
-    get_dataLog() {
-        return this._datalog
+    // 清空回合数据
+    clear_round_log() {
+        this._sklog_round = [{}, {}];
+        this._killlog_round = new Map();
+        this._datalog_round = [{}, {}];
     }
     /**
      * 执行帧 - 执行一回合
@@ -99,12 +179,12 @@ export class battle {
             console.log('战斗超时回合超过限制')
             return
         }
+        this.clear_round_log();
         for (let i = 0; i < this.groupMap.length; i++) {
             const element = this.groupMap[i];
             element.forEach(tick => {
                 if (tick.is_die()) {
                     // 单位死亡
-                    this.out(tick)
                     return;
                 }
                 tick.battle_round_begins(this)
@@ -122,21 +202,16 @@ export class battle {
             console.log(this._datalog)
             console.info(`[战场]战斗结束:${this.id}#${this.createTime}`);
             this.game_over();
+            return;
         }
+        this.callListen('rund', [])
+        console.log(`回合:${this.round}结束`)
     }
-    print_log() {
-        let str = `------------\n`;
-        console.log(this._sklog[0])
-        console.log(this._sklog[1])
-
-        str += `-----------`
-        console.info(str)
-        // 玩家|[技能名称]伤害5500[技能名称1]治疗100
+    private callListen(key: string, data: any[]) {
+        this._listen[key] && this._listen[key](this, ...data)
     }
     private game_over() {
-        if (this._listen['game_over']) {
-            this._listen['game_over'](this)
-        }
+        this.callListen('game_over', [])
         ET.fire(ET_K.battle_over, this);
         this.destroy();
     }
@@ -165,30 +240,29 @@ export class battle {
     private active(b: boolean) {
         this._active = b;
     }
-    destroy() {
-        this._active = false;
-        ET.fire(ET_K.battle_destroy, this.id);
-        this.groupMap = [];
-    }
+
     /**
      * 加入战场
      */
     join(g: battle_group, b: body_base) {
         b.set_group(g);
+        b.set_battle(this);
         this.groupMap[g].set(b.id, b);
-        console.info(`[战场]${b.name}加入战斗#g-${g}`)
+        if(this._active){
+            this.notice_all(`玩家[${b.name}]加入了战斗!`)
+        }
     }
     /**
      * 离开战场
      */
     out(b: body_base) {
-        if (b.is_die()) {
-            console.log(`${b.name}死亡`)
-            // 附加奖励到战场
-        } else {
-            console.log(`${b.name}逃离了战场`)
-        }
         b.set_group(battle_group.主场);
+        b.set_battle(undefined);
         this.groupMap[b.get_group()].delete(b.id);
+    }
+    leave(b: body_base) {
+        this.notice_all(`玩家[${b.name}]悄悄的逃跑了`)
+        this.out(b)
+
     }
 }

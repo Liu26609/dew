@@ -4,10 +4,7 @@ import ET, { ET_K } from "./ET";
 import { SKILL_rang, SKILL_eff_type, SKILL_eff_type_伤害类, SKILL_eff_type_增益类 } from "./face/FACE_SKILL";
 import { effect } from "./skill/effect/effect_base";
 const path = require('path');
-const effectMap = {
-    '物理伤害': './skill/effect/伤害类/物理伤害',
-    // 添加更多类映射
-};
+
 class EffectFactory {
     static async createEffect(classPath, data) {
         const module = await import(classPath);
@@ -105,7 +102,7 @@ class word {
     }
     private async _startBattleTick() {
         const batchSize = 10; // 每批处理的 battle 数量
-        const delayBetweenBatches = 100; // 每批处理的延迟时间，单位为毫秒
+        const delayBetweenBatches = 5000; // 每批处理的延迟时间，单位为毫秒
         const tickTime = 100;
         let currentId = 0;
         let batchCont = 0;

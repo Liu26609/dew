@@ -6,6 +6,7 @@ export enum ET_K {
     battle_destroy,
     /**战斗结束 */
     battle_over,
+    // 主动离开战斗
     input_message,
 }
 // 创建事件管理器实例

@@ -1,24 +1,24 @@
-import battleText from "../../lib/battleText"
-import server from "../../server"
-import message from "../../trigger/message"
-
+import message from '../../trigger/message';
+import { MsgAction } from '../../shared/master/MsgAction';
+import battleText from '../../lib/battleText';
 export default class {
-    constructor(cls: message) {
-        this.start(cls)
+    constructor(cls: message, data: MsgAction) {
+        console.log('回合战斗', data)
+        this.start(cls, data)
     }
-    async start(cls: message) {
-        let req = await server.api('debug/Battle', {}, cls)
-        console.log('战斗日志', req.skLog)
+    async start(cls: message, data: MsgAction) {
+        let req = data.data;
         let temp = `╞════🔵我方统计═━┄\n`
         temp += battleText.getSkLog(req.skLog[0])
         temp += `╞════🔵敌方统计═━┄\n`
         temp += battleText.getSkLog(req.skLog[1])
-   
 
+    
+        // 战斗数据
         temp += battleText.getData(req.dataLog[0]);
         temp += `战斗共计${req.round}回合\n`
-        temp += `╞════🔵击杀统计═━┄\n`
         temp += battleText.getKillLog(req.killLog);
+  
         /**
          * 11->xxx击杀xxx
          * 22->xxx击杀xxx

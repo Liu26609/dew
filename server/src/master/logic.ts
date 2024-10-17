@@ -48,6 +48,7 @@ class logic {
                     call.error("用户不存在")
                     return undefined;
                 }
+                _user.set_conn(call.conn,call.req._messageid);
                 // if (typeof (call.sn) == 'number') {
                 //     user.setConn(call.conn);
                 //     user.setLastLocation(fromid)

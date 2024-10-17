@@ -1,5 +1,7 @@
 import { ServiceProto } from 'tsrpc-proto';
+import { ReqOut, ResOut } from './battle/PtlOut';
 import { ReqBattle, ResBattle } from './debug/PtlBattle';
+import { ReqPvp, ResPvp } from './debug/PtlPvp';
 import { ReqSave, ResSave } from './debug/PtlSave';
 import { MsgAction } from './MsgAction';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
@@ -10,9 +12,17 @@ import { ReqBuild, ResBuild } from './work/PtlBuild';
 
 export interface ServiceType {
     api: {
+        "battle/Out": {
+            req: ReqOut,
+            res: ResOut
+        },
         "debug/Battle": {
             req: ReqBattle,
             res: ResBattle
+        },
+        "debug/Pvp": {
+            req: ReqPvp,
+            res: ResPvp
         },
         "debug/Save": {
             req: ReqSave,
@@ -45,11 +55,27 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 6,
+    "version": 7,
     "services": [
+        {
+            "id": 9,
+            "name": "battle/Out",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
         {
             "id": 3,
             "name": "debug/Battle",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 10,
+            "name": "debug/Pvp",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -111,7 +137,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
         }
     ],
     "types": {
-        "debug/PtlBattle/ReqBattle": {
+        "battle/PtlOut/ReqOut": {
             "type": "Interface",
             "extends": [
                 {
@@ -157,6 +183,33 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "type": "String"
                     },
                     "optional": true
+                }
+            ]
+        },
+        "battle/PtlOut/ResOut": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "../protocols/master_base/BaseResponse": {
+            "type": "Interface"
+        },
+        "debug/PtlBattle/ReqBattle": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
                 }
             ]
         },
@@ -260,8 +313,29 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "../protocols/master_base/BaseResponse": {
-            "type": "Interface"
+        "debug/PtlPvp/ReqPvp": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "debug/PtlPvp/ResPvp": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
         },
         "debug/PtlSave/ReqSave": {
             "type": "Interface",
@@ -337,6 +411,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 1,
                     "value": "测试"
+                },
+                {
+                    "id": 2,
+                    "value": "回合战斗"
+                },
+                {
+                    "id": 3,
+                    "value": "文本消息"
                 }
             ]
         },

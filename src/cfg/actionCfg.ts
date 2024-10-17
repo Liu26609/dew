@@ -9,11 +9,11 @@ interface actionCfg {
 }
 let cfg:actionCfg[] = [];
 // work
-// cfg.push({
-//     key: '^debug\\d+$',
-//     match_rule: matchRule.规则匹配,
-//     path:'debug/测试模式'
-// })
+cfg.push({
+    key: '逃跑',
+    match_rule: matchRule.完全匹配,
+    path:'battle/逃跑'
+})
 cfg.push({
     key: '^debug.*$',
     match_rule: matchRule.正则匹配,

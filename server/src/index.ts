@@ -8,6 +8,7 @@ import { battle } from "./master/lib/battle/battle";
 import { battle_group } from "./master/lib/face/FACE_BODY";
 import word from "./master/lib/word";
 import common from "./master/lib/common";
+import ET, { ET_K } from "./master/lib/ET";
 const http = require('https');
 async function start() {
     // xlsxToJson.init()
@@ -25,14 +26,20 @@ async function start() {
         c.join(battle_group.客场, t.create_unity())
         let ls = {
             game_over: (b: battle) => {
-                let sklog = b.get_log()
+                let sklog = b.get_log(a.get_group())
                 console.log('战斗结束', sklog)
             }
         }
         c.start(ls)
         // await server_rank.startServer(true);
         // Pull()
+        // const leaveHandler =(data:any)=>{
+        //     console.log('离开战场')
+        // };
+        // ET.listen(ET_K.battle_leave, leaveHandler);
+        // ET.fire(ET_K.battle_leave, 'data');
 
+        // ET.rm(ET_K.battle_leave, leaveHandler);
 }
 async function Pull() {
     // 请求get 地址https://v1.hitokoto.cn/

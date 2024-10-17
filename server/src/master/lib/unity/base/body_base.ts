@@ -1,3 +1,5 @@
+import { WsClient } from "tsrpc";
+import { ServiceType } from "../../../../shared/master/serviceProto";
 import { battle } from "../../battle/battle";
 import common from "../../common";
 import { _att_key, battle_group } from "../../face/FACE_BODY";
@@ -18,8 +20,17 @@ export class body_base {
     sk_auto: SKILL[] = [];
     sk_active: SKILL[] = [];
     wallet:{key:string,val:number}[] = []
+    private _conn:any;
+    private _messageid:string = '';
+    private _battle:battle | undefined = undefined;
     constructor() {
 
+    }
+    set_battle(b:battle|undefined){
+        this._battle = b;
+    }
+    get_battle(){
+        return this._battle
     }
     addItem(key:string,val:number){
         let item = this.wallet.find((item)=>{
@@ -57,7 +68,21 @@ export class body_base {
         })
         return val;
     }
+    set_conn(conn: WsClient<ServiceType>,messageid:string){
+        this._messageid = messageid;
+        this._conn = conn;
+    }
+    sendMessageg<T extends string & keyof ServiceType['msg']>(msgName: T, msg: ServiceType['msg'][T]){
+        if ('messageId' in msg) {
+            msg.messageId = this._messageid; 
+        }
 
+        if(this._conn && this._messageid.length > 0){
+            this._conn.sendMsg(msgName,msg)
+        }else{
+            console.error('消息发送失败',this.name)
+        }
+    }
     set_group(g: battle_group) {
         this._group = g;
     }
@@ -76,7 +101,7 @@ export class body_base {
             'body_bar': body_bar,
             'att_val': att_val
         };
-        this.name = data.name;
+        this.name = data.name || '天选之人';
         this.id = data.id || common.v4();
         if(data.attList){
             for (let index = 0; index < data.attList.length; index++) {
@@ -121,12 +146,20 @@ export class body_base {
     }
     /**此单位战斗回合开始 */
     battle_round_begins(bt: battle) {
-      
-        /**
-         * 1.技能选择 - ai训练
-         * 2.目标选择 - 技能决定
-         * 3.技能释放
-         */
+        if (this.is_die()) {
+            return;
+        }
+        // 1.过滤出CD符合的技能
+        let availableSkills = this.sk_active.filter(skill => skill.next_round() == 0);
+        if (availableSkills.length === 0) {
+            console.log('No cd skills');
+            return;
+        }
+        
+        // 1.技能选择 - 根据CD决定
+        let sk = availableSkills[common.random(0,availableSkills.length-1)];
+        // 2.技能释放 - 目标选择技能决定
+        sk.use(this,bt);
     }
     battle_round_end(bt: battle) {
         this._buff_source.forEach((val, key) => {
@@ -173,5 +206,23 @@ export class body_base {
         if(bt){
             bt.log_data('承伤',this._group,this.name,val)
         }
+    }
+    resHp(val:number,bt?:battle){
+        let att = this.get_att(_att_key.生命) as body_bar;
+        if (att) {
+            let v = att.getVal();
+            v += val;
+            let max = att.getMax();
+            if(v > max){
+                v = max;
+            }
+            att.setVal(v);
+        } else {
+            console.error('Attribute not found:', _att_key.生命);
+        }
+        if(bt){
+            bt.log_data('治疗',this._group,this.name,val)
+        }
+
     }
 }

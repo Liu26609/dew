@@ -31,6 +31,9 @@ export class body_bar extends _bodyCom implements _bar {
     setVal(val:number){
         this.now = val;
     }
+    getMax(){
+        return this.max
+    }
 }
 export class body_line extends _bodyCom implements _line {
     min: number = 0;
