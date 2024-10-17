@@ -1,5 +1,5 @@
-import message from "../trigger/message";
 import * as os from 'os';
+import message from '../../trigger/message';
 export default class {
     constructor(cls: message) {
         // 获取空闲内存和总内存

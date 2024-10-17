@@ -1,4 +1,4 @@
-import message from "../trigger/message";
+import message from "../../trigger/message"
 
 export default class {
     constructor(cls:message){

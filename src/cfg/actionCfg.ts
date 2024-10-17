@@ -30,19 +30,14 @@ cfg.push({
     path:'work/前端打包测试服'
 })
 cfg.push({
-    key: 'all',
-    match_rule: matchRule.完全匹配,
-    path:'atAll'
-})
-cfg.push({
     key: '基础指令',
     match_rule: matchRule.完全匹配,
-    path:'menu'
+    path:'common/menu'
 })
 cfg.push({
     key: 'sys',
     match_rule: matchRule.完全匹配,
-    path:'info'
+    path:'sys/info'
 })
 cfg.push({
     key: '改名',
@@ -52,6 +47,6 @@ cfg.push({
 cfg.push({
     key: '属性',
     match_rule: matchRule.完全匹配,
-    path:'属性'
+    path:'player/info/我的属性'
 })
 export default cfg;
