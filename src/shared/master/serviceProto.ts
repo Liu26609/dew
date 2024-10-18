@@ -1,10 +1,13 @@
 import { ServiceProto } from 'tsrpc-proto';
+import { ReqSign, ResSign } from './active/PtlSign';
 import { ReqOut, ResOut } from './battle/PtlOut';
+import { ReqSearch, ResSearch } from './battle/PtlSearch';
 import { ReqBattle, ResBattle } from './debug/PtlBattle';
 import { ReqPvp, ResPvp } from './debug/PtlPvp';
 import { ReqSave, ResSave } from './debug/PtlSave';
 import { MsgAction } from './MsgAction';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
+import { ReqPosition, ResPosition } from './player/info/PtlPosition';
 import { ReqSetName, ResSetName } from './player/info/PtlSetName';
 import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
@@ -12,9 +15,17 @@ import { ReqBuild, ResBuild } from './work/PtlBuild';
 
 export interface ServiceType {
     api: {
+        "active/Sign": {
+            req: ReqSign,
+            res: ResSign
+        },
         "battle/Out": {
             req: ReqOut,
             res: ResOut
+        },
+        "battle/Search": {
+            req: ReqSearch,
+            res: ResSearch
         },
         "debug/Battle": {
             req: ReqBattle,
@@ -31,6 +42,10 @@ export interface ServiceType {
         "player/info/GetBase": {
             req: ReqGetBase,
             res: ResGetBase
+        },
+        "player/info/Position": {
+            req: ReqPosition,
+            res: ResPosition
         },
         "player/info/SetName": {
             req: ReqSetName,
@@ -58,8 +73,24 @@ export const serviceProto: ServiceProto<ServiceType> = {
     "version": 7,
     "services": [
         {
-            "id": 9,
+            "id": 7,
+            "name": "active/Sign",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 8,
             "name": "battle/Out",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 12,
+            "name": "battle/Search",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -74,7 +105,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 10,
+            "id": 9,
             "name": "debug/Pvp",
             "type": "api",
             "conf": {
@@ -82,7 +113,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 7,
+            "id": 10,
             "name": "debug/Save",
             "type": "api",
             "conf": {
@@ -96,8 +127,16 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "conf": {}
         },
         {
-            "id": 8,
+            "id": 11,
             "name": "player/info/GetBase",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 13,
+            "name": "player/info/Position",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -137,7 +176,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
         }
     ],
     "types": {
-        "battle/PtlOut/ReqOut": {
+        "active/PtlSign/ReqSign": {
             "type": "Interface",
             "extends": [
                 {
@@ -186,7 +225,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "battle/PtlOut/ResOut": {
+        "active/PtlSign/ResSign": {
             "type": "Interface",
             "extends": [
                 {
@@ -200,6 +239,54 @@ export const serviceProto: ServiceProto<ServiceType> = {
         },
         "../protocols/master_base/BaseResponse": {
             "type": "Interface"
+        },
+        "battle/PtlOut/ReqOut": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "battle/PtlOut/ResOut": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "battle/PtlSearch/ReqSearch": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "battle/PtlSearch/ResSearch": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
         },
         "debug/PtlBattle/ReqBattle": {
             "type": "Interface",
@@ -451,6 +538,56 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "name",
                     "type": {
                         "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "att",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Any"
+                        }
+                    }
+                }
+            ]
+        },
+        "player/info/PtlPosition/ReqPosition": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/info/PtlPosition/ResPosition": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "online",
+                    "type": {
+                        "type": "Number"
                     }
                 }
             ]

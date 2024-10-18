@@ -2,7 +2,7 @@ import { WsClient } from "tsrpc";
 import { ServiceType } from "../../../../shared/master/serviceProto";
 import { battle } from "../../battle/battle";
 import common from "../../common";
-import { _att_key, battle_group } from "../../face/FACE_BODY";
+import { _att_key, battle_group, Item_Type } from "../../face/FACE_BODY";
 import { SKILL_type } from "../../face/FACE_SKILL";
 import { SKILL } from "../../skill/SKILL";
 import { att_line, att_val, body_bar } from "./body_com"
@@ -19,28 +19,53 @@ export class body_base {
     private _group: battle_group = battle_group.主场;
     sk_auto: SKILL[] = [];
     sk_active: SKILL[] = [];
-    wallet:{key:string,val:number}[] = []
-    private _conn:any;
-    private _messageid:string = '';
-    private _battle:battle | undefined = undefined;
+    wallet: { key: string, val: number }[] = []
+    private _conn: any;
+    private _messageid: string = '';
+    private _battle: battle | undefined = undefined;
     constructor() {
 
     }
-    set_battle(b:battle|undefined){
+    set_battle(b: battle | undefined) {
         this._battle = b;
     }
-    get_battle(){
+    get_battle() {
         return this._battle
     }
-    addItem(key:string,val:number){
-        let item = this.wallet.find((item)=>{
-            return item.key == key
-        })
-        if(item){
-            item.val += val
-        }else{
-            this.wallet.push({key:key,val:val})
+    addItem(key: Item_Type, data: any) {
+        switch (key) {
+            case Item_Type.经验:
+                this._addExp(data)
+                break;
+
+            default:
+                console.error('未实现功能', key)
+                break;
         }
+    }
+    private _addExp(exp: number) {
+        let att_exp = this.get_att(_att_key.经验值) as body_bar;
+        if (!att_exp) {
+            this.attList.push(new body_bar({ name: 'EXP', key: _att_key.经验值, max: 100, now: 0 }))
+            att_exp = this.get_att(_att_key.经验值) as body_bar;
+        }
+        let v = att_exp.getVal();
+        let max = att_exp.getMax();
+        while (v + exp >= max) {
+            exp -= (max - v);
+            let leve = this.get_att(_att_key.等级) as att_val;
+            if(!leve){
+                this.attList.push(new att_val({ name: '等级', key: _att_key.等级, val: 1 }))
+                leve = this.get_att(_att_key.等级) as att_val;
+            }
+            if (leve) {
+                leve.setVal(leve.getVal() + 1);
+                att_exp.setMax(att_exp.getMax() + leve.getVal() * 100)
+                att_exp.setVal(0)
+            }
+            v = 0;
+        }
+        att_exp.setVal(v);
     }
     add_buff(key: string, name: string, round: number = 1, val: number, source: body_base) {
         let _buff = this._buff_source.get(key) || new Map();
@@ -59,7 +84,7 @@ export class body_base {
     }
     get_buffVal(key: string) {
         let b = this._buff_source.get(key);
-        if(!b){
+        if (!b) {
             return 0
         }
         let val = 0;
@@ -68,19 +93,19 @@ export class body_base {
         })
         return val;
     }
-    set_conn(conn: WsClient<ServiceType>,messageid:string){
+    set_conn(conn: WsClient<ServiceType>, messageid: string) {
         this._messageid = messageid;
         this._conn = conn;
     }
-    sendMessageg<T extends string & keyof ServiceType['msg']>(msgName: T, msg: ServiceType['msg'][T]){
+    sendMessageg<T extends string & keyof ServiceType['msg']>(msgName: T, msg: ServiceType['msg'][T]) {
         if ('messageId' in msg) {
-            msg.messageId = this._messageid; 
+            msg.messageId = this._messageid;
         }
 
-        if(this._conn && this._messageid.length > 0){
-            this._conn.sendMsg(msgName,msg)
-        }else{
-            console.error('消息发送失败',this.name)
+        if (this._conn && this._messageid.length > 0) {
+            this._conn.sendMsg(msgName, msg)
+        } else {
+            console.error('消息发送失败', this.name)
         }
     }
     set_group(g: battle_group) {
@@ -101,9 +126,9 @@ export class body_base {
             'body_bar': body_bar,
             'att_val': att_val
         };
-        this.name = data.name || '天选之人';
+        this.name = data.name || '未命名';
         this.id = data.id || common.v4();
-        if(data.attList){
+        if (data.attList) {
             for (let index = 0; index < data.attList.length; index++) {
                 const element = data.attList[index];
                 const TypeClass = typeMap[element.t];
@@ -113,7 +138,7 @@ export class body_base {
                 this.attList.push(new TypeClass(element))
             }
         }
-      
+
         // 主动技能reload
         if (data.sk_active) {
             for (let i = 0; i < data.sk_active.length; i++) {
@@ -155,17 +180,17 @@ export class body_base {
             console.log('No cd skills');
             return;
         }
-        
+
         // 1.技能选择 - 根据CD决定
-        let sk = availableSkills[common.random(0,availableSkills.length-1)];
+        let sk = availableSkills[common.random(0, availableSkills.length - 1)];
         // 2.技能释放 - 目标选择技能决定
-        sk.use(this,bt);
+        sk.use(this, bt);
     }
     battle_round_end(bt: battle) {
         this._buff_source.forEach((val, key) => {
-            if(val.size == 0){
+            if (val.size == 0) {
                 this._buff_source.delete(key);
-            }else{
+            } else {
                 val.forEach((item, key) => {
                     item.round -= 1;
                     if (item.round <= 0) {
@@ -194,7 +219,7 @@ export class body_base {
         return this.attList[idx]
     }
     // 受到伤害
-    damage(val: number,bt?: battle) {
+    damage(val: number, bt?: battle) {
         let att = this.get_att(_att_key.生命)
         if (att) {
             let v = att.getVal();
@@ -203,25 +228,25 @@ export class body_base {
         } else {
             console.error('Attribute not found:', _att_key.生命);
         }
-        if(bt){
-            bt.log_data('承伤',this._group,this.name,val)
+        if (bt) {
+            bt.log_data('承伤', this._group, this.name, val)
         }
     }
-    resHp(val:number,bt?:battle){
+    resHp(val: number, bt?: battle) {
         let att = this.get_att(_att_key.生命) as body_bar;
         if (att) {
             let v = att.getVal();
             v += val;
             let max = att.getMax();
-            if(v > max){
+            if (v > max) {
                 v = max;
             }
             att.setVal(v);
         } else {
             console.error('Attribute not found:', _att_key.生命);
         }
-        if(bt){
-            bt.log_data('治疗',this._group,this.name,val)
+        if (bt) {
+            bt.log_data('治疗', this._group, this.name, val)
         }
 
     }

@@ -37,7 +37,10 @@ class user {
         let data: any = {};
         data.id = onlyid;
         data.attList = [];
+        data.attList.push(new att_val({ name: '战力', key: _att_key.战斗力, val: 10 }))
+        data.attList.push(new att_val({ name: '等级', key: _att_key.等级, val: 10 }))
         data.attList.push(new body_bar({ name: '生命值', key: _att_key.生命, max: 100, now: 100 }))
+        data.attList.push(new body_bar({ name: 'EXP', key: _att_key.经验值, max: 100, now: 100 }))
         data.attList.push(new att_val({ name: '攻击力', key: _att_key.物理攻击, val: 10 }))
         data.attList.push(new att_val({ name: '防御力', key: _att_key.物理防御, val: 10 }))
 

@@ -24,7 +24,7 @@ class db {
     }
     private hasMap(k:string){
         if (!this._dbMap.has(k)) {
-            const datastore = new Datastore({ filename: `${k}.json`, autoload: true });
+            const datastore = new Datastore({ filename: `./db/${k}.json`, autoload: true });
             this._dbMap.set(k, datastore);
         }
     }

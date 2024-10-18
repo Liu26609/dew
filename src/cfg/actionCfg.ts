@@ -8,6 +8,12 @@ interface actionCfg {
     path:string;
 }
 let cfg:actionCfg[] = [];
+// 活动相关
+cfg.push({
+    key: '签到',
+    match_rule: matchRule.完全匹配,
+    path:'active/签到'
+})
 // work
 cfg.push({
     key: '逃跑',
@@ -38,6 +44,11 @@ cfg.push({
 cfg.push({
     key: '属性',
     match_rule: matchRule.完全匹配,
-    path:'player/info/我的属性'
+    path:'player/info/属性'
+})
+cfg.push({
+    key: '位置',
+    match_rule: matchRule.完全匹配,
+    path:'player/info/位置'
 })
 export default cfg;

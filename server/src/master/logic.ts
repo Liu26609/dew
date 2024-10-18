@@ -75,7 +75,7 @@ class logic {
                 //     user.onLine();
                 // }
                 call.req._player = _user;
-                // user.active();
+                _user.active();
             }
             return call;
         }, master.s_wss, master.s_http)

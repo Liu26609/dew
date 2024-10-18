@@ -36,7 +36,6 @@ export default async function (call: ApiCall<ReqPvp, ResPvp>) {
         },
         game_over: (b: battle) => {
             let log = b.get_log(a.get_group());
-            call.req._player.addItem('金币', 99)
         }
     }
     c.start(ls)

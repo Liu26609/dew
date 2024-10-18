@@ -14,7 +14,6 @@ export class body_bar extends _bodyCom implements _bar {
     key: string = '?';
     max: number = 100
     now: number = 100
-    res: number = 0
     lastTime: number = Date.now();
     constructor(data: _bar) {
         super()
@@ -22,7 +21,6 @@ export class body_bar extends _bodyCom implements _bar {
         this.key = data.key || this.key;
         this.max = data.max || this.max;
         this.now = data.now || this.now;
-        this.res = data.res || this.res;
         this.lastTime = data.lastTime || Date.now();
     }
     getVal(){
@@ -33,6 +31,9 @@ export class body_bar extends _bodyCom implements _bar {
     }
     getMax(){
         return this.max
+    }
+    setMax(val:number){
+        this.max = val;
     }
 }
 export class body_line extends _bodyCom implements _line {

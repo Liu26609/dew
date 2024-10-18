@@ -26,7 +26,6 @@ export default async function (call: ApiCall<ReqBattle, ResBattle>) {
                 killLog: log.killLog,
                 gitfs:[{name:'金币',cont:1}]
             })
-            call.req._player.addItem('金币',99)
         }
     }
     c.start(ls)
