@@ -1,3 +1,4 @@
+import cfg_active from "../../cfg/skillCfg/active_Cfg";
 import { battle } from "../battle/battle";
 import common from "../common";
 import { SKILL_rang, SKILL_target, SKILL_type } from "../face/FACE_SKILL";
@@ -30,19 +31,30 @@ export class SKILL {
      * data
      */
     private _log: { key: string, val: any }[] = [];
-    constructor(data: any) {
-        this.type = data.type;
-        this.name = data.name;
-        this.id = data.id || common.v4();
-        this.desc = data.desc || '技能暂未描述';
-        this.target = data.target || SKILL_target.敌人;
-        this.rang_type = data.rang_type || SKILL_rang.单体伤害;
-        this.rang_num = data.rang_num || 1;
-        this.cd = data.cd || -1;
+    data:any = undefined;
+    constructor(data:any) {
+        if(data.data){
+            this.data = data.data;
+        }
+        let name = '';
+        if(typeof(data) == 'string'){
+            name = data;
+        }else{
+            name = data.name
+        }
+        const temp = JSON.parse(JSON.stringify(cfg_active.get(name)));
+        this.type = temp.type;
+        this.name = temp.name;
+        this.id = temp.id || common.v4();
+        this.desc = temp.desc || '技能暂未描述';
+        this.target = temp.target || SKILL_target.敌人;
+        this.rang_type = temp.rang_type || SKILL_rang.单体伤害;
+        this.rang_num = temp.rang_num || 1;
+        this.cd = temp.cd || -1;
         this._cd = this.cd;
-        if (data.effects) {
-            for (let i = 0; i < data.effects.length; i++) {
-                const element = data.effects[i];
+        if (temp.effects) {
+            for (let i = 0; i < temp.effects.length; i++) {
+                const element = temp.effects[i];
                 const effect = word.get_effectTemp(element.tag, element.target, element.data);
                 if (effect) {
                     this.effects.push(effect);
@@ -51,6 +63,9 @@ export class SKILL {
         } else {
             console.error('!!!技能没有效果')
         }
+    }
+    save(){
+        return {name:this.name,data:{test:111}}
     }
     clearLog() {
         this._log = [];

@@ -14,7 +14,7 @@ cfg.push({
     match_rule: matchRule.完全匹配,
     path:'active/签到'
 })
-// work
+// battle
 cfg.push({
     key: '逃跑',
     match_rule: matchRule.完全匹配,
@@ -30,6 +30,8 @@ cfg.push({
     match_rule: matchRule.完全匹配,
     path:'battle/战斗'
 })
+
+
 cfg.push({
     key: '^debug.*$',
     match_rule: matchRule.正则匹配,

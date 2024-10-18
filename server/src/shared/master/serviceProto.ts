@@ -248,6 +248,29 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "target": "../protocols/master_base/BaseResponse"
                     }
                 }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "consecutive_sign_count",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "sign_count",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "todayRank",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
             ]
         },
         "../protocols/master_base/BaseResponse": {

@@ -9,6 +9,13 @@ export default class {
     }
 
     async init(cls: message) {
-       server.api('active/Sign',{},cls)
+        let req = await server.api('active/Sign', {}, cls)
+        if (!req) return;
+        let temp = `╞════🔵签到成功═━┄\n`
+        temp += `共计签到${req.consecutive_sign_count}天\n`
+        temp += `累计签到${req.sign_count}\n`
+        temp += `今日排名${req.todayRank}\n`
+        cls.addLine(temp)
+        cls.send()
     }
 }

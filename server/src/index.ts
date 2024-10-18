@@ -14,32 +14,26 @@ async function start() {
         // await server_mail.startServer(true);
         word.start()
         await master.startServer();
-        let t = new test_battle()
+        // let t = new test_battle()
 
-        let a = t.create_unity()
-        let b = t.create_unity()
-        let c = new battle()
-        c.join(battle_group.主场, a)
-        c.join(battle_group.客场, b)
-        c.join(battle_group.客场, t.create_unity())
-        let ls = {
-            game_over: (b: battle) => {
-                let sklog = b.get_log(a.get_group())
-                console.log('战斗结束', sklog)
-                a.addItem(Item_Type.经验,999)
-            }
-        }
-        c.set_listen(ls)
-        c.start()
+        // let a = t.create_unity()
+        // let b = t.create_unity()
+        // let c = new battle()
+        // c.join(battle_group.主场, a)
+        // c.join(battle_group.客场, b)
+        // c.join(battle_group.客场, t.create_unity())
+        // let ls = {
+        //     game_over: (b: battle) => {
+        //         let sklog = b.get_log(a.get_group())
+        //         console.log('战斗结束', sklog)
+        //         a.addItem(Item_Type.经验,999)
+        //     }
+        // }
+        // c.set_listen(ls)
+        // c.start()
         // await server_rank.startServer(true);
         // Pull()
-        // const leaveHandler =(data:any)=>{
-        //     console.log('离开战场')
-        // };
-        // ET.listen(ET_K.battle_leave, leaveHandler);
-        // ET.fire(ET_K.battle_leave, 'data');
 
-        // ET.rm(ET_K.battle_leave, leaveHandler);
 }
 async function Pull() {
     // 请求get 地址https://v1.hitokoto.cn/

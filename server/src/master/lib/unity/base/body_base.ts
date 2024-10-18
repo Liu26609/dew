@@ -27,10 +27,10 @@ export class body_base {
     constructor() {
 
     }
-    set_battleLs(ls:any){
+    set_battleLs(ls: any) {
         this._battleLs = ls;
     }
-    get_battleLs(){
+    get_battleLs() {
         return this._battleLs;
     }
     set_battle(b: battle | undefined) {
@@ -61,7 +61,7 @@ export class body_base {
         while (v + exp >= max) {
             exp -= (max - v);
             let leve = this.get_att(_att_key.等级) as att_val;
-            if(!leve){
+            if (!leve) {
                 this.attList.push(new att_val({ name: '等级', key: _att_key.等级, val: 1 }))
                 leve = this.get_att(_att_key.等级) as att_val;
             }
@@ -149,8 +149,8 @@ export class body_base {
         // 主动技能reload
         if (data.sk_active) {
             for (let i = 0; i < data.sk_active.length; i++) {
-                const element = data.sk_active[i];
-                this.addSk_active(new SKILL(element))
+                const name = data.sk_active[i];
+                this.addSk_active(name)
             }
         }
         // 被动技能reload
@@ -161,20 +161,18 @@ export class body_base {
             }
         }
     }
+    /**
+     * 弃用
+     */
+    pushSkill(data: string) {
+        this.addSk_active(data);
 
-    pushSkill(data: any) {
-        let sk = new SKILL(data)
-        if (data.type == SKILL_type.主动技能) {
-            this.addSk_active(sk);
-        } else {
-            this.addSk_auto(sk);
-        }
     }
     private addSk_auto(data: SKILL) {
         this.sk_auto.push(data);
     }
-    private addSk_active(data: SKILL) {
-        this.sk_active.push(data);
+    addSk_active(data: any) {
+        this.sk_active.push(new SKILL(data));
     }
     /**此单位战斗回合开始 */
     battle_round_begins(bt: battle) {

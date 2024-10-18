@@ -7,7 +7,18 @@ export interface ReqSign extends BaseRequest {
 }
 
 export interface ResSign extends BaseResponse {
-    
+    /**
+     * 共计签到
+     */
+    consecutive_sign_count:number
+    /**
+     * 累计签到
+     */
+    sign_count:number
+    /**
+     * 今日排名
+     */
+    todayRank:number
 }
 
 export const conf: BaseConf = {

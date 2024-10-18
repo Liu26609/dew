@@ -16,9 +16,5 @@ export default async function (call: ApiCall<ReqBattle, ResBattle>) {
     }else{
         b.start();
     }
-    // if(b.moment){
-    //     // 长战斗
-    //     call.succ({});
-    // }
     call.succ({});
 }
