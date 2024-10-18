@@ -21,6 +21,16 @@ cfg.push({
     path:'battle/逃跑'
 })
 cfg.push({
+    key: '探索',
+    match_rule: matchRule.完全匹配,
+    path:'battle/探索'
+})
+cfg.push({
+    key: '战斗',
+    match_rule: matchRule.完全匹配,
+    path:'battle/战斗'
+})
+cfg.push({
     key: '^debug.*$',
     match_rule: matchRule.正则匹配,
     path:'debug/测试模式'

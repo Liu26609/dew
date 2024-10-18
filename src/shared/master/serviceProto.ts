@@ -1,8 +1,9 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { ReqSign, ResSign } from './active/PtlSign';
+import { ReqBattle, ResBattle } from './battle/PtlBattle';
 import { ReqOut, ResOut } from './battle/PtlOut';
 import { ReqSearch, ResSearch } from './battle/PtlSearch';
-import { ReqBattle, ResBattle } from './debug/PtlBattle';
+import { ReqBattle as ReqBattle_1, ResBattle as ResBattle_1 } from './debug/PtlBattle';
 import { ReqPvp, ResPvp } from './debug/PtlPvp';
 import { ReqSave, ResSave } from './debug/PtlSave';
 import { MsgAction } from './MsgAction';
@@ -19,6 +20,10 @@ export interface ServiceType {
             req: ReqSign,
             res: ResSign
         },
+        "battle/Battle": {
+            req: ReqBattle,
+            res: ResBattle
+        },
         "battle/Out": {
             req: ReqOut,
             res: ResOut
@@ -28,8 +33,8 @@ export interface ServiceType {
             res: ResSearch
         },
         "debug/Battle": {
-            req: ReqBattle,
-            res: ResBattle
+            req: ReqBattle_1,
+            res: ResBattle_1
         },
         "debug/Pvp": {
             req: ReqPvp,
@@ -70,11 +75,19 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 7,
+    "version": 8,
     "services": [
         {
             "id": 7,
             "name": "active/Sign",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 14,
+            "name": "battle/Battle",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -240,6 +253,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
         "../protocols/master_base/BaseResponse": {
             "type": "Interface"
         },
+        "battle/PtlBattle/ReqBattle": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "battle/PtlBattle/ResBattle": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
         "battle/PtlOut/ReqOut": {
             "type": "Interface",
             "extends": [
@@ -286,6 +323,45 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "target": "../protocols/master_base/BaseResponse"
                     }
                 }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "type",
+                    "type": {
+                        "type": "Union",
+                        "members": [
+                            {
+                                "id": 0,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": "monster"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": "player"
+                                }
+                            },
+                            {
+                                "id": 2,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": "reward"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "data",
+                    "type": {
+                        "type": "Any"
+                    }
+                }
             ]
         },
         "debug/PtlBattle/ReqBattle": {
@@ -313,6 +389,33 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ],
             "properties": [
                 {
+                    "id": 6,
+                    "name": "data",
+                    "type": {
+                        "type": "Reference",
+                        "target": "../interface/MSG_BATTLELOG"
+                    }
+                }
+            ]
+        },
+        "../interface/MSG_BATTLELOG": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "title",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "tips",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
                     "id": 2,
                     "name": "round",
                     "type": {
@@ -320,7 +423,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     }
                 },
                 {
-                    "id": 1,
+                    "id": 3,
                     "name": "skLog",
                     "type": {
                         "type": "Array",
@@ -330,7 +433,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     }
                 },
                 {
-                    "id": 3,
+                    "id": 4,
                     "name": "dataLog",
                     "type": {
                         "type": "Array",
@@ -340,61 +443,22 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     }
                 },
                 {
-                    "id": 4,
+                    "id": 5,
                     "name": "killLog",
                     "type": {
                         "type": "Array",
                         "elementType": {
-                            "type": "Interface",
-                            "properties": [
-                                {
-                                    "id": 0,
-                                    "name": "tag",
-                                    "type": {
-                                        "type": "String"
-                                    }
-                                },
-                                {
-                                    "id": 1,
-                                    "name": "round",
-                                    "type": {
-                                        "type": "Number"
-                                    }
-                                },
-                                {
-                                    "id": 2,
-                                    "name": "use",
-                                    "type": {
-                                        "type": "String"
-                                    }
-                                }
-                            ]
+                            "type": "Any"
                         }
                     }
                 },
                 {
-                    "id": 5,
+                    "id": 6,
                     "name": "gitfs",
                     "type": {
                         "type": "Array",
                         "elementType": {
-                            "type": "Interface",
-                            "properties": [
-                                {
-                                    "id": 0,
-                                    "name": "name",
-                                    "type": {
-                                        "type": "String"
-                                    }
-                                },
-                                {
-                                    "id": 1,
-                                    "name": "cont",
-                                    "type": {
-                                        "type": "Number"
-                                    }
-                                }
-                            ]
+                            "type": "Any"
                         }
                     }
                 }
@@ -500,8 +564,8 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "value": "测试"
                 },
                 {
-                    "id": 2,
-                    "value": "回合战斗"
+                    "id": 4,
+                    "value": "战斗日志"
                 },
                 {
                     "id": 3,

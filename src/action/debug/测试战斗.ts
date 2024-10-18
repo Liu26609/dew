@@ -1,5 +1,6 @@
 import battleText from "../../lib/battleText"
 import server from "../../server"
+import { MSG_BATTLELOG } from "../../shared/interface"
 import message from "../../trigger/message"
 
 export default class {
@@ -7,13 +8,16 @@ export default class {
         this.start(cls)
     }
     async start(cls: message) {
-        let req = await server.api('debug/Battle', {}, cls)
+        let data = await server.api('debug/Battle', {}, cls)
+        let req = data.data as MSG_BATTLELOG;
         console.log('战斗日志', req.skLog)
-        let temp = `╞════🔵我方统计═━┄\n`
+        let temp = `┏┄═══🔵${req.title}═━┄\n`
+        temp += `${req.tips}\n`
+         temp += `╞════🔵我方统计═━┄\n`
         temp += battleText.getSkLog(req.skLog[0])
         temp += `╞════🔵敌方统计═━┄\n`
         temp += battleText.getSkLog(req.skLog[1])
-   
+
 
         temp += battleText.getData(req.dataLog[0]);
         temp += `战斗共计${req.round}回合\n`

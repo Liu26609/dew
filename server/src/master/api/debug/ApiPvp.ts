@@ -5,6 +5,7 @@ import { battle } from "../../lib/battle/battle";
 import { test_battle } from "../../lib/battle/test.battle";
 import { player } from "../../lib/unity/player";
 import { template } from "../../../shared/master/MsgAction";
+import { MSG_BATTLELOG } from "../../../shared/interface";
 
 export default async function (call: ApiCall<ReqPvp, ResPvp>) {
     let t = new test_battle()
@@ -22,23 +23,29 @@ export default async function (call: ApiCall<ReqPvp, ResPvp>) {
     let ls = {
         rund: (b: battle) => {
             let log = b.get_round_log(a.get_group());
+            let data:MSG_BATTLELOG = {
+                title: "回合结束",
+                tips: `PVP测试战斗第${b.round}回合结束`,
+                round: b.round,
+                skLog: log.skLog,
+                dataLog: log.dataLog,
+                killLog: log.killLog,
+                gitfs: [{ name: '金币', cont: 1 }],
+      
+            }
             a.sendMessageg('Action', {
-                template: template.回合战斗,
+                template: template.战斗日志,
                 messageId: "",
-                data: {
-                    round: b.round,
-                    skLog: log.skLog,
-                    dataLog: log.dataLog,
-                    killLog: log.killLog,
-                    gitfs: [{ name: '金币', cont: 1 }]
-                }
+                data: data
             })
         },
         game_over: (b: battle) => {
             let log = b.get_log(a.get_group());
         }
     }
-    c.start(ls)
+    a.set_battleLs(ls)
+    // c.set_listen(ls)
+    c.start()
     call.succ({})
 
 }

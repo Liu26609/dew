@@ -7,7 +7,8 @@ export interface ReqSearch extends BaseRequest {
 }
 
 export interface ResSearch extends BaseResponse {
-    
+    type: 'monster' | 'player' | 'reward',
+    data: any
 }
 
 export const conf: BaseConf = {

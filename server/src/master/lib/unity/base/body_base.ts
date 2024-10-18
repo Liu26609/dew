@@ -23,8 +23,15 @@ export class body_base {
     private _conn: any;
     private _messageid: string = '';
     private _battle: battle | undefined = undefined;
+    private _battleLs: any = undefined;
     constructor() {
 
+    }
+    set_battleLs(ls:any){
+        this._battleLs = ls;
+    }
+    get_battleLs(){
+        return this._battleLs;
     }
     set_battle(b: battle | undefined) {
         this._battle = b;

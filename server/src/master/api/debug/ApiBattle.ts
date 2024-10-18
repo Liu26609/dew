@@ -3,6 +3,7 @@ import { ReqBattle, ResBattle } from "../../../shared/master/debug/PtlBattle";
 import { battle_group } from "../../lib/face/FACE_BODY";
 import { test_battle } from "../../lib/battle/test.battle";
 import { battle } from "../../lib/battle/battle";
+import { MSG_BATTLELOG } from "../../../shared/interface";
 
 export default async function (call: ApiCall<ReqBattle, ResBattle>) {
 
@@ -19,15 +20,20 @@ export default async function (call: ApiCall<ReqBattle, ResBattle>) {
     let ls = {
         game_over: (b: battle) => {
             let log = b.get_log(a.get_group());
-            call.succ({
+            let data: MSG_BATTLELOG = {
+                title: "战斗结束",
+                tips: `测试快速战斗已经结束`,
                 round: b.round,
                 skLog: log.skLog,
                 dataLog: log.dataLog,
                 killLog: log.killLog,
-                gitfs:[{name:'金币',cont:1}]
-            })
+                gitfs: [{ name: '金币', cont: 1 }],
+
+            }
+            call.succ({data:data})
         }
     }
-    c.start(ls)
+    a.set_battleLs(ls)
+    c.start()
 
 }

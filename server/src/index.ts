@@ -29,7 +29,8 @@ async function start() {
                 a.addItem(Item_Type.经验,999)
             }
         }
-        c.start(ls)
+        c.set_listen(ls)
+        c.start()
         // await server_rank.startServer(true);
         // Pull()
         // const leaveHandler =(data:any)=>{

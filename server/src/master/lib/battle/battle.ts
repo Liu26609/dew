@@ -58,6 +58,7 @@ export class battle {
         this.groupMap.forEach(element => {
             element.forEach(item => {
                 item.set_battle(undefined)
+                item.set_battleLs(undefined)
             });
         });
         this.groupMap = [];
@@ -198,8 +199,14 @@ export class battle {
         const homeGroupEmpty = this.groupMap[battle_group.主场].size == 0;
         const awayGroupEmpty = this.groupMap[battle_group.客场].size == 0;
 
+        if((!homeGroupAlive)){
+            this.allDie(battle_group.主场);
+        }
+        if((!awayGroupAlive)){
+            this.allDie(battle_group.客场);
+        }
+
         if ((!homeGroupAlive || !awayGroupAlive) || (homeGroupEmpty && awayGroupEmpty)) {
-            console.log(this._datalog)
             console.info(`[战场]战斗结束:${this.id}#${this.createTime}`);
             this.game_over();
             return;
@@ -207,8 +214,21 @@ export class battle {
         this.callListen('rund', [])
         console.log(`回合:${this.round}结束`)
     }
+    private allDie(winG: battle_group) {
+        this.callListen('allDie', [winG])
+    }
     private callListen(key: string, data: any[]) {
         this._listen[key] && this._listen[key](this, ...data)
+
+        this.groupMap.forEach(element => {
+            element.forEach(item => {
+                let ls = item.get_battleLs()
+                if(!ls){
+                    return;
+                }
+                ls[key] && ls[key](this, ...data)
+            });
+        });
     }
     private game_over() {
         this.callListen('game_over', [])
@@ -220,12 +240,13 @@ export class battle {
         let g2 = g == battle_group.主场 ? battle_group.客场 : battle_group.主场;
         return this.groupMap[g2];
     }
-    start(listen?: {}) {
+    set_listen(listen?: {}) {
         if (listen) {
             this._listen = listen;
         }
+    }
+    start() {
         this.active(true)
-
         if (this.groupMap[battle_group.主场].size == 0 || this.groupMap[battle_group.客场].size == 0) {
             console.info('无法启动战斗')
             return;

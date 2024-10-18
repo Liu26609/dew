@@ -24,13 +24,13 @@ class battleText {
                 }
                 dataUnityMap.set(name, unityData)
             }
-            dataLog += `│▌总${key}:${val}`;
+            dataLog += `│▌总${key}${val}`;
         }
         dataLog += '\n';
         dataUnityMap.forEach((unity, name) => {
             dataLog += `🐍${name}`
             for (const key in unity) {
-                dataLog += `│▌${key}:${unity[key]}`
+                dataLog += `│▌${key}${unity[key]}`
             }
             dataLog += '\n'
         });
@@ -62,8 +62,11 @@ class battleText {
      * 获取击杀日志
      */
     getKillLog(data:any){
-        let temp = `╞════🔵击杀统计═━┄\n`
         let killLog =data;
+        if(killLog.length == 0){
+            return ''
+        }
+        let temp = `╞════🔵击杀统计═━┄\n`
         for (let index = 0; index < killLog.length; index++) {
             const element = killLog[index];
             temp += `${element.round}->🐍${element.use}击杀🐍${element.tag}\n`

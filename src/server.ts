@@ -1,13 +1,22 @@
 import { HttpClient, WsClient } from "tsrpc";
 import { ServiceType, serviceProto } from "./shared/master/serviceProto";
-import { logger } from ".";
+import { log } from ".";
 import message from "./trigger/message";
 class server {
     private httpClient!: HttpClient<ServiceType>;
     private apiUrl!: string;
     private wsClient!: WsClient<ServiceType>;
+    init:boolean = false;
     constructor() {
 
+    }
+    // 卸载
+    async dispose() {
+        this.init = false;
+        if (this.wsClient) {
+            this.wsClient.unlistenMsgAll();
+            this.wsClient.disconnect();
+        }
     }
     /**
  * 设置服务器地址
@@ -36,7 +45,7 @@ class server {
         client.flows.postDisconnectFlow.push(v => {
             if (!v.isManual) {
                 this.connect()
-                console.log('开始断线重连')
+                log.info('开始断线重连')
             }
             // Bot_client.emit(Emitter_bot.server_off);
             return v;
@@ -45,12 +54,12 @@ class server {
     private async connect() {
         let res = await this.wsClient.connect();
         if (!res.isSucc) {
-            console.log('重试断线重连失败2秒后开始重试');
+            log.info('重试断线重连失败2秒后开始重试');
             setTimeout(async () => {
                 this.connect()
             }, 2000)
         } else {
-            console.log('断线重连成功');
+            log.info('断线重连成功');
         }
         return res;
     }
@@ -58,18 +67,20 @@ class server {
         return this.wsClient.listenMsg(msgName, ((data) => { handler.call(self, data) }))
     }
     async setWsUrl(link: string) {
-        logger.info(`server link:${link}`)
+        log.info(`server link:${link}`)
+        this.init = true;
         return new Promise(async (resolve, reject) => {
             this.apiUrl = link;
             this.wsClient = new WsClient(serviceProto, { server: this.apiUrl });
+            this.wsClient.unlistenMsgAll();
             const connect = await this.wsClient.connect();
             // this.flowsToken(this.wsClient);
             this.flowsResConnect(this.wsClient);
             if (connect.isSucc) {
-                logger.info('服务器连接成功')
+                log.info('服务器连接成功')
                 resolve(true)
             } else {
-                logger.error('服务器ws连接失败', connect.errMsg)
+                log.error('服务器ws连接失败', connect.errMsg)
                 reject(connect.errMsg)
             }
         })
@@ -78,7 +89,7 @@ class server {
         let client = this.wsClient || this.httpClient;
         if (msg) {
             posData = Object.assign(posData, {
-                _onlyid:msg.get_userId(),
+                _onlyid: msg.get_userId(),
                 _messageid: msg.get_msgId(),
                 _platform: msg.platform
             });
@@ -87,7 +98,7 @@ class server {
         if (req.isSucc) {
             return req.res;
         } else {
-            console.error('请求出错',apiName, req.err.message)
+            log.info('请求出错', apiName, req.err.message)
         }
 
     }
