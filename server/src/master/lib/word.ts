@@ -1,3 +1,4 @@
+import game_map from "../manage/map";
 import { battle } from "./battle/battle";
 import common from "./common";
 import ET, { ET_K } from "./ET";
@@ -16,14 +17,15 @@ class EffectFactory {
  * 事件管理器
  */
 class word {
-    private effectTempMap:Map<string,any> = new Map();
+    private effectTempMap: Map<string, any> = new Map();
     battleMap: Map<number, battle> = new Map();
     private _start = false;
+    private _maps: Map<string, game_map> = new Map();
     constructor() {
-        
+
     }
     async start() {
-        if(this._start){
+        if (this._start) {
             return;
         }
         this._start = true;
@@ -31,14 +33,31 @@ class word {
         await this._initSkillCl();
         this._startBattleTick();
         this._et();
-    }
 
+        this.createMap({ name: '主神空间',id:common.v4() });
+    }
+    createMap(data: any) {
+        const map = new game_map(data);
+        this._maps.set(map.name, map);
+        return map;
+    }
+    /**
+     * 获取玩家当前所在地图
+     * @param name 
+     * @returns 
+     */
+    getMap(name: string | undefined): game_map {
+        if (!name) {
+            name = '主神空间';
+        }
+        return this._maps.get(name) as game_map;
+    }
     private register_battle(data: battle) {
         console.info(`[战场]注册:${data.id}`)
         this.battleMap.set(data.id, data);
     }
     private dregister_battle(id: number) {
-        if(!this.battleMap.has(id)){
+        if (!this.battleMap.has(id)) {
             return;
         }
         console.info(`[战场]销毁:${id}`)
@@ -58,16 +77,16 @@ class word {
      * @param data 
      * @returns 
      */
-    get_effectTemp(keys: string[],script:any,data:any):effect | null {
+    get_effectTemp(keys: string[], script: any, data: any): effect | null {
         // 将 keys 数组中的字符串通过 '_' 拼接
         const key = keys.join('_');
-        
+
         // 从 effectTempMap 中获取对应的效果类
         const EffectClass = this.effectTempMap.get(key);
-        
+
         if (EffectClass) {
             // 动态实例化该效果类
-            return new EffectClass(keys,script,data);
+            return new EffectClass(keys, script, data);
         } else {
             console.info(`!!!Effect class not found for key: ${key}`);
             return null;
@@ -75,10 +94,10 @@ class word {
     }
     // 动态创建基于效果类型的实例
     private async _initSkillCl() {
-        await this._initSkillCls(SKILL_eff_type.伤害类,SKILL_eff_type_伤害类);
-        await this._initSkillCls(SKILL_eff_type.增益类,SKILL_eff_type_增益类);
+        await this._initSkillCls(SKILL_eff_type.伤害类, SKILL_eff_type_伤害类);
+        await this._initSkillCls(SKILL_eff_type.增益类, SKILL_eff_type_增益类);
     }
-    private async _initSkillCls(key:string,types:any) {
+    private async _initSkillCls(key: string, types: any) {
         const effectTypes = Object.values(types);
         for (const effectType of effectTypes) {
             const actionPath = path.resolve(__dirname, `./skill/effect/action/${key}/${effectType}`);
@@ -117,7 +136,7 @@ class word {
                 if (currentId > element.id) {
                     continue;
                 }
-                if(element.moment){
+                if (element.moment) {
                     continue;
                 }
                 currentId = element.id;

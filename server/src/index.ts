@@ -3,7 +3,7 @@ import xlsxToJson from "./model/xlsxToJson"
 import db from "./model/db/db";
 import { test_battle } from "./master/lib/battle/test.battle";
 import { battle } from "./master/lib/battle/battle";
-import { battle_group } from "./master/lib/face/FACE_BODY";
+import { battle_group, Item_Type } from "./master/lib/face/FACE_BODY";
 import word from "./master/lib/word";
 import common from "./master/lib/common";
 import ET, { ET_K } from "./master/lib/ET";
@@ -26,6 +26,7 @@ async function start() {
             game_over: (b: battle) => {
                 let sklog = b.get_log(a.get_group())
                 console.log('战斗结束', sklog)
+                a.addItem(Item_Type.经验,999)
             }
         }
         c.start(ls)

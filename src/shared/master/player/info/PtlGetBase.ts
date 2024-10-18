@@ -5,7 +5,8 @@ export interface ReqGetBase extends BaseRequest {
 }
 
 export interface ResGetBase extends BaseResponse {
-    name:string
+    name:string,
+    att:any[]
 }
 
 export const conf: BaseConf = {

@@ -6,7 +6,6 @@ export interface _bar extends _base_com{
     key: string
     max:number,
     now:number,
-    res?:number,
     lastTime?:number
 }
 export interface _line extends _base_com{
@@ -24,7 +23,10 @@ export interface _att_line extends _base_com{
     val:_line
 }
 export enum _att_key{
+    战斗力 = '战斗力',
     生命 = '生命值',
+    经验值 = '经验值',
+    等级 = '等级',
     物理攻击 = '物理攻击',
     物理防御 = '物理防御',
     速度 = '速度',
@@ -33,4 +35,10 @@ export enum _att_key{
 export enum battle_group {
     主场,
     客场,
+}
+export enum Item_Type{
+    技能书,
+    装备,
+    货币,
+    经验,
 }

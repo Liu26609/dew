@@ -66,7 +66,12 @@ export default class message {
         let str = '';
         for (let index = 0; index < this.temp.length; index++) {
             const element = this.temp[index];
-            str += element.data + '\n'
+            // 如果是最后一条数据则不加\n
+            if (index === this.temp.length - 1) {
+            str += element.data;
+            } else {
+            str += element.data + '\n';
+            }
         }
         this.session.sendQueued(str)
         this.clear();
