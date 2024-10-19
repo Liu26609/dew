@@ -1,5 +1,6 @@
+import { _att_key } from "../../../../shared/shareFace";
 import { battle } from "../../battle/battle";
-import { _att_key } from "../../face/FACE_BODY";
+
 import { SKILL_target } from "../../face/FACE_SKILL";
 import { body_base } from "../../unity/base/body_base";
 import { unity } from "../../unity/unity";

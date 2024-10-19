@@ -10,6 +10,6 @@ export default async function (call: ApiCall<ReqGetBase, ResGetBase>) {
         name:p.name,
         sys:p.sys,
         className:p.get_className(),
-        att:p.attList
+        att:[p.leve,p.hp,p.fight,p.exp,p.hp_res,p.mp_res,...p.attList]
     });
 }

@@ -41,26 +41,60 @@ class word {
 
         this.createMap('主神空间');
     }
+    att_import_cfg(cfg: any, pass: _att_key[], rang: number = 0, base = 1) {
+        let arry: any = [];
+        for (const key in cfg) {
+            if (typeof (_att_key[key]) == 'undefined') {
+                continue;
+            }
+            if (pass.indexOf(_att_key[key]) == -1) {
+                continue;
+            }
+            let data = cfg[key] * base;
+            let value = common.random(data - cfg[key] * rang / 100, data + cfg[key] * rang / 100);
+            value = Math.min(value, data); // 确保值不为负数
+            arry.push(new att_val({ key: key, val: value || 0 }))
+            // switch (key) {
+            //     case _att_key.物理攻击:
+            //     case _att_key.物理防御:
+            //     case _att_key.魔法攻击:
+            //     case _att_key.魔法防御:
+            //     case _att_key.技能急速:
+            //     case _att_key.物理暴击率:
+            //     case _att_key.魔法暴击率:
+            //     case _att_key.物理护盾:
+            //     case _att_key.魔法护盾:
+            //     case _att_key.生命护盾:
+            //         arry.push(new att_val({ key: key, val: value || 0 }))
+            //         break;
+            //     default:
+            //         break;
+            // }
+        }
+        return arry;
+    }
     createMonster(cfg: any, option = { leve: 1, diff: 1 }) {
         let data: any = {};
-        option.diff = option.diff /10;
+        option.diff = option.diff / 10;
         data.name = cfg.name;
         data.attList = [];
-        data.attList.push(new att_val({ name: '战斗力', key: _att_key.战斗力, val: 0 }))
-        data.attList.push(new att_val({ name: '等级', key: _att_key.等级, val: option.leve ,hide:true}))
-        data.attList.push(new body_bar({ name: '生命值', key: _att_key.生命值, max: cfg[_att_key.生命值] * option.leve * option.diff, now: cfg[_att_key.生命值] * option.leve * option.diff }))
-        data.attList.push(new body_bar({ name: '魔法值', key: _att_key.魔法值, max: cfg[_att_key.魔法值] * option.leve * option.diff, now: cfg[_att_key.魔法值] * option.leve * option.diff }))
-        data.attList.push(new body_bar({ name: '经验值', key: _att_key.经验值, max: 100, now: 0 }))
-        data.attList.push(new att_val({ name: '物理攻击', key: _att_key.物理攻击, val: cfg[_att_key.物理攻击] * option.leve * option.diff }))
-        data.attList.push(new att_val({ name: '物理防御', key: _att_key.物理防御, val: cfg[_att_key.物理防御] * option.leve * option.diff }))
-        data.attList.push(new att_val({ name: '魔法攻击', key: _att_key.魔法攻击, val: cfg[_att_key.魔法攻击] * option.leve * option.diff }))
-        data.attList.push(new att_val({ name: '魔法防御', key: _att_key.魔法防御, val: cfg[_att_key.魔法防御] * option.leve * option.diff }))
-        data.attList.push(new att_val({ name: '技能急速', key: _att_key.技能急速, val: cfg[_att_key.技能急速] * option.leve * option.diff }))
-        data.attList.push(new att_val({ name: '物理暴击率', key: _att_key.物理暴击率, val: cfg[_att_key.物理暴击率] * option.leve * option.diff }))
-        data.attList.push(new att_val({ name: '魔法暴击率', key: _att_key.魔法暴击率, val: cfg[_att_key.魔法暴击率] * option.leve * option.diff }))
-        data.attList.push(new att_val({ name: '物理护盾', key: _att_key.物理护盾, val: cfg[_att_key.物理护盾] * option.leve * option.diff }))
-        data.attList.push(new att_val({ name: '魔法护盾', key: _att_key.魔法护盾, val: cfg[_att_key.魔法护盾] * option.leve * option.diff }))
-        data.attList.push(new att_val({ name: '生命护盾', key: _att_key.生命护盾, val: cfg[_att_key.生命护盾] * option.leve * option.diff }))
+        let arry = []
+        arry = this.att_import_cfg(cfg, [
+            _att_key.生命值,
+            _att_key.生命恢复,
+            _att_key.魔法值,
+            _att_key.魔法恢复,
+            _att_key.物理攻击,
+            _att_key.魔法攻击,
+            _att_key.物理防御,
+            _att_key.魔法防御,
+            _att_key.技能急速,
+            _att_key.物理暴击率,
+            _att_key.魔法暴击率,
+        ], option.leve * option.diff * 100,option.leve * option.diff)
+        data.attList = data.attList.concat(arry);
+
+
         data.sk_active = [];
         let cls = new monster(data)
         if (cfg.sk_active) {

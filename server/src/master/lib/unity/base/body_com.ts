@@ -17,7 +17,12 @@ export class body_bar extends _bodyCom implements _bar {
     lastTime: number = Date.now();
     constructor(data: _bar) {
         super()
-        this.name = data.name || this.name;
+        try {
+        this.name = data.name || data.key;
+            
+        } catch (error) {
+            debugger
+        }
         this.key = data.key || this.key;
         this.max = data.max || this.max;
         this.now = data.now || this.now;
@@ -72,13 +77,13 @@ export class att_line extends _bodyCom implements _att_line {
  * 属性:数值
  */
 export class att_val extends _bodyCom implements _att_val {
-    name: string;
+    name?: string;
     key: string;
     val: number;
     hide?: boolean | undefined = false;
     constructor(data:_att_val) {
         super();
-        this.name = data.name;
+        this.name = data.name ||data.key;
         this.key = data.key;
         this.val = data.val || 0;
         this.hide = data.hide || this.hide;

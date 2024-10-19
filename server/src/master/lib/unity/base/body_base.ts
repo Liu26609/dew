@@ -9,10 +9,23 @@ import { att_line, att_val, body_bar } from "./body_com"
 import bags from "../../bag/bags";
 import { _att_key, Item_Type, prop_item } from "../../../../shared/shareFace";
 import xlsxToJson from "../../../../model/xlsxToJson";
+import { inherit } from "./inherit";
 export class body_base {
     id: string = '';
     name: string = '未命名的单位';
-    attList: (att_line | att_val | body_bar)[] = []
+    // 基础属性
+    attList: (att_line | att_val | body_bar)[] = [];
+
+    leve: att_val = new att_val({ key: _att_key.等级, val: 1 ,hide:true})
+    fight: att_val = new att_val({ key: _att_key.战斗力, val: 0 })
+    exp:body_bar = new body_bar({key:_att_key.经验值,max:100,now:0})
+
+
+    hp:body_bar = new body_bar({key:_att_key.生命值,max:100,now:100})
+    hp_res: att_val = new att_val({ key: _att_key.生命恢复, val: 1 })
+    mp:body_bar = new body_bar({key:_att_key.魔法值,max:100,now:100})
+    mp_res: att_val = new att_val({ key: _att_key.魔法恢复, val: 0 })
+
     private _buff_source: Map<string, Map<string, any>> = new Map();
     /**
      * buff 来源
@@ -28,7 +41,10 @@ export class body_base {
     private _battle: battle | undefined = undefined;
     private _battleLs: any = undefined;
     bag: bags = new bags();
-    sys: string = '修仙'
+    sys: string = '修仙';
+    // 继承血统
+    inherit!:inherit;
+    _outAtt: (att_line | att_val | body_bar)[] = []
     constructor() {
 
     }
@@ -37,7 +53,7 @@ export class body_base {
      */
     get_className() {
         let list = xlsxToJson.cfg.get(`sys_称谓_${this.sys}`) as unknown as Map<number, any>;
-        let leve = (this.get_att(_att_key.等级) as att_val ).getVal();
+        let leve = this.leve.getVal();
         if (list.has(leve)) {
             return list.get(leve).name;
         }
@@ -104,18 +120,12 @@ export class body_base {
         }
     }
     private _addExp(exp: number) {
-        let att_exp = this.get_att(_att_key.经验值) as body_bar;
-        if (!att_exp) {
-            this.attList.push(new body_bar({ name: 'EXP', key: _att_key.经验值, max: 100, now: 0 }))
-            att_exp = this.get_att(_att_key.经验值) as body_bar;
-        }
-        let v = att_exp.getVal();
-        att_exp.setVal(v + exp)
-        while (att_exp.getVal() >= att_exp.getMax()) {
-            att_exp.setVal(att_exp.getVal() - att_exp.getMax())
-            let leve = this.get_att(_att_key.等级) as att_val;
-            leve.setVal(leve.getVal() + 1);
-            att_exp.setMax(att_exp.getMax() + leve.getVal() * 100)
+        let v = this.exp.getVal();
+        this.exp.setVal(v + exp)
+        while (this.exp.getVal() >= this.exp.getMax()) {
+            this.exp.setVal(this.exp.getVal() - this.exp.getMax())
+            this.leve.setVal(this.leve.getVal() + 1);
+            this.exp.setMax(this.exp.getMax() + this.leve.getVal() * 100)
         }
     }
     add_buff(key: string, name: string, round: number = 1, val: number, source: body_base) {
@@ -179,6 +189,14 @@ export class body_base {
         };
         this.name = data.name || '未命名';
         this.id = data.id || common.v4();
+        data.exp && (this.exp = new body_bar(data.exp))
+        data.leve && (this.leve = new att_val(data.leve))
+        data.fight && (this.fight = new att_val(data.fight))
+        data.hp && (this.hp = new body_bar(data.hp))
+        data.hp_res && (this.hp_res = new att_val(data.hp_res))
+        data.mp && (this.mp = new body_bar(data.mp))
+        data.mp_res && (this.mp_res = new att_val(data.mp_res))
+
         if (data.attList) {
             for (let index = 0; index < data.attList.length; index++) {
                 const element = data.attList[index];
@@ -188,6 +206,9 @@ export class body_base {
                 }
                 this.attList.push(new TypeClass(element))
             }
+        }
+        if(!data.inherit){
+            this.inherit = new inherit();
         }
         // 背包
         if (data.bag) {
@@ -253,15 +274,26 @@ export class body_base {
         })
     }
     is_die() {
-        let att = this.get_att(_att_key.生命值)
-        if (!att) {
-            console.error('Attribute not found:', _att_key.生命值);
-            return true;
-        }
-        let v = att.getVal();
+        let v = this.hp.getVal();
         return v <= 0
     }
     get_att(key: _att_key | string) {
+        switch (key) {
+            case _att_key.战斗力:
+             return this.fight;
+            case _att_key.等级:
+                return this.leve;
+            case _att_key.生命值:
+                return this.hp;
+            case _att_key.生命恢复:
+                return this.hp_res;
+            case _att_key.魔法值:
+                return this.mp;
+            case _att_key.魔法恢复:
+                return this.mp_res;
+            default:
+                break;
+        }
         let idx = this.attList.findIndex((item, idx) => {
             return (item.key == key || item.name == key)
         })
@@ -272,31 +304,22 @@ export class body_base {
     }
     // 受到伤害
     damage(val: number, bt?: battle) {
-        let att = this.get_att(_att_key.生命值)
-        if (att) {
-            let v = att.getVal();
-            v -= val;
-            att.setVal(v);
-        } else {
-            console.error('Attribute not found:', _att_key.生命值);
-        }
+        let v = this.hp.getVal();
+        v -= val;
+        this.hp.setVal(v);
+
         if (bt) {
             bt.log_data('承伤', this._group, this.name, val)
         }
     }
     resHp(val: number, bt?: battle) {
-        let att = this.get_att(_att_key.生命值) as body_bar;
-        if (att) {
-            let v = att.getVal();
-            v += val;
-            let max = att.getMax();
-            if (v > max) {
-                v = max;
-            }
-            att.setVal(v);
-        } else {
-            console.error('Attribute not found:', _att_key.生命值);
+        let v = this.hp.getVal();
+        v += val;
+        let max = this.hp.getMax();
+        if (v > max) {
+            v = max;
         }
+        this.hp.setVal(v);
         if (bt) {
             bt.log_data('治疗', this._group, this.name, val)
         }

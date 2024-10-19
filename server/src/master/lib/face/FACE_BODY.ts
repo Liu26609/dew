@@ -2,7 +2,7 @@ export interface _base_com{
     t?:string
 }
 export interface _bar extends _base_com{
-    name: string
+    name?: string
     key: string
     max:number,
     now:number,
@@ -13,7 +13,7 @@ export interface _line extends _base_com{
     max:number
 }
 export interface _att_val extends _base_com{
-    name:string,
+    name?:string,
     key:string,
     val:number
     hide?:boolean

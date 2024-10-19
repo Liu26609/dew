@@ -1,11 +1,10 @@
-import { logger } from "../../index_bot";
 import message from "../message";
 
 export default class extends message {
     constructor(ctx: any) {
         ctx.content = ctx.content.replace(/<[^>]*>/gi, '').trim();
         ctx.content = ctx.content.replace('/', '')
-        logger.log('[qq-收到消息]', ctx.content)
+        console.log('[qq-收到消息]', ctx.content)
         super(ctx, 'qq')
     }
     send(): void {

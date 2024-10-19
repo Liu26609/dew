@@ -20,8 +20,8 @@ export default async function (call: ApiCall<ReqSearch, ResSearch>) {
         // $at输入[开始历练]进入与你实力匹配的世界
         // $at输入曾进入过的世界名
         let text = `你还没有进入任何世界,你可以:
-$at输入[开始历练]进入与你实力匹配的世界
-$at输入[开始历练 + 世界名]进入指定世界`;
+$at输入[历练]进入与你实力匹配的世界
+$at输入[历练 + 世界名]进入指定世界`;
         p.sendMessageg('Action',{
             template:template.文本消息,
             messageId:'',
@@ -57,7 +57,7 @@ $at输入[开始历练 + 世界名]进入指定世界`;
         // 监听谁击杀了谁
         log_kill:(b: battle,win:body_base,die:body_base) =>{
             if(win.id == p.id){
-                let killLeve = die.get_att(_att_key.等级)?.getVal();
+                let killLeve = die.leve.getVal();
                 b.addGift(win.id,{ name: '金币', cont: 1,type:Item_Type.道具 })
                 b.addGift(win.id,{ name: 'EXP', cont: killLeve,type:Item_Type.道具 })
             }
