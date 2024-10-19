@@ -9,9 +9,9 @@ RPG大型多人文字RPG游戏
 ## API 文档
 该文档可用于其他游戏对接：[API 文档](https://4qq6kekx0x.apifox.cn/api-224844655)
 # 平台支持
-- [ ] qq
-- [ ] koishi沙箱调试
-- [ ] telegram
+- [x] qq
+- [x] koishi沙箱调试
+- [x] telegram
 
 如果你还想要使用 GPU 版本，可以安装 GPU 加速库：
 npm install @tensorflow/tfjs-node-gpu
