@@ -2,6 +2,7 @@ import { ServiceProto } from 'tsrpc-proto';
 import { ReqSign, ResSign } from './active/PtlSign';
 import { ReqBattle, ResBattle } from './battle/PtlBattle';
 import { ReqOut, ResOut } from './battle/PtlOut';
+import { ReqGetBodySysCfg, ResGetBodySysCfg } from './common/PtlGetBodySysCfg';
 import { ReqSkill, ResSkill } from './debug/bag/PtlSkill';
 import { ReqBattle as ReqBattle_1, ResBattle as ResBattle_1 } from './debug/PtlBattle';
 import { ReqPvp, ResPvp } from './debug/PtlPvp';
@@ -28,6 +29,10 @@ export interface ServiceType {
         "battle/Out": {
             req: ReqOut;
             res: ResOut;
+        };
+        "common/GetBodySysCfg": {
+            req: ReqGetBodySysCfg;
+            res: ResGetBodySysCfg;
         };
         "debug/bag/Skill": {
             req: ReqSkill;
