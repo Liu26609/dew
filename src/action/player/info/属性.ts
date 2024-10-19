@@ -17,7 +17,6 @@ export default class {
                 APP.setSysCfg(req_cfg.cfg)
             }
         }
-        console.log(APP.bodySysCfg)
         cls.addLine('┏┄══✉️我的属性══━┄')
         cls.addLine(`🧙${req.name}[${req.className}]`)
         let attList = req.att;
