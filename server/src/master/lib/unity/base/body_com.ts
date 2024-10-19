@@ -75,11 +75,13 @@ export class att_val extends _bodyCom implements _att_val {
     name: string;
     key: string;
     val: number;
+    hide?: boolean | undefined = false;
     constructor(data:_att_val) {
         super();
         this.name = data.name;
         this.key = data.key;
-        this.val = data.val | 0;
+        this.val = data.val || 0;
+        this.hide = data.hide || this.hide;
     }
     getVal(){
         return this.val

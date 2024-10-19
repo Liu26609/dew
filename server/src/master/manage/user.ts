@@ -1,5 +1,5 @@
 import db from "../../model/db/db";
-import { _att_key } from "../lib/face/FACE_BODY";
+import { _att_key } from "../../shared/shareFace";
 import { SKILL_type, SKILL_target, SKILL_rang, SKILL_eff_path, SKILL_eff_type, SKILL_eff_type_伤害类 } from "../lib/face/FACE_SKILL";
 import { body_bar, att_val } from "../lib/unity/base/body_com";
 import { player } from "../lib/unity/player"
@@ -48,7 +48,7 @@ class user {
         data.id = onlyid;
         data.attList = [];
         data.attList.push(new att_val({ name: '战斗力', key: _att_key.战斗力, val: 0 }))
-        data.attList.push(new att_val({ name: '等级', key: _att_key.等级, val: 1 }))
+        data.attList.push(new att_val({ name: '等级', key: _att_key.等级, val: 1,hide:true }))
         data.attList.push(new body_bar({ name: '生命值', key: _att_key.生命值, max: 100, now: 100 }))
         data.attList.push(new body_bar({ name: '魔法值', key: _att_key.魔法值, max: 100, now: 50 }))
         data.attList.push(new body_bar({ name: '经验值', key: _att_key.经验值, max: 100, now: 0 }))

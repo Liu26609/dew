@@ -2,12 +2,13 @@ import { WsClient } from "tsrpc";
 import { ServiceType } from "../../../../shared/master/serviceProto";
 import { battle } from "../../battle/battle";
 import common from "../../common";
-import { _att_key, battle_group } from "../../face/FACE_BODY";
+import {  battle_group } from "../../face/FACE_BODY";
 import { SKILL_type } from "../../face/FACE_SKILL";
 import { SKILL } from "../../skill/SKILL";
 import { att_line, att_val, body_bar } from "./body_com"
 import bags from "../../bag/bags";
-import { Item_Type, prop_item } from "../../../../shared/shareFace";
+import { _att_key, Item_Type, prop_item } from "../../../../shared/shareFace";
+import xlsxToJson from "../../../../model/xlsxToJson";
 export class body_base {
     id: string = '';
     name: string = '未命名的单位';
@@ -27,8 +28,30 @@ export class body_base {
     private _battle: battle | undefined = undefined;
     private _battleLs: any = undefined;
     bag: bags = new bags();
+    sys: string = '修仙'
     constructor() {
 
+    }
+    /**
+     * 获取角色当前等级的体系称谓
+     */
+    get_className() {
+        let list = xlsxToJson.cfg.get(`sys_称谓_${this.sys}`) as unknown as Map<number, any>;
+        let leve = (this.get_att(_att_key.等级) as att_val ).getVal();
+        if (list.has(leve)) {
+            return list.get(leve).name;
+        }
+        let classList = [...list.keys()];
+        classList.sort((a, b) => a - b);
+
+        let closest = classList[0];
+        for (let i = 1; i < classList.length; i++) {
+            if (classList[i] > leve) {
+                break;
+            }
+            closest = classList[i];
+        }
+        return list.get(closest);
     }
     set_battleLs(ls: any) {
         this._battleLs = ls;

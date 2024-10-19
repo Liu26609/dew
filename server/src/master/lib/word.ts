@@ -1,9 +1,9 @@
 import xlsxToJson from "../../model/xlsxToJson";
+import { _att_key } from "../../shared/shareFace";
 import game_map from "../manage/map";
 import { battle } from "./battle/battle";
 import common from "./common";
 import ET, { ET_K } from "./ET";
-import { _att_key } from "./face/FACE_BODY";
 import { SKILL_rang, SKILL_eff_type, SKILL_eff_type_伤害类, SKILL_eff_type_增益类, SKILL_eff_path, SKILL_target, SKILL_type } from "./face/FACE_SKILL";
 import { effect } from "./skill/effect/effect_base";
 import { body_bar, att_val } from "./unity/base/body_com";
@@ -47,7 +47,7 @@ class word {
         data.name = cfg.name;
         data.attList = [];
         data.attList.push(new att_val({ name: '战斗力', key: _att_key.战斗力, val: 0 }))
-        data.attList.push(new att_val({ name: '等级', key: _att_key.等级, val: option.leve }))
+        data.attList.push(new att_val({ name: '等级', key: _att_key.等级, val: option.leve ,hide:true}))
         data.attList.push(new body_bar({ name: '生命值', key: _att_key.生命值, max: cfg[_att_key.生命值] * option.leve * option.diff, now: cfg[_att_key.生命值] * option.leve * option.diff }))
         data.attList.push(new body_bar({ name: '魔法值', key: _att_key.魔法值, max: cfg[_att_key.魔法值] * option.leve * option.diff, now: cfg[_att_key.魔法值] * option.leve * option.diff }))
         data.attList.push(new body_bar({ name: '经验值', key: _att_key.经验值, max: 100, now: 0 }))

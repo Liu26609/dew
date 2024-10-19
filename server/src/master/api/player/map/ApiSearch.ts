@@ -1,11 +1,10 @@
 import { ApiCall } from "tsrpc";
 import { player } from "../../../lib/unity/player";
 import { battle } from "../../../lib/battle/battle";
-import { Item_Type } from "../../../../shared/shareFace";
+import { _att_key, Item_Type } from "../../../../shared/shareFace";
 import { MSG_BATTLELOG, template } from "../../../../shared/master/MsgAction";
 import { ReqSearch, ResSearch } from "../../../../shared/master/player/map/PtlSearch";
 import { body_base } from "../../../lib/unity/base/body_base";
-import { _att_key } from "../../../lib/face/FACE_BODY";
 
 /**
  * 1.随机匹配怪物

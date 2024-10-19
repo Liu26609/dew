@@ -1,5 +1,6 @@
+import { _att_key } from "../../../shared/shareFace";
 import common from "../common";
-import { _att_key, battle_group } from "../face/FACE_BODY";
+import { battle_group } from "../face/FACE_BODY";
 import { SKILL_rang, SKILL_eff_type, SKILL_eff_type_伤害类, SKILL_type, SKILL_target, SKILL_eff_type_增益类, SKILL_eff_path } from "../face/FACE_SKILL";
 import { body_bar, att_val } from "../unity/base/body_com";
 import { unity } from "../unity/unity";
