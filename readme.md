@@ -10,8 +10,6 @@ RPG大型多人文字RPG游戏
 - [ ] qq
 - [ ] koishi沙箱调试
 - [ ] telegram
-目标:大致参考达尔文V3
-技能cd:回合数
 
 如果你还想要使用 GPU 版本，可以安装 GPU 加速库：
 npm install @tensorflow/tfjs-node-gpu

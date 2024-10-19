@@ -1,0 +1,1426 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TSRPC Open API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/active/Sign": {
+      "post": {
+        "tags": [
+          "active"
+        ],
+        "operationId": "active/Sign",
+        "requestBody": {
+          "description": "Req<Sign>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/active_PtlSign_ReqSign"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResSign>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/active_PtlSign_ResSign"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/battle/Battle": {
+      "post": {
+        "tags": [
+          "battle"
+        ],
+        "operationId": "battle/Battle",
+        "requestBody": {
+          "description": "Req<Battle>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/battle_PtlBattle_ReqBattle"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResBattle>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/battle_PtlBattle_ResBattle"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/battle/Out": {
+      "post": {
+        "tags": [
+          "battle"
+        ],
+        "operationId": "battle/Out",
+        "requestBody": {
+          "description": "Req<Out>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/battle_PtlOut_ReqOut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResOut>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/battle_PtlOut_ResOut"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/common/GetBodySysCfg": {
+      "post": {
+        "tags": [
+          "common"
+        ],
+        "operationId": "common/GetBodySysCfg",
+        "requestBody": {
+          "description": "Req<GetBodySysCfg>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/common_PtlGetBodySysCfg_ReqGetBodySysCfg"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResGetBodySysCfg>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/common_PtlGetBodySysCfg_ResGetBodySysCfg"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/debug/bag/Skill": {
+      "post": {
+        "tags": [
+          "debug/bag"
+        ],
+        "operationId": "debug/bag/Skill",
+        "requestBody": {
+          "description": "Req<Skill>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/debug_bag_PtlSkill_ReqSkill"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResSkill>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/debug_bag_PtlSkill_ResSkill"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/debug/Battle": {
+      "post": {
+        "tags": [
+          "debug"
+        ],
+        "operationId": "debug/Battle",
+        "requestBody": {
+          "description": "Req<Battle>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/debug_PtlBattle_ReqBattle"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResBattle>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/debug_PtlBattle_ResBattle"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/debug/Pvp": {
+      "post": {
+        "tags": [
+          "debug"
+        ],
+        "operationId": "debug/Pvp",
+        "requestBody": {
+          "description": "Req<Pvp>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/debug_PtlPvp_ReqPvp"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResPvp>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/debug_PtlPvp_ResPvp"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/debug/Save": {
+      "post": {
+        "tags": [
+          "debug"
+        ],
+        "operationId": "debug/Save",
+        "requestBody": {
+          "description": "Req<Save>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/debug_PtlSave_ReqSave"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResSave>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/debug_PtlSave_ResSave"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/player/info/GetBase": {
+      "post": {
+        "tags": [
+          "player/info"
+        ],
+        "operationId": "player/info/GetBase",
+        "requestBody": {
+          "description": "Req<GetBase>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/player_info_PtlGetBase_ReqGetBase"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResGetBase>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/player_info_PtlGetBase_ResGetBase"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/player/info/Position": {
+      "post": {
+        "tags": [
+          "player/info"
+        ],
+        "operationId": "player/info/Position",
+        "requestBody": {
+          "description": "Req<Position>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/player_info_PtlPosition_ReqPosition"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResPosition>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/player_info_PtlPosition_ResPosition"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/player/info/SetName": {
+      "post": {
+        "tags": [
+          "player/info"
+        ],
+        "operationId": "player/info/SetName",
+        "requestBody": {
+          "description": "Req<SetName>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/player_info_PtlSetName_ReqSetName"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResSetName>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/player_info_PtlSetName_ResSetName"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/player/map/Search": {
+      "post": {
+        "tags": [
+          "player/map"
+        ],
+        "operationId": "player/map/Search",
+        "requestBody": {
+          "description": "Req<Search>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/player_map_PtlSearch_ReqSearch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResSearch>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/player_map_PtlSearch_ResSearch"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/player/map/Start": {
+      "post": {
+        "tags": [
+          "player/map"
+        ],
+        "operationId": "player/map/Start",
+        "requestBody": {
+          "description": "Req<Start>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/player_map_PtlStart_ReqStart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResStart>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/player_map_PtlStart_ResStart"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/Miss": {
+      "post": {
+        "operationId": "Miss",
+        "requestBody": {
+          "description": "Req<Miss>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PtlMiss_ReqMiss"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResMiss>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/PtlMiss_ResMiss"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/Ping": {
+      "post": {
+        "operationId": "Ping",
+        "requestBody": {
+          "description": "Req<Ping>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PtlPing_ReqPing"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResPing>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/PtlPing_ResPing"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/work/Build": {
+      "post": {
+        "tags": [
+          "work"
+        ],
+        "operationId": "work/Build",
+        "requestBody": {
+          "description": "Req<Build>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/work_PtlBuild_ReqBuild"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "ApiReturn<ResBuild>",
+                  "properties": {
+                    "isSucc": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ],
+                      "default": true
+                    },
+                    "res": {
+                      "$ref": "#/components/schemas/work_PtlBuild_ResBuild"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "active_PtlSign_ReqSign": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ],
+        "description": "活动-签到"
+      },
+      "___protocols_master_base_BaseRequest": {
+        "type": "object",
+        "properties": {
+          "_player": {
+            "type": "object"
+          },
+          "_onlyid": {
+            "type": "string",
+            "description": "用户id"
+          },
+          "_messageid": {
+            "type": "string",
+            "description": "消息体编号\n溯源消息发送"
+          },
+          "_platform": {
+            "type": "string",
+            "description": "*必填 来源平台"
+          }
+        }
+      },
+      "active_PtlSign_ResSign": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "consecutive_sign_count": {
+                "type": "number",
+                "description": "共计签到"
+              },
+              "sign_count": {
+                "type": "number",
+                "description": "累计签到"
+              },
+              "todayRank": {
+                "type": "number",
+                "description": "今日排名"
+              },
+              "gitfs": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                },
+                "description": "获得奖励"
+              }
+            },
+            "required": [
+              "consecutive_sign_count",
+              "sign_count",
+              "todayRank",
+              "gitfs"
+            ]
+          }
+        ]
+      },
+      "___protocols_master_base_BaseResponse": {
+        "type": "object",
+        "properties": {}
+      },
+      "battle_PtlBattle_ReqBattle": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "battle_PtlBattle_ResBattle": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "battle_PtlOut_ReqOut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ],
+        "description": "离开当前的pvp战斗"
+      },
+      "battle_PtlOut_ResOut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "common_PtlGetBodySysCfg_ReqGetBodySysCfg": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ]
+          }
+        ],
+        "description": "获取指定体系配置"
+      },
+      "common_PtlGetBodySysCfg_ResGetBodySysCfg": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "cfg": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "cfg"
+            ]
+          }
+        ]
+      },
+      "debug_bag_PtlSkill_ReqSkill": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ]
+          }
+        ]
+      },
+      "debug_bag_PtlSkill_ResSkill": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "debug_PtlBattle_ReqBattle": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "debug_PtlBattle_ResBattle": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/MsgAction_MSG_BATTLELOG"
+              }
+            },
+            "required": [
+              "data"
+            ]
+          }
+        ]
+      },
+      "MsgAction_MSG_BATTLELOG": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "战斗标题"
+          },
+          "tips": {
+            "type": "string",
+            "description": "战斗标题描述"
+          },
+          "round": {
+            "type": "number"
+          },
+          "skLog": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "dataLog": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "killLog": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "gitfs": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "tips",
+          "round",
+          "skLog",
+          "dataLog",
+          "killLog",
+          "gitfs"
+        ]
+      },
+      "debug_PtlPvp_ReqPvp": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "debug_PtlPvp_ResPvp": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "debug_PtlSave_ReqSave": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "debug_PtlSave_ResSave": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "MsgAction_MsgAction": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_base_BaseMessage"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "template": {
+                "$ref": "#/components/schemas/MsgAction_template"
+              },
+              "messageId": {
+                "type": "string"
+              },
+              "data": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "template",
+              "messageId"
+            ]
+          }
+        ]
+      },
+      "___protocols_base_BaseMessage": {
+        "type": "object",
+        "properties": {}
+      },
+      "MsgAction_template": {
+        "type": "string",
+        "enum": [
+          "未注册",
+          "测试",
+          "战斗日志",
+          "文本消息"
+        ]
+      },
+      "player_info_PtlGetBase_ReqGetBase": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "player_info_PtlGetBase_ResGetBase": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "sys": {
+                "type": "string"
+              },
+              "className": {
+                "type": "string"
+              },
+              "att": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            },
+            "required": [
+              "name",
+              "sys",
+              "className",
+              "att"
+            ]
+          }
+        ]
+      },
+      "player_info_PtlPosition_ReqPosition": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ],
+        "description": "查看当前位置"
+      },
+      "player_info_PtlPosition_ResPosition": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "副本名称"
+              },
+              "online": {
+                "type": "number",
+                "description": "副本在线玩家数"
+              }
+            },
+            "required": [
+              "name",
+              "online"
+            ]
+          }
+        ]
+      },
+      "player_info_PtlSetName_ReqSetName": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "new": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "new"
+            ]
+          }
+        ]
+      },
+      "player_info_PtlSetName_ResSetName": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "player_map_PtlSearch_ReqSearch": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ],
+        "description": "探索地图"
+      },
+      "player_map_PtlSearch_ResSearch": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "monster"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "player"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "reward"
+                    ]
+                  }
+                ]
+              },
+              "data": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "type",
+              "data"
+            ]
+          }
+        ]
+      },
+      "player_map_PtlStart_ReqStart": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "description": "进入历练副本"
+      },
+      "player_map_PtlStart_ResStart": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "PtlMiss_ReqMiss": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "PtlMiss_ResMiss": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "PtlPing_ReqPing": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "PtlPing_ResPing": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "work_PtlBuild_ReqBuild": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseRequest"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "work_PtlBuild_ResBuild": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/___protocols_master_base_BaseResponse"
+          },
+          {
+            "type": "object",
+            "properties": {}
+          }
+        ]
+      },
+      "?bson_ObjectID": {
+        "type": "string"
+      },
+      "?bson_ObjectId": {
+        "type": "string"
+      },
+      "?mongodb_ObjectID": {
+        "type": "string"
+      },
+      "?mongodb_ObjectId": {
+        "type": "string"
+      }
+    },
+    "responses": {
+      "error": {
+        "description": "Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "title": "API 错误",
+              "description": "业务错误（ApiError）返回 HTTP 状态码 200，其它错误返回 HTTP 状态码 500",
+              "properties": {
+                "isSucc": {
+                  "type": "boolean",
+                  "enum": [
+                    false
+                  ],
+                  "default": false
+                },
+                "err": {
+                  "type": "object",
+                  "description": "TsrpcError",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "ApiError",
+                        "NetworkError",
+                        "ServerError",
+                        "ClientError"
+                      ]
+                    },
+                    "code": {
+                      "oneOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "integer"
+                        }
+                      ],
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "type"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

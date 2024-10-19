@@ -2,7 +2,7 @@
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const tsrpc_cli_1 = require("tsrpc-cli");
-const serverArry = ["master", "server_mail"];
+const serverArry = ["master"];
 const tsrpcConf = {
     // Generate ServiceProto
     proto: [],
@@ -10,7 +10,7 @@ const tsrpcConf = {
     sync: [
         {
             from: 'src/shared',
-            to: '../bot_-readme/src/shared',
+            to: '../src/shared',
             type: 'copy' // Change this to 'copy' if your environment not support symlink
         },
     ],

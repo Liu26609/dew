@@ -1,6 +1,7 @@
 node_modules
 ./src/shared
 db/*
+./dist
 Build
 resources
 output/*
