@@ -15,7 +15,9 @@ export let log: any
 
 export const Config: Schema<Config> = Schema.object({
   调试模式: Schema.boolean().default(true),
-  服务器地址: Schema.string().default('ws://127.0.0.1:8848')
+  服务器地址: Schema.string().default('ws://139.159.214.249:8848')
+  // 服务器地址: Schema.string().default('ws://127.0.0.1:8848')
+  // 139.159.214.249
 })
 
 export let CFG: Config;
