@@ -34,6 +34,7 @@ export class player  extends body_base{
         this._reload(data);
     }
     active(){
+        super.active();
         let id = this.get_mapid();
         let map = word.getMap(id);
         map.active(this.id);

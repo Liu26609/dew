@@ -1,3 +1,5 @@
+import { _att_key } from "../../../shared/shareFace"
+
 export interface _base_com{
     t?:string
 }
@@ -14,7 +16,7 @@ export interface _line extends _base_com{
 }
 export interface _att_val extends _base_com{
     name?:string,
-    key:string,
+    key:_att_key,
     val:number
     hide?:boolean
 }

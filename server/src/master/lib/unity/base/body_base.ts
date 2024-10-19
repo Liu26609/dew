@@ -2,7 +2,7 @@ import { WsClient } from "tsrpc";
 import { ServiceType } from "../../../../shared/master/serviceProto";
 import { battle } from "../../battle/battle";
 import common from "../../common";
-import {  battle_group } from "../../face/FACE_BODY";
+import { battle_group } from "../../face/FACE_BODY";
 import { SKILL_type } from "../../face/FACE_SKILL";
 import { SKILL } from "../../skill/SKILL";
 import { att_line, att_val, body_bar } from "./body_com"
@@ -14,17 +14,21 @@ export class body_base {
     id: string = '';
     name: string = '未命名的单位';
     // 基础属性
-    attList: (att_line | att_val | body_bar)[] = [];
+    attList: att_val[] = [];
 
-    leve: att_val = new att_val({ key: _att_key.等级, val: 1 ,hide:true})
+    leve: att_val = new att_val({ key: _att_key.等级, val: 1, hide: true })
     fight: att_val = new att_val({ key: _att_key.战斗力, val: 0 })
-    exp:body_bar = new body_bar({key:_att_key.经验值,max:100,now:0})
+    exp: body_bar = new body_bar({ key: _att_key.经验值, max: 100, now: 0 })
 
 
-    hp:body_bar = new body_bar({key:_att_key.生命值,max:100,now:100})
+    hp: body_bar = new body_bar({ key: _att_key.生命值, max: 100, now: 100 })
     hp_res: att_val = new att_val({ key: _att_key.生命恢复, val: 1 })
-    mp:body_bar = new body_bar({key:_att_key.魔法值,max:100,now:100})
+    mp: body_bar = new body_bar({ key: _att_key.魔法值, max: 100, now: 100 })
     mp_res: att_val = new att_val({ key: _att_key.魔法恢复, val: 0 })
+
+    dong_hp: att_val = new att_val({ key: _att_key.生命护盾, val: 0 })
+    dong_mp: att_val = new att_val({ key: _att_key.魔法护盾, val: 0 })
+    dong_phy: att_val = new att_val({ key: _att_key.物理护盾, val: 0 })
 
     private _buff_source: Map<string, Map<string, any>> = new Map();
     /**
@@ -43,8 +47,9 @@ export class body_base {
     bag: bags = new bags();
     sys: string = '修仙';
     // 继承血统
-    inherit!:inherit;
-    _outAtt: (att_line | att_val | body_bar)[] = []
+    inherit!: inherit;
+    private _outAtt: (att_line | att_val | body_bar)[] = []
+    private _needUpdate: boolean = false;
     constructor() {
 
     }
@@ -77,6 +82,7 @@ export class body_base {
     }
     set_battle(b: battle | undefined) {
         this._battle = b;
+        this.refAtt();
     }
     get_battle() {
         return this._battle
@@ -207,8 +213,10 @@ export class body_base {
                 this.attList.push(new TypeClass(element))
             }
         }
-        if(!data.inherit){
+        if (!data.inherit) {
             this.inherit = new inherit();
+        } else {
+            this.inherit = new inherit(data.inherit);
         }
         // 背包
         if (data.bag) {
@@ -228,6 +236,43 @@ export class body_base {
                 this.addSk_auto(new SKILL(element));
             }
         }
+        this.updateAtt();
+    }
+    updateAtt() {
+        if (!this._needUpdate) {
+            return;
+        }
+        this._needUpdate = false;
+        // 最终属性=
+        // 角色基础属性 + 血统属性 * 角色等级
+        // 特殊处理:护盾
+        let leve = this.leve.getVal();
+        this.hp.setMax(this.hp.getVal() + this.inherit.get_att(_att_key.生命值) * leve)
+        this.hp_res.setVal(this.hp_res.getVal() + this.inherit.get_att(_att_key.生命恢复) * leve)
+        this.mp.setMax(this.mp.getVal() + this.inherit.get_att(_att_key.魔法值) * leve)
+        this.mp_res.setVal(this.mp_res.getVal() + this.inherit.get_att(_att_key.魔法恢复) * leve)
+        this.dong_hp.setVal(this.dong_hp.getVal() + this.inherit.get_att(_att_key.生命护盾) * leve)
+        this.dong_mp.setVal(this.dong_mp.getVal() + this.inherit.get_att(_att_key.魔法护盾) * leve)
+        this.dong_phy.setVal(this.dong_phy.getVal() + this.inherit.get_att(_att_key.物理护盾) * leve)
+        
+        let base = this.attList;
+        let out: att_val[] = [];
+        for (let i = 0; i < base.length; i++) {
+            const element = base[i];
+            let val = element.getVal() + this.inherit.get_att(element.key)
+            out.push(new att_val({ key: element.key, val: val }))
+        }
+        this._outAtt = out;
+    }
+    refAtt() {
+        this._needUpdate = true;
+    }
+    get_outAtt() {
+        this.updateAtt();
+        return this._outAtt;
+    }
+    active(){
+        this.refAtt();
     }
     /**
      * 弃用
@@ -278,9 +323,10 @@ export class body_base {
         return v <= 0
     }
     get_att(key: _att_key | string) {
+        this.updateAtt();
         switch (key) {
             case _att_key.战斗力:
-             return this.fight;
+                return this.fight;
             case _att_key.等级:
                 return this.leve;
             case _att_key.生命值:
@@ -291,16 +337,24 @@ export class body_base {
                 return this.mp;
             case _att_key.魔法恢复:
                 return this.mp_res;
+            case _att_key.经验值:
+                return this.exp;
+            case _att_key.生命护盾:
+                return this.dong_hp;
+            case _att_key.魔法护盾:
+                return this.dong_mp;
+            case _att_key.物理护盾:
+                return this.dong_phy;
             default:
                 break;
         }
-        let idx = this.attList.findIndex((item, idx) => {
+        let idx = this._outAtt.findIndex((item, idx) => {
             return (item.key == key || item.name == key)
         })
         if (idx == -1) {
             return undefined;
         }
-        return this.attList[idx]
+        return this._outAtt[idx]
     }
     // 受到伤害
     damage(val: number, bt?: battle) {

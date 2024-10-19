@@ -47,6 +47,9 @@ class user {
         let data: any = {};
         data.id = onlyid;
         data.attList = [];
+        data.attList.push(new att_val({ key: _att_key.生命值, val: 0 }))
+        data.attList.push(new att_val({ key: _att_key.魔法恢复, val: 0 }))
+        data.attList.push(new att_val({ key: _att_key.生命恢复, val: 0 }))
         data.attList.push(new att_val({ key: _att_key.魔法值, val: 0 }))
         data.attList.push(new att_val({ key: _att_key.物理攻击, val: 10 }))
         data.attList.push(new att_val({  key: _att_key.物理防御, val: 1 }))

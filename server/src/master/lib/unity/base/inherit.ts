@@ -7,7 +7,7 @@ import { att_line, att_val, body_bar } from "./body_com";
 export class inherit{
     id:string = '1';
 
-    attList: (att_line | att_val | body_bar)[] = []
+    attList: att_val[] = []
     constructor(data?:any){
         if(data){
             this.id = data.id;
@@ -21,6 +21,15 @@ export class inherit{
         let list = xlsxToJson.cfg.get('血统表') as Map<string, any>;
         let info = list.get(this.id)
         return info;
+    }
+    get_att(key:_att_key){
+        for (let i = 0; i < this.attList.length; i++) {
+            const att = this.attList[i];
+                if(att.key == key){
+                    return att.val
+                }
+        }
+        return 0;
     }
     reset(id?:string){
         let list = xlsxToJson.cfg.get('血统表') as Map<string, any>;

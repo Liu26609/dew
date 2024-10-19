@@ -9,7 +9,8 @@ export default async function (call: ApiCall<ReqGetBase, ResGetBase>) {
     call.succ({
         name:p.name,
         sys:p.sys,
+        inherit:p.inherit.get_info().name,
         className:p.get_className(),
-        att:[p.leve,p.hp,p.fight,p.exp,p.hp_res,p.mp_res,...p.attList]
+        att:[p.leve,p.hp,p.fight,p.exp,...p.get_outAtt()]
     });
 }

@@ -1,4 +1,4 @@
-import { _att_key } from "../../../../face/FACE_BODY";
+import { _att_key } from "../../../../../../shared/shareFace";
 import { body_base } from "../../../../unity/base/body_base";
 import { SKILL } from "../../../SKILL";
 import { effect } from "../../effect_base";

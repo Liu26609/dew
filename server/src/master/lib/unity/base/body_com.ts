@@ -1,3 +1,4 @@
+import { _att_key } from "../../../../shared/shareFace";
 import common from "../../common";
 import { _att_line, _att_val, _bar, _base_com, _line } from "../../face/FACE_BODY"
 export class _bodyCom implements _base_com {
@@ -78,7 +79,7 @@ export class att_line extends _bodyCom implements _att_line {
  */
 export class att_val extends _bodyCom implements _att_val {
     name?: string;
-    key: string;
+    key: _att_key;
     val: number;
     hide?: boolean | undefined = false;
     constructor(data:_att_val) {

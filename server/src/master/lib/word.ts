@@ -53,7 +53,7 @@ class word {
             let data = cfg[key] * base;
             let value = common.random(data - cfg[key] * rang / 100, data + cfg[key] * rang / 100);
             value = Math.min(value, data); // 确保值不为负数
-            arry.push(new att_val({ key: key, val: value || 0 }))
+            arry.push(new att_val({ key: key as _att_key, val: value || 0 }))
             // switch (key) {
             //     case _att_key.物理攻击:
             //     case _att_key.物理防御:
