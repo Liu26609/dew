@@ -9,6 +9,7 @@ export default class {
     }
     async start(cls: message) {
         let data = await server.api('debug/Battle', {}, cls)
+        if(!data)return;
         let req = data.data as MSG_BATTLELOG;
         console.log('战斗日志', req.skLog)
         let temp = `┏┄═══🔵${req.title}═━┄\n`

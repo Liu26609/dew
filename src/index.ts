@@ -49,7 +49,7 @@ export async function apply(ctx: Context, config: Config) {
       }
     }
 
-    cls.action((_, ag) => {
+    cls.action((_:any, ag:any) => {
       const classPath = path.resolve(__dirname, `./action/${element.path}`);
       let msg = inputManage.get_msg(_.session.messageId)
       common.importClass(classPath, [msg, ag])
@@ -97,7 +97,7 @@ image: Dict 图片
   //     common.importClass(classPath, [msg, message])
   //   })
 
-  ctx.middleware((session, next) => {
+  ctx.middleware((session:any, next) => {
     session.content = session.content.toLowerCase();
     session.content = session.content.replace('hp', ' -h');
     return next()

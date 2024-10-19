@@ -9,7 +9,7 @@ export default class bot_logic {
     constructor(ctx: any) {
         // console.log('事件分析', ctx)
     }
-    getCls_msg(ctx){
+    getCls_msg(ctx:any){
         let pf = this._platform(ctx)
         // 根据平台名称去引入对应的类
         const classPath = path.resolve(__dirname, `./logic/${pf}`);

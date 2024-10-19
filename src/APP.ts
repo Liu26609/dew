@@ -14,10 +14,10 @@ class APP{
         }
         this.bodySysCfg.set(cfg.id,m)
     }
-    getSysCover(s:string,k){
+    getSysCover(s:string,k: string){
         if(this.bodySysCfg.has(s)){
             let m = this.bodySysCfg.get(s)
-            if(m.has(k)){
+            if(m && m.has(k)){
                 return m.get(k)
             }
         }

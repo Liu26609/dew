@@ -32,7 +32,7 @@ class server {
         })
     }
     private flowsToken(client: WsClient<any> | HttpClient<any>) {
-        client.flows.preApiReturnFlow.push(v => {
+        client.flows.preApiReturnFlow.push((v: { return: { isSucc: any; res: { __token: any; }; }; }) => {
             if (v.return.isSucc) {
                 if (v.return.res.__token) {
                     // tokenMap.set('_token', v.return.res.__token)
@@ -42,7 +42,7 @@ class server {
         })
     }
     private flowsResConnect(client: WsClient<any>) {
-        client.flows.postDisconnectFlow.push(v => {
+        client.flows.postDisconnectFlow.push((v: { isManual: any; }) => {
             if (!v.isManual) {
                 this.connect()
                 log.info('开始断线重连')
@@ -63,8 +63,8 @@ class server {
         }
         return res;
     }
-    lisentMsg<T extends keyof ServiceType['msg']>(msgName: T | RegExp, handler: any, self) {
-        return this.wsClient.listenMsg(msgName, ((data) => { handler.call(self, data) }))
+    lisentMsg<T extends keyof ServiceType['msg']>(msgName: T | RegExp, handler: any, self: any) {
+        return this.wsClient.listenMsg(msgName, ((data: any) => { handler.call(self, data) }))
     }
     async setWsUrl(link: string) {
         log.info(`server link:${link}`)

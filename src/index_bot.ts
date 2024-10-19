@@ -31,12 +31,12 @@ export function apply(ctx: Context) {
     'telegram/shipping-query'
   ]
   for (let i = 0; i < ls.length; i++) {
-    ctx.on(ls[i] as any, async (session) => {
+    ctx.on(ls[i] as any, async (session:any) => {
       console.log(`接受到消息类型:${ls[i]},${session}`)
       console.log(session)
     })
   }
-  ctx.on('telegram/channel-post' as any, async (session) => {
+  ctx.on('telegram/channel-post' as any, async (session:any) => {
     console.log('标题修改')
   })
   ctx.on('message', async (session) => {
@@ -51,11 +51,11 @@ export function apply(ctx: Context) {
       session.send(`<p>欢迎新韭菜进群<at id="${tg_data.new_chat_member.first_name}"></at>这个人邀请的<at id="${tg_data.from.first_name}"></at>千万现金点击就送<button text="我是傻逼" type="input">开始送钱</button><button text="扣1" type="input">领取地狱火</button>`)
     }
 
-    if (session.content.length < 2) {
-      console.log(session)
-      console.log('接受到短消息')
-      return;
-    }
+    // if (session.content.length < 2) {
+    //   console.log(session)
+    //   console.log('接受到短消息')
+    //   return;
+    // }
     // console.log("获取到信息:",session.content);
     // return;
     // 发送图片

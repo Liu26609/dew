@@ -11,7 +11,7 @@ export interface prop_item{
   // 自识别是否可叠加
   type:Item_Type
   cont?:number
-  data?;
+  data?: any;
 }
 export enum body_sys{
   修仙 = '修仙',

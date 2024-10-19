@@ -11,7 +11,7 @@ export default class {
     async init(cls: message) {
         let res = await server.api('player/map/Search', {}, cls)
         console.log(res)
-
+        if(!res)return;
         switch (res.type) {
             case 'monster':
                 // 发现怪物
