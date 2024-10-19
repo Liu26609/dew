@@ -15,6 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const master_1 = __importDefault(require("./master"));
 const xlsxToJson_1 = __importDefault(require("./model/xlsxToJson"));
 const db_1 = __importDefault(require("./model/db/db"));
+const test_battle_1 = require("./master/lib/battle/test.battle");
+const battle_1 = require("./master/lib/battle/battle");
+const FACE_BODY_1 = require("./master/lib/face/FACE_BODY");
 const word_1 = __importDefault(require("./master/lib/word"));
 const http = require('https');
 function start() {
@@ -24,13 +27,13 @@ function start() {
         // await server_mail.startServer(true);
         word_1.default.start();
         yield master_1.default.startServer();
-        // let t = new test_battle()
-        // let a = t.create_unity()
-        // let b = t.create_unity()
-        // let c = new battle()
-        // c.join(battle_group.主场, a)
-        // c.join(battle_group.客场, b)
-        // c.join(battle_group.客场, t.create_unity())
+        let t = new test_battle_1.test_battle();
+        let a = t.create_unity();
+        let b = t.create_unity();
+        let c = new battle_1.battle();
+        c.join(FACE_BODY_1.battle_group.主场, a);
+        c.join(FACE_BODY_1.battle_group.客场, b);
+        c.join(FACE_BODY_1.battle_group.客场, t.create_unity());
         // let ls = {
         //     game_over: (b: battle) => {
         //         let sklog = b.get_log(a.get_group())
@@ -39,7 +42,7 @@ function start() {
         //     }
         // }
         // c.set_listen(ls)
-        // c.start()
+        c.start();
         // await server_rank.startServer(true);
         // Pull()
     });

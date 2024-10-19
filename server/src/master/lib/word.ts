@@ -168,7 +168,7 @@ class word {
             // 动态实例化该效果类
             return new EffectClass(keys, script, data);
         } else {
-            console.info(`!!!Effect class not found for key: ${key}`);
+            debugger;
             return null;
         }
     }
@@ -182,7 +182,7 @@ class word {
         for (const effectType of effectTypes) {
             const actionPath = path.resolve(__dirname, `./skill/effect/action/${key}/${effectType}`);
             try {
-                const effectModule = require(`${actionPath}.ts`);
+                const effectModule = require(`${actionPath}`);
                 const EffectClass = effectModule.default;
                 this.effectTempMap.set(`action_${key}_${effectType}`, EffectClass);
             } catch (error) {
@@ -191,7 +191,7 @@ class word {
 
             const buffPath = path.resolve(__dirname, `./skill/effect/buff/${key}/${effectType}`);
             try {
-                const effectModule = require(`${buffPath}.ts`);
+                const effectModule = require(`${buffPath}`);
                 const EffectClass = effectModule.default;
                 this.effectTempMap.set(`buff_${key}_${effectType}`, EffectClass);
             } catch (error) {

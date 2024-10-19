@@ -4,6 +4,7 @@
     "dev": "tsrpc-cli dev",
     "build": "tsrpc-cli build",
     "api": "tsrpc-cli api",
+    "debug":"node ./dist/index.js",
     "doc": "tsrpc doc",
     "sync": "tsrpc-cli sync",
     "proto": "tsrpc-cli proto",

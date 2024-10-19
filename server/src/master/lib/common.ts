@@ -17,7 +17,7 @@ class common {
     }
     // 引入指定类
     importClass(path: string,agm?){
-        const effectModule = require(`${path}.ts`);
+        const effectModule = require(`${path}`);
         const EffectClass = effectModule.default;
         return new EffectClass(...agm);
     }

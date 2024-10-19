@@ -11,11 +11,23 @@ const body_com_1 = require("./body_com");
 const bags_1 = __importDefault(require("../../bag/bags"));
 const shareFace_1 = require("../../../../shared/shareFace");
 const xlsxToJson_1 = __importDefault(require("../../../../model/xlsxToJson"));
+const inherit_1 = require("./inherit");
 class body_base {
     constructor() {
         this.id = '';
         this.name = '未命名的单位';
+        // 基础属性
         this.attList = [];
+        this.leve = new body_com_1.att_val({ key: shareFace_1._att_key.等级, val: 1, hide: true });
+        this.fight = new body_com_1.att_val({ key: shareFace_1._att_key.战斗力, val: 0 });
+        this.exp = new body_com_1.body_bar({ key: shareFace_1._att_key.经验值, max: 100, now: 0 });
+        this.hp = new body_com_1.body_bar({ key: shareFace_1._att_key.生命值, max: 100, now: 100 });
+        this.hp_res = new body_com_1.att_val({ key: shareFace_1._att_key.生命恢复, val: 1 });
+        this.mp = new body_com_1.body_bar({ key: shareFace_1._att_key.魔法值, max: 100, now: 100 });
+        this.mp_res = new body_com_1.att_val({ key: shareFace_1._att_key.魔法恢复, val: 0 });
+        this.dong_hp = new body_com_1.att_val({ key: shareFace_1._att_key.生命护盾, val: 0 });
+        this.dong_mp = new body_com_1.att_val({ key: shareFace_1._att_key.魔法护盾, val: 0 });
+        this.dong_phy = new body_com_1.att_val({ key: shareFace_1._att_key.物理护盾, val: 0 });
         this._buff_source = new Map();
         /**
          * buff 来源
@@ -31,13 +43,15 @@ class body_base {
         this._battleLs = undefined;
         this.bag = new bags_1.default();
         this.sys = '修仙';
+        this._outAtt = [];
+        this._needUpdate = false;
     }
     /**
      * 获取角色当前等级的体系称谓
      */
     get_className() {
         let list = xlsxToJson_1.default.cfg.get(`sys_称谓_${this.sys}`);
-        let leve = this.get_att(shareFace_1._att_key.等级).getVal();
+        let leve = this.leve.getVal();
         if (list.has(leve)) {
             return list.get(leve).name;
         }
@@ -60,6 +74,7 @@ class body_base {
     }
     set_battle(b) {
         this._battle = b;
+        this.refAtt();
     }
     get_battle() {
         return this._battle;
@@ -103,18 +118,12 @@ class body_base {
         }
     }
     _addExp(exp) {
-        let att_exp = this.get_att(shareFace_1._att_key.经验值);
-        if (!att_exp) {
-            this.attList.push(new body_com_1.body_bar({ name: 'EXP', key: shareFace_1._att_key.经验值, max: 100, now: 0 }));
-            att_exp = this.get_att(shareFace_1._att_key.经验值);
-        }
-        let v = att_exp.getVal();
-        att_exp.setVal(v + exp);
-        while (att_exp.getVal() >= att_exp.getMax()) {
-            att_exp.setVal(att_exp.getVal() - att_exp.getMax());
-            let leve = this.get_att(shareFace_1._att_key.等级);
-            leve.setVal(leve.getVal() + 1);
-            att_exp.setMax(att_exp.getMax() + leve.getVal() * 100);
+        let v = this.exp.getVal();
+        this.exp.setVal(v + exp);
+        while (this.exp.getVal() >= this.exp.getMax()) {
+            this.exp.setVal(this.exp.getVal() - this.exp.getMax());
+            this.leve.setVal(this.leve.getVal() + 1);
+            this.exp.setMax(this.exp.getMax() + this.leve.getVal() * 100);
         }
     }
     add_buff(key, name, round = 1, val, source) {
@@ -178,6 +187,13 @@ class body_base {
         };
         this.name = data.name || '未命名';
         this.id = data.id || common_1.default.v4();
+        data.exp && (this.exp = new body_com_1.body_bar(data.exp));
+        data.leve && (this.leve = new body_com_1.att_val(data.leve));
+        data.fight && (this.fight = new body_com_1.att_val(data.fight));
+        data.hp && (this.hp = new body_com_1.body_bar(data.hp));
+        data.hp_res && (this.hp_res = new body_com_1.att_val(data.hp_res));
+        data.mp && (this.mp = new body_com_1.body_bar(data.mp));
+        data.mp_res && (this.mp_res = new body_com_1.att_val(data.mp_res));
         if (data.attList) {
             for (let index = 0; index < data.attList.length; index++) {
                 const element = data.attList[index];
@@ -187,6 +203,12 @@ class body_base {
                 }
                 this.attList.push(new TypeClass(element));
             }
+        }
+        if (!data.inherit) {
+            this.inherit = new inherit_1.inherit();
+        }
+        else {
+            this.inherit = new inherit_1.inherit(data.inherit);
         }
         // 背包
         if (data.bag) {
@@ -206,6 +228,42 @@ class body_base {
                 this.addSk_auto(new SKILL_1.SKILL(element));
             }
         }
+        this.updateAtt();
+    }
+    updateAtt() {
+        if (!this._needUpdate) {
+            return;
+        }
+        this._needUpdate = false;
+        // 最终属性=
+        // 角色基础属性 + 血统属性 * 角色等级
+        // 特殊处理:护盾
+        let leve = this.leve.getVal();
+        this.hp.setMax(this.hp.getVal() + this.inherit.get_att(shareFace_1._att_key.生命值) * leve);
+        this.hp_res.setVal(this.hp_res.getVal() + this.inherit.get_att(shareFace_1._att_key.生命恢复) * leve);
+        this.mp.setMax(this.mp.getVal() + this.inherit.get_att(shareFace_1._att_key.魔法值) * leve);
+        this.mp_res.setVal(this.mp_res.getVal() + this.inherit.get_att(shareFace_1._att_key.魔法恢复) * leve);
+        this.dong_hp.setVal(this.dong_hp.getVal() + this.inherit.get_att(shareFace_1._att_key.生命护盾) * leve);
+        this.dong_mp.setVal(this.dong_mp.getVal() + this.inherit.get_att(shareFace_1._att_key.魔法护盾) * leve);
+        this.dong_phy.setVal(this.dong_phy.getVal() + this.inherit.get_att(shareFace_1._att_key.物理护盾) * leve);
+        let base = this.attList;
+        let out = [];
+        for (let i = 0; i < base.length; i++) {
+            const element = base[i];
+            let val = element.getVal() + this.inherit.get_att(element.key);
+            out.push(new body_com_1.att_val({ key: element.key, val: val }));
+        }
+        this._outAtt = out;
+    }
+    refAtt() {
+        this._needUpdate = true;
+    }
+    get_outAtt() {
+        this.updateAtt();
+        return this._outAtt;
+    }
+    active() {
+        this.refAtt();
     }
     /**
      * 弃用
@@ -251,52 +309,60 @@ class body_base {
         });
     }
     is_die() {
-        let att = this.get_att(shareFace_1._att_key.生命值);
-        if (!att) {
-            console.error('Attribute not found:', shareFace_1._att_key.生命值);
-            return true;
-        }
-        let v = att.getVal();
+        let v = this.hp.getVal();
         return v <= 0;
     }
     get_att(key) {
-        let idx = this.attList.findIndex((item, idx) => {
+        this.updateAtt();
+        switch (key) {
+            case shareFace_1._att_key.战斗力:
+                return this.fight;
+            case shareFace_1._att_key.等级:
+                return this.leve;
+            case shareFace_1._att_key.生命值:
+                return this.hp;
+            case shareFace_1._att_key.生命恢复:
+                return this.hp_res;
+            case shareFace_1._att_key.魔法值:
+                return this.mp;
+            case shareFace_1._att_key.魔法恢复:
+                return this.mp_res;
+            case shareFace_1._att_key.经验值:
+                return this.exp;
+            case shareFace_1._att_key.生命护盾:
+                return this.dong_hp;
+            case shareFace_1._att_key.魔法护盾:
+                return this.dong_mp;
+            case shareFace_1._att_key.物理护盾:
+                return this.dong_phy;
+            default:
+                break;
+        }
+        let idx = this._outAtt.findIndex((item, idx) => {
             return (item.key == key || item.name == key);
         });
         if (idx == -1) {
             return undefined;
         }
-        return this.attList[idx];
+        return this._outAtt[idx];
     }
     // 受到伤害
     damage(val, bt) {
-        let att = this.get_att(shareFace_1._att_key.生命值);
-        if (att) {
-            let v = att.getVal();
-            v -= val;
-            att.setVal(v);
-        }
-        else {
-            console.error('Attribute not found:', shareFace_1._att_key.生命值);
-        }
+        let v = this.hp.getVal();
+        v -= val;
+        this.hp.setVal(v);
         if (bt) {
             bt.log_data('承伤', this._group, this.name, val);
         }
     }
     resHp(val, bt) {
-        let att = this.get_att(shareFace_1._att_key.生命值);
-        if (att) {
-            let v = att.getVal();
-            v += val;
-            let max = att.getMax();
-            if (v > max) {
-                v = max;
-            }
-            att.setVal(v);
+        let v = this.hp.getVal();
+        v += val;
+        let max = this.hp.getMax();
+        if (v > max) {
+            v = max;
         }
-        else {
-            console.error('Attribute not found:', shareFace_1._att_key.生命值);
-        }
+        this.hp.setVal(v);
         if (bt) {
             bt.log_data('治疗', this._group, this.name, val);
         }

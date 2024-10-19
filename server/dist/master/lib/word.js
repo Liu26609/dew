@@ -77,26 +77,58 @@ class word {
             this.createMap('主神空间');
         });
     }
+    att_import_cfg(cfg, pass, rang = 0, base = 1) {
+        let arry = [];
+        for (const key in cfg) {
+            if (typeof (shareFace_1._att_key[key]) == 'undefined') {
+                continue;
+            }
+            if (pass.indexOf(shareFace_1._att_key[key]) == -1) {
+                continue;
+            }
+            let data = cfg[key] * base;
+            let value = common_1.default.random(data - cfg[key] * rang / 100, data + cfg[key] * rang / 100);
+            value = Math.min(value, data); // 确保值不为负数
+            arry.push(new body_com_1.att_val({ key: key, val: value || 0 }));
+            // switch (key) {
+            //     case _att_key.物理攻击:
+            //     case _att_key.物理防御:
+            //     case _att_key.魔法攻击:
+            //     case _att_key.魔法防御:
+            //     case _att_key.技能急速:
+            //     case _att_key.物理暴击率:
+            //     case _att_key.魔法暴击率:
+            //     case _att_key.物理护盾:
+            //     case _att_key.魔法护盾:
+            //     case _att_key.生命护盾:
+            //         arry.push(new att_val({ key: key, val: value || 0 }))
+            //         break;
+            //     default:
+            //         break;
+            // }
+        }
+        return arry;
+    }
     createMonster(cfg, option = { leve: 1, diff: 1 }) {
         let data = {};
         option.diff = option.diff / 10;
         data.name = cfg.name;
         data.attList = [];
-        data.attList.push(new body_com_1.att_val({ name: '战斗力', key: shareFace_1._att_key.战斗力, val: 0 }));
-        data.attList.push(new body_com_1.att_val({ name: '等级', key: shareFace_1._att_key.等级, val: option.leve, hide: true }));
-        data.attList.push(new body_com_1.body_bar({ name: '生命值', key: shareFace_1._att_key.生命值, max: cfg[shareFace_1._att_key.生命值] * option.leve * option.diff, now: cfg[shareFace_1._att_key.生命值] * option.leve * option.diff }));
-        data.attList.push(new body_com_1.body_bar({ name: '魔法值', key: shareFace_1._att_key.魔法值, max: cfg[shareFace_1._att_key.魔法值] * option.leve * option.diff, now: cfg[shareFace_1._att_key.魔法值] * option.leve * option.diff }));
-        data.attList.push(new body_com_1.body_bar({ name: '经验值', key: shareFace_1._att_key.经验值, max: 100, now: 0 }));
-        data.attList.push(new body_com_1.att_val({ name: '物理攻击', key: shareFace_1._att_key.物理攻击, val: cfg[shareFace_1._att_key.物理攻击] * option.leve * option.diff }));
-        data.attList.push(new body_com_1.att_val({ name: '物理防御', key: shareFace_1._att_key.物理防御, val: cfg[shareFace_1._att_key.物理防御] * option.leve * option.diff }));
-        data.attList.push(new body_com_1.att_val({ name: '魔法攻击', key: shareFace_1._att_key.魔法攻击, val: cfg[shareFace_1._att_key.魔法攻击] * option.leve * option.diff }));
-        data.attList.push(new body_com_1.att_val({ name: '魔法防御', key: shareFace_1._att_key.魔法防御, val: cfg[shareFace_1._att_key.魔法防御] * option.leve * option.diff }));
-        data.attList.push(new body_com_1.att_val({ name: '技能急速', key: shareFace_1._att_key.技能急速, val: cfg[shareFace_1._att_key.技能急速] * option.leve * option.diff }));
-        data.attList.push(new body_com_1.att_val({ name: '物理暴击率', key: shareFace_1._att_key.物理暴击率, val: cfg[shareFace_1._att_key.物理暴击率] * option.leve * option.diff }));
-        data.attList.push(new body_com_1.att_val({ name: '魔法暴击率', key: shareFace_1._att_key.魔法暴击率, val: cfg[shareFace_1._att_key.魔法暴击率] * option.leve * option.diff }));
-        data.attList.push(new body_com_1.att_val({ name: '物理护盾', key: shareFace_1._att_key.物理护盾, val: cfg[shareFace_1._att_key.物理护盾] * option.leve * option.diff }));
-        data.attList.push(new body_com_1.att_val({ name: '魔法护盾', key: shareFace_1._att_key.魔法护盾, val: cfg[shareFace_1._att_key.魔法护盾] * option.leve * option.diff }));
-        data.attList.push(new body_com_1.att_val({ name: '生命护盾', key: shareFace_1._att_key.生命护盾, val: cfg[shareFace_1._att_key.生命护盾] * option.leve * option.diff }));
+        let arry = [];
+        arry = this.att_import_cfg(cfg, [
+            shareFace_1._att_key.生命值,
+            shareFace_1._att_key.生命恢复,
+            shareFace_1._att_key.魔法值,
+            shareFace_1._att_key.魔法恢复,
+            shareFace_1._att_key.物理攻击,
+            shareFace_1._att_key.魔法攻击,
+            shareFace_1._att_key.物理防御,
+            shareFace_1._att_key.魔法防御,
+            shareFace_1._att_key.技能急速,
+            shareFace_1._att_key.物理暴击率,
+            shareFace_1._att_key.魔法暴击率,
+        ], option.leve * option.diff * 100, option.leve * option.diff);
+        data.attList = data.attList.concat(arry);
         data.sk_active = [];
         let cls = new monster_1.monster(data);
         if (cfg.sk_active) {
@@ -171,7 +203,7 @@ class word {
             return new EffectClass(keys, script, data);
         }
         else {
-            console.info(`!!!Effect class not found for key: ${key}`);
+            debugger;
             return null;
         }
     }
@@ -188,7 +220,7 @@ class word {
             for (const effectType of effectTypes) {
                 const actionPath = path.resolve(__dirname, `./skill/effect/action/${key}/${effectType}`);
                 try {
-                    const effectModule = require(`${actionPath}.ts`);
+                    const effectModule = require(`${actionPath}`);
                     const EffectClass = effectModule.default;
                     this.effectTempMap.set(`action_${key}_${effectType}`, EffectClass);
                 }
@@ -197,7 +229,7 @@ class word {
                 }
                 const buffPath = path.resolve(__dirname, `./skill/effect/buff/${key}/${effectType}`);
                 try {
-                    const effectModule = require(`${buffPath}.ts`);
+                    const effectModule = require(`${buffPath}`);
                     const EffectClass = effectModule.default;
                     this.effectTempMap.set(`buff_${key}_${effectType}`, EffectClass);
                 }

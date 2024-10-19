@@ -3,8 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const shareFace_1 = require("../../../../../../shared/shareFace");
 const common_1 = __importDefault(require("../../../../common"));
-const FACE_BODY_1 = require("../../../../face/FACE_BODY");
 const effect_base_1 = require("../../effect_base");
 class e extends effect_base_1.effect {
     //{
@@ -32,8 +32,8 @@ class e extends effect_base_1.effect {
                 return;
             }
             // 拿到tag防御
-            let def_val = this.get_attVal(FACE_BODY_1._att_key.物理防御, tag);
-            let baoji = this.get_attVal(FACE_BODY_1._att_key.物理暴击率, use);
+            let def_val = this.get_attVal(shareFace_1._att_key.物理防御, tag);
+            let baoji = this.get_attVal(shareFace_1._att_key.物理暴击率, use);
             if (common_1.default.random(0, 100) < baoji) {
                 val = val * 2;
             }

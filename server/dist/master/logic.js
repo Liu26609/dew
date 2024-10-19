@@ -37,7 +37,6 @@ class logic {
                     // });
                     return;
                 }
-                console.log('收到请求---');
                 let onlyid = `${call.req._platform}_${user_id}`;
                 let onLine = user_1.default.locaHas(onlyid);
                 let _user;

@@ -22,7 +22,12 @@ class body_bar extends _bodyCom {
         this.max = 100;
         this.now = 0;
         this.lastTime = Date.now();
-        this.name = data.name || this.name;
+        try {
+            this.name = data.name || data.key;
+        }
+        catch (error) {
+            debugger;
+        }
         this.key = data.key || this.key;
         this.max = data.max || this.max;
         this.now = data.now || this.now;
@@ -78,7 +83,7 @@ class att_val extends _bodyCom {
     constructor(data) {
         super();
         this.hide = false;
-        this.name = data.name;
+        this.name = data.name || data.key;
         this.key = data.key;
         this.val = data.val || 0;
         this.hide = data.hide || this.hide;

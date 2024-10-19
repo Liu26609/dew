@@ -16,8 +16,9 @@ function default_1(call) {
         call.succ({
             name: p.name,
             sys: p.sys,
+            inherit: p.inherit.get_info().name,
             className: p.get_className(),
-            att: p.attList
+            att: [p.leve, p.hp, p.fight, p.exp, ...p.get_outAtt()]
         });
     });
 }

@@ -218,6 +218,7 @@ class battle {
         }
         if (this.round > 1000) {
             console.log('战斗超时回合超过限制');
+            debugger;
             return;
         }
         this.clear_round_log();
