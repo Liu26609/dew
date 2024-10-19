@@ -13,7 +13,7 @@ export class body_bar extends _bodyCom implements _bar {
     name: string = '?';
     key: string = '?';
     max: number = 100
-    now: number = 100
+    now: number = 0
     lastTime: number = Date.now();
     constructor(data: _bar) {
         super()
@@ -79,12 +79,15 @@ export class att_val extends _bodyCom implements _att_val {
         super();
         this.name = data.name;
         this.key = data.key;
-        this.val = data.val;
+        this.val = data.val | 0;
     }
     getVal(){
         return this.val
     }
-    setVal(val:number){
+    setVal(val:number | undefined){
+        if(typeof(val) != 'number'){
+            return;
+        }
         this.val = val;
     }
 }

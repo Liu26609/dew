@@ -4,6 +4,8 @@ import { battle } from "../../../lib/battle/battle";
 import { Item_Type } from "../../../../shared/shareFace";
 import { MSG_BATTLELOG, template } from "../../../../shared/master/MsgAction";
 import { ReqSearch, ResSearch } from "../../../../shared/master/player/map/PtlSearch";
+import { body_base } from "../../../lib/unity/base/body_base";
+import { _att_key } from "../../../lib/face/FACE_BODY";
 
 /**
  * 1.随机匹配怪物
@@ -36,7 +38,7 @@ $at输入[开始历练 + 世界名]进入指定世界`;
         game_over: (b: battle) => {
             console.log('探索战斗结束')
             let log = b.get_log(p.get_group());
-            let gitfs = [{ name: '金币', cont: 1,type:Item_Type.道具 }]
+            let gitfs = b.getGift(p.id);
             let data:MSG_BATTLELOG = {
                 title: "战斗结束",
                 tips: `探索战斗结束`,
@@ -52,6 +54,14 @@ $at输入[开始历练 + 世界名]进入指定世界`;
                 data:data,
                 messageId: ""
             })
+        },
+        // 监听谁击杀了谁
+        log_kill:(b: battle,win:body_base,die:body_base) =>{
+            if(win.id == p.id){
+                let killLeve = die.get_att(_att_key.等级)?.getVal();
+                b.addGift(win.id,{ name: '金币', cont: 1,type:Item_Type.道具 })
+                b.addGift(win.id,{ name: 'EXP', cont: killLeve,type:Item_Type.道具 })
+            }
         }
     }
     p.set_battleLs(ls)

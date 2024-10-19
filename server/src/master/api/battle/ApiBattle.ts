@@ -6,6 +6,9 @@ import { template } from "../../../shared/master/MsgAction";
 export default async function (call: ApiCall<ReqBattle, ResBattle>) {
     // TODO
     let p = call.req._player as player;
+    if(p.is_die()){
+        p.resHp(99999)
+    }
     let b = p.get_battleCall();
     if(!b){
         p.sendMessageg('Action', {

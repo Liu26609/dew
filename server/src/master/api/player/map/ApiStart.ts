@@ -17,7 +17,7 @@ export default async function (call: ApiCall<ReqStart, ResStart>) {
      * 提示已经成功进入世界
      */
     // xlsxToJson.cfg.get('map_测试地图')
-    p.set_mapid('map_测试地图');
+    p.set_mapid('测试地图');
 
     call.succ({})
 }

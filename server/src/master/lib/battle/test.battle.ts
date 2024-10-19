@@ -12,7 +12,7 @@ export class test_battle {
         let data: any = {};
         data.name = `测试单位${common.random(1000, 9999)}`;
         data.attList = [];
-        data.attList.push(new body_bar({ name: '生命值', key: _att_key.生命, max: 100, now: 100 }))
+        data.attList.push(new body_bar({ name: '生命值', key: _att_key.生命值, max: 100, now: 100 }))
         data.attList.push(new att_val({ name: '攻击力', key: _att_key.物理攻击, val: 10 }))
         data.attList.push(new att_val({ name: '防御力', key: _att_key.物理防御, val: 10 }))
 

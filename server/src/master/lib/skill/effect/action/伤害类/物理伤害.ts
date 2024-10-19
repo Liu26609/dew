@@ -35,7 +35,7 @@ class e extends effect {
             // 拿到tag防御
             let def_val = this.get_attVal(_att_key.物理防御, tag);
 
-            let baoji = this.get_attVal(_att_key.暴击率, use);
+            let baoji = this.get_attVal(_att_key.物理暴击率, use);
 
             if (common.random(0, 100) < baoji) {
                 val = val * 2;
@@ -51,7 +51,7 @@ class e extends effect {
             sk.log(this.tag, damage)
             if (tag.is_die()) {
                 console.log(`${use.name}使用${sk.name}击杀了${tag.name}`, '')
-                bt.log_kill(use.name, tag.name)
+                bt.log_kill(use, tag)
             }
         }
 

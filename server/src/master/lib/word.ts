@@ -39,15 +39,28 @@ class word {
         this._startBattleTick();
         this._et();
 
-        this.createMap({ name: '主神空间' });
+        this.createMap('主神空间');
     }
-    createMonster(cfg: any) {
+    createMonster(cfg: any, option = { leve: 1, diff: 1 }) {
         let data: any = {};
+        option.diff = option.diff /10;
         data.name = cfg.name;
         data.attList = [];
-        data.attList.push(new body_bar({ name: '生命值', key: _att_key.生命, max: 100, now: 100 }))
-        data.attList.push(new att_val({ name: '攻击力', key: _att_key.物理攻击, val: 10 }))
-        data.attList.push(new att_val({ name: '防御力', key: _att_key.物理防御, val: 10 }))
+        data.attList.push(new att_val({ name: '战斗力', key: _att_key.战斗力, val: 0 }))
+        data.attList.push(new att_val({ name: '等级', key: _att_key.等级, val: option.leve }))
+        data.attList.push(new body_bar({ name: '生命值', key: _att_key.生命值, max: cfg[_att_key.生命值] * option.leve * option.diff, now: cfg[_att_key.生命值] * option.leve * option.diff }))
+        data.attList.push(new body_bar({ name: '魔法值', key: _att_key.魔法值, max: cfg[_att_key.魔法值] * option.leve * option.diff, now: cfg[_att_key.魔法值] * option.leve * option.diff }))
+        data.attList.push(new body_bar({ name: '经验值', key: _att_key.经验值, max: 100, now: 0 }))
+        data.attList.push(new att_val({ name: '物理攻击', key: _att_key.物理攻击, val: cfg[_att_key.物理攻击] * option.leve * option.diff }))
+        data.attList.push(new att_val({ name: '物理防御', key: _att_key.物理防御, val: cfg[_att_key.物理防御] * option.leve * option.diff }))
+        data.attList.push(new att_val({ name: '魔法攻击', key: _att_key.魔法攻击, val: cfg[_att_key.魔法攻击] * option.leve * option.diff }))
+        data.attList.push(new att_val({ name: '魔法防御', key: _att_key.魔法防御, val: cfg[_att_key.魔法防御] * option.leve * option.diff }))
+        data.attList.push(new att_val({ name: '技能急速', key: _att_key.技能急速, val: cfg[_att_key.技能急速] * option.leve * option.diff }))
+        data.attList.push(new att_val({ name: '物理暴击率', key: _att_key.物理暴击率, val: cfg[_att_key.物理暴击率] * option.leve * option.diff }))
+        data.attList.push(new att_val({ name: '魔法暴击率', key: _att_key.魔法暴击率, val: cfg[_att_key.魔法暴击率] * option.leve * option.diff }))
+        data.attList.push(new att_val({ name: '物理护盾', key: _att_key.物理护盾, val: cfg[_att_key.物理护盾] * option.leve * option.diff }))
+        data.attList.push(new att_val({ name: '魔法护盾', key: _att_key.魔法护盾, val: cfg[_att_key.魔法护盾] * option.leve * option.diff }))
+        data.attList.push(new att_val({ name: '生命护盾', key: _att_key.生命护盾, val: cfg[_att_key.生命护盾] * option.leve * option.diff }))
         data.sk_active = [];
         let cls = new monster(data)
         if (cfg.sk_active) {
@@ -56,19 +69,19 @@ class word {
                 const parts = group.split('as');
                 let temp = parts[0]
                 let rename = parts[1]
-                cls.addSk_active({name:temp,data:{rename:rename}}); // Uncomment and modify this line as needed
+                cls.addSk_active({ name: temp, data: { rename: rename } }); // Uncomment and modify this line as needed
             }
-        }else{
-            cls.addSk_active({name:'普通攻击',data:{rename:'error'}});
+        } else {
+            cls.addSk_active({ name: '普通攻击', data: { rename: 'error' } });
         }
         return cls
     }
-    createMap(data: any) {
+    createMap(id: string) {
         let cfgMap = xlsxToJson.cfg;
-        let monsterCfg = cfgMap.get(data.name)
-        const map = new game_map(data);
+        let monsterCfg = cfgMap.get(`map_${id}`)
+        const map = new game_map(id);
         map.set_monsterCfg(monsterCfg)
-        this._maps.set(map.name, map);
+        this._maps.set(id, map);
         return map;
     }
     /**
@@ -81,7 +94,7 @@ class word {
             name = '主神空间';
         }
         if (!this._maps.has(name)) {
-            this.createMap({ name: name })
+            this.createMap(name)
         }
         return this._maps.get(name) as game_map;
     }

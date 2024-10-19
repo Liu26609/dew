@@ -17,7 +17,7 @@ class e extends effect {
         
         for (let index = 0; index < effList.length; index++) {
             const e = effList[index];
-            this.add_buff(_att_key.暴击率,use,e,this.get_val(use));
+            this.add_buff(_att_key.物理暴击率,use,e,this.get_val(use));
         }
     }
 }

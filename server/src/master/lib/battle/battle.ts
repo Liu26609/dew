@@ -1,4 +1,5 @@
 import { template } from "../../../shared/master/MsgAction";
+import { Item_Type, prop_item } from "../../../shared/shareFace";
 import common from "../common";
 import ET, { ET_K } from "../ET";
 import { battle_group } from "../face/FACE_BODY";
@@ -47,7 +48,7 @@ export class battle {
         this.groupMap.forEach(element => {
             element.forEach(item => {
                 if (item instanceof player) {
-                    item.sendMessageg('Action',{template:template.文本消息,data:`[战场]${msg}`,messageId:''});
+                    item.sendMessageg('Action', { template: template.文本消息, data: `[战场]${msg}`, messageId: '' });
                 }
             });
         });
@@ -69,8 +70,28 @@ export class battle {
             }
         }
     }
-    addGift(id: string, item: any) {
-        this._gift.set(id, item)
+
+    addGift(id: string, item:prop_item) {
+        let list = this._gift.get(id) || [];
+        if (item.type == Item_Type.道具) {
+            let existingItem = list.find((i: any) => i.name === item.name);
+            if (existingItem) {
+                existingItem.cont += item.cont;
+            } else {
+                list.push(item);
+            }
+        } else {
+            list.push(item);
+        }
+        this._gift.set(id, list);
+    }
+    getGift(id, rm = true) {
+        let list: any[] = [];
+        list = this._gift.get(id) || []
+        if (rm) {
+            this._gift.delete(id)
+        }
+        return list;
     }
     log_data(key: string, group: battle_group, name: string, val: number) {
         if (!this._datalog[group][key]) {
@@ -90,11 +111,12 @@ export class battle {
         }
         this._datalog_round[group][key][name] += val;
     }
-    log_kill(name: string, tag: string) {
-        this._killlog.set(common.v4(), { tag, round: this.round, use: name })
+    log_kill(win: body_base, die: body_base) {
+        this._killlog.set(common.v4(), { tag: die.name, round: this.round, use: win.name })
 
         // 回合数据
-        this._killlog_round.set(common.v4(), { tag, round: this.round, use: name })
+        this._killlog_round.set(common.v4(), { tag: die.name, round: this.round, use: win.name })
+        this.callListen('log_kill', [win, die])
     }
     log(group: battle_group, useName: string, skName: string, logs: { key: string, val: any }[]) {
 
@@ -176,7 +198,7 @@ export class battle {
         if (!this._active) {
             return;
         }
-        if (this.round > 600) {
+        if (this.round > 1000) {
             console.log('战斗超时回合超过限制')
             return
         }
@@ -199,10 +221,10 @@ export class battle {
         const homeGroupEmpty = this.groupMap[battle_group.主场].size == 0;
         const awayGroupEmpty = this.groupMap[battle_group.客场].size == 0;
 
-        if((!homeGroupAlive)){
+        if ((!homeGroupAlive)) {
             this.allDie(battle_group.主场);
         }
-        if((!awayGroupAlive)){
+        if ((!awayGroupAlive)) {
             this.allDie(battle_group.客场);
         }
 
@@ -212,7 +234,6 @@ export class battle {
             return;
         }
         this.callListen('rund', [])
-        console.log(`回合:${this.round}结束`)
     }
     private allDie(winG: battle_group) {
         this.callListen('allDie', [winG])
@@ -223,7 +244,7 @@ export class battle {
         this.groupMap.forEach(element => {
             element.forEach(item => {
                 let ls = item.get_battleLs()
-                if(!ls){
+                if (!ls) {
                     return;
                 }
                 ls[key] && ls[key](this, ...data)
@@ -269,7 +290,7 @@ export class battle {
         b.set_group(g);
         b.set_battle(this);
         this.groupMap[g].set(b.id, b);
-        if(this._active){
+        if (this._active) {
             this.notice_all(`玩家[${b.name}]加入了战斗!`)
         }
     }

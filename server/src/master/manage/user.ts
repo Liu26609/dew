@@ -47,13 +47,21 @@ class user {
         let data: any = {};
         data.id = onlyid;
         data.attList = [];
-        data.attList.push(new att_val({ name: '战力', key: _att_key.战斗力, val: 10 }))
-        data.attList.push(new att_val({ name: '等级', key: _att_key.等级, val: 10 }))
-        data.attList.push(new body_bar({ name: '生命值', key: _att_key.生命, max: 100, now: 100 }))
-        data.attList.push(new body_bar({ name: 'EXP', key: _att_key.经验值, max: 100, now: 100 }))
-        data.attList.push(new att_val({ name: '攻击力', key: _att_key.物理攻击, val: 10 }))
-        data.attList.push(new att_val({ name: '防御力', key: _att_key.物理防御, val: 10 }))
-
+        data.attList.push(new att_val({ name: '战斗力', key: _att_key.战斗力, val: 0 }))
+        data.attList.push(new att_val({ name: '等级', key: _att_key.等级, val: 1 }))
+        data.attList.push(new body_bar({ name: '生命值', key: _att_key.生命值, max: 100, now: 100 }))
+        data.attList.push(new body_bar({ name: '魔法值', key: _att_key.魔法值, max: 100, now: 50 }))
+        data.attList.push(new body_bar({ name: '经验值', key: _att_key.经验值, max: 100, now: 0 }))
+        data.attList.push(new att_val({ name: '物理攻击', key: _att_key.物理攻击, val: 10 }))
+        data.attList.push(new att_val({ name: '物理防御', key: _att_key.物理防御, val: 1 }))
+        data.attList.push(new att_val({ name: '魔法攻击', key: _att_key.魔法攻击, val: 0 }))
+        data.attList.push(new att_val({ name: '魔法防御', key: _att_key.魔法防御, val:0 }))
+        data.attList.push(new att_val({ name: '技能急速', key: _att_key.技能急速, val: 0 }))
+        data.attList.push(new att_val({ name: '物理暴击率', key: _att_key.物理暴击率, val: 0 }))
+        data.attList.push(new att_val({ name: '魔法暴击率', key: _att_key.魔法暴击率, val: 0 }))
+        data.attList.push(new att_val({ name: '物理护盾', key: _att_key.物理护盾, val: 0 }))
+        data.attList.push(new att_val({ name: '魔法护盾', key: _att_key.魔法护盾, val: 0 }))
+        data.attList.push(new att_val({ name: '生命护盾', key: _att_key.生命护盾, val: 0 }))
 
         let u = new player(data);
         this.createFix(u)

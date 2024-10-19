@@ -1,3 +1,4 @@
+import xlsxToJson from "../../model/xlsxToJson";
 import { battle } from "../lib/battle/battle";
 import common from "../lib/common";
 import { battle_group } from "../lib/face/FACE_BODY";
@@ -6,14 +7,21 @@ import word from "../lib/word";
 
 export default class game_map {
     name: string = '主神空间';
-    id: string = common.v4();
+    id: string = ''
+    leve: number = 1;
+    diff: number = 1;
+    _id: string = common.v4();
     private _players: Map<string, any> = new Map();
     private _searchs: Map<string, any> = new Map();
-    private _monsterMap:Map<string,any> = new Map();
-    constructor(data: any) {
-        for (const key in data) {
-            this[key] = data[key];
-        }
+    private _monsterMap: Map<string, any> = new Map();
+    constructor(id: string) {
+        let cfgMap = xlsxToJson.cfg;
+        let _mapInfo = cfgMap.get('mapCfg') as Map<string, any>;
+        let mapInfo = _mapInfo.get(id)
+        this.name = mapInfo.name;
+        this.id = `map_${mapInfo.id}`;
+        this.leve = mapInfo.leve;
+        this.diff = mapInfo.diff;
     }
     /**
      * 探索
@@ -25,7 +33,7 @@ export default class game_map {
          */
         let data: any = [];
         for (let i = 0; i < 5; i++) {
-            data.push(word.createMonster(this._monsterMap.get('1')))
+            data.push(word.createMonster(this._monsterMap.get('1'),{leve:this.leve,diff:this.diff}))
         }
         this._searchs.set(p.id, data);
         p.set_battleCall((data: player) => {
@@ -33,8 +41,8 @@ export default class game_map {
         })
         return { type: 'monster', data: data };
     }
-    set_monsterCfg(data:Map<string,any> | undefined){
-        if(!data){
+    set_monsterCfg(data: Map<string, any> | undefined) {
+        if (!data) {
             return;
         }
         this._monsterMap = data;
@@ -52,7 +60,7 @@ export default class game_map {
                 if (win == battle_group.主场) {
                     console.log('探索战斗结束玩家胜利')
                     p.set_battleCall(undefined);
-                }else{
+                } else {
                     console.log('探索战斗结束怪物胜利')
                 }
             }
@@ -65,7 +73,7 @@ export default class game_map {
     active(id: string) {
         this._players.set(id, Date.now());
     }
-    leave(id:string){
+    leave(id: string) {
         this._players.delete(id);
     }
     get_info(id: string) {

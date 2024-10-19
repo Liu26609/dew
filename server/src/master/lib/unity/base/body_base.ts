@@ -61,8 +61,8 @@ export class body_base {
             }
         }
     }
-    wallet_add(key:string,val:number){
-        if(!this.wallet[key]){
+    wallet_add(key: string, val: number) {
+        if (!this.wallet[key]) {
             this.wallet[key] = 0;
         }
         this.wallet[key] += val;
@@ -70,7 +70,7 @@ export class body_base {
     private _addItem_道具(data: any) {
         switch (data.name) {
             case '金币':
-                this.wallet_add(data.name,data.cont)
+                this.wallet_add(data.name, data.cont)
                 break;
             case 'EXP':
                 this._addExp(data.cont)
@@ -87,22 +87,13 @@ export class body_base {
             att_exp = this.get_att(_att_key.经验值) as body_bar;
         }
         let v = att_exp.getVal();
-        let max = att_exp.getMax();
-        while (v + exp >= max) {
-            exp -= (max - v);
+        att_exp.setVal(v + exp)
+        while (att_exp.getVal() >= att_exp.getMax()) {
+            att_exp.setVal(att_exp.getVal() - att_exp.getMax())
             let leve = this.get_att(_att_key.等级) as att_val;
-            if (!leve) {
-                this.attList.push(new att_val({ name: '等级', key: _att_key.等级, val: 1 }))
-                leve = this.get_att(_att_key.等级) as att_val;
-            }
-            if (leve) {
-                leve.setVal(leve.getVal() + 1);
-                att_exp.setMax(att_exp.getMax() + leve.getVal() * 100)
-                att_exp.setVal(0)
-            }
-            v = 0;
+            leve.setVal(leve.getVal() + 1);
+            att_exp.setMax(att_exp.getMax() + leve.getVal() * 100)
         }
-        att_exp.setVal(v);
     }
     add_buff(key: string, name: string, round: number = 1, val: number, source: body_base) {
         let _buff = this._buff_source.get(key) || new Map();
@@ -176,8 +167,8 @@ export class body_base {
             }
         }
         // 背包
-        if(data.bag){
-            this.bag.items =data.bag.items;
+        if (data.bag) {
+            this.bag.items = data.bag.items;
         }
         // 主动技能reload
         if (data.sk_active) {
@@ -239,9 +230,9 @@ export class body_base {
         })
     }
     is_die() {
-        let att = this.get_att(_att_key.生命)
+        let att = this.get_att(_att_key.生命值)
         if (!att) {
-            console.error('Attribute not found:', _att_key.生命);
+            console.error('Attribute not found:', _att_key.生命值);
             return true;
         }
         let v = att.getVal();
@@ -258,20 +249,20 @@ export class body_base {
     }
     // 受到伤害
     damage(val: number, bt?: battle) {
-        let att = this.get_att(_att_key.生命)
+        let att = this.get_att(_att_key.生命值)
         if (att) {
             let v = att.getVal();
             v -= val;
             att.setVal(v);
         } else {
-            console.error('Attribute not found:', _att_key.生命);
+            console.error('Attribute not found:', _att_key.生命值);
         }
         if (bt) {
             bt.log_data('承伤', this._group, this.name, val)
         }
     }
     resHp(val: number, bt?: battle) {
-        let att = this.get_att(_att_key.生命) as body_bar;
+        let att = this.get_att(_att_key.生命值) as body_bar;
         if (att) {
             let v = att.getVal();
             v += val;
@@ -281,7 +272,7 @@ export class body_base {
             }
             att.setVal(v);
         } else {
-            console.error('Attribute not found:', _att_key.生命);
+            console.error('Attribute not found:', _att_key.生命值);
         }
         if (bt) {
             bt.log_data('治疗', this._group, this.name, val)
