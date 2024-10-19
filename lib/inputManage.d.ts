@@ -5,6 +5,7 @@ declare class inputManage {
     constructor();
     init(): void;
     skip(id: string, jude: boolean): void;
+    get_msg(id: string): message;
     input_msg(cls: message): void;
 }
 declare const _default: inputManage;

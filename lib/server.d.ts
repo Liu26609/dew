@@ -4,7 +4,9 @@ declare class server {
     private httpClient;
     private apiUrl;
     private wsClient;
+    init: boolean;
     constructor();
+    dispose(): Promise<void>;
     /**
  * 设置服务器地址
  * @param link

@@ -1,4 +1,4 @@
-import { mail_item } from "../interface";
+import { mail_item } from "../master/interface";
 import { BaseRequest, BaseResponse, BaseConf } from "../protocols/server_mail_base";
 export interface ReqPull extends BaseRequest {
     uuid: string;

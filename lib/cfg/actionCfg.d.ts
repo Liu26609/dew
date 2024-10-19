@@ -1,11 +1,15 @@
-export declare enum matchRule {
-    完全匹配 = 0,
-    正则匹配 = 1
-}
-interface actionCfg {
+interface _data {
+    /**
+     * command
+     */
     key: string;
-    match_rule: matchRule;
+    key_tips: string;
+    /**
+     * usage
+     */
+    tips: string;
+    example: string[];
     path: string;
 }
-declare let cfg: actionCfg[];
-export default cfg;
+declare let actionCfg: _data[];
+export default actionCfg;
