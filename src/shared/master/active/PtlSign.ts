@@ -19,6 +19,10 @@ export interface ResSign extends BaseResponse {
      * 今日排名
      */
     todayRank:number
+    /**
+     * 获得奖励
+     */
+    gitfs:any[];
 }
 
 export const conf: BaseConf = {

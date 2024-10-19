@@ -1,5 +1,4 @@
 const path = require('path');
-import actionCfg, { matchRule } from "./cfg/actionCfg";
 import common from "./lib/common";
 import ET, { ET_K } from "./lib/ET";
 import server from "./server";
@@ -31,39 +30,41 @@ class inputManage {
             this.wait_inputskipMap.delete(id);
         }
     }
+    get_msg(id:string){
+        return this.messageMap.get(id)
+    }
     input_msg(cls: message) {
         if (this.wait_inputskipMap.has(cls.get_userId())) {
             console.log('skip')
             return;
         }
         this.messageMap.set(cls.get_msgId(), cls);
-        console.log('input_msg', cls)
 
         // 根据配置分析内容
-        let str = cls.get_content();
-        let matchCont = 0;
-        for (let index = 0; index < actionCfg.length; index++) {
-            const element = actionCfg[index];
-            if (element.match_rule == matchRule.完全匹配) {
-                if (str == element.key) {
-                    ++matchCont;
-                    const classPath = path.resolve(__dirname, `./action/${element.path}`);
-                    common.importClass(classPath, [cls])
-                }
-            }
-            if (element.match_rule == matchRule.正则匹配) {
-                let reg = new RegExp(element.key);
-                if (reg.test(str)) {
-                    ++matchCont;
-                    const classPath = path.resolve(__dirname, `./action/${element.path}`);
-                    common.importClass(classPath, [cls]);
-                }
-            }
-        }
+        // let str = cls.get_content();
+        // let matchCont = 0;
+        // for (let index = 0; index < actionCfg.length; index++) {
+        //     const element = actionCfg[index];
+        //     if (element.match_rule == matchRule.完全匹配) {
+        //         if (str == element.key) {
+        //             ++matchCont;
+        //             const classPath = path.resolve(__dirname, `./action/${element.path}`);
+        //             common.importClass(classPath, [cls])
+        //         }
+        //     }
+        //     if (element.match_rule == matchRule.正则匹配) {
+        //         let reg = new RegExp(element.key);
+        //         if (reg.test(str)) {
+        //             ++matchCont;
+        //             const classPath = path.resolve(__dirname, `./action/${element.path}`);
+        //             common.importClass(classPath, [cls]);
+        //         }
+        //     }
+        // }
 
-        if (!matchCont) {
-            server.api('Miss', {}, cls)
-        }
+        // if (!matchCont) {
+        //     server.api('Miss', {}, cls)
+        // }
     }
 }
 export default new inputManage();

@@ -1,4 +1,4 @@
-import { mail_item } from "../interface";
+import { mail_item } from "../shareFace";
 import { BaseRequest, BaseResponse, BaseConf } from "../protocols/server_mail_base";
 
 export interface ReqSend extends BaseRequest {

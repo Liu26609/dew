@@ -1,5 +1,5 @@
-import { MSG_BATTLELOG } from "../../interface";
 import { BaseRequest, BaseResponse, BaseConf } from "../../protocols/master_base";
+import { MSG_BATTLELOG } from "../MsgAction";
 
 export interface ReqBattle extends BaseRequest {
 }

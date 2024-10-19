@@ -3,7 +3,7 @@ import { ReqBattle, ResBattle } from "../../../shared/master/debug/PtlBattle";
 import { battle_group } from "../../lib/face/FACE_BODY";
 import { test_battle } from "../../lib/battle/test.battle";
 import { battle } from "../../lib/battle/battle";
-import { MSG_BATTLELOG } from "../../../shared/interface";
+import { MSG_BATTLELOG } from "../../../shared/master/MsgAction";
 
 export default async function (call: ApiCall<ReqBattle, ResBattle>) {
 

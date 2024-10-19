@@ -1,4 +1,4 @@
-import { rank_item } from "../interface";
+import { rank_item } from "../master/interface";
 import { BaseRequest, BaseResponse, BaseConf } from "../protocols/server_rank_base";
 
 export interface ReqUpdate extends BaseRequest {

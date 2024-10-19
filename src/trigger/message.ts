@@ -12,7 +12,7 @@ export default class message {
         this.session = ctx;
         this.platform = p || '未知平台';
 
-        setTimeout(() => { ET.fire(ET_K.input_message, this) }, 0);
+        // setTimeout(() => { ET.fire(ET_K.input_message, this) }, 0);
 
     }
 

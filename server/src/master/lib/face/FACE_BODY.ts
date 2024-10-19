@@ -36,9 +36,3 @@ export enum battle_group {
     主场,
     客场,
 }
-export enum Item_Type{
-    技能书,
-    装备,
-    货币,
-    经验,
-}

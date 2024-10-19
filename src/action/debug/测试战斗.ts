@@ -1,6 +1,6 @@
 import battleText from "../../lib/battleText"
 import server from "../../server"
-import { MSG_BATTLELOG } from "../../shared/interface"
+import { MSG_BATTLELOG, MsgAction } from '../../shared/master/MsgAction';
 import message from "../../trigger/message"
 
 export default class {

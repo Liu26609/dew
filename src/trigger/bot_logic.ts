@@ -7,8 +7,16 @@ const path = require('path');
 export default class bot_logic {
     cls: any;
     constructor(ctx: any) {
-        console.log('事件分析', ctx)
-        this.start(ctx)
+        // console.log('事件分析', ctx)
+    }
+    getCls_msg(ctx){
+        let pf = this._platform(ctx)
+        // 根据平台名称去引入对应的类
+        const classPath = path.resolve(__dirname, `./logic/${pf}`);
+        this.cls = common.importClass(classPath, [ctx])
+        const typePath = path.resolve(__dirname, `./message/${pf}`);
+        let cls = common.importClass(typePath, [ctx])
+        return cls
     }
     private start(ctx: any) {
         // 类型判断

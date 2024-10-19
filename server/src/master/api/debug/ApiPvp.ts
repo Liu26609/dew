@@ -4,8 +4,7 @@ import { battle_group } from "../../lib/face/FACE_BODY";
 import { battle } from "../../lib/battle/battle";
 import { test_battle } from "../../lib/battle/test.battle";
 import { player } from "../../lib/unity/player";
-import { template } from "../../../shared/master/MsgAction";
-import { MSG_BATTLELOG } from "../../../shared/interface";
+import { MSG_BATTLELOG, template } from "../../../shared/master/MsgAction";
 
 export default async function (call: ApiCall<ReqPvp, ResPvp>) {
     let t = new test_battle()

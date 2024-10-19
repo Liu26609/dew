@@ -2,10 +2,12 @@ import { WsClient } from "tsrpc";
 import { ServiceType } from "../../../../shared/master/serviceProto";
 import { battle } from "../../battle/battle";
 import common from "../../common";
-import { _att_key, battle_group, Item_Type } from "../../face/FACE_BODY";
+import { _att_key, battle_group } from "../../face/FACE_BODY";
 import { SKILL_type } from "../../face/FACE_SKILL";
 import { SKILL } from "../../skill/SKILL";
 import { att_line, att_val, body_bar } from "./body_com"
+import bags from "../../bag/bags";
+import { Item_Type, prop_item } from "../../../../shared/shareFace";
 export class body_base {
     id: string = '';
     name: string = '未命名的单位';
@@ -24,6 +26,7 @@ export class body_base {
     private _messageid: string = '';
     private _battle: battle | undefined = undefined;
     private _battleLs: any = undefined;
+    bag: bags = new bags();
     constructor() {
 
     }
@@ -39,14 +42,41 @@ export class body_base {
     get_battle() {
         return this._battle
     }
-    addItem(key: Item_Type, data: any) {
-        switch (key) {
-            case Item_Type.经验:
-                this._addExp(data)
+    addItem(data: prop_item | prop_item[]) {
+        if (!Array.isArray(data)) {
+            data = [data];
+        }
+        for (let i = 0; i < data.length; i++) {
+            const element = data[i];
+            switch (element.type) {
+                case Item_Type.道具:
+                    this._addItem_道具(element);
+                    break;
+                case Item_Type.技能书:
+                    this.bag.addItem(element);
+                    break;
+                default:
+                    console.error('未实现功能', element.type);
+                    break;
+            }
+        }
+    }
+    wallet_add(key:string,val:number){
+        if(!this.wallet[key]){
+            this.wallet[key] = 0;
+        }
+        this.wallet[key] += val;
+    }
+    private _addItem_道具(data: any) {
+        switch (data.name) {
+            case '金币':
+                this.wallet_add(data.name,data.cont)
                 break;
-
+            case 'EXP':
+                this._addExp(data.cont)
+                break;
             default:
-                console.error('未实现功能', key)
+                this.bag.addItem(data);
                 break;
         }
     }
@@ -145,7 +175,10 @@ export class body_base {
                 this.attList.push(new TypeClass(element))
             }
         }
-
+        // 背包
+        if(data.bag){
+            this.bag.items =data.bag.items;
+        }
         // 主动技能reload
         if (data.sk_active) {
             for (let i = 0; i < data.sk_active.length; i++) {
