@@ -95,9 +95,14 @@ image: Dict 图片
   //     common.importClass(classPath, [msg, message])
   //   })
 
-
+  ctx.middleware((session, next) => {
+    session.content = session.content.toLowerCase();
+    session.content = session.content.replace('hp', ' -h');
+    return next()
+  }, true)
   ctx.on('message', async (session) => {
     let _logic = new bot_logic(session)
+
     let msg = _logic.getCls_msg(session)
     inputManage.input_msg(msg)
   })

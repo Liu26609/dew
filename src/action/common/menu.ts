@@ -2,12 +2,13 @@ import message from "../../trigger/message"
 
 export default class {
     constructor(cls:message){
-        cls.addLine('┏┄══✉️菜单列表══━┄')
-        cls.addLine('┃ [活动]查看当前进行的活动')
+        cls.addLine('┏┄══✉️基础指令══━┄')
+        cls.addLine('┃ [探索]查看当前进行的活动')
         cls.addLine('┃ [位置]查看当前位置')
-        cls.addLine('┃ [任务]超多任务等你参与')
-        cls.addLine('┃ [我的]与我相关')
-        cls.addLine('┃ V1.0.2')
+        cls.addLine('┃ [战斗]超多任务等你参与')
+        cls.addLine('┃════✉️提示系统═━┄')
+        cls.addLine('┃ Tips[指令 + hp]可查看指令的描述')
+        cls.addLine('┃ 🌰栗子：探索hp')
         cls.addLine('┗━━━━━━━━━━━━┄')
         cls.send()
     }
