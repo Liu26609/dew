@@ -1,4 +1,5 @@
-import { BaseRequest, BaseResponse, BaseConf } from "../../protocols/master_base";
+import { BaseConf, BaseRequest, BaseResponse } from "../../../protocols/master_base"
+
 /**
  * 探索地图
  */

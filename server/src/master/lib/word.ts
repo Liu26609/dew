@@ -1,3 +1,4 @@
+import xlsxToJson from "../../model/xlsxToJson";
 import game_map from "../manage/map";
 import { battle } from "./battle/battle";
 import common from "./common";
@@ -38,24 +39,35 @@ class word {
         this._startBattleTick();
         this._et();
 
-        this.createMap({ name: '主神空间',id:common.v4() });
+        this.createMap({ name: '主神空间' });
     }
-    createMonster(cfg:any){
+    createMonster(cfg: any) {
         let data: any = {};
-        data.name = `测试怪物${common.random(1000, 9999)}`;
+        data.name = cfg.name;
         data.attList = [];
         data.attList.push(new body_bar({ name: '生命值', key: _att_key.生命, max: 100, now: 100 }))
         data.attList.push(new att_val({ name: '攻击力', key: _att_key.物理攻击, val: 10 }))
         data.attList.push(new att_val({ name: '防御力', key: _att_key.物理防御, val: 10 }))
-
-
         data.sk_active = [];
-        data.sk_active.push('普通攻击','大招')
-
-        return new monster(data)
+        let cls = new monster(data)
+        if (cfg.sk_active) {
+            const groups = cfg.sk_active.split('\n');
+            for (const group of groups) {
+                const parts = group.split('as');
+                let temp = parts[0]
+                let rename = parts[1]
+                cls.addSk_active({name:temp,data:{rename:rename}}); // Uncomment and modify this line as needed
+            }
+        }else{
+            cls.addSk_active({name:'普通攻击',data:{rename:'error'}});
+        }
+        return cls
     }
     createMap(data: any) {
+        let cfgMap = xlsxToJson.cfg;
+        let monsterCfg = cfgMap.get(data.name)
         const map = new game_map(data);
+        map.set_monsterCfg(monsterCfg)
         this._maps.set(map.name, map);
         return map;
     }
@@ -67,6 +79,9 @@ class word {
     getMap(name: string | undefined): game_map {
         if (!name) {
             name = '主神空间';
+        }
+        if (!this._maps.has(name)) {
+            this.createMap({ name: name })
         }
         return this._maps.get(name) as game_map;
     }

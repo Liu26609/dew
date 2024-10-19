@@ -9,7 +9,7 @@ export default class {
     }
 
     async init(cls: message) {
-        let res = await server.api('battle/Search', {}, cls)
+        let res = await server.api('player/map/Search', {}, cls)
         console.log(res)
 
         switch (res.type) {

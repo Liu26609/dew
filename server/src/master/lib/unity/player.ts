@@ -4,12 +4,15 @@ import word from "../word";
 import { body_base } from "./base/body_base";
 
 export class player  extends body_base{
-    id: string = common.v4();
     private _mapid:string|undefined  = undefined;
     private _battleCall:Function|undefined = undefined;
     constructor(data) {
         super();
         this.init(data)
+    }
+    set_mapid(id:string){
+        this.getMap().leave(this.id);
+        this._mapid = id;
     }
     get_mapid(){
         return this._mapid;

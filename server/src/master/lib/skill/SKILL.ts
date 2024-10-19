@@ -31,18 +31,24 @@ export class SKILL {
      * data
      */
     private _log: { key: string, val: any }[] = [];
-    data:any = undefined;
-    constructor(data:any) {
-        if(data.data){
+    data: any = {};
+    constructor(data: any) {
+        if (data.data) {
             this.data = data.data;
         }
         let name = '';
-        if(typeof(data) == 'string'){
+        if (typeof (data) == 'string') {
             name = data;
-        }else{
+            this.data.rename = name;
+        } else {
             name = data.name
         }
-        const temp = JSON.parse(JSON.stringify(cfg_active.get(name)));
+        const temp_res = cfg_active.get(name)
+        if(!temp_res){
+            console.error(`技能不存在`,name)
+            debugger;
+        }
+        const temp = JSON.parse(JSON.stringify(temp_res));
         this.type = temp.type;
         this.name = temp.name;
         this.id = temp.id || common.v4();
@@ -64,8 +70,14 @@ export class SKILL {
             console.error('!!!技能没有效果')
         }
     }
-    save(){
-        return {name:this.name,data:{test:111}}
+    get_name(){
+        if(this.data && this.data.rename){
+            return this.data.rename
+        }
+        return this.name
+    }
+    save() {
+        return { name: this.name, data: this.data }
     }
     clearLog() {
         this._log = [];
@@ -119,11 +131,11 @@ export class SKILL {
         // 遍历effects
         for (let i = 0; i < this.effects.length; i++) {
             const element = this.effects[i];
-            element.active(this, use, _tags, forCont,bt)
+            element.active(this, use, _tags, forCont, bt)
         }
 
         if (this._log.length > 0) {
-            bt.log(use.get_group(), use.name, this.name, this._log)
+            bt.log(use.get_group(), use.name, this.get_name(), this._log)
         }
     }
     /**

@@ -2,6 +2,7 @@ import xlsx from 'xlsx';
 import fs from "fs";
 const PATH = require('path');
 class xlsxToJson {
+    cfg:Map<string,Map<string,any>> = new Map()
     constructor() {
 
     }
@@ -97,7 +98,8 @@ class xlsxToJson {
                         outData.set(outItem.id, outItem)
                     }
                 }
-                // console.log(outData)
+                // console.log(name,outData)
+                this.cfg.set(name,outData)
                 // app.setXlsxCfg(name, outData)
             }
         }

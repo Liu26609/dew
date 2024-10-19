@@ -9,7 +9,7 @@ import common from "./master/lib/common";
 import ET, { ET_K } from "./master/lib/ET";
 const http = require('https');
 async function start() {
-    // xlsxToJson.init()
+    xlsxToJson.init()
     await db.init();
         // await server_mail.startServer(true);
         word.start()

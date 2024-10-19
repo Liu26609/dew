@@ -9,6 +9,7 @@ export default class game_map {
     id: string = common.v4();
     private _players: Map<string, any> = new Map();
     private _searchs: Map<string, any> = new Map();
+    private _monsterMap:Map<string,any> = new Map();
     constructor(data: any) {
         for (const key in data) {
             this[key] = data[key];
@@ -24,13 +25,19 @@ export default class game_map {
          */
         let data: any = [];
         for (let i = 0; i < 5; i++) {
-            data.push(word.createMonster({}))
+            data.push(word.createMonster(this._monsterMap.get('1')))
         }
         this._searchs.set(p.id, data);
         p.set_battleCall((data: player) => {
             return this.battle_monster(data);
         })
         return { type: 'monster', data: data };
+    }
+    set_monsterCfg(data:Map<string,any> | undefined){
+        if(!data){
+            return;
+        }
+        this._monsterMap = data;
     }
     battle_monster(p: player) {
         let data: any = this._searchs.get(p.id);
@@ -57,6 +64,9 @@ export default class game_map {
     }
     active(id: string) {
         this._players.set(id, Date.now());
+    }
+    leave(id:string){
+        this._players.delete(id);
     }
     get_info(id: string) {
 

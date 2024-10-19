@@ -2,7 +2,6 @@ import { ServiceProto } from 'tsrpc-proto';
 import { ReqSign, ResSign } from './active/PtlSign';
 import { ReqBattle, ResBattle } from './battle/PtlBattle';
 import { ReqOut, ResOut } from './battle/PtlOut';
-import { ReqSearch, ResSearch } from './battle/PtlSearch';
 import { ReqSkill, ResSkill } from './debug/bag/PtlSkill';
 import { ReqBattle as ReqBattle_1, ResBattle as ResBattle_1 } from './debug/PtlBattle';
 import { ReqPvp, ResPvp } from './debug/PtlPvp';
@@ -11,6 +10,8 @@ import { MsgAction } from './MsgAction';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
 import { ReqPosition, ResPosition } from './player/info/PtlPosition';
 import { ReqSetName, ResSetName } from './player/info/PtlSetName';
+import { ReqSearch, ResSearch } from './player/map/PtlSearch';
+import { ReqStart, ResStart } from './player/map/PtlStart';
 import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
 import { ReqBuild, ResBuild } from './work/PtlBuild';
@@ -28,10 +29,6 @@ export interface ServiceType {
         "battle/Out": {
             req: ReqOut,
             res: ResOut
-        },
-        "battle/Search": {
-            req: ReqSearch,
-            res: ResSearch
         },
         "debug/bag/Skill": {
             req: ReqSkill,
@@ -60,6 +57,14 @@ export interface ServiceType {
         "player/info/SetName": {
             req: ReqSetName,
             res: ResSetName
+        },
+        "player/map/Search": {
+            req: ReqSearch,
+            res: ResSearch
+        },
+        "player/map/Start": {
+            req: ReqStart,
+            res: ResStart
         },
         "Miss": {
             req: ReqMiss,
@@ -101,14 +106,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 8,
             "name": "battle/Out",
-            "type": "api",
-            "conf": {
-                "check_onlyid": true
-            }
-        },
-        {
-            "id": 12,
-            "name": "battle/Search",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -171,6 +168,22 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 5,
             "name": "player/info/SetName",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 16,
+            "name": "player/map/Search",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 17,
+            "name": "player/map/Start",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -343,69 +356,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Reference",
                         "target": "../protocols/master_base/BaseResponse"
-                    }
-                }
-            ]
-        },
-        "battle/PtlSearch/ReqSearch": {
-            "type": "Interface",
-            "extends": [
-                {
-                    "id": 0,
-                    "type": {
-                        "type": "Reference",
-                        "target": "../protocols/master_base/BaseRequest"
-                    }
-                }
-            ]
-        },
-        "battle/PtlSearch/ResSearch": {
-            "type": "Interface",
-            "extends": [
-                {
-                    "id": 0,
-                    "type": {
-                        "type": "Reference",
-                        "target": "../protocols/master_base/BaseResponse"
-                    }
-                }
-            ],
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "type",
-                    "type": {
-                        "type": "Union",
-                        "members": [
-                            {
-                                "id": 0,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": "monster"
-                                }
-                            },
-                            {
-                                "id": 1,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": "player"
-                                }
-                            },
-                            {
-                                "id": 2,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": "reward"
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "data",
-                    "type": {
-                        "type": "Any"
                     }
                 }
             ]
@@ -757,6 +707,116 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "player/info/PtlSetName/ResSetName": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "player/map/PtlSearch/ReqSearch": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/map/PtlSearch/ResSearch": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "type",
+                    "type": {
+                        "type": "Union",
+                        "members": [
+                            {
+                                "id": 0,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": "monster"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": "player"
+                                }
+                            },
+                            {
+                                "id": 2,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": "reward"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "data",
+                    "type": {
+                        "type": "Any"
+                    }
+                }
+            ]
+        },
+        "player/map/PtlStart/ReqStart": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "Union",
+                        "members": [
+                            {
+                                "id": 0,
+                                "type": {
+                                    "type": "String"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "type": {
+                                    "type": "Literal"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "player/map/PtlStart/ResStart": {
             "type": "Interface",
             "extends": [
                 {
