@@ -15,7 +15,7 @@ declare class server {
     private flowsToken;
     private flowsResConnect;
     private connect;
-    lisentMsg<T extends keyof ServiceType['msg']>(msgName: T | RegExp, handler: any, self: any): any;
+    lisentMsg<T extends keyof ServiceType['msg']>(msgName: T | RegExp, handler: any, self: any): import("tsrpc").ClientMsgHandler<ServiceType, T>;
     setWsUrl(link: string): Promise<unknown>;
     api<T extends keyof ServiceType['api']>(apiName: T, posData: ServiceType['api'][T]['req'], msg?: message): Promise<ServiceType['api'][T]['res'] | undefined>;
 }
