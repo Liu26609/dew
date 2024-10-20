@@ -4,6 +4,7 @@
   "version": "1.0.32",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
+  "type": "commonjs",
   "files": [
     "lib",
     "dist"
@@ -28,8 +29,8 @@
   },
   "peerDependencies": {
     "koishi": "^4.18.0",
-    "uuid": "^10.0.0",
-    "tsrpc": "^3.4.16"
+    "tsrpc": "^3.4.16",
+    "uuid": "^10.0.0"
   },
   "dependencies": {
     "tsrpc": "^3.4.16",
