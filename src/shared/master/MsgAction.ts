@@ -8,7 +8,8 @@ export enum template{
 export interface MsgAction extends BaseMessage {
     template: template;
     messageId:string;
-    data?:any
+    data?:any;
+    delaytime?:number;
 }
 export interface MSG_BATTLELOG{
     /**

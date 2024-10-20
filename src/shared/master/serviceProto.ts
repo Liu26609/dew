@@ -13,6 +13,7 @@ import { ReqPosition, ResPosition } from './player/info/PtlPosition';
 import { ReqSetName, ResSetName } from './player/info/PtlSetName';
 import { ReqInfo, ResInfo } from './player/inherit/PtlInfo';
 import { ReqReset, ResReset } from './player/inherit/PtlReset';
+import { ReqOut as ReqOut_1, ResOut as ResOut_1 } from './player/map/PtlOut';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
 import { ReqMiss, ResMiss } from './PtlMiss';
@@ -72,6 +73,10 @@ export interface ServiceType {
         "player/inherit/Reset": {
             req: ReqReset,
             res: ResReset
+        },
+        "player/map/Out": {
+            req: ReqOut_1,
+            res: ResOut_1
         },
         "player/map/Search": {
             req: ReqSearch,
@@ -207,6 +212,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 22,
             "name": "player/inherit/Reset",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 23,
+            "name": "player/map/Out",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -656,6 +669,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "type": "Any"
                     },
                     "optional": true
+                },
+                {
+                    "id": 3,
+                    "name": "delaytime",
+                    "type": {
+                        "type": "Number"
+                    },
+                    "optional": true
                 }
             ]
         },
@@ -784,6 +805,13 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Number"
                     }
+                },
+                {
+                    "id": 2,
+                    "name": "pgs",
+                    "type": {
+                        "type": "Number"
+                    }
                 }
             ]
         },
@@ -900,6 +928,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "player/inherit/PtlReset/ResReset": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "player/map/PtlOut/ReqOut": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/map/PtlOut/ResOut": {
             "type": "Interface",
             "extends": [
                 {

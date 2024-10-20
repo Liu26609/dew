@@ -52,7 +52,7 @@ export default class message {
     get_userId() {
         return this.session.userId
     }
-    get_msgId(){
+    get_msgId() {
         return this.session.messageId
     }
     get_content() {
@@ -62,18 +62,18 @@ export default class message {
     jude_private() {
         return !!this.session.guildId
     }
-    send() {
+    send(delaytime?: number) {
         let str = '';
         for (let index = 0; index < this.temp.length; index++) {
             const element = this.temp[index];
             // 如果是最后一条数据则不加\n
             if (index === this.temp.length - 1) {
-            str += element.data;
+                str += element.data;
             } else {
-            str += element.data + '\n';
+                str += element.data + '\n';
             }
         }
-        this.session.sendQueued(str)
+        this.session.sendQueued(str, delaytime ? delaytime * 1000 : 0.2)
         this.clear();
     }
 }

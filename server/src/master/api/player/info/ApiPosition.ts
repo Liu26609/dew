@@ -7,6 +7,7 @@ export default async function (call: ApiCall<ReqPosition, ResPosition>) {
     let map = p.getMap();
     call.succ({
         name: map.name,
-        online:map.get_playerCont()
+        online:map.get_playerCont(),
+        pgs:map.get_pgs(p.id)
     })
 }

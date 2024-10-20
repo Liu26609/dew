@@ -55,6 +55,13 @@ actionCfg.push({
     example: ["@bot 位置"],
     path: 'player/info/位置'
 })
+actionCfg.push({
+    key: "世界/离开",
+    key_tips:'离开当前世界回到主神空间',
+    tips: "离开",
+    example: ["@bot 离开"],
+    path: 'player/map/离开'
+})
 
 
 actionCfg.push({

@@ -19,7 +19,7 @@ export class battle {
     private _sklog: any = [{}, {}]; // 技能日志
     private _killlog: Map<string, { tag: string, round: number, use: string }> = new Map();
     private _datalog: any = [{}, {}]; //战斗总计数据
-
+    win: battle_group | undefined = undefined;
     // 回合日志
     private _sklog_round: any = [{}, {}];
     private _killlog_round: Map<string, { tag: string, round: number, use: string }> = new Map();
@@ -55,13 +55,14 @@ export class battle {
     }
     destroy() {
         this._active = false;
+        this.callListen('destroy', [])
         ET.fire(ET_K.battle_destroy, this.id);
-        this.groupMap.forEach(element => {
-            element.forEach(item => {
-                item.set_battle(undefined)
-                item.set_battleLs(undefined)
-            });
-        });
+        // this.groupMap.forEach(element => {
+        //     element.forEach(item => {
+        //         item.set_battle(undefined)
+        //         item.set_battleLs(undefined)
+        //     });
+        // });
         this.groupMap = [];
         // 销毁对象将其从内存中移除
         for (let key in this) {
@@ -73,7 +74,7 @@ export class battle {
 
     addGift(id: string, item:prop_item) {
         let list = this._gift.get(id) || [];
-        if (item.type == Item_Type.道具) {
+        if (item.type == Item_Type.道具 || item.type == Item_Type.none) {
             let existingItem = list.find((i: any) => i.name === item.name);
             if (existingItem) {
                 existingItem.cont += item.cont;
@@ -223,9 +224,11 @@ export class battle {
         const awayGroupEmpty = this.groupMap[battle_group.客场].size == 0;
 
         if ((!homeGroupAlive)) {
+            this.win = battle_group.客场;
             this.allDie(battle_group.主场);
         }
         if ((!awayGroupAlive)) {
+            this.win = battle_group.主场;
             this.allDie(battle_group.客场);
         }
 

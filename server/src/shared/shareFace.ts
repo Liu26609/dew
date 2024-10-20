@@ -5,6 +5,7 @@ export enum Item_Type{
   技能书,
   装备,
   道具,
+  none,
 }
 export interface prop_item{
   name:string 
