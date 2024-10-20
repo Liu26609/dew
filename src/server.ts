@@ -14,7 +14,6 @@ class server {
     async dispose() {
         this.init = false;
         if (this.wsClient) {
-            this.wsClient.unlistenMsgAll();
             this.wsClient.disconnect();
         }
     }
@@ -32,7 +31,7 @@ class server {
         })
     }
     private flowsToken(client: WsClient<any> | HttpClient<any>) {
-        client.flows.preApiReturnFlow.push((v: { return: { isSucc: any; res: { __token: any; }; }; }) => {
+        client.flows.preApiReturnFlow.push((v) => {
             if (v.return.isSucc) {
                 if (v.return.res.__token) {
                     // tokenMap.set('_token', v.return.res.__token)
@@ -72,7 +71,6 @@ class server {
         return new Promise(async (resolve, reject) => {
             this.apiUrl = link;
             this.wsClient = new WsClient(serviceProto, { server: this.apiUrl });
-            this.wsClient.unlistenMsgAll();
             const connect = await this.wsClient.connect();
             // this.flowsToken(this.wsClient);
             this.flowsResConnect(this.wsClient);

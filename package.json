@@ -31,15 +31,6 @@
     "uuid": "^10.0.0",
     "tsrpc": "^3.4.16"
   },
-  "koishi": {
-    "service": {
-      "required": [
-        "tsrpc"
-      ],
-      "optional": [],
-      "implements": []
-    }
-  },
   "dependencies": {
     "tsrpc": "^3.4.16",
     "uuid": "^10.0.0"
