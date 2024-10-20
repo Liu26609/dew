@@ -94,9 +94,9 @@ class word {
         ], option.leve * option.diff * 100,option.leve * option.diff)
         data.attList = data.attList.concat(arry);
 
-
         data.sk_active = [];
         let cls = new monster(data)
+        cls.inherit.reset(data.sys)
         if (cfg.sk_active) {
             const groups = cfg.sk_active.split('\n');
             for (const group of groups) {

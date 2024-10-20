@@ -47,7 +47,7 @@ export class body_base {
     bag: bags = new bags();
     sys: string = '修仙';
     // 继承血统
-    inherit!: inherit;
+    inherit: inherit = new inherit();
     private _outAtt: (att_line | att_val | body_bar)[] = []
     private _needUpdate: boolean = false;
     constructor() {

@@ -19,7 +19,7 @@ export default class {
         }
         cls.addLine('┏┄══✉️我的属性══━┄')
         cls.addLine(`🧙${req.name}`)
-        cls.addLine(`🔯血统)${req.inherit}[${req.className}]`)
+        cls.addLine(`🔯血统:${req.inherit}[${req.className}]`)
         let attList = req.att;
         for (let i = 0; i < attList.length; i++) {
             const att = attList[i];

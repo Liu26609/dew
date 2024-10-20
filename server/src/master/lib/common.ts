@@ -21,5 +21,31 @@ class common {
         const EffectClass = effectModule.default;
         return new EffectClass(...agm);
     }
+    sanitizeObject(obj) {
+        if (typeof obj !== 'object' || obj === null) {
+            return obj;
+        }
+        if (obj.save && typeof (obj.save) == 'function') {
+            try {
+                return obj.save();
+            } catch (error) {
+                debugger
+            }
+        }
+        const sanitizedObj = Array.isArray(obj) ? [] : {};
+
+        for (const prop in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+                if (typeof (obj[prop]) == 'function') {
+                    continue;
+                }
+                if (!prop.startsWith('_')) {
+                    sanitizedObj[prop] = this.sanitizeObject(obj[prop]);
+                }
+            }
+        }
+
+        return sanitizedObj;
+    }
 }
 export default new common()
