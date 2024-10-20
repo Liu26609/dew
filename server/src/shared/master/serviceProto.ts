@@ -11,6 +11,8 @@ import { MsgAction } from './MsgAction';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
 import { ReqPosition, ResPosition } from './player/info/PtlPosition';
 import { ReqSetName, ResSetName } from './player/info/PtlSetName';
+import { ReqInfo, ResInfo } from './player/inherit/PtlInfo';
+import { ReqReset, ResReset } from './player/inherit/PtlReset';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
 import { ReqMiss, ResMiss } from './PtlMiss';
@@ -63,6 +65,14 @@ export interface ServiceType {
             req: ReqSetName,
             res: ResSetName
         },
+        "player/inherit/Info": {
+            req: ReqInfo,
+            res: ResInfo
+        },
+        "player/inherit/Reset": {
+            req: ReqReset,
+            res: ResReset
+        },
         "player/map/Search": {
             req: ReqSearch,
             res: ResSearch
@@ -90,7 +100,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 14,
+    "version": 18,
     "services": [
         {
             "id": 7,
@@ -181,6 +191,22 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 5,
             "name": "player/info/SetName",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 19,
+            "name": "player/inherit/Info",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 22,
+            "name": "player/inherit/Reset",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -783,6 +809,97 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "player/info/PtlSetName/ResSetName": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "player/inherit/PtlInfo/ReqInfo": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/inherit/PtlInfo/ResInfo": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "from",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "sys",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "skills",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "String"
+                        }
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "att",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Any"
+                        }
+                    }
+                }
+            ]
+        },
+        "player/inherit/PtlReset/ReqReset": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/inherit/PtlReset/ResReset": {
             "type": "Interface",
             "extends": [
                 {

@@ -39,6 +39,7 @@ export class inherit {
         if (id) {
             info = list.get(id)
         } else {
+            this.sk_active = [];
             // 随机一个
             let keys = [...list.keys()]
             let key = common.random(0, keys.length - 1)
