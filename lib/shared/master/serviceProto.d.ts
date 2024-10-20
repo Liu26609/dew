@@ -11,6 +11,9 @@ import { MsgAction } from './MsgAction';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
 import { ReqPosition, ResPosition } from './player/info/PtlPosition';
 import { ReqSetName, ResSetName } from './player/info/PtlSetName';
+import { ReqInfo, ResInfo } from './player/inherit/PtlInfo';
+import { ReqReset, ResReset } from './player/inherit/PtlReset';
+import { ReqOut as ReqOut_1, ResOut as ResOut_1 } from './player/map/PtlOut';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
 import { ReqMiss, ResMiss } from './PtlMiss';
@@ -61,6 +64,18 @@ export interface ServiceType {
         "player/info/SetName": {
             req: ReqSetName;
             res: ResSetName;
+        };
+        "player/inherit/Info": {
+            req: ReqInfo;
+            res: ResInfo;
+        };
+        "player/inherit/Reset": {
+            req: ReqReset;
+            res: ResReset;
+        };
+        "player/map/Out": {
+            req: ReqOut_1;
+            res: ResOut_1;
         };
         "player/map/Search": {
             req: ReqSearch;

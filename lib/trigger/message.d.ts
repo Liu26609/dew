@@ -24,5 +24,5 @@ export default class message {
     get_msgId(): any;
     get_content(): any;
     jude_private(): boolean;
-    send(): void;
+    send(delaytime?: number): void;
 }

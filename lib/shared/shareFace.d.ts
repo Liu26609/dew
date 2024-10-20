@@ -2,7 +2,8 @@ export declare enum Item_Type {
     经验 = 0,
     技能书 = 1,
     装备 = 2,
-    道具 = 3
+    道具 = 3,
+    none = 4
 }
 export interface prop_item {
     name: string;
