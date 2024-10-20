@@ -292,8 +292,11 @@ export class body_base {
         if (this.is_die()) {
             return;
         }
+        let allSkill: SKILL[] = [];
+        allSkill = allSkill.concat(this.sk_active);
+        allSkill = allSkill.concat(this.inherit.sk_active);
         // 1.过滤出CD符合的技能
-        let availableSkills = this.sk_active.filter(skill => skill.next_round() == 0);
+        let availableSkills = allSkill.filter(skill => skill.next_round() == 0);
         if (availableSkills.length === 0) {
             console.log('No cd skills');
             return;

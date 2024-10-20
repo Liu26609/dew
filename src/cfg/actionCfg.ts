@@ -92,5 +92,11 @@ actionCfg.push({
     example: ["@机器人 属性"],
     path: 'player/info/属性'
 })
-
+actionCfg.push({
+    key: "角色/血统 <操作:string>",
+    key_tips:'角色血统相关指令',
+    tips: "血统",
+    example: ["@机器人 血统(查看血统信息)","@机器人 血统 重置"],
+    path: 'player/info/血统'
+})
 export default actionCfg;
