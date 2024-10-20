@@ -1,22 +1,24 @@
-import { Context, Schema, Time } from 'koishi'
+import { Command, Context, Schema, Time } from 'koishi'
 import bot_logic from './trigger/bot_logic'
 import ET from './lib/ET'
 import server from './server'
 import inputManage from './inputManage'
 import common from './lib/common'
 import actionCfg from './cfg/actionCfg'
+import { Trie } from './lib/trie'
 export const name = 'dew-bot'
 const path = require('path');
 export interface Config {
   调试模式: boolean,
+  忽略指令空格: boolean,
   服务器地址: string,
 }
 export let log: any
 
 export const Config: Schema<Config> = Schema.object({
-  调试模式: Schema.boolean().default(true),
-  // 服务器地址: Schema.string().default('ws://139.159.214.249:8848')
-  服务器地址: Schema.string().default('ws://127.0.0.1:8848')
+  调试模式: Schema.boolean().default(true).description('个人开发调试用'),
+  忽略指令空格: Schema.boolean().default(false).description('默认允许省略指令名后的空格'),
+  服务器地址: Schema.string().default('ws://139.159.214.249:8848')
   // 139.159.214.249
 })
 
@@ -32,6 +34,11 @@ export async function apply(ctx: Context, config: Config) {
     // 在插件停用时关闭端口
     server.dispose()
   })
+
+  reg_ignoreSeperator(ctx, config)
+
+
+
   for (let index = 0; index < actionCfg.length; index++) {
     const element = actionCfg[index];
     let cls = ctx.command(element.key, `💡${element.key_tips}`)
@@ -49,7 +56,7 @@ export async function apply(ctx: Context, config: Config) {
       }
     }
 
-    cls.action((_:any, ag:any) => {
+    cls.action((_: any, ag: any) => {
       const classPath = path.resolve(__dirname, `./action/${element.path}`);
       let msg = inputManage.get_msg(_.session.messageId)
       common.importClass(classPath, [msg, ..._.args])
@@ -97,7 +104,7 @@ image: Dict 图片
   //     common.importClass(classPath, [msg, message])
   //   })
 
-  ctx.middleware((session:any, next) => {
+  ctx.middleware((session: any, next) => {
     session.content = session.content.toLowerCase();
     session.content = session.content.replace('hp', ' -h');
     return next()
@@ -107,5 +114,28 @@ image: Dict 图片
 
     let msg = _logic.getCls_msg(session)
     inputManage.input_msg(msg)
+  })
+}
+
+export function reg_ignoreSeperator(ctx: Context, config: Config) {
+  const trie = new Trie()
+  const applyCommand = async (command: Command) => {
+    if (!command) return
+    await Promise.resolve()
+    const aliases = [...Object.keys(command._aliases), ...Object.keys(command.config['aliases'] ?? {})]
+    for (const name of aliases) {
+      trie.insert(name)
+    }
+    command._disposables.push(() => aliases.splice(0, aliases.length).forEach(trie.remove.bind(trie)))
+  }
+  ctx.$commander._commandList.forEach(applyCommand)
+  ctx.on('command-added', applyCommand)
+  ctx.on('command-updated', applyCommand)
+  ctx.middleware(async (session, next) => {
+    const key = trie.prefixes(Command.normalize(session.stripped.content?.split(' ')[0] ?? ''))
+      .filter((key) => ctx.$commander.get(key)?.config['忽略指令空格'] ?? CFG.忽略指令空格)
+      ?.[0]
+    if (!key) return next()
+    await session.execute([session.stripped.content.slice(0, key.length), session.stripped.content.slice(key.length)].join(' '), next)
   })
 }

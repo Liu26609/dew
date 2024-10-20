@@ -1,14 +1,32 @@
+import { off } from "process";
 import db from "../../model/db/db";
 import { _att_key } from "../../shared/shareFace";
 import common from "../lib/common";
 import { SKILL_type, SKILL_target, SKILL_rang, SKILL_eff_path, SKILL_eff_type, SKILL_eff_type_伤害类 } from "../lib/face/FACE_SKILL";
 import { body_bar, att_val } from "../lib/unity/base/body_com";
 import { player } from "../lib/unity/player"
+import cron from 'node-cron';
 
 class user {
     userMap: Map<string, player> = new Map();
     constructor() {
-
+        cron.schedule('*/1 * * * *', this.checkOffLine.bind(this));
+    }
+    // node-cron定时每间隔5分钟遍历一次用户列表，将超过5分钟未活跃的用户移除
+    private checkOffLine() {
+        console.log('Checking inactive users...');
+        const now = Date.now();
+        this.userMap.forEach((user, key) => {
+            if (now - user.lastActiveTime > 5 * 60 * 1000) { // 5 minutes in milliseconds
+                this.offLine(user.id);
+            }
+        });
+    }
+    offLine(onlyid: string) {
+        // TODO: 检查玩家是否还处于战斗中，如果是则不移除
+        this.save(onlyid);
+        console.log(`Removed inactive user: ${onlyid}`);
+        this.userMap.delete(onlyid);
     }
     locaHas(onlyid: string) {
         return this.userMap.get(onlyid)
