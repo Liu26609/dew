@@ -8,6 +8,7 @@ import { ReqBattle as ReqBattle_1, ResBattle as ResBattle_1 } from './debug/PtlB
 import { ReqPvp, ResPvp } from './debug/PtlPvp';
 import { ReqSave, ResSave } from './debug/PtlSave';
 import { MsgAction } from './MsgAction';
+import { ReqList, ResList } from './player/bag/PtlList';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
 import { ReqPosition, ResPosition } from './player/info/PtlPosition';
 import { ReqSetName, ResSetName } from './player/info/PtlSetName';
@@ -16,6 +17,10 @@ import { ReqReset, ResReset } from './player/inherit/PtlReset';
 import { ReqOut as ReqOut_1, ResOut as ResOut_1 } from './player/map/PtlOut';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
+import { ReqList as ReqList_1, ResList as ResList_1 } from './player/skill/PtlList';
+import { ReqLook, ResLook } from './player/skill/PtlLook';
+import { ReqRename, ResRename } from './player/skill/PtlRename';
+import { ReqRm, ResRm } from './player/skill/PtlRm';
 import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
 import { ReqBuild, ResBuild } from './work/PtlBuild';
@@ -53,6 +58,10 @@ export interface ServiceType {
             req: ReqSave;
             res: ResSave;
         };
+        "player/bag/List": {
+            req: ReqList;
+            res: ResList;
+        };
         "player/info/GetBase": {
             req: ReqGetBase;
             res: ResGetBase;
@@ -84,6 +93,22 @@ export interface ServiceType {
         "player/map/Start": {
             req: ReqStart;
             res: ResStart;
+        };
+        "player/skill/List": {
+            req: ReqList_1;
+            res: ResList_1;
+        };
+        "player/skill/Look": {
+            req: ReqLook;
+            res: ResLook;
+        };
+        "player/skill/Rename": {
+            req: ReqRename;
+            res: ResRename;
+        };
+        "player/skill/Rm": {
+            req: ReqRm;
+            res: ResRm;
         };
         "Miss": {
             req: ReqMiss;
