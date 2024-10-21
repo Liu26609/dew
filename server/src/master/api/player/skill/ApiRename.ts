@@ -24,7 +24,7 @@ export default async function (call: ApiCall<ReqRename, ResRename>) {
     }
     // 不能包含换行符号
  
-    if (name.includes('as') || name.includes('As') || name.includes('@at') || name.includes('<') || name.includes('>') || name.includes('\\')) {
+    if (name.includes('as') || name.includes('/') || name.includes('@at') || name.includes('<') || name.includes('>') || name.includes('\\')) {
         p.sendMessageg('Action', {
             template: template.文本消息,
             data: `名字不能包含系统保留字`,

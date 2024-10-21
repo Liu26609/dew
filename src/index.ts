@@ -111,6 +111,7 @@ image: Dict 图片
 
   ctx.middleware((session: any, next) => {
     session.content = session.content.toLowerCase();
+    session.content = session.content.replace('/', '');
     session.content = session.content.replace('hp', ' -h');
     return next()
   }, true)
