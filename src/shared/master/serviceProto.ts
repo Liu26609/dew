@@ -17,6 +17,10 @@ import { ReqReset, ResReset } from './player/inherit/PtlReset';
 import { ReqOut as ReqOut_1, ResOut as ResOut_1 } from './player/map/PtlOut';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
+import { ReqList as ReqList_1, ResList as ResList_1 } from './player/skill/PtlList';
+import { ReqLook, ResLook } from './player/skill/PtlLook';
+import { ReqRename, ResRename } from './player/skill/PtlRename';
+import { ReqRm, ResRm } from './player/skill/PtlRm';
 import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
 import { ReqBuild, ResBuild } from './work/PtlBuild';
@@ -91,6 +95,22 @@ export interface ServiceType {
             req: ReqStart,
             res: ResStart
         },
+        "player/skill/List": {
+            req: ReqList_1,
+            res: ResList_1
+        },
+        "player/skill/Look": {
+            req: ReqLook,
+            res: ResLook
+        },
+        "player/skill/Rename": {
+            req: ReqRename,
+            res: ResRename
+        },
+        "player/skill/Rm": {
+            req: ReqRm,
+            res: ResRm
+        },
         "Miss": {
             req: ReqMiss,
             res: ResMiss
@@ -110,7 +130,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 19,
+    "version": 22,
     "services": [
         {
             "id": 7,
@@ -249,6 +269,38 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 17,
             "name": "player/map/Start",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 25,
+            "name": "player/skill/List",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 26,
+            "name": "player/skill/Look",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 27,
+            "name": "player/skill/Rename",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 28,
+            "name": "player/skill/Rm",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -1099,6 +1151,187 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "player/map/PtlStart/ResStart": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "player/skill/PtlList/ReqList": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/skill/PtlList/ResList": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "list",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Interface",
+                            "properties": [
+                                {
+                                    "id": 0,
+                                    "name": "name",
+                                    "type": {
+                                        "type": "String"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "player/skill/PtlLook/ReqLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "idx",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "player/skill/PtlLook/ResLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "cd",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "type",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "desc",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "player/skill/PtlRename/ReqRename": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "idx",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "rename",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "player/skill/PtlRename/ResRename": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "player/skill/PtlRm/ReqRm": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "idx",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "player/skill/PtlRm/ResRm": {
             "type": "Interface",
             "extends": [
                 {

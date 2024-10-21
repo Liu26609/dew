@@ -4,7 +4,7 @@ import game_map from "../manage/map";
 import { battle } from "./battle/battle";
 import common from "./common";
 import ET, { ET_K } from "./ET";
-import { SKILL_rang, SKILL_eff_type, SKILL_eff_type_伤害类, SKILL_eff_type_增益类, SKILL_eff_path, SKILL_target, SKILL_type } from "./face/FACE_SKILL";
+import { SKILL_rang, SKILL_eff_type, SKILL_eff_type_伤害类, SKILL_eff_type_增益类, SKILL_eff_path, SKILL_target } from "./face/FACE_SKILL";
 import { effect } from "./skill/effect/effect_base";
 import { body_bar, att_val } from "./unity/base/body_com";
 import { monster } from "./unity/monster";

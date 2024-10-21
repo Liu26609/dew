@@ -54,6 +54,7 @@ export async function apply(ctx: Context, config: Config) {
       cls.usage(`════🔵指令描述═━┄\n${element.tips}`)
     }
     if (element.example.length > 0) {
+      cls.example(`✨别忘了指令的空格哦✨`)
       for (let i = 0; i < element.example.length; i++) {
         const example = element.example[i];
         cls.example(`🌰${example}`)

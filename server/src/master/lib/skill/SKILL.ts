@@ -1,7 +1,8 @@
+import { SKILL_type } from "../../../shared/shareFace";
 import cfg_active from "../../cfg/skillCfg/active_Cfg";
 import { battle } from "../battle/battle";
 import common from "../common";
-import { SKILL_rang, SKILL_target, SKILL_type } from "../face/FACE_SKILL";
+import { SKILL_rang, SKILL_target } from "../face/FACE_SKILL";
 import { body_base } from "../unity/base/body_base";
 import { unity } from "../unity/unity";
 import word from "../word";
@@ -69,6 +70,9 @@ export class SKILL {
         } else {
             console.error('!!!技能没有效果')
         }
+    }
+    set_rename(name: string) {
+        this.data.rename = name;
     }
     get_name(){
         if(this.data && this.data.rename){

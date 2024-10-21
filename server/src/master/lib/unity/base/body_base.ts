@@ -3,7 +3,6 @@ import { ServiceType } from "../../../../shared/master/serviceProto";
 import { battle } from "../../battle/battle";
 import common from "../../common";
 import { battle_group } from "../../face/FACE_BODY";
-import { SKILL_type } from "../../face/FACE_SKILL";
 import { SKILL } from "../../skill/SKILL";
 import { att_line, att_val, body_bar } from "./body_com"
 import bags from "../../bag/bags";
@@ -287,14 +286,32 @@ export class body_base {
     addSk_active(data: any) {
         this.sk_active.push(new SKILL(data));
     }
+    /**
+     * 移除自身技能
+     * @param idx 
+     */
+    rm_skill(idx:number) {
+        if (idx < 0 || idx >= this.sk_active.length) {
+            return;
+        }
+        this.sk_active.splice(idx, 1);
+    }
+    /**
+     * 
+     * @returns 获取所有技能
+     */
+    get_skill_all() {
+        let allSkill: SKILL[] = [];
+        allSkill = allSkill.concat(this.sk_active);
+        allSkill = allSkill.concat(this.inherit.sk_active);
+        return allSkill;
+    }
     /**此单位战斗回合开始 */
     battle_round_begins(bt: battle) {
         if (this.is_die()) {
             return;
         }
-        let allSkill: SKILL[] = [];
-        allSkill = allSkill.concat(this.sk_active);
-        allSkill = allSkill.concat(this.inherit.sk_active);
+        let allSkill = this.get_skill_all();
         // 1.过滤出CD符合的技能
         let availableSkills = allSkill.filter(skill => skill.next_round() == 0);
         if (availableSkills.length === 0) {
