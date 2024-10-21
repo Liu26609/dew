@@ -1,7 +1,7 @@
 # koishi-plugin-dew-bot
 
 [![npm](https://img.shields.io/npm/v/koishi-plugin-dew-bot?style=flat-square)](https://www.npmjs.com/package/koishi-plugin-dew-bot)
-![View Counter](https://komarev.com/ghpvc/?username=your-github-username&color=green)
+![View Counter](https://komarev.com/ghpvc/?username=Liu26609&color=green)
 
 # 简介
 RPG大型多人文字RPG游戏
