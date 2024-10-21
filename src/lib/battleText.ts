@@ -9,7 +9,7 @@ class battleText {
         // 战斗数据模块
         let dataLog_A = data
         let dataLog = ''
-        dataLog += `╞════🔵战斗数据═━┄\n`
+        dataLog += `╞═══🔵战斗数据═━┄\n`
         let dataUnityMap = new Map();
         for (const key in dataLog_A) {
             const data = dataLog_A[key];
@@ -24,7 +24,7 @@ class battleText {
                 }
                 dataUnityMap.set(name, unityData)
             }
-            dataLog += `│▌总${key}${val}`;
+            dataLog += `│▌总${key}${val.toFixed(2)}`;
         }
         dataLog += '\n';
         dataUnityMap.forEach((unity, name) => {
@@ -51,7 +51,7 @@ class battleText {
                 let effArry = element[skName];
                 for (let i = 0; i < effArry.length; i++) {
                     const effItem = effArry[i];
-                    line += `🗡${effItem.val}`;
+                    line += `🗡${effItem.val.toFixed(2)}`;
                 }
             }
             text += line + '\n'
@@ -66,7 +66,7 @@ class battleText {
         if(killLog.length == 0){
             return ''
         }
-        let temp = `╞════🔵击杀统计═━┄\n`
+        let temp = `╞═══🔵击杀统计═━┄\n`
         for (let index = 0; index < killLog.length; index++) {
             const element = killLog[index];
             temp += `${element.round}->🐍${element.use}击杀🐍${element.tag}\n`

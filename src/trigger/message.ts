@@ -64,6 +64,9 @@ export default class message {
     }
     send(delaytime?: number) {
         let str = '';
+        if(this.platform === 'qq') {
+            str += '\n';
+        }
         for (let index = 0; index < this.temp.length; index++) {
             const element = this.temp[index];
             // 如果是最后一条数据则不加\n
