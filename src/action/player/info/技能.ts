@@ -13,9 +13,10 @@ export default class {
     async start(cls: message, ...data) {
         if (!data || data.length == 0) {
             this.look(cls)
-        } else if (data.length > 1) {
+        } else if (data.length >= 1) {
             let actionKey = data[0]
             let skill_id = data[1]
+            console.log('actionKey',actionKey)
             switch (actionKey) {
                 case '查看':
                     this.look_index(cls, skill_id)
@@ -27,7 +28,8 @@ export default class {
                     this.rename(cls, skill_id, data[2])
                     break;
                 default:
-                    this.look(cls)
+                    cls.addLine('你好像输入了一个无效指令呢~[指令 + hp]可查看帮助')
+                    cls.send()
                     break;
             }
         }

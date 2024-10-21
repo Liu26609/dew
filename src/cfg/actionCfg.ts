@@ -109,7 +109,7 @@ actionCfg.push({
 actionCfg.push({
     key: "角色/技能 <操作:string><技能ID:number>",
     key_tips:'角色技能相关指令',
-    tips: '📖手册www.baidu.com',
+    tips: '📖手册(:文档还在编辑哩',
     example: [
         "@bot 技能(查看技能列表)",
         "@bot 技能查看 技能ID",
