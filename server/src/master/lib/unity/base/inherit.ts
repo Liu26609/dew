@@ -13,7 +13,7 @@ export class inherit {
     constructor(data?: any) {
         if (data) {
             this.id = data.id;
-            this.attList = data.attList;
+            this.attList = data.attList || [];
         }
         if (this.attList.length == 0) {
             this.reset()

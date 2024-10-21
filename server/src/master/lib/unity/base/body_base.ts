@@ -5,10 +5,10 @@ import common from "../../common";
 import { battle_group } from "../../face/FACE_BODY";
 import { SKILL } from "../../skill/SKILL";
 import { att_line, att_val, body_bar } from "./body_com"
-import bags from "../../bag/bags";
 import { _att_key, Item_Type, prop_item } from "../../../../shared/shareFace";
 import xlsxToJson from "../../../../model/xlsxToJson";
 import { inherit } from "./inherit";
+import bags from "./bags";
 export class body_base {
     id: string = '';
     name: string = '未命名的单位';
@@ -243,7 +243,7 @@ export class body_base {
         }
         this._needUpdate = false;
         // 最终属性=
-        // 角色基础属性 + 血统属性 * 角色等级
+        // 角色基础属性 + 血统属性 * 角色等级 + 装备属性
         // 特殊处理:护盾
         let leve = this.leve.getVal();
         this.hp.setMax(this.hp.getVal() + this.inherit.get_att(_att_key.生命值) * leve)

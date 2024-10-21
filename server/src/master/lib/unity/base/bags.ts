@@ -1,4 +1,4 @@
-import { Item_Type, prop_item } from "../../../shared/shareFace";
+import { Item_Type, prop_item } from "../../../../shared/shareFace";
 
 export default class bags{
     items:prop_item[] = []
