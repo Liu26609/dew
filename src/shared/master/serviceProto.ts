@@ -8,6 +8,7 @@ import { ReqBattle as ReqBattle_1, ResBattle as ResBattle_1 } from './debug/PtlB
 import { ReqPvp, ResPvp } from './debug/PtlPvp';
 import { ReqSave, ResSave } from './debug/PtlSave';
 import { MsgAction } from './MsgAction';
+import { ReqList, ResList } from './player/bag/PtlList';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
 import { ReqPosition, ResPosition } from './player/info/PtlPosition';
 import { ReqSetName, ResSetName } from './player/info/PtlSetName';
@@ -53,6 +54,10 @@ export interface ServiceType {
         "debug/Save": {
             req: ReqSave,
             res: ResSave
+        },
+        "player/bag/List": {
+            req: ReqList,
+            res: ResList
         },
         "player/info/GetBase": {
             req: ReqGetBase,
@@ -105,7 +110,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 18,
+    "version": 19,
     "services": [
         {
             "id": 7,
@@ -176,6 +181,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "name": "Action",
             "type": "msg",
             "conf": {}
+        },
+        {
+            "id": 24,
+            "name": "player/bag/List",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
         },
         {
             "id": 11,
@@ -701,6 +714,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 3,
                     "value": "文本消息"
+                }
+            ]
+        },
+        "player/bag/PtlList/ReqList": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/bag/PtlList/ResList": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
                 }
             ]
         },

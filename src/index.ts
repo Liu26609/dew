@@ -6,6 +6,7 @@ import inputManage from './inputManage'
 import common from './lib/common'
 import actionCfg from './cfg/actionCfg'
 import { Trie } from './lib/trie'
+import { logger } from './index_bot'
 export const name = 'dew-bot'
 const path = require('path');
 export interface Config {
@@ -34,7 +35,10 @@ export async function apply(ctx: Context, config: Config) {
     // 在插件停用时关闭端口
     server.dispose()
   })
-
+  if(CFG.调试模式){
+    CFG.服务器地址 = 'ws://127.0.0.1:8848';
+    log.info('调试模式-将调用本地服务器')
+  }
   reg_ignoreSeperator(ctx, config)
 
 
@@ -44,7 +48,7 @@ export async function apply(ctx: Context, config: Config) {
     let cls = ctx.command(element.key, `💡${element.key_tips}`)
     // option 不适合本机器人
     // if (element.option) {
-    //   cls.option('世界名', '<世界名> 指定进入的世界')
+      // cls.option('改名', '<val:string>')
     // }
     if (element.tips.length > 0) {
       cls.usage(`════🔵指令描述═━┄\n${element.tips}`)
@@ -52,7 +56,7 @@ export async function apply(ctx: Context, config: Config) {
     if (element.example.length > 0) {
       for (let i = 0; i < element.example.length; i++) {
         const example = element.example[i];
-        cls.example(`🌰栗子:${example}`)
+        cls.example(`🌰${example}`)
       }
     }
 

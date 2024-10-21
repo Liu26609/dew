@@ -106,4 +106,16 @@ actionCfg.push({
     example: ["@bot 血统(查看血统信息)","@bot 血统 重置"],
     path: 'player/info/血统'
 })
+actionCfg.push({
+    key: "角色/技能 <操作:string><技能ID:number>",
+    key_tips:'角色技能相关指令',
+    tips: '📖手册www.baidu.com',
+    example: [
+        "@bot 技能(查看技能列表)",
+        "@bot 技能查看 技能ID",
+        "@bot 技能遗忘 技能ID",
+        "@bot 技能改名 技能ID 新名字",
+    ],
+    path: 'player/info/技能'
+})
 export default actionCfg;
