@@ -2,7 +2,6 @@ import { off } from "process";
 import db from "../../model/db/db";
 import { _att_key } from "../../shared/shareFace";
 import common from "../lib/common";
-import { SKILL_type, SKILL_target, SKILL_rang, SKILL_eff_path, SKILL_eff_type, SKILL_eff_type_伤害类 } from "../lib/face/FACE_SKILL";
 import { body_bar, att_val } from "../lib/unity/base/body_com";
 import { player } from "../lib/unity/player"
 import cron from 'node-cron';

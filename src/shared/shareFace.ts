@@ -1,5 +1,8 @@
 
-
+export enum SKILL_type {
+  主动技能,
+  被动技能
+}
 export enum Item_Type{
   经验,
   技能书,

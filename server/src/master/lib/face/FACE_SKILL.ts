@@ -1,7 +1,4 @@
-export enum SKILL_type {
-    主动技能,
-    被动技能
-}
+
 export enum SKILL_target{
     敌人,
     // 敌人_死亡,

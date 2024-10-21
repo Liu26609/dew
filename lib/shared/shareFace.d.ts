@@ -1,3 +1,7 @@
+export declare enum SKILL_type {
+    主动技能 = 0,
+    被动技能 = 1
+}
 export declare enum Item_Type {
     经验 = 0,
     技能书 = 1,

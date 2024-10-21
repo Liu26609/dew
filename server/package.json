@@ -7,6 +7,7 @@
     "debug":"node ./dist/index.js",
     "doc": "tsrpc doc",
     "sync": "tsrpc-cli sync",
+    "pull": "git reset --hard HEAD && git pull",
     "proto": "tsrpc-cli proto",
     "git": "npm run build && git add . && git commit -m '任务模版' && git push origin master"
   },
