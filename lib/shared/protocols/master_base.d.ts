@@ -15,6 +15,7 @@ export interface BaseRequest {
     _platform?: string;
 }
 export interface BaseResponse {
+    sys?: string;
 }
 export interface BaseConf {
     /**
