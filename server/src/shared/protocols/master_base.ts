@@ -15,7 +15,8 @@ export interface BaseRequest{
     _platform?:string
 }
 export interface BaseResponse{
-
+    //角色体系
+    sys?:string
 }
 export interface BaseConf{
     /**

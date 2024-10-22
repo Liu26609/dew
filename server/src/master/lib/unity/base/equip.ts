@@ -3,7 +3,10 @@ import { _att_key } from "../../../../shared/shareFace";
 import common from "../../common";
 import word from "../../word";
 import { att_val } from "./body_com";
-
+/**
+ * 装备体系
+ * 装备位置
+ */
 export default class equip {
     // 装备模板ID
     id: string = '1';
@@ -19,7 +22,14 @@ export default class equip {
             this.name = data.name || this.name;
             this.attList = data.attList || [];
         }
-
+        if (this.attList.length == 0) {
+            this.reset()
+        }
+    }
+    get_info() {
+        let list = xlsxToJson.cfg.get('装备模板表') as Map<string, any>;
+        let info = list.get(this.id)
+        return info;
     }
     /**
      * 重置属性

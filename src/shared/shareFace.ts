@@ -38,6 +38,7 @@ export enum body_sys{
  * 
  * 角色: 修仙
  * 装备栏位 [法宝]
+ * 如果没有 则随机一个位置装备 并且效果只生效 80% 不再附带技能
  */
 
 export enum _att_key{

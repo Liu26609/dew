@@ -8,7 +8,12 @@ export default class bags{
     }
     _resData(data:any){
         if(!data)return;
-        if(data.items){this.items = data.items};
+        if(data.items){
+            for (let i = 0; i < data.items.length; i++) {
+                const element = data.items[i];
+                this.items.push(element);
+            }
+        };
     }
     addItem(data:prop_item){
         switch (data.type) {
@@ -16,7 +21,10 @@ export default class bags{
                 data.name = data.data.name;
                 data.cont = 1;
                 break;
-        
+            case Item_Type.装备:
+                data.name = data.data.name;
+                data.cont = 1;
+            break;
             default:
                 break;
         }

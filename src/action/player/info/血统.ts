@@ -38,13 +38,6 @@ export default class {
         let req = await server.api('player/inherit/Info',{},cls)
         if(!req)return;
         let _s = req.sys;
-        if(!APP.bodySysCfg.has(_s)){
-            let req_cfg = await server.api('common/GetBodySysCfg', {key:_s})
-            if(req_cfg){
-                APP.setSysCfg(req_cfg.cfg)
-            }
-        }
-
         let temp = `🔵血统信息\n`
         temp += `🔵名称:${req.name}\n`
         temp += `🔵来源:${req.from}\n`

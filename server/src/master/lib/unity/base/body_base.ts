@@ -9,6 +9,8 @@ import { _att_key, Item_Type, prop_item } from "../../../../shared/shareFace";
 import xlsxToJson from "../../../../model/xlsxToJson";
 import { inherit } from "./inherit";
 import bags from "./bags";
+import equip from "./equip";
+import { template } from "../../../../shared/master/MsgAction";
 export class body_base {
     id: string = '';
     name: string = '未命名的单位';
@@ -47,10 +49,59 @@ export class body_base {
     sys: string = '修仙';
     // 继承血统
     inherit: inherit = new inherit();
+    equips: (equip|undefined)[] = [];
     private _outAtt: (att_line | att_val | body_bar)[] = []
     private _needUpdate: boolean = false;
     constructor() {
 
+    }
+    /**
+     * 脱装备
+     */
+    takeOffEquip(idx:number) {
+        if (idx < 0 || idx >= this.equips.length) {
+            this.sendMessageg('Action',{
+                template:template.文本消息,
+                data: `[卸下装备]装备ID：${idx + 1}不存在`,
+                messageId:''
+            })
+            return;
+        }
+        let eq = this.equips[idx];
+        if(!eq){
+            this.sendMessageg('Action',{
+                template:template.文本消息,
+                data: `[卸下装备]装备ID：${idx + 1}不存在`,
+                messageId:''
+            })
+            return;
+        }
+        this.addItem({
+            type:Item_Type.装备,
+            name:eq.name,
+            cont:1,
+            data:eq
+        })
+        this.equips[idx] = undefined;
+        this.sendMessageg('Action',{
+            template:template.文本消息,
+            data: `[卸下装备]装备ID：${idx + 1}已放入背包`,
+            messageId:''
+        })
+        this.refAtt();
+        this.sendMessageg('Action',{
+            template:template.文本消息,
+            data: `[卸下装备]发送最新的战力变化`,
+            messageId:'',
+            delaytime:1
+        })
+    }
+    /**
+     * 穿装备
+     */
+    wearEquip(e: equip) {
+        this.equips.push(e);
+        this.refAtt();
     }
     /**
      * 获取角色当前等级的体系称谓
@@ -97,6 +148,9 @@ export class body_base {
                     this._addItem_道具(element);
                     break;
                 case Item_Type.技能书:
+                    this.bag.addItem(element);
+                    break;
+                case Item_Type.装备:
                     this.bag.addItem(element);
                     break;
                 default:
@@ -237,6 +291,17 @@ export class body_base {
         }
         this.updateAtt();
     }
+    private _get_equipVal(key: _att_key) {
+        let equips = this.equips;
+        // 装备属性
+        let val = 0;
+        for (let j = 0; j < equips.length; j++) {
+            const equip = equips[j];
+            if(!equip){continue;}
+            val += equip.get_att(key);
+        }
+        return val;
+    }
     updateAtt() {
         if (!this._needUpdate) {
             return;
@@ -246,19 +311,28 @@ export class body_base {
         // 角色基础属性 + 血统属性 * 角色等级 + 装备属性
         // 特殊处理:护盾
         let leve = this.leve.getVal();
-        this.hp.setMax(this.hp.getVal() + this.inherit.get_att(_att_key.生命值) * leve)
-        this.hp_res.setVal(this.hp_res.getVal() + this.inherit.get_att(_att_key.生命恢复) * leve)
-        this.mp.setMax(this.mp.getVal() + this.inherit.get_att(_att_key.魔法值) * leve)
-        this.mp_res.setVal(this.mp_res.getVal() + this.inherit.get_att(_att_key.魔法恢复) * leve)
-        this.dong_hp.setVal(this.dong_hp.getVal() + this.inherit.get_att(_att_key.生命护盾) * leve)
-        this.dong_mp.setVal(this.dong_mp.getVal() + this.inherit.get_att(_att_key.魔法护盾) * leve)
-        this.dong_phy.setVal(this.dong_phy.getVal() + this.inherit.get_att(_att_key.物理护盾) * leve)
-        
+        this.hp.setMax(this.hp.getVal() + this.inherit.get_att(_att_key.生命值) * leve + this._get_equipVal(_att_key.生命值))
+        this.hp_res.setVal(this.hp_res.getVal() + this.inherit.get_att(_att_key.生命恢复) * leve + this._get_equipVal(_att_key.生命恢复))
+        this.mp.setMax(this.mp.getVal() + this.inherit.get_att(_att_key.魔法值) * leve + this._get_equipVal(_att_key.魔法值))
+        this.mp_res.setVal(this.mp_res.getVal() + this.inherit.get_att(_att_key.魔法恢复) * leve + this._get_equipVal(_att_key.魔法恢复))
+        // TODO:护盾有bug 暂时不加
+        // this.dong_hp.setVal(this.dong_hp.getVal() + this.inherit.get_att(_att_key.生命护盾) * leve)
+        // this.dong_mp.setVal(this.dong_mp.getVal() + this.inherit.get_att(_att_key.魔法护盾) * leve)
+        // this.dong_phy.setVal(this.dong_phy.getVal() + this.inherit.get_att(_att_key.物理护盾) * leve)
+
+
         let base = this.attList;
         let out: att_val[] = [];
+        let equips = this.equips;
         for (let i = 0; i < base.length; i++) {
             const element = base[i];
             let val = element.getVal() + this.inherit.get_att(element.key)
+            // 装备属性
+            for (let j = 0; j < equips.length; j++) {
+                const equip = equips[j];
+                if(!equip){continue;}
+                val += equip.get_att(element.key);
+            }
             out.push(new att_val({ key: element.key, val: val }))
         }
         this._outAtt = out;
@@ -270,7 +344,7 @@ export class body_base {
         this.updateAtt();
         return this._outAtt;
     }
-    active(){
+    active() {
         this.refAtt();
     }
     /**
@@ -290,7 +364,7 @@ export class body_base {
      * 移除自身技能
      * @param idx 
      */
-    rm_skill(idx:number) {
+    rm_skill(idx: number) {
         if (idx < 0 || idx >= this.sk_active.length) {
             return;
         }

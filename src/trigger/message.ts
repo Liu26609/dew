@@ -76,6 +76,7 @@ export default class message {
                 str += element.data + '\n';
             }
         }
+        str += '\n文字排版dev 0.01'
         this.session.sendQueued(str, delaytime ? delaytime * 1000 : 0.2)
         this.clear();
     }

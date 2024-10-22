@@ -7,8 +7,14 @@ import { ReqSkill, ResSkill } from './debug/bag/PtlSkill';
 import { ReqBattle as ReqBattle_1, ResBattle as ResBattle_1 } from './debug/PtlBattle';
 import { ReqPvp, ResPvp } from './debug/PtlPvp';
 import { ReqSave, ResSave } from './debug/PtlSave';
+import { ReqTakeOffEquip, ResTakeOffEquip } from './debug/PtlTakeOffEquip';
+import { ReqUpequip, ResUpequip } from './debug/PtlUpequip';
 import { MsgAction } from './MsgAction';
 import { ReqList, ResList } from './player/bag/PtlList';
+import { ReqList as ReqList_1, ResList as ResList_1 } from './player/equip/PtlList';
+import { ReqLook, ResLook } from './player/equip/PtlLook';
+import { ReqReName, ResReName } from './player/equip/PtlReName';
+import { ReqTakeOff, ResTakeOff } from './player/equip/PtlTakeOff';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
 import { ReqPosition, ResPosition } from './player/info/PtlPosition';
 import { ReqSetName, ResSetName } from './player/info/PtlSetName';
@@ -17,8 +23,8 @@ import { ReqReset, ResReset } from './player/inherit/PtlReset';
 import { ReqOut as ReqOut_1, ResOut as ResOut_1 } from './player/map/PtlOut';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
-import { ReqList as ReqList_1, ResList as ResList_1 } from './player/skill/PtlList';
-import { ReqLook, ResLook } from './player/skill/PtlLook';
+import { ReqList as ReqList_2, ResList as ResList_2 } from './player/skill/PtlList';
+import { ReqLook as ReqLook_1, ResLook as ResLook_1 } from './player/skill/PtlLook';
 import { ReqRename, ResRename } from './player/skill/PtlRename';
 import { ReqRm, ResRm } from './player/skill/PtlRm';
 import { ReqMiss, ResMiss } from './PtlMiss';
@@ -59,9 +65,33 @@ export interface ServiceType {
             req: ReqSave,
             res: ResSave
         },
+        "debug/TakeOffEquip": {
+            req: ReqTakeOffEquip,
+            res: ResTakeOffEquip
+        },
+        "debug/Upequip": {
+            req: ReqUpequip,
+            res: ResUpequip
+        },
         "player/bag/List": {
             req: ReqList,
             res: ResList
+        },
+        "player/equip/List": {
+            req: ReqList_1,
+            res: ResList_1
+        },
+        "player/equip/Look": {
+            req: ReqLook,
+            res: ResLook
+        },
+        "player/equip/ReName": {
+            req: ReqReName,
+            res: ResReName
+        },
+        "player/equip/TakeOff": {
+            req: ReqTakeOff,
+            res: ResTakeOff
         },
         "player/info/GetBase": {
             req: ReqGetBase,
@@ -96,12 +126,12 @@ export interface ServiceType {
             res: ResStart
         },
         "player/skill/List": {
-            req: ReqList_1,
-            res: ResList_1
+            req: ReqList_2,
+            res: ResList_2
         },
         "player/skill/Look": {
-            req: ReqLook,
-            res: ResLook
+            req: ReqLook_1,
+            res: ResLook_1
         },
         "player/skill/Rename": {
             req: ReqRename,
@@ -130,7 +160,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 22,
+    "version": 24,
     "services": [
         {
             "id": 7,
@@ -197,6 +227,22 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
+            "id": 30,
+            "name": "debug/TakeOffEquip",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 29,
+            "name": "debug/Upequip",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
             "id": 4,
             "name": "Action",
             "type": "msg",
@@ -205,6 +251,38 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 24,
             "name": "player/bag/List",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 31,
+            "name": "player/equip/List",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 32,
+            "name": "player/equip/Look",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 33,
+            "name": "player/equip/ReName",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 34,
+            "name": "player/equip/TakeOff",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -427,7 +505,17 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "../protocols/master_base/BaseResponse": {
-            "type": "Interface"
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "sys",
+                    "type": {
+                        "type": "String"
+                    },
+                    "optional": true
+                }
+            ]
         },
         "battle/PtlBattle/ReqBattle": {
             "type": "Interface",
@@ -700,6 +788,54 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
+        "debug/PtlTakeOffEquip/ReqTakeOffEquip": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "debug/PtlTakeOffEquip/ResTakeOffEquip": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "debug/PtlUpequip/ReqUpequip": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "debug/PtlUpequip/ResUpequip": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
         "MsgAction/MsgAction": {
             "type": "Interface",
             "extends": [
@@ -782,6 +918,232 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "player/bag/PtlList/ResList": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "list",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Interface",
+                            "properties": [
+                                {
+                                    "id": 0,
+                                    "name": "name",
+                                    "type": {
+                                        "type": "String"
+                                    }
+                                },
+                                {
+                                    "id": 1,
+                                    "name": "cont",
+                                    "type": {
+                                        "type": "Number"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "player/equip/PtlList/ReqList": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/equip/PtlList/ResList": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "list",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Union",
+                            "members": [
+                                {
+                                    "id": 0,
+                                    "type": {
+                                        "type": "Interface",
+                                        "properties": [
+                                            {
+                                                "id": 0,
+                                                "name": "name",
+                                                "type": {
+                                                    "type": "String"
+                                                }
+                                            },
+                                            {
+                                                "id": 1,
+                                                "name": "type",
+                                                "type": {
+                                                    "type": "String"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "id": 1,
+                                    "type": {
+                                        "type": "Literal"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "player/equip/PtlLook/ReqLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "idx",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "player/equip/PtlLook/ResLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "sys",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "att",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Any"
+                        }
+                    }
+                }
+            ]
+        },
+        "player/equip/PtlReName/ReqReName": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "idx",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "player/equip/PtlReName/ResReName": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "player/equip/PtlTakeOff/ReqTakeOff": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "idx",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "player/equip/PtlTakeOff/ResTakeOff": {
             "type": "Interface",
             "extends": [
                 {

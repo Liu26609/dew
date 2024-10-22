@@ -2,11 +2,12 @@ import { HttpClient, WsClient } from "tsrpc";
 import { ServiceType, serviceProto } from "./shared/master/serviceProto";
 import { log } from ".";
 import message from "./trigger/message";
+import APP from "./APP";
 class server {
     private httpClient!: HttpClient<ServiceType>;
     private apiUrl!: string;
     private wsClient!: WsClient<ServiceType>;
-    init:boolean = false;
+    init: boolean = false;
     constructor() {
 
     }
@@ -94,6 +95,13 @@ class server {
         }
         let req = await client.callApi(apiName, posData);
         if (req.isSucc) {
+            let _s = req['sys'];
+            if (_s && !APP.bodySysCfg.has(_s)) {
+                let req_cfg = await this.api('common/GetBodySysCfg', { key: _s })
+                if (req_cfg) {
+                    APP.setSysCfg(req_cfg.cfg)
+                }
+            }
             return req.res;
         } else {
             log.info('请求出错', apiName, req.err.message)

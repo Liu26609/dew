@@ -27,7 +27,5 @@ export default async function (call: ApiCall<ReqRm, ResRm>) {
         return;
     }
     p.rm_skill(idx);
-    call.succ({
-        idx: idx + 1
-    });
+    call.succ({});
 }

@@ -1,15 +1,13 @@
 import { BaseRequest, BaseResponse, BaseConf } from "../../../protocols/master_base";
-
+/**
+ * 查看我的穿戴装备列表
+ */
 export interface ReqList extends BaseRequest {
     
 }
-/**
- * 背包列表
- * 名称
- * 数量
- */
+
 export interface ResList extends BaseResponse {
-    list:{name:string,cont:number}[]
+    list:({name:string,type:string}|undefined)[]
 }
 
 export const conf: BaseConf = {
