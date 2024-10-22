@@ -1,13 +1,7 @@
+import { Item_Type } from "../PtlFace";
 export declare enum SKILL_type {
     主动技能 = 0,
     被动技能 = 1
-}
-export declare enum Item_Type {
-    经验 = 0,
-    技能书 = 1,
-    装备 = 2,
-    道具 = 3,
-    none = 4
 }
 export interface prop_item {
     name: string;
@@ -53,10 +47,4 @@ export declare enum _att_key {
     物理护盾 = "\u7269\u7406\u62A4\u76FE",
     魔法护盾 = "\u9B54\u6CD5\u62A4\u76FE",
     生命护盾 = "\u751F\u547D\u62A4\u76FE"
-}
-export interface prop_item_equip {
-    name: string;
-    att: any;
-    sys: string;
-    tips: string;
 }

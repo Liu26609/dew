@@ -11,8 +11,9 @@ import { ReqTakeOffEquip, ResTakeOffEquip } from './debug/PtlTakeOffEquip';
 import { ReqUpequip, ResUpequip } from './debug/PtlUpequip';
 import { MsgAction } from './MsgAction';
 import { ReqList, ResList } from './player/bag/PtlList';
+import { ReqLook, ResLook } from './player/bag/PtlLook';
 import { ReqList as ReqList_1, ResList as ResList_1 } from './player/equip/PtlList';
-import { ReqLook, ResLook } from './player/equip/PtlLook';
+import { ReqLook as ReqLook_1, ResLook as ResLook_1 } from './player/equip/PtlLook';
 import { ReqReName, ResReName } from './player/equip/PtlReName';
 import { ReqTakeOff, ResTakeOff } from './player/equip/PtlTakeOff';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
@@ -24,7 +25,7 @@ import { ReqOut as ReqOut_1, ResOut as ResOut_1 } from './player/map/PtlOut';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
 import { ReqList as ReqList_2, ResList as ResList_2 } from './player/skill/PtlList';
-import { ReqLook as ReqLook_1, ResLook as ResLook_1 } from './player/skill/PtlLook';
+import { ReqLook as ReqLook_2, ResLook as ResLook_2 } from './player/skill/PtlLook';
 import { ReqRename, ResRename } from './player/skill/PtlRename';
 import { ReqRm, ResRm } from './player/skill/PtlRm';
 import { ReqMiss, ResMiss } from './PtlMiss';
@@ -76,13 +77,17 @@ export interface ServiceType {
             req: ReqList;
             res: ResList;
         };
+        "player/bag/Look": {
+            req: ReqLook;
+            res: ResLook;
+        };
         "player/equip/List": {
             req: ReqList_1;
             res: ResList_1;
         };
         "player/equip/Look": {
-            req: ReqLook;
-            res: ResLook;
+            req: ReqLook_1;
+            res: ResLook_1;
         };
         "player/equip/ReName": {
             req: ReqReName;
@@ -129,8 +134,8 @@ export interface ServiceType {
             res: ResList_2;
         };
         "player/skill/Look": {
-            req: ReqLook_1;
-            res: ResLook_1;
+            req: ReqLook_2;
+            res: ResLook_2;
         };
         "player/skill/Rename": {
             req: ReqRename;
