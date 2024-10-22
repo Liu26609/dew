@@ -5,12 +5,13 @@ import common from "../../common";
 import { battle_group } from "../../face/FACE_BODY";
 import { SKILL } from "../../skill/SKILL";
 import { att_line, att_val, body_bar } from "./body_com"
-import { _att_key, Item_Type, prop_item } from "../../../../shared/shareFace";
+import { _att_key, prop_item } from "../../../../shared/protocols/shareFace";
 import xlsxToJson from "../../../../model/xlsxToJson";
 import { inherit } from "./inherit";
 import bags from "./bags";
 import equip from "./equip";
 import { template } from "../../../../shared/master/MsgAction";
+import { Item_Type } from "../../../../shared/PtlFace";
 export class body_base {
     id: string = '';
     name: string = '未命名的单位';

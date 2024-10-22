@@ -1,5 +1,8 @@
-import { Item_Type, prop_item } from "../../../../shared/shareFace";
-
+import {  prop_item } from "../../../../shared/protocols/shareFace";
+import { Item_Type } from "../../../../shared/PtlFace";
+export enum bag_getType{
+    index
+}
 export default class bags{
     items:prop_item[] = []
     // 增加索引map
@@ -14,6 +17,21 @@ export default class bags{
                 this.items.push(element);
             }
         };
+    }
+    get_item(type:bag_getType,id:any):prop_item|undefined{
+        let data;
+        switch (type) {
+            case bag_getType.index:
+                data = this._get_item_index(id)
+                break;
+        
+            default:
+                break;
+        }
+        return data;
+    }
+    private _get_item_index(index:number){
+        return this.items[index];
     }
     addItem(data:prop_item){
         switch (data.type) {

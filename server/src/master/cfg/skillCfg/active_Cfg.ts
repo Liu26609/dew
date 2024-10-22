@@ -1,4 +1,4 @@
-import { _att_key, SKILL_type } from "../../../shared/shareFace";
+import { _att_key, SKILL_type } from "../../../shared/protocols/shareFace";
 import {  SKILL_target, SKILL_rang, SKILL_eff_path, SKILL_eff_type, SKILL_eff_type_伤害类, SKILL_eff_type_增益类 } from "../../lib/face/FACE_SKILL"
 
 let cfg:any = []

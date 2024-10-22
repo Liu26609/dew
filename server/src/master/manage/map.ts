@@ -1,6 +1,6 @@
 import xlsxToJson from "../../model/xlsxToJson";
 import { template } from "../../shared/master/MsgAction";
-import { Item_Type } from "../../shared/shareFace";
+import { Item_Type } from "../../shared/PtlFace";
 import { battle } from "../lib/battle/battle";
 import common from "../lib/common";
 import { battle_group } from "../lib/face/FACE_BODY";

@@ -1,15 +1,10 @@
+import { Item_Type } from "../PtlFace";
 
 export enum SKILL_type {
   主动技能,
   被动技能
 }
-export enum Item_Type{
-  经验,
-  技能书,
-  装备,
-  道具,
-  none,
-}
+
 export interface prop_item{
   name:string 
   // 自识别是否可叠加
@@ -62,14 +57,3 @@ export enum _att_key{
   生命护盾 = '生命护盾'
 }
 
-export interface prop_item_equip{
-  // 装备名称
-  name:string
-  // 装备属性
-  att:any
-  // 体系
-  sys:string
-  // skill
-  // 技能描述
-  tips:string
-}

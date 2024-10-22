@@ -1,6 +1,6 @@
 import { HttpClient, WsClient } from "tsrpc";
 import { ServiceType, serviceProto } from "./shared/master/serviceProto";
-import { log } from ".";
+import { CFG, log } from ".";
 import message from "./trigger/message";
 import APP from "./APP";
 class server {
@@ -102,9 +102,17 @@ class server {
                     APP.setSysCfg(req_cfg.cfg)
                 }
             }
+            if(CFG.调试模式){
+               console.log(req.res)
+              }
             return req.res;
         } else {
-            log.info('请求出错', apiName, req.err.message)
+            if(CFG.调试模式){
+                if(msg){
+                    msg.send_v1(`请求出错:${req.err.message}`)
+                }
+                log.info('请求出错', apiName, req.err.message)
+              }
         }
 
     }

@@ -11,8 +11,9 @@ import { ReqTakeOffEquip, ResTakeOffEquip } from './debug/PtlTakeOffEquip';
 import { ReqUpequip, ResUpequip } from './debug/PtlUpequip';
 import { MsgAction } from './MsgAction';
 import { ReqList, ResList } from './player/bag/PtlList';
+import { ReqLook, ResLook } from './player/bag/PtlLook';
 import { ReqList as ReqList_1, ResList as ResList_1 } from './player/equip/PtlList';
-import { ReqLook, ResLook } from './player/equip/PtlLook';
+import { ReqLook as ReqLook_1, ResLook as ResLook_1 } from './player/equip/PtlLook';
 import { ReqReName, ResReName } from './player/equip/PtlReName';
 import { ReqTakeOff, ResTakeOff } from './player/equip/PtlTakeOff';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
@@ -24,7 +25,7 @@ import { ReqOut as ReqOut_1, ResOut as ResOut_1 } from './player/map/PtlOut';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
 import { ReqList as ReqList_2, ResList as ResList_2 } from './player/skill/PtlList';
-import { ReqLook as ReqLook_1, ResLook as ResLook_1 } from './player/skill/PtlLook';
+import { ReqLook as ReqLook_2, ResLook as ResLook_2 } from './player/skill/PtlLook';
 import { ReqRename, ResRename } from './player/skill/PtlRename';
 import { ReqRm, ResRm } from './player/skill/PtlRm';
 import { ReqMiss, ResMiss } from './PtlMiss';
@@ -77,13 +78,17 @@ export interface ServiceType {
             req: ReqList,
             res: ResList
         },
+        "player/bag/Look": {
+            req: ReqLook,
+            res: ResLook
+        },
         "player/equip/List": {
             req: ReqList_1,
             res: ResList_1
         },
         "player/equip/Look": {
-            req: ReqLook,
-            res: ResLook
+            req: ReqLook_1,
+            res: ResLook_1
         },
         "player/equip/ReName": {
             req: ReqReName,
@@ -130,8 +135,8 @@ export interface ServiceType {
             res: ResList_2
         },
         "player/skill/Look": {
-            req: ReqLook_1,
-            res: ResLook_1
+            req: ReqLook_2,
+            res: ResLook_2
         },
         "player/skill/Rename": {
             req: ReqRename,
@@ -160,7 +165,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 24,
+    "version": 29,
     "services": [
         {
             "id": 7,
@@ -251,6 +256,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 24,
             "name": "player/bag/List",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 35,
+            "name": "player/bag/Look",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -957,6 +970,81 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
+        "player/bag/PtlLook/ReqLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "idx",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "player/bag/PtlLook/ResLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 1,
+                    "name": "type",
+                    "type": {
+                        "type": "Reference",
+                        "target": "../PtlFace/Item_Type"
+                    }
+                },
+                {
+                    "id": 0,
+                    "name": "temp",
+                    "type": {
+                        "type": "Any"
+                    }
+                }
+            ]
+        },
+        "../PtlFace/Item_Type": {
+            "type": "Enum",
+            "members": [
+                {
+                    "id": 0,
+                    "value": 0
+                },
+                {
+                    "id": 1,
+                    "value": 1
+                },
+                {
+                    "id": 2,
+                    "value": 2
+                },
+                {
+                    "id": 3,
+                    "value": 3
+                },
+                {
+                    "id": 4,
+                    "value": 4
+                }
+            ]
+        },
         "player/equip/PtlList/ReqList": {
             "type": "Interface",
             "extends": [
@@ -1594,6 +1682,13 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "extends": [
                 {
+                    "id": 1,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../PtlFace/prop_item_skill"
+                    }
+                },
+                {
                     "id": 0,
                     "type": {
                         "type": "Reference",
@@ -1625,6 +1720,39 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 },
                 {
                     "id": 1,
+                    "name": "desc",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "../PtlFace/prop_item_skill": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "cd",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "type",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 3,
                     "name": "desc",
                     "type": {
                         "type": "String"

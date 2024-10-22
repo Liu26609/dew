@@ -1,5 +1,5 @@
 import xlsxToJson from "../../../../model/xlsxToJson";
-import { _att_key } from "../../../../shared/shareFace";
+import { _att_key } from "../../../../shared/protocols/shareFace";
 import common from "../../common";
 import { SKILL } from "../../skill/SKILL";
 import word from "../../word";

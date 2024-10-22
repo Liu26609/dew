@@ -1,5 +1,5 @@
 import xlsxToJson from "../../model/xlsxToJson";
-import { _att_key } from "../../shared/shareFace";
+import { _att_key } from "../../shared/protocols/shareFace";
 import game_map from "../manage/map";
 import { battle } from "./battle/battle";
 import common from "./common";

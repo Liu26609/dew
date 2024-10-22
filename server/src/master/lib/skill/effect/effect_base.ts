@@ -1,4 +1,4 @@
-import { _att_key } from "../../../../shared/shareFace";
+import { _att_key } from "../../../../shared/protocols/shareFace";
 import { battle } from "../../battle/battle";
 
 import { SKILL_target } from "../../face/FACE_SKILL";

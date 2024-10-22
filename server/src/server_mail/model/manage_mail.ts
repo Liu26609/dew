@@ -1,5 +1,5 @@
 import app from "../../app";
-import { face_prop_item, mail_item } from "../../shared/shareFace"
+import { face_prop_item, mail_item } from "../../shared/protocols/shareFace"
 import db from "../../model/db/db";
 
 class manage_mail {

@@ -1,7 +1,8 @@
 import server from "../../../server";
+import temp_text from "../../../temp/temp_text";
 import message from "../../../trigger/message";
 
-export default class{
+export default class {
     constructor(cls: message, ...data) {
         console.log('背包', data)
         this.start(cls, ...data)
@@ -22,20 +23,11 @@ export default class{
         }
     }
     async list(cls: message) {
-        let req = await server.api('player/bag/List',{},cls);
-        if(!req)return;
-        let temp = `背包信息\n`;
-        for (let i = 0; i < req.list.length; i++) {
-            const element = req.list[i];
-            temp += `[${i + 1}]┃${element.name}X${element.cont}\n`
-        }
-        if(req.list.length == 0){
-             temp += `你的背包里什么东西都没有呢~`
-        }
-        cls.addLine(temp)
-        cls.send()
+        let req = await server.api('player/bag/List', {}, cls);
+        temp_text.bag_list(req, cls)
     }
     async look(cls: message, idx: number) {
-
+        let req = await server.api('player/bag/Look', { idx: idx }, cls);
+        temp_text.prop_look(req, cls)
     }
 }

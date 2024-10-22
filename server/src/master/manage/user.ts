@@ -1,6 +1,6 @@
 import { off } from "process";
 import db from "../../model/db/db";
-import { _att_key } from "../../shared/shareFace";
+import { _att_key } from "../../shared/protocols/shareFace";
 import common from "../lib/common";
 import { body_bar, att_val } from "../lib/unity/base/body_com";
 import { player } from "../lib/unity/player"

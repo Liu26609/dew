@@ -1,4 +1,5 @@
 import { BaseRequest, BaseResponse, BaseConf } from "../../../protocols/master_base";
+import { prop_item_skill } from "../../../PtlFace";
 
 /**
  * 查看自身指定技能
@@ -12,7 +13,7 @@ export interface ReqLook extends BaseRequest {
  * 技能类型
  * 技能描述
  */
-export interface ResLook extends BaseResponse {
+export interface ResLook extends prop_item_skill, BaseResponse {
     /**技能名称 */
     name: string;
     /**

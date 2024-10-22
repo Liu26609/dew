@@ -1,5 +1,6 @@
 import { template } from "../../../shared/master/MsgAction";
-import { Item_Type, prop_item } from "../../../shared/shareFace";
+import {  prop_item } from "../../../shared/protocols/shareFace";
+import { Item_Type } from "../../../shared/PtlFace";
 import common from "../common";
 import ET, { ET_K } from "../ET";
 import { battle_group } from "../face/FACE_BODY";

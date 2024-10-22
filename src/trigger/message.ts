@@ -64,7 +64,7 @@ export default class message {
     }
     send(delaytime?: number) {
         let str = '';
-        if(this.platform === 'qq') {
+        if (this.platform === 'qq') {
             str += '\n';
         }
         for (let index = 0; index < this.temp.length; index++) {
@@ -79,5 +79,14 @@ export default class message {
         str += '\n文字排版dev 0.01'
         this.session.sendQueued(str, delaytime ? delaytime * 1000 : 0.2)
         this.clear();
+    }
+    send_v1(temp: string) {
+        let str = '';
+        if (this.platform === 'qq') {
+            str += '\n';
+        }
+        str += temp;
+        str += '\n文字排版dev 0.02'
+        this.session.sendQueued(str, 0.2)
     }
 }
