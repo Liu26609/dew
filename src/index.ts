@@ -17,7 +17,7 @@ export interface Config {
 export let log: any
 
 export const Config: Schema<Config> = Schema.object({
-  调试模式: Schema.boolean().default(true).description('个人开发调试用'),
+  调试模式: Schema.boolean().default(false).description('个人开发调试用'),
   忽略指令空格: Schema.boolean().default(true).description('默认允许省略指令名后的空格'),
   服务器地址: Schema.string().default('ws://139.159.214.249:8848')
   // 139.159.214.249

@@ -11,12 +11,6 @@ export default class {
         let req = await server.api('player/info/GetBase', {}, cls)
         if(!req)return;
         let _s = req.sys;
-        if(!APP.bodySysCfg.has(_s)){
-            let req_cfg = await server.api('common/GetBodySysCfg', {key:_s})
-            if(req_cfg){
-                APP.setSysCfg(req_cfg.cfg)
-            }
-        }
         cls.addLine('┏┄══✉️我的属性══━┄')
         cls.addLine(`🧙${req.name}`)
         cls.addLine(`🔯血统:${req.inherit}[${req.className}]`)

@@ -1,4 +1,4 @@
-import { SKILL_type } from "../../../shared/shareFace";
+import { SKILL_type } from "../../../shared/protocols/shareFace";
 import cfg_active from "../../cfg/skillCfg/active_Cfg";
 import { battle } from "../battle/battle";
 import common from "../common";

@@ -9,10 +9,9 @@ export default async function (call: ApiCall<ReqLook, ResLook>) {
          call.error('装备查看 - 装备不存在');
          return;
    }
-   let cfg = eq.get_info();
    call.succ({
       name:eq.name,
-      sys:cfg.sys as string,
+      sys:eq.sys as string,
       att:eq.attList
    })
 }

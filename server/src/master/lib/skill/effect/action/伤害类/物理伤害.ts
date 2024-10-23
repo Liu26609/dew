@@ -1,4 +1,4 @@
-import { _att_key } from "../../../../../../shared/shareFace";
+import { _att_key } from "../../../../../../shared/protocols/shareFace";
 import { battle } from "../../../../battle/battle";
 import common from "../../../../common";
 import { SKILL_rang, SKILL_eff_type, SKILL_eff_type_伤害类 } from "../../../../face/FACE_SKILL";

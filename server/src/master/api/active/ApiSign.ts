@@ -3,7 +3,7 @@ import { ReqSign, ResSign } from "../../../shared/master/active/PtlSign";
 import sign from "../../manage/sign";
 import { player } from "../../lib/unity/player";
 import { template } from "../../../shared/master/MsgAction";
-import { Item_Type } from "../../../shared/shareFace";
+import { Item_Type } from "../../../shared/PtlFace";
 export default async function (call: ApiCall<ReqSign, ResSign>) {
     let p = call.req._player as player;
     let cls =  await sign.sign(p.id);

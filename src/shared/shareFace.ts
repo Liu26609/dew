@@ -61,3 +61,15 @@ export enum _att_key{
   魔法护盾 = '魔法护盾',
   生命护盾 = '生命护盾'
 }
+
+export interface prop_item_equip{
+  // 装备名称
+  name:string
+  // 装备属性
+  att:any
+  // 体系
+  sys:string
+  // skill
+  // 技能描述
+  tips:string
+}

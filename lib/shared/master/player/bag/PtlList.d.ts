@@ -3,7 +3,13 @@ export interface ReqList extends BaseRequest {
 }
 /**
  * 背包列表
+ * 名称
+ * 数量
  */
 export interface ResList extends BaseResponse {
+    list: {
+        name: string;
+        cont: number;
+    }[];
 }
 export declare const conf: BaseConf;

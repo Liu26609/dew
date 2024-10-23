@@ -1,4 +1,4 @@
-import { _att_key } from "../../../../shared/shareFace";
+import { _att_key } from "../../../../shared/protocols/shareFace";
 import common from "../../common";
 import { _att_line, _att_val, _bar, _base_com, _line } from "../../face/FACE_BODY"
 export class _bodyCom implements _base_com {

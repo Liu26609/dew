@@ -7,8 +7,15 @@ import { ReqSkill, ResSkill } from './debug/bag/PtlSkill';
 import { ReqBattle as ReqBattle_1, ResBattle as ResBattle_1 } from './debug/PtlBattle';
 import { ReqPvp, ResPvp } from './debug/PtlPvp';
 import { ReqSave, ResSave } from './debug/PtlSave';
+import { ReqTakeOffEquip, ResTakeOffEquip } from './debug/PtlTakeOffEquip';
+import { ReqUpequip, ResUpequip } from './debug/PtlUpequip';
 import { MsgAction } from './MsgAction';
 import { ReqList, ResList } from './player/bag/PtlList';
+import { ReqLook, ResLook } from './player/bag/PtlLook';
+import { ReqList as ReqList_1, ResList as ResList_1 } from './player/equip/PtlList';
+import { ReqLook as ReqLook_1, ResLook as ResLook_1 } from './player/equip/PtlLook';
+import { ReqReName, ResReName } from './player/equip/PtlReName';
+import { ReqTakeOff, ResTakeOff } from './player/equip/PtlTakeOff';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
 import { ReqPosition, ResPosition } from './player/info/PtlPosition';
 import { ReqSetName, ResSetName } from './player/info/PtlSetName';
@@ -17,8 +24,8 @@ import { ReqReset, ResReset } from './player/inherit/PtlReset';
 import { ReqOut as ReqOut_1, ResOut as ResOut_1 } from './player/map/PtlOut';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
-import { ReqList as ReqList_1, ResList as ResList_1 } from './player/skill/PtlList';
-import { ReqLook, ResLook } from './player/skill/PtlLook';
+import { ReqList as ReqList_2, ResList as ResList_2 } from './player/skill/PtlList';
+import { ReqLook as ReqLook_2, ResLook as ResLook_2 } from './player/skill/PtlLook';
 import { ReqRename, ResRename } from './player/skill/PtlRename';
 import { ReqRm, ResRm } from './player/skill/PtlRm';
 import { ReqMiss, ResMiss } from './PtlMiss';
@@ -58,9 +65,37 @@ export interface ServiceType {
             req: ReqSave;
             res: ResSave;
         };
+        "debug/TakeOffEquip": {
+            req: ReqTakeOffEquip;
+            res: ResTakeOffEquip;
+        };
+        "debug/Upequip": {
+            req: ReqUpequip;
+            res: ResUpequip;
+        };
         "player/bag/List": {
             req: ReqList;
             res: ResList;
+        };
+        "player/bag/Look": {
+            req: ReqLook;
+            res: ResLook;
+        };
+        "player/equip/List": {
+            req: ReqList_1;
+            res: ResList_1;
+        };
+        "player/equip/Look": {
+            req: ReqLook_1;
+            res: ResLook_1;
+        };
+        "player/equip/ReName": {
+            req: ReqReName;
+            res: ResReName;
+        };
+        "player/equip/TakeOff": {
+            req: ReqTakeOff;
+            res: ResTakeOff;
         };
         "player/info/GetBase": {
             req: ReqGetBase;
@@ -95,12 +130,12 @@ export interface ServiceType {
             res: ResStart;
         };
         "player/skill/List": {
-            req: ReqList_1;
-            res: ResList_1;
+            req: ReqList_2;
+            res: ResList_2;
         };
         "player/skill/Look": {
-            req: ReqLook;
-            res: ResLook;
+            req: ReqLook_2;
+            res: ResLook_2;
         };
         "player/skill/Rename": {
             req: ReqRename;

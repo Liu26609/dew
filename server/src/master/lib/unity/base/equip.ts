@@ -1,5 +1,5 @@
 import xlsxToJson from "../../../../model/xlsxToJson";
-import { _att_key } from "../../../../shared/shareFace";
+import { _att_key } from "../../../../shared/protocols/shareFace";
 import common from "../../common";
 import word from "../../word";
 import { att_val } from "./body_com";
@@ -12,6 +12,7 @@ export default class equip {
     id: string = '1';
     // 生成时的唯一ID
     uuid: string = common.v4();
+    sys:string = '修仙';
     // 装备名称 - 涉及改名 单独记录
     name: string = '未命名装备';
     // 装备属性
@@ -19,6 +20,7 @@ export default class equip {
     constructor(data?: any) {
         if (data) {
             this.id = data.id || this.id;
+            this.sys = data.sys || this.sys;
             this.name = data.name || this.name;
             this.attList = data.attList || [];
         }
@@ -26,11 +28,11 @@ export default class equip {
             this.reset()
         }
     }
-    get_info() {
-        let list = xlsxToJson.cfg.get('装备模板表') as Map<string, any>;
-        let info = list.get(this.id)
-        return info;
-    }
+    // get_info() {
+    //     let list = xlsxToJson.cfg.get(`装备模板表_${this.sys}`) as Map<string, any>;
+    //     let info = list.get(this.id)
+    //     return info;
+    // }
     /**
      * 重置属性
      */
@@ -39,7 +41,7 @@ export default class equip {
          * 读取装备配置
          * 根据配置随机出一个装备范围
          */
-        let list = xlsxToJson.cfg.get('装备模板表') as Map<string, any>;
+        let list = xlsxToJson.cfg.get(`装备模板表_${this.sys}`) as Map<string, any>;
         let info: any = list.get(this.id)
         this.attList = word.att_import_cfg(info, [
             _att_key.生命值,

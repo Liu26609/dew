@@ -1,5 +1,7 @@
 import APP from "../../../APP";
 import server from "../../../server";
+import { Item_Type } from "../../../shared/PtlFace";
+import temp_text from "../../../temp/temp_text";
 import message from "../../../trigger/message"
 
 
@@ -50,15 +52,7 @@ export default class {
         let req = await server.api('player/skill/Look',{
             idx:idx
         },cls);
-        if(!req)return;
-        let temp = '';
-        temp += '📜技能详情\n'
-        temp += `名称: ${req.name}\n`
-        temp += `冷却: ${req.cd}回合\n`
-        temp += `类型: ${req.type === 0 ? '主动技能' : '被动技能'}\n`
-        temp += `技能描述: ${req.desc}\n`
-        cls.addLine(temp)
-        cls.send()
+        temp_text.prop_look({type:Item_Type.技能书,temp:req},cls)
     }
     async look(cls: message) {
         console.log('查看全部技能')
