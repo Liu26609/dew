@@ -8,7 +8,7 @@ export default async function (call: ApiCall<ReqUse, ResUse>) {
     let p = call.req._player as player;
     let bag = p.bag;
 
-    if(bag.items[call.req.idx-1]){
+    if(!bag.items[call.req.idx-1]){
         p.sendMessageg('Action',{
             template:template.文本消息,
             data:`[使用失败]背包中没有ID为${call.req.idx}的物品`,
@@ -18,7 +18,7 @@ export default async function (call: ApiCall<ReqUse, ResUse>) {
         return;
     }
 
-    bag.useItem(bag_getType.index, call.req.idx, call.req.cont);
+    bag.useItem(bag_getType.index, call.req.idx - 1, call.req.cont);
 
     call.succ({})
 }

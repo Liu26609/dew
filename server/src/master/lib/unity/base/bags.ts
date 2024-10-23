@@ -1,3 +1,4 @@
+import { template } from "../../../../shared/master/MsgAction";
 import { prop_item } from "../../../../shared/protocols/shareFace";
 import { Item_Type } from "../../../../shared/PtlFace";
 import { body_base } from "./body_base";
@@ -101,6 +102,12 @@ export default class bags {
                 if(skJude){
                     this.removeItem(type, id, cont);
                 }
+                this._body.sendMessageg('Action',{
+                    template:template.文本消息,
+                    data: `[技能书使用]技能学习成功`,
+                    messageId:'',
+                    delaytime:1
+                })
                 console.error('背包-技能学习失败')
                 break;
             default:

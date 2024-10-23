@@ -360,13 +360,6 @@ export class body_base {
     active() {
         this.refAtt();
     }
-    /**
-     * 弃用
-     */
-    pushSkill(data: string) {
-        this.addSk_active(data);
-
-    }
     private addSk_auto(data: SKILL) {
         this.sk_auto.push(data);
     }

@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link  rel="stylesheet" href="../css/common.css">
-    <link  rel="stylesheet" href="../css_page/skill/style.css">
+    <link  rel="stylesheet" href="../common.css">
 </head>
 <body style="background: red;width: 813px;height: 1187px;">
     <div class="title">
@@ -27,7 +26,200 @@
     <img src="https://gitee.com/ChuXuanD30/resources_skill/raw/master/bg/1.jpg" alt="" srcset="">
     
 </body>
-<script>
+<style>
+    @font-face {
+    font-family: 'xiaomai';
+    src: url('../font/xiaomai.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
 
-</script>
+@font-face {
+    font-family: 'ttf';
+    src: url('../font/ttf_cn.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'number';
+    src: url('../font/number.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'cn';
+    src: url('../font/cn.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+.iconfont {
+    font-weight: 100!important;
+    display: inline!important;
+}
+
+.font_xiaomai {
+    font-family:  xiaomai;
+}
+
+.font_ttf {
+    font-family:  ttf;
+}
+
+body {
+    margin: 0;
+    /* width: 200vw; */
+}
+
+img {
+    display: block;
+}
+
+
+.bar_line {
+    width: 97%;
+    display: flex;
+    align-items: center;
+
+}
+
+.bar {
+    background: red;
+    height: 16px;
+    width: 100%;
+    border-radius: 5px;
+
+    display: flex;
+    justify-content: center;
+    /* 水平居中 */
+    align-items: center;
+    /* 垂直居中 */
+}
+
+.bar span {
+    position: absolute;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 15px;
+    right: 18px;
+    font-family:xiaomai
+}
+</style>
+<style>
+.title {
+    position: absolute;
+    left: 61px;
+    top: 51px;
+    color: white;
+    font-size: 63px;
+    font-family: cn;
+    width: 697px;
+    height: 80px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.score_div {
+    width: 612px;
+    position: absolute;
+    left: 100px;
+    bottom: 55px;
+    height: 54px;
+    text-align: left;
+    overflow: hidden;
+    color: #ffffff;
+    font-family: cn;
+    font-size: 37px;
+    -webkit-text-stroke: 0.5px #ffffff;
+    text-shadow: 0px 0px 1px #000, 0px 0px 8px #000000, 0px 0px 16px #000000, 0px 0px 32px #000000, 0px 0px 64px #000000, 0px 0px 128px #000000;
+}
+
+.score_leve {
+    width: 609px;
+    position: absolute;
+    left: 37px;
+    top: 138px;
+    height: 61px;
+    text-align: left;
+    overflow: hidden;
+    color: #ffffff;
+    font-family: xiaomai;
+    font-size: 45px;
+    -webkit-text-stroke: 0.5px #ffffff;
+}
+
+.score_div img {
+    display: inline-block;
+}
+
+.style_img {
+    width: 611px;
+    height: 611px;
+    position: absolute;
+    left: 102px;
+    top: 220px;
+}
+
+.style_img img {
+    width: 100%;
+    height: 100%;
+}
+
+.skill_type {
+    width: 684px;
+    position: absolute;
+    left: 107px;
+    top: 149px;
+    height: 54px;
+    color: white;
+    font-family: cn;
+    position: absolute;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.skill_typeBg {
+    position: absolute;
+    width: 872px;
+    left: -75px;
+    top: 124px;
+    height: 93px;
+    overflow: hidden;
+}
+
+.skill_typeBg img {
+    width: 917px;
+    height: 95px;
+}
+
+.skill_desc {
+    position: absolute;
+    left: 57px;
+    top: 891px;
+    font-size: 24px;
+    width: 695px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 219px;
+    font-weight: bold;
+    font-family: xiaomai;
+}
+
+
+</style>
 </html>

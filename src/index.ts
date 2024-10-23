@@ -7,7 +7,7 @@ import inputManage from './inputManage'
 import common from './lib/common'
 import actionCfg from './cfg/actionCfg'
 import { Trie } from './lib/trie'
-import { logger } from './index_bot'
+import temp_img from './temp/temp_img';
 export const name = 'dew-bot'
 const path = require('path');
 export interface Config {
@@ -30,7 +30,6 @@ export let CFG: Config;
 export async function apply(ctx: Context, config: Config) {
   CFG = config;
   log = ctx.logger('[game]');
-  // console.log(ctx.puppeteer)
   ctx.on('dispose', () => {
     // 修复热重载 监听残留
     ET.removeAllListeners()
@@ -41,9 +40,10 @@ export async function apply(ctx: Context, config: Config) {
     CFG.服务器地址 = 'ws://127.0.0.1:8848';
     log.info('调试模式-将调用本地服务器')
   }
+  // 忽略指令空格
   reg_ignoreSeperator(ctx, config)
-
-
+  // puppeteer 初始化
+  temp_img.init(ctx)
 
   for (let index = 0; index < actionCfg.length; index++) {
     const element = actionCfg[index];
@@ -62,39 +62,11 @@ export async function apply(ctx: Context, config: Config) {
         cls.example(`🌰${example}`)
       }
     }
-
     cls.action(async (_: any, ag: any) => {
       const classPath = path.resolve(__dirname, `./action/${element.path}`);
       let msg = inputManage.get_msg(_.session.messageId)
       common.importClass(classPath, [msg, ..._.args])
-      const page = await ctx.puppeteer.page();
-
-      const tempHtml = `file://${path.resolve(__dirname, './html/page/skill.html')}`;
-      
-      await page.goto(tempHtml, { waitUntil: 'networkidle2' });
-
-// 传递数据到网页
-      const dataToPass = { key: 'value', anotherKey: 'anotherValue' };
-      await page.evaluate((data) => {
-        // 在页面上下文中执行的代码
-        (window as any).dataFromNode = data;
-      }, dataToPass);
-
-
-      const leaderboardElement = await page.$('body');
-
-
-      const boundingBox = await leaderboardElement.boundingBox();
-      await page.setViewport({
-        width: Math.ceil(boundingBox.width),
-        height: Math.ceil(boundingBox.height),
-      });
-
-      const imgBuf = await leaderboardElement.screenshot({ captureBeyondViewport: false });
-      const leaderboardImage = h.image(imgBuf, 'image/png');
-      await _.session.send(leaderboardImage);
-      await page.close();
-
+      temp_img.test(msg)
     })
   }
 

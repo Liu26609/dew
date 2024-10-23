@@ -19,11 +19,18 @@ export default class {
                 case '使用':
                     this.use(cls, data[1], Number(data[2]) || 1)
                     break;
+                case '出售':
+                    this.sell(cls, data[1], Number(data[2]) || 1)
+                    break;
                 default:
                     this.list(cls)
                     break;
             }
         }
+    }
+    async sell(cls: message, idx: number, num: number = 1) {
+        let req = await server.api('player/bag/Sell_sys', { idx: idx, cont: num }, cls);
+        console.log('背包出售')
     }
     async use(cls: message, idx: number, num: number = 1) {
         let req = await server.api('player/bag/Use', { idx: idx, cont: num }, cls);

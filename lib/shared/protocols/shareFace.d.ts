@@ -6,7 +6,7 @@ export declare enum SKILL_type {
 export interface prop_item {
     name: string;
     type: Item_Type;
-    cont?: number;
+    cont: number;
     data?: any;
 }
 export declare enum body_sys {

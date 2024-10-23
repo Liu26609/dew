@@ -3,6 +3,7 @@ import { ReqSell_sys, ResSell_sys } from "../../../../shared/master/player/bag/P
 import { player } from "../../../lib/unity/player";
 import { bag_getType } from "../../../lib/unity/base/bags";
 import { Item_Type } from "../../../../shared/PtlFace";
+import { template } from "../../../../shared/master/MsgAction";
 
 export default async function (call: ApiCall<ReqSell_sys, ResSell_sys>) {
     let p = call.req._player as player;
@@ -18,7 +19,13 @@ export default async function (call: ApiCall<ReqSell_sys, ResSell_sys>) {
     // 假设道具价值100
     let coin = 100 * sellCont;
     let sellCoin = coin * cont;
-    // TODO：当前工作
-    p.addItem({name:'金币',cont:coin,type:Item_Type.道具});
+    p.addItem({name:'金币',cont:sellCoin,type:Item_Type.道具});
 
+    p.sendMessageg('Action',{
+        template:template.文本消息,
+        data: `[出售成功]你已将${item.name}X${sellCont}出售至主神空间，获得${sellCoin}金币`,
+        messageId:'',
+        delaytime:1
+    })
+    call.succ({});
 }

@@ -12,6 +12,7 @@ import { ReqUpequip, ResUpequip } from './debug/PtlUpequip';
 import { MsgAction } from './MsgAction';
 import { ReqList, ResList } from './player/bag/PtlList';
 import { ReqLook, ResLook } from './player/bag/PtlLook';
+import { ReqSell_sys, ResSell_sys } from './player/bag/PtlSell_sys';
 import { ReqUse, ResUse } from './player/bag/PtlUse';
 import { ReqList as ReqList_1, ResList as ResList_1 } from './player/equip/PtlList';
 import { ReqLook as ReqLook_1, ResLook as ResLook_1 } from './player/equip/PtlLook';
@@ -81,6 +82,10 @@ export interface ServiceType {
         "player/bag/Look": {
             req: ReqLook;
             res: ResLook;
+        };
+        "player/bag/Sell_sys": {
+            req: ReqSell_sys;
+            res: ResSell_sys;
         };
         "player/bag/Use": {
             req: ReqUse;

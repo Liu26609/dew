@@ -9,7 +9,6 @@ export declare enum ET_K {
     input_message = 3
 }
 declare class ET extends EventEmitter {
-    static [x: string]: any;
     constructor();
     listen(key: ET_K, call: (data: any) => void): void;
     fire(key: ET_K, data: any): void;
