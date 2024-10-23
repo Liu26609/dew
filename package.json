@@ -29,7 +29,6 @@
     "url": "https://github.com/Liu26609/dew.git"
   },
   "peerDependencies": {
-    "koishi-plugin-puppeteer": "^1.0.0",
     "koishi": "^4.18.0",
     "tsrpc": "^3.4.16",
     "uuid": "^10.0.0"
