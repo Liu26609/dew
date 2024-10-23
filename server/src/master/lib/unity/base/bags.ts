@@ -39,6 +39,7 @@ export default class bags {
     private _get_item_index(index: number) {
         return this.items[index];
     }
+    
     addItem(data: prop_item) {
         switch (data.type) {
             case Item_Type.技能书:
@@ -80,7 +81,7 @@ export default class bags {
             console.error('背包内没有该物品');
             return '背包内没有该物品';
         }
-        let itemCont = item.cont || 1;
+        let itemCont = item.cont;
 
         if (itemCont < cont) {
             cont = itemCont;

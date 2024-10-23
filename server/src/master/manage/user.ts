@@ -13,7 +13,6 @@ class user {
     }
     // node-cron定时每间隔5分钟遍历一次用户列表，将超过5分钟未活跃的用户移除
     private checkOffLine() {
-        console.log('Checking inactive users...');
         const now = Date.now();
         this.userMap.forEach((user, key) => {
             if (now - user.lastActiveTime > 5 * 60 * 1000) { // 5 minutes in milliseconds

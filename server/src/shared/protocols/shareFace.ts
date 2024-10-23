@@ -9,7 +9,7 @@ export interface prop_item{
   name:string 
   // 自识别是否可叠加
   type:Item_Type
-  cont?:number
+  cont:number
   data?;
 }
 export enum body_sys{

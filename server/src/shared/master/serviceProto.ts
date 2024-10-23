@@ -12,6 +12,7 @@ import { ReqUpequip, ResUpequip } from './debug/PtlUpequip';
 import { MsgAction } from './MsgAction';
 import { ReqList, ResList } from './player/bag/PtlList';
 import { ReqLook, ResLook } from './player/bag/PtlLook';
+import { ReqSell_sys, ResSell_sys } from './player/bag/PtlSell_sys';
 import { ReqUse, ResUse } from './player/bag/PtlUse';
 import { ReqList as ReqList_1, ResList as ResList_1 } from './player/equip/PtlList';
 import { ReqLook as ReqLook_1, ResLook as ResLook_1 } from './player/equip/PtlLook';
@@ -82,6 +83,10 @@ export interface ServiceType {
         "player/bag/Look": {
             req: ReqLook,
             res: ResLook
+        },
+        "player/bag/Sell_sys": {
+            req: ReqSell_sys,
+            res: ResSell_sys
         },
         "player/bag/Use": {
             req: ReqUse,
@@ -276,6 +281,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
         },
         {
             "id": 36,
+            "name": "player/bag/Sell_sys",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 37,
             "name": "player/bag/Use",
             "type": "api",
             "conf": {
@@ -1062,6 +1075,46 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 4,
                     "value": 4
+                }
+            ]
+        },
+        "player/bag/PtlSell_sys/ReqSell_sys": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "idx",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "cont",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "player/bag/PtlSell_sys/ResSell_sys": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
                 }
             ]
         },

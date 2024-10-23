@@ -10,7 +10,7 @@ export default async function (call: ApiCall<ReqList, ResList>) {
     for (let i = 0; i < list.length; i++) {
         const element = list[i];
         if(!element) continue;
-        req.push({idx:i, name: element.name, cont: element.cont || 0 });
+        req.push({idx:i, name: element.name, cont: element.cont});
     }
     call.succ({
         list: req
