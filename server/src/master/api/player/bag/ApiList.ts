@@ -6,10 +6,11 @@ export default async function (call: ApiCall<ReqList, ResList>) {
     let p = call.req._player as player;
     let list = p.bag.items;
 
-    let req: { name: string, cont: number }[] = [];
+    let req: { name: string, cont: number,idx:number }[] = [];
     for (let i = 0; i < list.length; i++) {
         const element = list[i];
-        req.push({ name: element.name, cont: element.cont || 0 });
+        if(!element) continue;
+        req.push({idx:i, name: element.name, cont: element.cont || 0 });
     }
     call.succ({
         list: req

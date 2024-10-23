@@ -46,7 +46,7 @@ export class body_base {
     private _messageid: string = '';
     private _battle: battle | undefined = undefined;
     private _battleLs: any = undefined;
-    bag: bags = new bags();
+    bag!: bags;
     sys: string = '修仙';
     // 继承血统
     inherit: inherit = new inherit();
@@ -54,7 +54,7 @@ export class body_base {
     private _outAtt: (att_line | att_val | body_bar)[] = []
     private _needUpdate: boolean = false;
     constructor() {
-
+       this.bag = new bags(this);
     }
     /**
      * 脱装备
@@ -102,7 +102,19 @@ export class body_base {
      */
     wearEquip(e: equip) {
         this.equips.push(e);
+        this.sendMessageg('Action',{
+            template:template.文本消息,
+            data: `[装备成功]装备名称${e.name}已穿戴`,
+            messageId:''
+        })
         this.refAtt();
+        this.sendMessageg('Action',{
+            template:template.文本消息,
+            data: `[装备成功]发送最新的战力变化`,
+            messageId:'',
+            delaytime:1
+        })
+        return true;
     }
     /**
      * 获取角色当前等级的体系称谓
@@ -360,6 +372,7 @@ export class body_base {
     }
     addSk_active(data: any) {
         this.sk_active.push(new SKILL(data));
+        return true
     }
     /**
      * 移除自身技能

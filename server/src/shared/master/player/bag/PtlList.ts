@@ -9,7 +9,7 @@ export interface ReqList extends BaseRequest {
  * 数量
  */
 export interface ResList extends BaseResponse {
-    list:{name:string,cont:number}[]
+    list:{name:string,cont:number,idx:number}[]
 }
 
 export const conf: BaseConf = {

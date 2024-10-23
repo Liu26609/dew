@@ -16,11 +16,18 @@ export default class {
                 case '查看':
                     this.look(cls, data[1])
                     break;
+                case '使用':
+                    this.use(cls, data[1], Number(data[2]) || 1)
+                    break;
                 default:
                     this.list(cls)
                     break;
             }
         }
+    }
+    async use(cls: message, idx: number, num: number = 1) {
+        let req = await server.api('player/bag/Use', { idx: idx, cont: num }, cls);
+        console.log('背包使用')
     }
     async list(cls: message) {
         let req = await server.api('player/bag/List', {}, cls);

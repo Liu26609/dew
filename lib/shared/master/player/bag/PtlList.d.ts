@@ -10,6 +10,7 @@ export interface ResList extends BaseResponse {
     list: {
         name: string;
         cont: number;
+        idx: number;
     }[];
 }
 export declare const conf: BaseConf;

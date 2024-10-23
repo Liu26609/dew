@@ -1,4 +1,5 @@
-import { Command, Context, Schema, Time } from 'koishi'
+import { Command, Context, Schema, Time, h } from 'koishi'
+import { } from 'koishi-plugin-puppeteer';
 import bot_logic from './trigger/bot_logic'
 import ET from './lib/ET'
 import server from './server'
@@ -15,6 +16,7 @@ export interface Config {
   服务器地址: string,
 }
 export let log: any
+export const inject = ['puppeteer'];
 
 export const Config: Schema<Config> = Schema.object({
   调试模式: Schema.boolean().default(false).description('个人开发调试用'),
@@ -25,17 +27,17 @@ export const Config: Schema<Config> = Schema.object({
 
 export let CFG: Config;
 
-
 export async function apply(ctx: Context, config: Config) {
   CFG = config;
   log = ctx.logger('[game]');
+  // console.log(ctx.puppeteer)
   ctx.on('dispose', () => {
     // 修复热重载 监听残留
     ET.removeAllListeners()
     // 在插件停用时关闭端口
     server.dispose()
   })
-  if(CFG.调试模式){
+  if (CFG.调试模式) {
     CFG.服务器地址 = 'ws://127.0.0.1:8848';
     log.info('调试模式-将调用本地服务器')
   }
@@ -48,7 +50,7 @@ export async function apply(ctx: Context, config: Config) {
     let cls = ctx.command(element.key, `💡${element.key_tips}`)
     // option 不适合本机器人
     // if (element.option) {
-      // cls.option('改名', '<val:string>')
+    // cls.option('改名', '<val:string>')
     // }
     if (element.tips.length > 0) {
       cls.usage(`════🔵指令描述═━┄\n${element.tips}`)
@@ -61,10 +63,38 @@ export async function apply(ctx: Context, config: Config) {
       }
     }
 
-    cls.action((_: any, ag: any) => {
+    cls.action(async (_: any, ag: any) => {
       const classPath = path.resolve(__dirname, `./action/${element.path}`);
       let msg = inputManage.get_msg(_.session.messageId)
       common.importClass(classPath, [msg, ..._.args])
+      const page = await ctx.puppeteer.page();
+
+      const tempHtml = `file://${path.resolve(__dirname, './html/page/skill.html')}`;
+      
+      await page.goto(tempHtml, { waitUntil: 'networkidle2' });
+
+// 传递数据到网页
+      const dataToPass = { key: 'value', anotherKey: 'anotherValue' };
+      await page.evaluate((data) => {
+        // 在页面上下文中执行的代码
+        (window as any).dataFromNode = data;
+      }, dataToPass);
+
+
+      const leaderboardElement = await page.$('body');
+
+
+      const boundingBox = await leaderboardElement.boundingBox();
+      await page.setViewport({
+        width: Math.ceil(boundingBox.width),
+        height: Math.ceil(boundingBox.height),
+      });
+
+      const imgBuf = await leaderboardElement.screenshot({ captureBeyondViewport: false });
+      const leaderboardImage = h.image(imgBuf, 'image/png');
+      await _.session.send(leaderboardImage);
+      await page.close();
+
     })
   }
 
@@ -110,13 +140,13 @@ image: Dict 图片
   //   })
 
   ctx.middleware((session: any, next) => {
-    console.log('[ctx-转换前]',session.content)
+    console.log('[ctx-转换前]', session.content)
     session.content = session.content.toLowerCase();
     session.content = session.content.replace('/', '');
     session.content = session.content.replace('hp', ' -h');
     // '<at id="4708089599809513869"> 属性</at>'
     session.content = session.content.replace(/<[^>]*>/gi, '').trim();
-    console.log('[ctx-转换后]',session.content)
+    console.log('[ctx-转换后]', session.content)
     return next()
   }, true)
   ctx.on('message', async (session) => {

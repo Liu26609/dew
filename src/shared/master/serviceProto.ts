@@ -12,6 +12,7 @@ import { ReqUpequip, ResUpequip } from './debug/PtlUpequip';
 import { MsgAction } from './MsgAction';
 import { ReqList, ResList } from './player/bag/PtlList';
 import { ReqLook, ResLook } from './player/bag/PtlLook';
+import { ReqUse, ResUse } from './player/bag/PtlUse';
 import { ReqList as ReqList_1, ResList as ResList_1 } from './player/equip/PtlList';
 import { ReqLook as ReqLook_1, ResLook as ResLook_1 } from './player/equip/PtlLook';
 import { ReqReName, ResReName } from './player/equip/PtlReName';
@@ -81,6 +82,10 @@ export interface ServiceType {
         "player/bag/Look": {
             req: ReqLook,
             res: ResLook
+        },
+        "player/bag/Use": {
+            req: ReqUse,
+            res: ResUse
         },
         "player/equip/List": {
             req: ReqList_1,
@@ -165,7 +170,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 29,
+    "version": 30,
     "services": [
         {
             "id": 7,
@@ -264,6 +269,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 35,
             "name": "player/bag/Look",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 36,
+            "name": "player/bag/Use",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -963,6 +976,13 @@ export const serviceProto: ServiceProto<ServiceType> = {
                                     "type": {
                                         "type": "Number"
                                     }
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "idx",
+                                    "type": {
+                                        "type": "Number"
+                                    }
                                 }
                             ]
                         }
@@ -1042,6 +1062,46 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 4,
                     "value": 4
+                }
+            ]
+        },
+        "player/bag/PtlUse/ReqUse": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "idx",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "cont",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "player/bag/PtlUse/ResUse": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
                 }
             ]
         },
