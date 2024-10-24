@@ -1,5 +1,6 @@
 import { SKILL_type } from "../../../shared/protocols/shareFace";
 import cfg_active from "../../cfg/skillCfg/active_Cfg";
+import cfg_auto from "../../cfg/skillCfg/auto_Cfg";
 import { battle } from "../battle/battle";
 import common from "../common";
 import { SKILL_eff_condition, SKILL_rang, SKILL_target } from "../face/FACE_SKILL";
@@ -39,26 +40,21 @@ export class SKILL {
      */
     private _log: { key: string, val: any }[] = [];
     data: any = {};
-    trigger?:{condition:SKILL_eff_condition,effect:effect[]} = undefined;
+    trigger?: { condition: SKILL_eff_condition, effect: effect[] } = undefined;
     constructor(data: any) {
         if (data.data) {
             this.data = data.data;
         }
-        let name = '';
-        if (typeof (data) == 'string') {
-            name = data;
-            this.data.rename = name;
-        } else {
-            name = data.name
-        }
-        const temp_res = cfg_active.get(name)
-        if(!temp_res){
-            console.error(`技能不存在`,name)
+
+        this.type = data.type;
+        this.name = data.name;
+
+        const temp_res = this.type == SKILL_type.主动技能 ? cfg_active.get(this.name) : cfg_auto.get(this.name);
+        if (!temp_res) {
+            console.error(`技能不存在`, this.name)
             debugger;
         }
         const temp = JSON.parse(JSON.stringify(temp_res));
-        this.type = temp.type;
-        this.name = temp.name;
         this.id = temp.id || common.v4();
         this.desc = temp.desc || '技能暂未描述';
         this.target = temp.target || SKILL_target.敌人;
@@ -77,21 +73,39 @@ export class SKILL {
         } else {
             console.error('!!!技能没有效果')
         }
-        if(temp.trigger){
-            
+        if (temp.trigger) {
+            this.trigger = { condition: temp.trigger.condition, effect: [] };
+            for (let i = 0; i < temp.trigger.effect.length; i++) {
+                const element = temp.trigger.effect[i];
+                const effect = word.get_effectTemp(element.tag, element.target, element.data);
+                if (effect) {
+                    this.trigger.effect.push(effect);
+                }
+            }
         }
     }
     set_rename(name: string) {
         this.data.rename = name;
     }
-    get_name(){
-        if(this.data && this.data.rename){
+    /**
+     * 读取真实名称
+     */
+    get_realName() {
+        return this.name;
+    }
+
+    get_name() {
+        if (this.data && this.data.rename) {
             return this.data.rename
         }
         return this.name
     }
     save() {
-        return { name: this.name, data: this.data }
+        return {
+            name: this.name,
+            type: this.type,
+            data: this.data,
+        }
     }
     clearLog() {
         this._log = [];
@@ -127,14 +141,19 @@ export class SKILL {
     }
     use(use: body_base, bt: battle) {
         this.cd = this._cd;
-        this.clearLog();
         let tag_list = this.get_target_rang(use, bt);
-        let forCont = this.rang_num > 1 ? this.rang_num : tag_list.length;
+        // let forCont = this.rang_num > 1 ? this.rang_num : tag_list.length;
+        this.runEffect(use, tag_list, this.effects, bt)
+        if (this._log.length > 0) {
+            bt.log(use.get_group(), use.name, this.get_name(), this._log)
+        }
+    }
 
-
+    private runEffect(use: body_base, tags: body_base[], effects: effect[], bt: battle) {
+        this.clearLog();
         let _tags: body_base[] = [];
-        for (let i = 0; i < tag_list.length; i++) {
-            let _tag = tag_list[i];
+        for (let i = 0; i < tags.length; i++) {
+            let _tag = tags[i];
             if (!_tag) {
                 console.error('!!!技能目标不存在')
                 continue;
@@ -143,13 +162,25 @@ export class SKILL {
 
         }
         // 遍历effects
-        for (let i = 0; i < this.effects.length; i++) {
-            const element = this.effects[i];
-            element.active(this, use, _tags, forCont, bt)
+        for (let i = 0; i < effects.length; i++) {
+            const element = effects[i];
+            element.active(this, use, _tags, 0, bt)
         }
-
         if (this._log.length > 0) {
             bt.log(use.get_group(), use.name, this.get_name(), this._log)
+        }
+    }
+    trigger_tick(condition: SKILL_eff_condition, self: body_base, tag: body_base, bt: battle) {
+        if (!this.trigger) {
+            return;
+        }
+        if (this.trigger.condition != condition) {
+            return;
+        }
+        console.log(`[被动触发]${this.name}`)
+        // 如果 目标是 敌人  并且 范围 为1 则 目标为tag
+        if (this.target == SKILL_target.敌人 && this.rang_num == 1) {
+            this.runEffect(self, [tag], this.trigger.effect, bt)
         }
     }
     /**

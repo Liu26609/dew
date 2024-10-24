@@ -1,7 +1,7 @@
 import { _att_key } from "../../../../shared/protocols/shareFace";
 import { battle } from "../../battle/battle";
 
-import { SKILL_target } from "../../face/FACE_SKILL";
+import { SKILL_eff_condition, SKILL_target } from "../../face/FACE_SKILL";
 import { body_base } from "../../unity/base/body_base";
 import { unity } from "../../unity/unity";
 import { SKILL } from "../SKILL";
@@ -75,5 +75,25 @@ export class effect {
         let calculateVal = new Function('val_str', `return ${val_str}`);
         let val = calculateVal(val_str);
         return val;
+    }
+    /**
+     * 对目标造成伤害
+     */
+    damage(use:body_base,tag:body_base,damage:number,sk:SKILL,bt:battle){
+        let is_die = tag.is_die();
+        if(is_die){return}
+
+        tag.damage(use,damage, bt);
+        
+        if(sk.get_realName() == '普通攻击'){
+            tag.trigger(SKILL_eff_condition.受到普通攻击时,use,bt)
+        }
+
+        sk.log(this.tag, damage)
+
+        if (tag.is_die()) {
+            console.log(`${use.name}使用${sk.name}击杀了${tag.name}`, '')
+            bt.log_kill(use, tag)
+        }
     }
 }

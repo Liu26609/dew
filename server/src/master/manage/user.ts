@@ -74,6 +74,7 @@ class user {
     }
     private createFix(p: player) {
         p.addSk_active('普通攻击')
+        p.addSk_auto('荆棘之甲')
     }
 }
 export default new user()

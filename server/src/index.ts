@@ -19,10 +19,10 @@ async function start() {
         let t = new test_battle()
 
         let a = t.create_unity()
-        let b = t.create_unity()
+        // let b = t.create_unity()
         let c = new battle()
         c.join(battle_group.主场, a)
-        c.join(battle_group.客场, b)
+        // c.join(battle_group.客场, b)
         c.join(battle_group.客场, t.create_unity())
         // let ls = {
         //     game_over: (b: battle) => {

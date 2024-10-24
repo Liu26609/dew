@@ -5,7 +5,7 @@ import { template } from "../../../../shared/master/MsgAction";
 
 export default async function (call: ApiCall<ReqLook, ResLook>) {
     let p = call.req._player as player;
-    let list = p.get_skill_all();
+    let list = p.get_skill_all(true);
     let idx = call.req.idx - 1;
     let sk = list[idx];
     if (!sk) {

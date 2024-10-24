@@ -19,7 +19,9 @@ export class test_battle {
 
 
         data.sk_active = [];
+        data.sk_auto = [];
         data.sk_active.push('普通攻击','大招')
+        data.sk_auto.push('荆棘之甲')
         return new unity(data)
     }
     attack(a, b) {

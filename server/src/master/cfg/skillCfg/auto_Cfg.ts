@@ -14,31 +14,35 @@ cfg.push({
     name: '荆棘之甲',
     type: SKILL_type.被动技能,
     target: SKILL_target.敌人,
-    desc: `受到普通攻击时将对触发者造成(20%受到的伤害)魔法伤害`,
+    desc: `在被一次攻击命中后，对攻击者造成15（+15%护甲）魔法伤害，并且如果目标是英雄，还会施加持续3秒的40%重伤效果`,
     cd: 1,
     // 提供被动效果
     trigger: {
         condition: SKILL_eff_condition.受到普通攻击时,
-        effect: [{
-            tag: [SKILL_eff_path.动作, SKILL_eff_type.伤害类, SKILL_eff_type_伤害类.魔法伤害],
-            data: {
-                // 数值
-                val_str: `受击伤害*0.2`
-            }
-        }]
+        effect: [
+            {
+                tag: [SKILL_eff_path.动作, SKILL_eff_type.伤害类, SKILL_eff_type_伤害类.物理伤害],
+                data: {
+                    // 数值
+                    val_str: `15+0.15*${_att_key.物理防御}`
+                }
+            }]
     },
     rang_type: SKILL_rang.单体伤害,
     rang_num: 1,
     effects: []
 })
 
+// 使用XX技能时将获得1个灵魂
+// 每100个灵魂将提升10%  xx技能的伤害
 
-let auto_Cfg = new Map();
+
+let cfg_auto = new Map();
 for (let i = 0; i < cfg.length; i++) {
     const element = cfg[i];
-    if (auto_Cfg.has(element.name)) {
-        console.error(`[auto_Cfg技能重复注册]${element.name}`)
+    if (cfg_auto.has(element.name)) {
+        console.error(`[cfg_auto技能重复注册]${element.name}`)
     }
-    auto_Cfg.set(element.name, element)
+    cfg_auto.set(element.name, element)
 }
-export default auto_Cfg
+export default cfg_auto;

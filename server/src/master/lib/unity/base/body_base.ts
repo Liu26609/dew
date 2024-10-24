@@ -5,13 +5,14 @@ import common from "../../common";
 import { battle_group } from "../../face/FACE_BODY";
 import { SKILL } from "../../skill/SKILL";
 import { att_line, att_val, body_bar } from "./body_com"
-import { _att_key, prop_item } from "../../../../shared/protocols/shareFace";
+import { _att_key, prop_item, SKILL_type } from "../../../../shared/protocols/shareFace";
 import xlsxToJson from "../../../../model/xlsxToJson";
 import { inherit } from "./inherit";
 import bags from "./bags";
 import equip from "./equip";
 import { template } from "../../../../shared/master/MsgAction";
 import { Item_Type } from "../../../../shared/PtlFace";
+import { SKILL_eff_condition } from "../../face/FACE_SKILL";
 export class body_base {
     id: string = '';
     name: string = '未命名的单位';
@@ -50,51 +51,51 @@ export class body_base {
     sys: string = '修仙';
     // 继承血统
     inherit: inherit = new inherit();
-    equips: (equip|undefined)[] = [];
+    equips: (equip | undefined)[] = [];
     private _outAtt: (att_line | att_val | body_bar)[] = []
     private _needUpdate: boolean = false;
     constructor() {
-       this.bag = new bags(this);
+        this.bag = new bags(this);
     }
     /**
      * 脱装备
      */
-    takeOffEquip(idx:number) {
+    takeOffEquip(idx: number) {
         if (idx < 0 || idx >= this.equips.length) {
-            this.sendMessageg('Action',{
-                template:template.文本消息,
+            this.sendMessageg('Action', {
+                template: template.文本消息,
                 data: `[卸下装备]装备ID：${idx + 1}不存在`,
-                messageId:''
+                messageId: ''
             })
             return;
         }
         let eq = this.equips[idx];
-        if(!eq){
-            this.sendMessageg('Action',{
-                template:template.文本消息,
+        if (!eq) {
+            this.sendMessageg('Action', {
+                template: template.文本消息,
                 data: `[卸下装备]装备ID：${idx + 1}不存在`,
-                messageId:''
+                messageId: ''
             })
             return;
         }
         this.addItem({
-            type:Item_Type.装备,
-            name:eq.name,
-            cont:1,
-            data:eq
+            type: Item_Type.装备,
+            name: eq.name,
+            cont: 1,
+            data: eq
         })
         this.equips[idx] = undefined;
-        this.sendMessageg('Action',{
-            template:template.文本消息,
+        this.sendMessageg('Action', {
+            template: template.文本消息,
             data: `[卸下装备]装备ID：${idx + 1}已放入背包`,
-            messageId:''
+            messageId: ''
         })
         this.refAtt();
-        this.sendMessageg('Action',{
-            template:template.文本消息,
+        this.sendMessageg('Action', {
+            template: template.文本消息,
             data: `[卸下装备]发送最新的战力变化`,
-            messageId:'',
-            delaytime:1
+            messageId: '',
+            delaytime: 1
         })
     }
     /**
@@ -102,17 +103,17 @@ export class body_base {
      */
     wearEquip(e: equip) {
         this.equips.push(e);
-        this.sendMessageg('Action',{
-            template:template.文本消息,
+        this.sendMessageg('Action', {
+            template: template.文本消息,
             data: `[装备成功]装备名称${e.name}已穿戴`,
-            messageId:''
+            messageId: ''
         })
         this.refAtt();
-        this.sendMessageg('Action',{
-            template:template.文本消息,
+        this.sendMessageg('Action', {
+            template: template.文本消息,
             data: `[装备成功]发送最新的战力变化`,
-            messageId:'',
-            delaytime:1
+            messageId: '',
+            delaytime: 1
         })
         return true;
     }
@@ -299,7 +300,7 @@ export class body_base {
         if (data.sk_auto) {
             for (let i = 0; i < data.sk_auto.length; i++) {
                 const element = data.sk_auto[i];
-                this.addSk_auto(new SKILL(element));
+                this.addSk_auto(element);
             }
         }
         this.updateAtt();
@@ -310,7 +311,7 @@ export class body_base {
         let val = 0;
         for (let j = 0; j < equips.length; j++) {
             const equip = equips[j];
-            if(!equip){continue;}
+            if (!equip) { continue; }
             val += equip.get_att(key);
         }
         return val;
@@ -343,7 +344,7 @@ export class body_base {
             // 装备属性
             for (let j = 0; j < equips.length; j++) {
                 const equip = equips[j];
-                if(!equip){continue;}
+                if (!equip) { continue; }
                 val += equip.get_att(element.key);
             }
             out.push(new att_val({ key: element.key, val: val }))
@@ -360,11 +361,19 @@ export class body_base {
     active() {
         this.refAtt();
     }
-    private addSk_auto(data: SKILL) {
-        this.sk_auto.push(data);
+    addSk_auto(data: any) {
+        let _data = data;
+        if (typeof (data) == 'string') {
+            _data = { name: data,type:SKILL_type.被动技能 }
+        }
+        this.sk_auto.push(new SKILL(_data));
     }
     addSk_active(data: any) {
-        this.sk_active.push(new SKILL(data));
+        let _data = data;
+        if (typeof (data) == 'string') {
+            _data = { name: data,type:SKILL_type.主动技能 }
+        }
+        this.sk_active.push(new SKILL(_data));
         return true
     }
     /**
@@ -378,13 +387,28 @@ export class body_base {
         this.sk_active.splice(idx, 1);
     }
     /**
+     * 接收到触发事件
+     * 遍历自身触发效果
+     */
+    trigger(condition: SKILL_eff_condition, tag: body_base, bt: battle) {
+        let allSkill = this.get_skill_all(true);
+        allSkill.forEach((sk) => {
+            sk.trigger_tick(condition, this, tag, bt);
+        })
+
+    }
+    /**
      * 
      * @returns 获取所有技能
      */
-    get_skill_all() {
+    get_skill_all(auto: boolean = false) {
         let allSkill: SKILL[] = [];
         allSkill = allSkill.concat(this.sk_active);
         allSkill = allSkill.concat(this.inherit.sk_active);
+        if(auto){
+            allSkill = allSkill.concat(this.sk_auto);
+            // allSkill = allSkill.concat(this.inherit.sk_auto);
+        }
         return allSkill;
     }
     /**此单位战斗回合开始 */
@@ -458,13 +482,15 @@ export class body_base {
         return this._outAtt[idx]
     }
     // 受到伤害
-    damage(val: number, bt?: battle) {
+    damage(tag: body_base, val: number, bt?: battle) {
         let v = this.hp.getVal();
         v -= val;
         this.hp.setVal(v);
 
         if (bt) {
             bt.log_data('承伤', this._group, this.name, val)
+            bt.log_data('伤害', tag.get_group(), tag.name, val)
+
         }
     }
     resHp(val: number, bt?: battle) {

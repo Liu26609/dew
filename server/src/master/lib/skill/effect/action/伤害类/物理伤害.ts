@@ -46,13 +46,10 @@ class e extends effect {
             if (damage <= 0) {
                 damage = 1;
             }
-            bt.log_data('伤害', use.get_group(), use.name, damage)
-            tag.damage(damage, bt);
-            sk.log(this.tag, damage)
-            if (tag.is_die()) {
-                console.log(`${use.name}使用${sk.name}击杀了${tag.name}`, '')
-                bt.log_kill(use, tag)
-            }
+            // bt.log_data('伤害', use.get_group(), use.name, damage)
+         
+           this.damage(use, tag, damage,sk,bt)
+            
         }
 
     }

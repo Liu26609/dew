@@ -1,6 +1,6 @@
 import message from '../../trigger/message';
 import { MSG_BATTLELOG, MsgAction } from '../../shared/master/MsgAction';
-import battleText from '../../lib/battleText';
+import battleText from '../../temp/battleText';
 export default class {
     constructor(cls: message, data: MsgAction) {
         console.log('回合战斗', data)

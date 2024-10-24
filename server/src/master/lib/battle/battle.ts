@@ -234,7 +234,7 @@ export class battle {
         }
 
         if ((!homeGroupAlive || !awayGroupAlive) || (homeGroupEmpty && awayGroupEmpty)) {
-            console.info(`[战场]战斗结束:${this.id}#${this.createTime}`);
+            console.info(`[战场]战斗结束:${this.id}#[回合:${this.round - 1}][${Date.now() - this.createTime}ms]`);
             this.game_over();
             return;
         }

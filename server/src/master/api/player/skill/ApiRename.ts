@@ -40,7 +40,7 @@ export default async function (call: ApiCall<ReqRename, ResRename>) {
         })
         return
     }
-    let list = p.get_skill_all();
+    let list = p.get_skill_all(true);
     let idx = call.req.idx - 1;
     let sk = list[idx];
     if (idx < 0 || idx >= list.length || !sk) {

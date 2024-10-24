@@ -1,4 +1,4 @@
-import battleText from "../../lib/battleText"
+import battleText from "../../temp/battleText"
 import server from "../../server"
 import { MSG_BATTLELOG, MsgAction } from '../../shared/master/MsgAction';
 import message from "../../trigger/message"
@@ -22,7 +22,6 @@ export default class {
 
         temp += battleText.getData(req.dataLog[0]);
         temp += `战斗共计${req.round}回合\n`
-        temp += `╞═══🔵击杀统计═━┄\n`
         temp += battleText.getKillLog(req.killLog);
         /**
          * 11->xxx击杀xxx

@@ -71,15 +71,13 @@ export async function apply(ctx: Context, config: Config) {
       const classPath = path.resolve(__dirname, `./action/${element.path}`);
       let msg = inputManage.get_msg(_.session.messageId)
       common.importClass(classPath, [msg, ..._.args])
-      temp_img.test(msg)
     })
   }
 
   ctx.on('ready', async () => {
     if (!server.init) {
-      await server.setWsUrl(`ws://${CFG.服务器地址}:8848`);
+      await server.setWsUrl(`${CFG.wss ? 'wss' : 'ws'}://${CFG.服务器地址}:8848`);
     }
-    console.log('ping start')
     server_tool.setApiUrl(`${CFG.图片压缩服务器}:8849`)
     inputManage.init()
 

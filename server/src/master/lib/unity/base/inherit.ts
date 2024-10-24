@@ -1,5 +1,5 @@
 import xlsxToJson from "../../../../model/xlsxToJson";
-import { _att_key } from "../../../../shared/protocols/shareFace";
+import { _att_key, SKILL_type } from "../../../../shared/protocols/shareFace";
 import common from "../../common";
 import { SKILL } from "../../skill/SKILL";
 import word from "../../word";
@@ -67,7 +67,7 @@ export class inherit {
                 const parts = group.split('as');
                 let temp = parts[0]
                 let rename = parts[1]
-                this.sk_active.push(new SKILL({ name: temp, data: { rename: rename } }))
+                this.sk_active.push(new SKILL({ name: temp,type:SKILL_type.主动技能, data: { rename: rename } }))
             }
         }
     }
