@@ -2,7 +2,7 @@ import { SKILL_type } from "../../../shared/protocols/shareFace";
 import cfg_active from "../../cfg/skillCfg/active_Cfg";
 import { battle } from "../battle/battle";
 import common from "../common";
-import { SKILL_rang, SKILL_target } from "../face/FACE_SKILL";
+import { SKILL_eff_condition, SKILL_rang, SKILL_target } from "../face/FACE_SKILL";
 import { body_base } from "../unity/base/body_base";
 import { unity } from "../unity/unity";
 import word from "../word";
@@ -18,6 +18,10 @@ export class SKILL {
      */
     cd: number = -1
     private _cd: number = 1;
+    /**
+     * 技能效果
+     * 主动技能效果
+     */
     effects: effect[] = []
     /**
      * 技能目标
@@ -25,7 +29,9 @@ export class SKILL {
     target: SKILL_target = SKILL_target.敌人
     // 范围类型
     rang_type: SKILL_rang = SKILL_rang.单体伤害
-    // 范围数量
+    /**
+     * 技能范围数量
+     */
     rang_num: number = 1
     /**
      * tag
@@ -33,6 +39,7 @@ export class SKILL {
      */
     private _log: { key: string, val: any }[] = [];
     data: any = {};
+    trigger?:{condition:SKILL_eff_condition,effect:effect[]} = undefined;
     constructor(data: any) {
         if (data.data) {
             this.data = data.data;
@@ -69,6 +76,9 @@ export class SKILL {
             }
         } else {
             console.error('!!!技能没有效果')
+        }
+        if(temp.trigger){
+            
         }
     }
     set_rename(name: string) {

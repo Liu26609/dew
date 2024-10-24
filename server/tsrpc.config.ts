@@ -1,5 +1,5 @@
 import { CodeTemplate, TsrpcConfig } from 'tsrpc-cli';
-const serverArry = ["master"];
+const serverArry = ["master","tool"];
 const tsrpcConf: TsrpcConfig = {
     // Generate ServiceProto
     proto: [],

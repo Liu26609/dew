@@ -41,6 +41,9 @@ export enum SKILL_eff_type_恢复类 {
     生命恢复,
     魔法恢复,
 }
+export enum SKILL_eff_condition{
+    受到普通攻击时 = '受到普通攻击时',
+}
 export enum SKILL_rang{
     单体伤害,
     范围伤害
