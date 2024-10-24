@@ -8,20 +8,25 @@ import common from './lib/common'
 import actionCfg from './cfg/actionCfg'
 import { Trie } from './lib/trie'
 import temp_img from './temp/temp_img';
+import server_tool from './server_tool';
 export const name = 'dew-bot'
 const path = require('path');
 export interface Config {
   调试模式: boolean,
+  图片压缩服务器:string,
   忽略指令空格: boolean,
   服务器地址: string,
+  wss:boolean
 }
 export let log: any
 export const inject = ['puppeteer'];
 
 export const Config: Schema<Config> = Schema.object({
+  wss: Schema.boolean().default(false).description('通常无需修改此项'),
   调试模式: Schema.boolean().default(false).description('个人开发调试用'),
   忽略指令空格: Schema.boolean().default(true).description('默认允许省略指令名后的空格'),
-  服务器地址: Schema.string().default('ws://139.159.214.249:8848')
+  服务器地址: Schema.string().default('139.159.214.249'),
+  图片压缩服务器: Schema.string().default('139.159.214.249'),
   // 139.159.214.249
 })
 
@@ -37,7 +42,7 @@ export async function apply(ctx: Context, config: Config) {
     server.dispose()
   })
   if (CFG.调试模式) {
-    CFG.服务器地址 = 'ws://127.0.0.1:8848';
+    CFG.服务器地址 = '127.0.0.1';
     log.info('调试模式-将调用本地服务器')
   }
   // 忽略指令空格
@@ -72,8 +77,10 @@ export async function apply(ctx: Context, config: Config) {
 
   ctx.on('ready', async () => {
     if (!server.init) {
-      await server.setWsUrl(CFG.服务器地址);
+      await server.setWsUrl(`ws://${CFG.服务器地址}:8848`);
     }
+    console.log('ping start')
+    server_tool.setApiUrl(`${CFG.图片压缩服务器}:8849`)
     inputManage.init()
 
   })

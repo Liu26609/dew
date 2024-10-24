@@ -22,6 +22,9 @@ class EffectFactory {
  * 事件管理器
  */
 class word {
+    /**
+     * 效果缓存
+     */
     private effectTempMap: Map<string, any> = new Map();
     battleMap: Map<number, battle> = new Map();
     private _start = false;
@@ -35,7 +38,6 @@ class word {
         }
         this._start = true;
         console.info('世界启动!')
-        await this._initSkillCl();
         this._startBattleTick();
         this._et();
 
@@ -91,7 +93,7 @@ class word {
             _att_key.技能急速,
             _att_key.物理暴击率,
             _att_key.魔法暴击率,
-        ], option.leve * option.diff * 100,option.leve * option.diff)
+        ], option.leve * option.diff * 100, option.leve * option.diff)
         data.attList = data.attList.concat(arry);
 
         data.sk_active = [];
@@ -157,48 +159,23 @@ class word {
      * @param data 
      * @returns 
      */
-    get_effectTemp(keys: string[], script: any, data: any): effect | null {
-        // 将 keys 数组中的字符串通过 '_' 拼接
-        const key = keys.join('_');
-
-        // 从 effectTempMap 中获取对应的效果类
-        const EffectClass = this.effectTempMap.get(key);
-
-        if (EffectClass) {
-            // 动态实例化该效果类
-            return new EffectClass(keys, script, data);
-        } else {
-            debugger;
+    get_effectTemp(keys: string[], target: any, data: any): effect | null {
+        let effectPath = path.resolve(__dirname, `./skill/effect/${keys.join('/')}`);
+        let temp = this.effectTempMap.get(effectPath);
+        if (temp) {
+            return new temp(keys, target, data);
+        }
+        try {
+            const effectModule = require(`${effectPath}`);
+            const EffectClass = effectModule.default;
+            this.effectTempMap.set(effectPath, EffectClass);
+            return new EffectClass(keys, target, data);
+        } catch (error) {
+            console.error(`[技能效果不存在]${keys}`)
             return null;
         }
     }
-    // 动态创建基于效果类型的实例
-    private async _initSkillCl() {
-        await this._initSkillCls(SKILL_eff_type.伤害类, SKILL_eff_type_伤害类);
-        await this._initSkillCls(SKILL_eff_type.增益类, SKILL_eff_type_增益类);
-    }
-    private async _initSkillCls(key: string, types: any) {
-        const effectTypes = Object.values(types);
-        for (const effectType of effectTypes) {
-            const actionPath = path.resolve(__dirname, `./skill/effect/action/${key}/${effectType}`);
-            try {
-                const effectModule = require(`${actionPath}`);
-                const EffectClass = effectModule.default;
-                this.effectTempMap.set(`action_${key}_${effectType}`, EffectClass);
-            } catch (error) {
-                console.error(`[技能注册:action]${key}/${effectType}`);
-            }
 
-            const buffPath = path.resolve(__dirname, `./skill/effect/buff/${key}/${effectType}`);
-            try {
-                const effectModule = require(`${buffPath}`);
-                const EffectClass = effectModule.default;
-                this.effectTempMap.set(`buff_${key}_${effectType}`, EffectClass);
-            } catch (error) {
-                console.error(`[技能注册:buff]${key}/${effectType}`);
-            }
-        }
-    }
     private async _startBattleTick() {
         const batchSize = 10; // 每批处理的 battle 数量
         const delayBetweenBatches = 5000; // 每批处理的延迟时间，单位为毫秒

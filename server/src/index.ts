@@ -7,6 +7,7 @@ import { battle_group } from "./master/lib/face/FACE_BODY";
 import word from "./master/lib/word";
 import common from "./master/lib/common";
 import ET, { ET_K } from "./master/lib/ET";
+import tool from "./tool";
 const http = require('https');
 async function start() {
     xlsxToJson.init()
@@ -14,6 +15,7 @@ async function start() {
         // await server_mail.startServer(true);
         word.start()
         await master.startServer();
+        await tool.startServer()
         let t = new test_battle()
 
         let a = t.create_unity()

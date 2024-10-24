@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { h } from 'koishi'
 import message from '../trigger/message';
-import {} from "@quanhuzeyu/koishi-plugin-qhzy-sharp"
+import server_tool from '../server_tool';
 const path = require('path');
 class temp_img {
     commonCss: string;
@@ -71,11 +71,10 @@ class temp_img {
         });
         const imgBuf = await leaderboardElement.screenshot({ captureBeyondViewport: false });
         console.log(`Original image size: ${imgBuf.length} bytes`);
-
-        // 使用 imagemin 和 imagemin-mozjpeg 压缩图像
-  
-
-        const leaderboardImage = h.image(imgBuf, 'image/jpeg');
+        let sendBuff = new Uint8Array(imgBuf)
+        let req = await server_tool.api('CompressImg',{imgBuf:sendBuff})
+        console.log(`Compressed image size: ${req.imgBuf.length} bytes`);
+        const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
         await cls.session.send(leaderboardImage);
         await page.close();
     }
