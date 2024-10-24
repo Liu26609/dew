@@ -1,3 +1,4 @@
+import emojiCfg from "./cfg/emojiCfg";
 import { logger } from "./index_bot";
 import server from "./server";
 
@@ -60,6 +61,12 @@ class APP {
         }
 
         return result || '0';
+    }
+    getIcon(name:string){
+        if(emojiCfg[name]){
+            return emojiCfg[name]
+        }
+        return '⚠️'
     }
 }
 export default new APP();

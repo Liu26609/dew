@@ -1,4 +1,6 @@
 import APP from "../APP";
+import actionCfg from "../cfg/actionCfg";
+import emojiCfg from "../cfg/emojiCfg";
 
 class battleText {
     constructor() {
@@ -53,13 +55,14 @@ class battleText {
                 let effArry = element[skName];
                 for (let i = 0; i < effArry.length; i++) {
                     const effItem = effArry[i];
-                    line += `🗡${APP.numberToChinese(effItem.val)}`;
+                    line += `${APP.getIcon(effItem.key)}${APP.numberToChinese(effItem.val)}`;
                 }
             }
             text += line + '\n'
         }
         return text;
     }
+
     /**
      * 获取击杀日志
      */
