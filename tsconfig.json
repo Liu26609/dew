@@ -4,6 +4,7 @@
     "outDir": "lib",
     "target": "es2022",
     "module": "commonjs",
+    "declaration": true,
     "composite": true,
     "incremental": true,
     "skipLibCheck": true,

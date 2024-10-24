@@ -8,6 +8,7 @@ export enum ET_K{
     battle_over,
     input_message,
 }
+
 // 创建事件管理器实例
 class ET extends EventEmitter {
     constructor() {
