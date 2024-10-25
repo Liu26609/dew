@@ -1,5 +1,6 @@
 import xlsxToJson from "../../model/xlsxToJson";
 import { _att_key } from "../../shared/protocols/shareFace";
+import cfg_eff from "../cfg/skillCfg/eff_Cfg";
 import game_map from "../manage/map";
 import { battle } from "./battle/battle";
 import common from "./common";
@@ -159,19 +160,20 @@ class word {
      * @param data 
      * @returns 
      */
-    get_effectTemp(keys: string[], target: any, data: any): effect | null {
-        let effectPath = path.resolve(__dirname, `./skill/effect/${keys.join('/')}`);
+    get_effectTemp(data: any): effect | null {
+        let o_data = cfg_eff.get(data.id)
+        let effectPath = path.resolve(__dirname, `./skill/effect/${o_data.tag.join('/')}`);
         let temp = this.effectTempMap.get(effectPath);
         if (temp) {
-            return new temp(keys, target, data);
+            return new temp(o_data.tag, o_data.target, o_data.data);
         }
         try {
             const effectModule = require(`${effectPath}`);
             const EffectClass = effectModule.default;
             this.effectTempMap.set(effectPath, EffectClass);
-            return new EffectClass(keys, target, data);
+            return new EffectClass(o_data.tag, o_data.target, o_data.data);
         } catch (error) {
-            console.error(`[技能效果不存在]${keys}`)
+            console.error(`[技能效果不存在]${o_data.id}`)
             return null;
         }
     }

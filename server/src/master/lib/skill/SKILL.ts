@@ -65,7 +65,7 @@ export class SKILL {
         if (temp.effects) {
             for (let i = 0; i < temp.effects.length; i++) {
                 const element = temp.effects[i];
-                const effect = word.get_effectTemp(element.tag, element.target, element.data);
+                const effect = word.get_effectTemp(element);
                 if (effect) {
                     this.effects.push(effect);
                 }
@@ -77,7 +77,7 @@ export class SKILL {
             this.trigger = { condition: temp.trigger.condition, effect: [] };
             for (let i = 0; i < temp.trigger.effect.length; i++) {
                 const element = temp.trigger.effect[i];
-                const effect = word.get_effectTemp(element.tag, element.target, element.data);
+                const effect = word.get_effectTemp(element);
                 if (effect) {
                     this.trigger.effect.push(effect);
                 }

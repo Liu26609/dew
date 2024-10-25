@@ -10,7 +10,7 @@ export default async function (call: ApiCall<ReqBattle, ResBattle>) {
 
     let t = new test_battle()
 
-    let a = t.create_unity()
+    let a = call.req._player
     let b = t.create_unity()
     let c = new battle()
     c.join(battle_group.主场, a)

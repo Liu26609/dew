@@ -7,13 +7,21 @@ import { unity } from "../../unity/unity";
 import { SKILL } from "../SKILL";
 
 export class effect {
+    id:number = 0;
     data: any
+
     target: SKILL_target = SKILL_target.自己
     tag: string[]
     constructor(tag: string[], target: SKILL_target, data: any) {
         this.target = target
         this.tag = tag;
-        this.data = data;
+        this.data = data || {};
+    }
+    save() {
+        return {
+            id: this.id,
+            data: this.data,
+        }
     }
     get_key() {
         return this.tag.join('_');
@@ -50,31 +58,36 @@ export class effect {
 
     }
     get_val(use: body_base) {
-        let val_str = this.data.val_str;
-        // 将val_str按计算符号分割
-        let val_arr = val_str.split(/(\+|\-|\*|\/)/);
-        for (let i = 0; i < val_arr.length; i++) {
-            const element = val_arr[i];
-            // 如果element是数字，则跳过
-            if (!isNaN(element)) {
-                continue;
+        try {
+            let val_str = this.data.val_str;
+            // 将val_str按计算符号分割
+            let val_arr = val_str.split(/(\+|\-|\*|\/)/);
+            for (let i = 0; i < val_arr.length; i++) {
+                const element = val_arr[i];
+                // 如果element是数字，则跳过
+                if (!isNaN(element)) {
+                    continue;
+                }
+                // 如果element是计算符号，则跳过/(\+|\-|\*|\/)/
+                if (/(\+|\-|\*|\/)/.test(element)) {
+                    continue;
+                }
+                let line = use.get_att(element);
+                //    如果line是undefined，则直接替换为0
+                if (!line) {
+                    val_str = val_str.replace(element, '0');
+                    continue;
+                }
+                let val = line.getVal();
+                val_str = val_str.replace(element, val.toString());
             }
-            // 如果element是计算符号，则跳过/(\+|\-|\*|\/)/
-            if (/(\+|\-|\*|\/)/.test(element)) {
-                continue;
-            }
-            let line = use.get_att(element);
-            //    如果line是undefined，则直接替换为0
-            if (!line) {
-                val_str = val_str.replace(element, '0');
-                continue;
-            }
-            let val = line.getVal();
-            val_str = val_str.replace(element, val.toString());
+            let calculateVal = new Function('val_str', `return ${val_str}`);
+            let val = calculateVal(val_str);
+            return val;
+        } catch (error) {
+            debugger
         }
-        let calculateVal = new Function('val_str', `return ${val_str}`);
-        let val = calculateVal(val_str);
-        return val;
+
     }
     /**
      * 对目标造成伤害

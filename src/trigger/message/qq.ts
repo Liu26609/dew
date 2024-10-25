@@ -1,10 +1,11 @@
+import { log } from "../..";
 import message from "../message";
 
 export default class extends message {
     constructor(ctx: any) {
         ctx.content = ctx.content.replace(/<[^>]*>/gi, '').trim();
         ctx.content = ctx.content.replace('/', '')
-        console.log('[qq-收到消息]', ctx.content)
+        log.info('[qq-收到消息]', ctx.content)
         super(ctx, 'qq')
     }
     send(): void {

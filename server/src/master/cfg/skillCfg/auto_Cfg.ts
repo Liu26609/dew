@@ -6,9 +6,8 @@ import { SKILL_target, SKILL_rang, SKILL_eff_path, SKILL_eff_type, SKILL_eff_typ
  */
 
 // TODO 内置CD 1毫秒 防止无限触发
-
-// 技能来源  使用者  目标  战场
-// 触发来源  自身  触发者  战场
+// 效果模板编辑页面
+// 技能主体编辑页面  effect[效果模板]
 let cfg: any = []
 cfg.push({
     name: '荆棘之甲',
@@ -19,14 +18,7 @@ cfg.push({
     // 提供被动效果
     trigger: {
         condition: SKILL_eff_condition.受到普通攻击时,
-        effect: [
-            {
-                tag: [SKILL_eff_path.动作, SKILL_eff_type.伤害类, SKILL_eff_type_伤害类.物理伤害],
-                data: {
-                    // 数值
-                    val_str: `15+0.15*${_att_key.物理防御}`
-                }
-            }]
+        effect: [{id:3}]
     },
     rang_type: SKILL_rang.单体伤害,
     rang_num: 1,

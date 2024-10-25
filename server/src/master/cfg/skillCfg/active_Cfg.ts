@@ -15,13 +15,7 @@ cfg.push({
     cd: 1,
     rang_type: SKILL_rang.单体伤害,
     rang_num: 1,
-    effects: [{
-        tag: [SKILL_eff_path.动作, SKILL_eff_type.伤害类, SKILL_eff_type_伤害类.物理伤害],
-        data: {
-            // 数值
-            val_str: `${_att_key.物理攻击}*0.8+测试力`
-        }
-    }]
+    effects: [{id:1}]
 })
 cfg.push({
     name: '大招',
@@ -32,26 +26,8 @@ cfg.push({
     rang_type: SKILL_rang.范围伤害,
     rang_num: 5,
     effects: [
-        {
-            tag: [SKILL_eff_path.buff, SKILL_eff_type.增益类, SKILL_eff_type_增益类.附加暴击],
-            target: SKILL_target.自己,
-            data: {
-                //buff name
-                name:'残暴',
-                // 持续回合
-                round: 2,
-                // 数值
-                val_str: `30`
-            }
-        },
-        {
-            tag: [SKILL_eff_path.动作, SKILL_eff_type.伤害类, SKILL_eff_type_伤害类.物理伤害],
-            target: SKILL_target.敌人,
-            data: {
-                // 数值
-                val_str: `${_att_key.物理攻击}*0.5+测试力`
-            }
-        }]
+        {id:1},
+        {id:1}]
 })
 
 
