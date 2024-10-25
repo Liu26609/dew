@@ -364,16 +364,26 @@ export class body_base {
     addSk_auto(data: any) {
         let _data = data;
         if (typeof (data) == 'string') {
-            _data = { name: data,type:SKILL_type.被动技能 }
+            _data = { name: data, type: SKILL_type.被动技能 }
+        }else{
+            _data.type = SKILL_type.被动技能;
         }
         this.sk_auto.push(new SKILL(_data));
     }
     addSk_active(data: any) {
         let _data = data;
         if (typeof (data) == 'string') {
-            _data = { name: data,type:SKILL_type.主动技能 }
+            _data = { name: data, type: SKILL_type.主动技能 }
+        }else{
+            _data.type = SKILL_type.主动技能;
         }
-        this.sk_active.push(new SKILL(_data));
+
+        try {
+            this.sk_active.push(new SKILL(_data));
+
+        } catch (error) {
+            debugger;
+        }
         return true
     }
     /**
@@ -405,7 +415,7 @@ export class body_base {
         let allSkill: SKILL[] = [];
         allSkill = allSkill.concat(this.sk_active);
         allSkill = allSkill.concat(this.inherit.sk_active);
-        if(auto){
+        if (auto) {
             allSkill = allSkill.concat(this.sk_auto);
             // allSkill = allSkill.concat(this.inherit.sk_auto);
         }

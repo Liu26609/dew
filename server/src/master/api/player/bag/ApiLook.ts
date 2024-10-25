@@ -22,22 +22,29 @@ export default async function (call: ApiCall<ReqLook, ResLook>) {
     switch (item.type) {
         case Item_Type.装备:
             temp = {
-            name: item.name,
-            att: item.data.attList,
-            sys: item.data.sys,
-            tips: '还没有写描述功能哦'
+                name: item.name,
+                att: item.data.attList,
+                sys: item.data.sys,
+                tips: '还没有写描述功能哦'
             } as prop_item_equip;
             break;
         case Item_Type.技能书:
             let skData = new SKILL(item.data);
-            let sk:prop_item_skill = {
+            let sk: prop_item_skill = {
                 name: skData.get_name(),
                 cd: skData.cd,
                 type: skData.type,
                 desc: skData.desc
             }
             temp = sk
-        break;
+            break;
+        case Item_Type.道具:
+            // TODO：道具系统
+            temp = {
+                name: item.name,
+                desc: '暂未实现功能'
+            }
+            break;
         default:
             break;
     }

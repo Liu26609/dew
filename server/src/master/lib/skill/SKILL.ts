@@ -55,6 +55,8 @@ export class SKILL {
             debugger;
         }
         const temp = JSON.parse(JSON.stringify(temp_res));
+
+     
         this.id = temp.id || common.v4();
         this.desc = temp.desc || '技能暂未描述';
         this.target = temp.target || SKILL_target.敌人;
