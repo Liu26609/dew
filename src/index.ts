@@ -119,10 +119,10 @@ image: Dict 图片
   ctx.middleware((session: any, next) => {
     log.info('[ctx-转换前]', session.content)
     session.content = session.content.toLowerCase();
-    session.content = session.content.replace('/', '');
     session.content = session.content.replace('hp', ' -h');
     // '<at id="4708089599809513869"> 属性</at>'
     session.content = session.content.replace(/<[^>]*>/gi, '').trim();
+    session.content = session.content.replace('/', '');
     log.info('[ctx-转换后]', session.content)
     return next()
   }, true)
