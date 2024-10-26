@@ -4,6 +4,9 @@ import { Item_Type } from "../../shared/PtlFace";
 import { battle } from "../lib/battle/battle";
 import common from "../lib/common";
 import { battle_group } from "../lib/face/FACE_BODY";
+import { itemSysName } from "../lib/unity/base/bags";
+import { body_base } from "../lib/unity/base/body_base";
+import { monster } from "../lib/unity/monster";
 import { player } from "../lib/unity/player";
 import word from "../lib/word";
 import user from "./user";
@@ -60,7 +63,28 @@ export default class game_map {
             b.join(battle_group.客场, element)
         }
         b.set_listen({
-            log_kill: (c: battle, win: player, die: player) => {
+            log_kill: (c: battle, win: body_base, die: body_base) => {
+                // 死亡概率掉落道具
+                if(die instanceof monster){
+                    // 根据权重随机一个道具
+                    let fall = die.fall;
+                    let sum = 0;
+                    for (let i = 0; i < fall.length; i++) {
+                        const element = fall[i];
+                        sum += element.wigth;
+                    }
+                    let random = common.random(0,sum);
+                    let now = 0;
+                    for (let i = 0; i < fall.length; i++) {
+                        const element = fall[i];
+                        now += element.wigth;
+                        if(random < now){
+                            c.addGift(win.id,{ name: element.name, cont: common.random(element.min,element.max),type:Item_Type.道具 })
+                            break;
+                        }
+                    }
+                }
+
                 if (win.id == p.id) {
                     c.addGift(p.id, { name: '💠探索进度', cont: 1, type: Item_Type.none })
                     this.add_pgs(p.id, data.length);

@@ -100,6 +100,7 @@ class word {
         data.sk_active = [];
         let cls = new monster(data)
         cls.inherit.reset(data.sys)
+        cls.set_fall(cfg.fall)
         if (cfg.sk_active) {
             const groups = cfg.sk_active.split('\n');
             for (const group of groups) {
