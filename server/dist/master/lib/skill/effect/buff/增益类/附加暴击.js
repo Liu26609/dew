@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const shareFace_1 = require("../../../../../../shared/shareFace");
+const shareFace_1 = require("../../../../../../shared/protocols/shareFace");
 const effect_base_1 = require("../../effect_base");
 class e extends effect_base_1.effect {
     //{

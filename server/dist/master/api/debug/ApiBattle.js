@@ -15,7 +15,7 @@ const battle_1 = require("../../lib/battle/battle");
 function default_1(call) {
     return __awaiter(this, void 0, void 0, function* () {
         let t = new test_battle_1.test_battle();
-        let a = t.create_unity();
+        let a = call.req._player;
         let b = t.create_unity();
         let c = new battle_1.battle();
         c.join(FACE_BODY_1.battle_group.主场, a);

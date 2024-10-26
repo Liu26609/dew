@@ -13,32 +13,36 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = __importDefault(require("../../model/db/db"));
-const shareFace_1 = require("../../shared/shareFace");
+const shareFace_1 = require("../../shared/protocols/shareFace");
+const common_1 = __importDefault(require("../lib/common"));
 const body_com_1 = require("../lib/unity/base/body_com");
 const player_1 = require("../lib/unity/player");
+const node_cron_1 = __importDefault(require("node-cron"));
 class user {
     constructor() {
         this.userMap = new Map();
+        node_cron_1.default.schedule('*/1 * * * *', this.checkOffLine.bind(this));
+    }
+    // node-cron定时每间隔5分钟遍历一次用户列表，将超过5分钟未活跃的用户移除
+    checkOffLine() {
+        const now = Date.now();
+        this.userMap.forEach((user, key) => {
+            if (now - user.lastActiveTime > 5 * 60 * 1000) { // 5 minutes in milliseconds
+                this.offLine(user.id);
+            }
+        });
+    }
+    offLine(onlyid) {
+        // TODO: 检查玩家是否还处于战斗中，如果是则不移除
+        this.save(onlyid);
+        console.log(`Removed inactive user: ${onlyid}`);
+        this.userMap.delete(onlyid);
     }
     locaHas(onlyid) {
         return this.userMap.get(onlyid);
     }
     save(onlyid, create) {
-        let data = Object.assign({}, this.userMap.get(onlyid));
-        // 去掉全部带下划线的属性
-        let sk_acitve = [];
-        for (let i = 0; i < data.sk_active.length; i++) {
-            const sk = data.sk_active[i];
-            sk_acitve.push(sk.save());
-        }
-        data['sk_active'] = sk_acitve;
-        for (const key in data) {
-            if (Object.prototype.hasOwnProperty.call(data, key)) {
-                if (key.indexOf('_') == 0) {
-                    delete data[key];
-                }
-            }
-        }
+        let data = common_1.default.sanitizeObject(this.userMap.get(onlyid));
         if (create) {
             db_1.default.update('user', { id: onlyid }, data);
         }
@@ -84,6 +88,7 @@ class user {
     }
     createFix(p) {
         p.addSk_active('普通攻击');
+        p.addSk_auto('荆棘之甲');
     }
 }
 exports.default = new user();

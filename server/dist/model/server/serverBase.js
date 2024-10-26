@@ -33,14 +33,14 @@ class serverBase {
      */
     _startServer_http(proto, cfg) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.s_http = serverBase.create_httpServer(proto, Object.assign(Object.assign({}, cfg), { json: true, logger: logger_1.logger }));
+            this.s_http = serverBase.create_httpServer(proto, Object.assign({ json: true, logger: logger_1.logger }, cfg));
             yield this.s_http.autoImplementApi(path_1.default.resolve(this._dir, `./api`));
             yield this.s_http.start();
         });
     }
     _startServer_wss(proto, cfg) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.s_wss = serverBase.create_wssServer(proto, Object.assign(Object.assign({}, cfg), { json: true, logger: logger_1.logger }));
+            this.s_wss = serverBase.create_wssServer(proto, Object.assign({ json: true, logger: logger_1.logger }, cfg));
             yield this.s_wss.autoImplementApi(path_1.default.resolve(this._dir, `./api`));
             yield this.s_wss.start();
         });

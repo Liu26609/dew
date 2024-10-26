@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const shareFace_1 = require("../../../../shared/shareFace");
 const MsgAction_1 = require("../../../../shared/master/MsgAction");
+const PtlFace_1 = require("../../../../shared/PtlFace");
 /**
  * 1.随机匹配怪物
  * 2.随机匹配玩家
@@ -63,8 +63,9 @@ $at输入[历练 + 世界名]进入指定世界`;
             log_kill: (b, win, die) => {
                 if (win.id == p.id) {
                     let killLeve = die.leve.getVal();
-                    b.addGift(win.id, { name: '金币', cont: 1, type: shareFace_1.Item_Type.道具 });
-                    b.addGift(win.id, { name: 'EXP', cont: killLeve, type: shareFace_1.Item_Type.道具 });
+                    b.addGift(win.id, { name: '金币', cont: 1, type: PtlFace_1.Item_Type.道具 });
+                    b.addGift(win.id, { name: '经验', cont: killLeve, type: PtlFace_1.Item_Type.道具 });
+                    b.addGift(win.id, { name: '测试道具', cont: 999, type: PtlFace_1.Item_Type.道具 });
                 }
             }
         };
@@ -83,7 +84,7 @@ $at输入[历练 + 世界名]进入指定世界`;
         }
         call.succ({
             type: 'monster',
-            data: res.data
+            data: res.data.map(v => { return { name: v.name }; })
         });
     });
 }

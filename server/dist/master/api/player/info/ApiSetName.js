@@ -8,11 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const transaction_1 = __importDefault(require("../../../lib/transaction"));
 function default_1(call) {
     return __awaiter(this, void 0, void 0, function* () {
         let p = call.req._player;
-        p.name = call.req.new;
+        transaction_1.default.create(p, '角色改名为xxx', [{ name: '金币', cont: 0 }])
+            .then(() => {
+            console.log('改名成功');
+            p.name = call.req.new;
+        });
         call.succ({});
     });
 }

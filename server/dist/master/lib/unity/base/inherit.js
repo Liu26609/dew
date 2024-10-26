@@ -5,16 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.inherit = void 0;
 const xlsxToJson_1 = __importDefault(require("../../../../model/xlsxToJson"));
-const shareFace_1 = require("../../../../shared/shareFace");
+const shareFace_1 = require("../../../../shared/protocols/shareFace");
 const common_1 = __importDefault(require("../../common"));
+const SKILL_1 = require("../../skill/SKILL");
 const word_1 = __importDefault(require("../../word"));
 class inherit {
     constructor(data) {
         this.id = '1';
         this.attList = [];
+        this.sk_active = [];
         if (data) {
             this.id = data.id;
-            this.attList = data.attList;
+            this.attList = data.attList || [];
         }
         if (this.attList.length == 0) {
             this.reset();
@@ -41,6 +43,7 @@ class inherit {
             info = list.get(id);
         }
         else {
+            this.sk_active = [];
             // 随机一个
             let keys = [...list.keys()];
             let key = common_1.default.random(0, keys.length - 1);
@@ -59,6 +62,15 @@ class inherit {
                 shareFace_1._att_key.物理暴击率,
                 shareFace_1._att_key.魔法暴击率
             ], 0);
+        }
+        if (info.sk_active.length > 0) {
+            const groups = info.sk_active.split('\n');
+            for (const group of groups) {
+                const parts = group.split('as');
+                let temp = parts[0];
+                let rename = parts[1];
+                this.sk_active.push(new SKILL_1.SKILL({ name: temp, type: shareFace_1.SKILL_type.主动技能, data: { rename: rename } }));
+            }
         }
     }
 }

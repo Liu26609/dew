@@ -28,7 +28,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.battle = void 0;
 const MsgAction_1 = require("../../../shared/master/MsgAction");
-const shareFace_1 = require("../../../shared/shareFace");
+const PtlFace_1 = require("../../../shared/PtlFace");
 const common_1 = __importDefault(require("../common"));
 const ET_1 = __importStar(require("../ET"));
 const FACE_BODY_1 = require("../face/FACE_BODY");
@@ -51,6 +51,7 @@ class battle {
         this._sklog = [{}, {}]; // 技能日志
         this._killlog = new Map();
         this._datalog = [{}, {}]; //战斗总计数据
+        this.win = undefined;
         // 回合日志
         this._sklog_round = [{}, {}];
         this._killlog_round = new Map();
@@ -78,13 +79,14 @@ class battle {
     }
     destroy() {
         this._active = false;
+        this.callListen('destroy', []);
         ET_1.default.fire(ET_1.ET_K.battle_destroy, this.id);
-        this.groupMap.forEach(element => {
-            element.forEach(item => {
-                item.set_battle(undefined);
-                item.set_battleLs(undefined);
-            });
-        });
+        // this.groupMap.forEach(element => {
+        //     element.forEach(item => {
+        //         item.set_battle(undefined)
+        //         item.set_battleLs(undefined)
+        //     });
+        // });
         this.groupMap = [];
         // 销毁对象将其从内存中移除
         for (let key in this) {
@@ -95,7 +97,7 @@ class battle {
     }
     addGift(id, item) {
         let list = this._gift.get(id) || [];
-        if (item.type == shareFace_1.Item_Type.道具) {
+        if (item.type == PtlFace_1.Item_Type.道具 || item.type == PtlFace_1.Item_Type.none) {
             let existingItem = list.find((i) => i.name === item.name);
             if (existingItem) {
                 existingItem.cont += item.cont;
@@ -240,13 +242,15 @@ class battle {
         const homeGroupEmpty = this.groupMap[FACE_BODY_1.battle_group.主场].size == 0;
         const awayGroupEmpty = this.groupMap[FACE_BODY_1.battle_group.客场].size == 0;
         if ((!homeGroupAlive)) {
+            this.win = FACE_BODY_1.battle_group.客场;
             this.allDie(FACE_BODY_1.battle_group.主场);
         }
         if ((!awayGroupAlive)) {
+            this.win = FACE_BODY_1.battle_group.主场;
             this.allDie(FACE_BODY_1.battle_group.客场);
         }
         if ((!homeGroupAlive || !awayGroupAlive) || (homeGroupEmpty && awayGroupEmpty)) {
-            console.info(`[战场]战斗结束:${this.id}#${this.createTime}`);
+            console.info(`[战场]战斗结束:${this.id}#[回合:${this.round - 1}][${Date.now() - this.createTime}ms]`);
             this.game_over();
             return;
         }

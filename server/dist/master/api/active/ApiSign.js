@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sign_1 = __importDefault(require("../../manage/sign"));
 const MsgAction_1 = require("../../../shared/master/MsgAction");
-const shareFace_1 = require("../../../shared/shareFace");
+const PtlFace_1 = require("../../../shared/PtlFace");
 function default_1(call) {
     return __awaiter(this, void 0, void 0, function* () {
         let p = call.req._player;
@@ -28,7 +28,10 @@ function default_1(call) {
             call.error('今日已经签到过了');
             return;
         }
-        let gitfs = [{ name: '金币', cont: 1, type: shareFace_1.Item_Type.道具 }];
+        let gitfs = [
+            { name: '金币', cont: 1, type: PtlFace_1.Item_Type.道具 },
+            { name: '强化石', cont: 99, type: PtlFace_1.Item_Type.道具 },
+        ];
         // 签到成功
         // 奖励
         call.succ({

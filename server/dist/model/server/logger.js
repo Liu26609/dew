@@ -1,31 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logger = void 0;
+const removeAnsiCodes = (str) => {
+    return str.replace(/\x1b\[[0-9;]*m/g, '');
+};
 exports.logger = {
     log: function (...args) {
-        let jump = false;
-        for (let index = 0; index < args.length; index++) {
-            const element = args[index];
-            if (typeof (element) != 'string') {
-                break;
-            }
-            if (element.includes('API implemented succ:')) {
-                jump = true;
-                return;
-            }
-        }
-        if (jump) {
-            return;
-        }
-        console.log(...args);
+        const cleanArgs = args.map(arg => typeof arg === 'string' ? removeAnsiCodes(arg) : arg);
+        console.log(...cleanArgs);
     },
     warn: function (...args) {
-        console.error(...args);
+        const cleanArgs = args.map(arg => typeof arg === 'string' ? removeAnsiCodes(arg) : arg);
+        console.warn(...cleanArgs);
     },
     error: function (...args) {
-        console.error(...args);
+        const cleanArgs = args.map(arg => typeof arg === 'string' ? removeAnsiCodes(arg) : arg);
+        console.error(...cleanArgs);
     },
     debug: function (...args) {
-        console.debug(...args);
+        const cleanArgs = args.map(arg => typeof arg === 'string' ? removeAnsiCodes(arg) : arg);
+        console.debug(...cleanArgs);
     }
 };

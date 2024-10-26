@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.test_battle = void 0;
-const shareFace_1 = require("../../../shared/shareFace");
+const shareFace_1 = require("../../../shared/protocols/shareFace");
 const common_1 = __importDefault(require("../common"));
 const FACE_BODY_1 = require("../face/FACE_BODY");
 const body_com_1 = require("../unity/base/body_com");
@@ -21,7 +21,9 @@ class test_battle {
         data.attList.push(new body_com_1.att_val({ name: '攻击力', key: shareFace_1._att_key.物理攻击, val: 10 }));
         data.attList.push(new body_com_1.att_val({ name: '防御力', key: shareFace_1._att_key.物理防御, val: 10 }));
         data.sk_active = [];
+        data.sk_auto = [];
         data.sk_active.push('普通攻击', '大招');
+        data.sk_auto.push('荆棘之甲');
         return new unity_1.unity(data);
     }
     attack(a, b) {

@@ -1,11 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Buff_keys = exports.SKILL_rang = exports.SKILL_eff_type_恢复类 = exports.SKILL_eff_type_伤害类 = exports.SKILL_eff_type_增益类 = exports.SKILL_eff_path = exports.SKILL_eff_type = exports.SKILL_target = exports.SKILL_type = void 0;
-var SKILL_type;
-(function (SKILL_type) {
-    SKILL_type[SKILL_type["\u4E3B\u52A8\u6280\u80FD"] = 0] = "\u4E3B\u52A8\u6280\u80FD";
-    SKILL_type[SKILL_type["\u88AB\u52A8\u6280\u80FD"] = 1] = "\u88AB\u52A8\u6280\u80FD";
-})(SKILL_type = exports.SKILL_type || (exports.SKILL_type = {}));
+exports.Buff_keys = exports.SKILL_rang = exports.SKILL_eff_condition = exports.SKILL_eff_type_恢复类 = exports.SKILL_eff_type_伤害类 = exports.SKILL_eff_type_增益类 = exports.SKILL_eff_path = exports.SKILL_eff_type = exports.SKILL_target = void 0;
 var SKILL_target;
 (function (SKILL_target) {
     SKILL_target[SKILL_target["\u654C\u4EBA"] = 0] = "\u654C\u4EBA";
@@ -54,6 +49,10 @@ var SKILL_eff_type_恢复类;
     SKILL_eff_type_恢复类[SKILL_eff_type_恢复类["\u751F\u547D\u6062\u590D"] = 0] = "\u751F\u547D\u6062\u590D";
     SKILL_eff_type_恢复类[SKILL_eff_type_恢复类["\u9B54\u6CD5\u6062\u590D"] = 1] = "\u9B54\u6CD5\u6062\u590D";
 })(SKILL_eff_type_恢复类 = exports.SKILL_eff_type_恢复类 || (exports.SKILL_eff_type_恢复类 = {}));
+var SKILL_eff_condition;
+(function (SKILL_eff_condition) {
+    SKILL_eff_condition["\u53D7\u5230\u666E\u901A\u653B\u51FB\u65F6"] = "\u53D7\u5230\u666E\u901A\u653B\u51FB\u65F6";
+})(SKILL_eff_condition = exports.SKILL_eff_condition || (exports.SKILL_eff_condition = {}));
 var SKILL_rang;
 (function (SKILL_rang) {
     SKILL_rang[SKILL_rang["\u5355\u4F53\u4F24\u5BB3"] = 0] = "\u5355\u4F53\u4F24\u5BB3";

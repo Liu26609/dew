@@ -36,11 +36,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const xlsxToJson_1 = __importDefault(require("../../model/xlsxToJson"));
-const shareFace_1 = require("../../shared/shareFace");
+const shareFace_1 = require("../../shared/protocols/shareFace");
+const eff_Cfg_1 = __importDefault(require("../cfg/skillCfg/eff_Cfg"));
 const map_1 = __importDefault(require("../manage/map"));
 const common_1 = __importDefault(require("./common"));
 const ET_1 = __importStar(require("./ET"));
-const FACE_SKILL_1 = require("./face/FACE_SKILL");
 const body_com_1 = require("./unity/base/body_com");
 const monster_1 = require("./unity/monster");
 const path = require('path');
@@ -59,6 +59,9 @@ class EffectFactory {
  */
 class word {
     constructor() {
+        /**
+         * 效果缓存
+         */
         this.effectTempMap = new Map();
         this.battleMap = new Map();
         this._start = false;
@@ -71,7 +74,6 @@ class word {
             }
             this._start = true;
             console.info('世界启动!');
-            yield this._initSkillCl();
             this._startBattleTick();
             this._et();
             this.createMap('主神空间');
@@ -131,6 +133,7 @@ class word {
         data.attList = data.attList.concat(arry);
         data.sk_active = [];
         let cls = new monster_1.monster(data);
+        cls.inherit.reset(data.sys);
         if (cfg.sk_active) {
             const groups = cfg.sk_active.split('\n');
             for (const group of groups) {
@@ -193,51 +196,23 @@ class word {
      * @param data
      * @returns
      */
-    get_effectTemp(keys, script, data) {
-        // 将 keys 数组中的字符串通过 '_' 拼接
-        const key = keys.join('_');
-        // 从 effectTempMap 中获取对应的效果类
-        const EffectClass = this.effectTempMap.get(key);
-        if (EffectClass) {
-            // 动态实例化该效果类
-            return new EffectClass(keys, script, data);
+    get_effectTemp(data) {
+        let o_data = eff_Cfg_1.default.get(data.id);
+        let effectPath = path.resolve(__dirname, `./skill/effect/${o_data.tag.join('/')}`);
+        let temp = this.effectTempMap.get(effectPath);
+        if (temp) {
+            return new temp(o_data.tag, o_data.target, o_data.data);
         }
-        else {
-            debugger;
+        try {
+            const effectModule = require(`${effectPath}`);
+            const EffectClass = effectModule.default;
+            this.effectTempMap.set(effectPath, EffectClass);
+            return new EffectClass(o_data.tag, o_data.target, o_data.data);
+        }
+        catch (error) {
+            console.error(`[技能效果不存在]${o_data.id}`);
             return null;
         }
-    }
-    // 动态创建基于效果类型的实例
-    _initSkillCl() {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield this._initSkillCls(FACE_SKILL_1.SKILL_eff_type.伤害类, FACE_SKILL_1.SKILL_eff_type_伤害类);
-            yield this._initSkillCls(FACE_SKILL_1.SKILL_eff_type.增益类, FACE_SKILL_1.SKILL_eff_type_增益类);
-        });
-    }
-    _initSkillCls(key, types) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const effectTypes = Object.values(types);
-            for (const effectType of effectTypes) {
-                const actionPath = path.resolve(__dirname, `./skill/effect/action/${key}/${effectType}`);
-                try {
-                    const effectModule = require(`${actionPath}`);
-                    const EffectClass = effectModule.default;
-                    this.effectTempMap.set(`action_${key}_${effectType}`, EffectClass);
-                }
-                catch (error) {
-                    console.error(`[技能注册:action]${key}/${effectType}`);
-                }
-                const buffPath = path.resolve(__dirname, `./skill/effect/buff/${key}/${effectType}`);
-                try {
-                    const effectModule = require(`${buffPath}`);
-                    const EffectClass = effectModule.default;
-                    this.effectTempMap.set(`buff_${key}_${effectType}`, EffectClass);
-                }
-                catch (error) {
-                    console.error(`[技能注册:buff]${key}/${effectType}`);
-                }
-            }
-        });
     }
     _startBattleTick() {
         return __awaiter(this, void 0, void 0, function* () {

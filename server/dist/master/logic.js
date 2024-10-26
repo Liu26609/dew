@@ -78,9 +78,12 @@ class logic {
                 //         return;
                 //     }
                 // }
-                // if (!onLine) {
-                //     user.onLine();
-                // }
+                if (!onLine) {
+                    _user.onLine();
+                }
+                else {
+                    _user.active();
+                }
                 call.req._player = _user;
                 _user.active();
             }

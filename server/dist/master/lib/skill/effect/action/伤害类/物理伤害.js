@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const shareFace_1 = require("../../../../../../shared/shareFace");
+const shareFace_1 = require("../../../../../../shared/protocols/shareFace");
 const common_1 = __importDefault(require("../../../../common"));
 const effect_base_1 = require("../../effect_base");
 class e extends effect_base_1.effect {
@@ -42,13 +42,8 @@ class e extends effect_base_1.effect {
             if (damage <= 0) {
                 damage = 1;
             }
-            bt.log_data('伤害', use.get_group(), use.name, damage);
-            tag.damage(damage, bt);
-            sk.log(this.tag, damage);
-            if (tag.is_die()) {
-                console.log(`${use.name}使用${sk.name}击杀了${tag.name}`, '');
-                bt.log_kill(use, tag);
-            }
+            // bt.log_data('伤害', use.get_group(), use.name, damage)
+            this.damage(use, tag, damage, sk, bt);
         }
     }
 }

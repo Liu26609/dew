@@ -15,7 +15,8 @@ function default_1(call) {
         let map = p.getMap();
         call.succ({
             name: map.name,
-            online: map.get_playerCont()
+            online: map.get_playerCont(),
+            pgs: map.get_pgs(p.id)
         });
     });
 }

@@ -19,6 +19,7 @@ const test_battle_1 = require("./master/lib/battle/test.battle");
 const battle_1 = require("./master/lib/battle/battle");
 const FACE_BODY_1 = require("./master/lib/face/FACE_BODY");
 const word_1 = __importDefault(require("./master/lib/word"));
+const tool_1 = __importDefault(require("./tool"));
 const http = require('https');
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -27,12 +28,13 @@ function start() {
         // await server_mail.startServer(true);
         word_1.default.start();
         yield master_1.default.startServer();
+        yield tool_1.default.startServer();
         let t = new test_battle_1.test_battle();
         let a = t.create_unity();
-        let b = t.create_unity();
+        // let b = t.create_unity()
         let c = new battle_1.battle();
         c.join(FACE_BODY_1.battle_group.主场, a);
-        c.join(FACE_BODY_1.battle_group.客场, b);
+        // c.join(battle_group.客场, b)
         c.join(FACE_BODY_1.battle_group.客场, t.create_unity());
         // let ls = {
         //     game_over: (b: battle) => {

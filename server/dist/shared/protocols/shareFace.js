@@ -1,13 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._att_key = exports.body_sys = exports.Item_Type = void 0;
-var Item_Type;
-(function (Item_Type) {
-    Item_Type[Item_Type["\u7ECF\u9A8C"] = 0] = "\u7ECF\u9A8C";
-    Item_Type[Item_Type["\u6280\u80FD\u4E66"] = 1] = "\u6280\u80FD\u4E66";
-    Item_Type[Item_Type["\u88C5\u5907"] = 2] = "\u88C5\u5907";
-    Item_Type[Item_Type["\u9053\u5177"] = 3] = "\u9053\u5177";
-})(Item_Type = exports.Item_Type || (exports.Item_Type = {}));
+exports._att_key = exports.body_sys = exports.SKILL_type = void 0;
+var SKILL_type;
+(function (SKILL_type) {
+    SKILL_type[SKILL_type["\u4E3B\u52A8\u6280\u80FD"] = 0] = "\u4E3B\u52A8\u6280\u80FD";
+    SKILL_type[SKILL_type["\u88AB\u52A8\u6280\u80FD"] = 1] = "\u88AB\u52A8\u6280\u80FD";
+})(SKILL_type = exports.SKILL_type || (exports.SKILL_type = {}));
 var body_sys;
 (function (body_sys) {
     body_sys["\u4FEE\u4ED9"] = "\u4FEE\u4ED9";
@@ -15,13 +13,23 @@ var body_sys;
     body_sys["\u6597\u7F57"] = "\u6597\u7F57";
     // 百级魂师‌
     body_sys["\u9B54\u6CD5"] = "\u9B54\u6CD5";
-    body_sys["\u53E4\u4EE3\u79D1\u6280"] = "\u53E4\u4EE3\u79D1\u6280";
-    body_sys["\u73B0\u4EE3\u79D1\u6280"] = "\u73B0\u4EE3\u79D1\u6280";
-    body_sys["\u672A\u6765\u79D1\u6280"] = "\u672A\u6765\u79D1\u6280";
-    body_sys["\u897F\u65B9\u795E\u8BDD"] = "\u897F\u65B9\u4F20\u8BF4";
-    body_sys["\u4E1C\u65B9\u795E\u8BDD"] = "\u4E1C\u65B9\u795E\u8BDD";
+    body_sys["\u79D1\u5E7B"] = "\u79D1\u5E7B";
+    body_sys["\u7384\u5E7B"] = "\u7384\u5E7B";
+    body_sys["\u706B\u5F71\u5FCD\u8005"] = "\u706B\u5F71\u5FCD\u8005";
     // 普通巫师、终极巫师
 })(body_sys = exports.body_sys || (exports.body_sys = {}));
+/**
+ * 修仙系统允许装备 [法宝,本名法宝.]
+ * 古代科技 [手枪]
+ * 现代科技 [手枪]
+ * 系统 + 装备类型
+ *
+ * 装备类型  修仙-法宝
+ *
+ * 角色: 修仙
+ * 装备栏位 [法宝]
+ * 如果没有 则随机一个位置装备 并且效果只生效 80% 不再附带技能
+ */
 var _att_key;
 (function (_att_key) {
     _att_key["\u6218\u6597\u529B"] = "\u6218\u6597\u529B";

@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -8,10 +31,12 @@ const common_1 = __importDefault(require("../../common"));
 const FACE_BODY_1 = require("../../face/FACE_BODY");
 const SKILL_1 = require("../../skill/SKILL");
 const body_com_1 = require("./body_com");
-const bags_1 = __importDefault(require("../../bag/bags"));
-const shareFace_1 = require("../../../../shared/shareFace");
+const shareFace_1 = require("../../../../shared/protocols/shareFace");
 const xlsxToJson_1 = __importDefault(require("../../../../model/xlsxToJson"));
 const inherit_1 = require("./inherit");
+const bags_1 = __importStar(require("./bags"));
+const MsgAction_1 = require("../../../../shared/master/MsgAction");
+const PtlFace_1 = require("../../../../shared/PtlFace");
 class body_base {
     constructor() {
         this.id = '';
@@ -41,10 +66,73 @@ class body_base {
         this._messageid = '';
         this._battle = undefined;
         this._battleLs = undefined;
-        this.bag = new bags_1.default();
         this.sys = '修仙';
+        // 继承血统
+        this.inherit = new inherit_1.inherit();
+        this.equips = [];
         this._outAtt = [];
         this._needUpdate = false;
+        this.bag = new bags_1.default(this);
+    }
+    /**
+     * 脱装备
+     */
+    takeOffEquip(idx) {
+        if (idx < 0 || idx >= this.equips.length) {
+            this.sendMessageg('Action', {
+                template: MsgAction_1.template.文本消息,
+                data: `[卸下装备]装备ID：${idx + 1}不存在`,
+                messageId: ''
+            });
+            return;
+        }
+        let eq = this.equips[idx];
+        if (!eq) {
+            this.sendMessageg('Action', {
+                template: MsgAction_1.template.文本消息,
+                data: `[卸下装备]装备ID：${idx + 1}不存在`,
+                messageId: ''
+            });
+            return;
+        }
+        this.addItem({
+            type: PtlFace_1.Item_Type.装备,
+            name: eq.name,
+            cont: 1,
+            data: eq
+        });
+        this.equips[idx] = undefined;
+        this.sendMessageg('Action', {
+            template: MsgAction_1.template.文本消息,
+            data: `[卸下装备]装备ID：${idx + 1}已放入背包`,
+            messageId: ''
+        });
+        this.refAtt();
+        this.sendMessageg('Action', {
+            template: MsgAction_1.template.文本消息,
+            data: `[卸下装备]发送最新的战力变化`,
+            messageId: '',
+            delaytime: 1
+        });
+    }
+    /**
+     * 穿装备
+     */
+    wearEquip(e) {
+        this.equips.push(e);
+        this.sendMessageg('Action', {
+            template: MsgAction_1.template.文本消息,
+            data: `[装备成功]装备名称${e.name}已穿戴`,
+            messageId: ''
+        });
+        this.refAtt();
+        this.sendMessageg('Action', {
+            template: MsgAction_1.template.文本消息,
+            data: `[装备成功]发送最新的战力变化`,
+            messageId: '',
+            delaytime: 1
+        });
+        return true;
     }
     /**
      * 获取角色当前等级的体系称谓
@@ -86,10 +174,13 @@ class body_base {
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
             switch (element.type) {
-                case shareFace_1.Item_Type.道具:
+                case PtlFace_1.Item_Type.道具:
                     this._addItem_道具(element);
                     break;
-                case shareFace_1.Item_Type.技能书:
+                case PtlFace_1.Item_Type.技能书:
+                    this.bag.addItem(element);
+                    break;
+                case PtlFace_1.Item_Type.装备:
                     this.bag.addItem(element);
                     break;
                 default:
@@ -97,6 +188,15 @@ class body_base {
                     break;
             }
         }
+    }
+    wallet_get(key) {
+        let item = this.wallet.find((item) => {
+            return item.key == key;
+        });
+        if (item) {
+            return item.val;
+        }
+        return 0;
     }
     wallet_add(key, val) {
         if (!this.wallet[key]) {
@@ -106,10 +206,10 @@ class body_base {
     }
     _addItem_道具(data) {
         switch (data.name) {
-            case '金币':
+            case bags_1.itemSysName.金币:
                 this.wallet_add(data.name, data.cont);
                 break;
-            case 'EXP':
+            case bags_1.itemSysName.经验:
                 this._addExp(data.cont);
                 break;
             default:
@@ -225,10 +325,23 @@ class body_base {
         if (data.sk_auto) {
             for (let i = 0; i < data.sk_auto.length; i++) {
                 const element = data.sk_auto[i];
-                this.addSk_auto(new SKILL_1.SKILL(element));
+                this.addSk_auto(element);
             }
         }
         this.updateAtt();
+    }
+    _get_equipVal(key) {
+        let equips = this.equips;
+        // 装备属性
+        let val = 0;
+        for (let j = 0; j < equips.length; j++) {
+            const equip = equips[j];
+            if (!equip) {
+                continue;
+            }
+            val += equip.get_att(key);
+        }
+        return val;
     }
     updateAtt() {
         if (!this._needUpdate) {
@@ -236,21 +349,31 @@ class body_base {
         }
         this._needUpdate = false;
         // 最终属性=
-        // 角色基础属性 + 血统属性 * 角色等级
+        // 角色基础属性 + 血统属性 * 角色等级 + 装备属性
         // 特殊处理:护盾
         let leve = this.leve.getVal();
-        this.hp.setMax(this.hp.getVal() + this.inherit.get_att(shareFace_1._att_key.生命值) * leve);
-        this.hp_res.setVal(this.hp_res.getVal() + this.inherit.get_att(shareFace_1._att_key.生命恢复) * leve);
-        this.mp.setMax(this.mp.getVal() + this.inherit.get_att(shareFace_1._att_key.魔法值) * leve);
-        this.mp_res.setVal(this.mp_res.getVal() + this.inherit.get_att(shareFace_1._att_key.魔法恢复) * leve);
-        this.dong_hp.setVal(this.dong_hp.getVal() + this.inherit.get_att(shareFace_1._att_key.生命护盾) * leve);
-        this.dong_mp.setVal(this.dong_mp.getVal() + this.inherit.get_att(shareFace_1._att_key.魔法护盾) * leve);
-        this.dong_phy.setVal(this.dong_phy.getVal() + this.inherit.get_att(shareFace_1._att_key.物理护盾) * leve);
+        this.hp.setMax(this.hp.getVal() + this.inherit.get_att(shareFace_1._att_key.生命值) * leve + this._get_equipVal(shareFace_1._att_key.生命值));
+        this.hp_res.setVal(this.hp_res.getVal() + this.inherit.get_att(shareFace_1._att_key.生命恢复) * leve + this._get_equipVal(shareFace_1._att_key.生命恢复));
+        this.mp.setMax(this.mp.getVal() + this.inherit.get_att(shareFace_1._att_key.魔法值) * leve + this._get_equipVal(shareFace_1._att_key.魔法值));
+        this.mp_res.setVal(this.mp_res.getVal() + this.inherit.get_att(shareFace_1._att_key.魔法恢复) * leve + this._get_equipVal(shareFace_1._att_key.魔法恢复));
+        // TODO:护盾有bug 暂时不加
+        // this.dong_hp.setVal(this.dong_hp.getVal() + this.inherit.get_att(_att_key.生命护盾) * leve)
+        // this.dong_mp.setVal(this.dong_mp.getVal() + this.inherit.get_att(_att_key.魔法护盾) * leve)
+        // this.dong_phy.setVal(this.dong_phy.getVal() + this.inherit.get_att(_att_key.物理护盾) * leve)
         let base = this.attList;
         let out = [];
+        let equips = this.equips;
         for (let i = 0; i < base.length; i++) {
             const element = base[i];
             let val = element.getVal() + this.inherit.get_att(element.key);
+            // 装备属性
+            for (let j = 0; j < equips.length; j++) {
+                const equip = equips[j];
+                if (!equip) {
+                    continue;
+                }
+                val += equip.get_att(element.key);
+            }
             out.push(new body_com_1.att_val({ key: element.key, val: val }));
         }
         this._outAtt = out;
@@ -265,25 +388,74 @@ class body_base {
     active() {
         this.refAtt();
     }
-    /**
-     * 弃用
-     */
-    pushSkill(data) {
-        this.addSk_active(data);
-    }
     addSk_auto(data) {
-        this.sk_auto.push(data);
+        let _data = data;
+        if (typeof (data) == 'string') {
+            _data = { name: data, type: shareFace_1.SKILL_type.被动技能 };
+        }
+        else {
+            _data.type = shareFace_1.SKILL_type.被动技能;
+        }
+        this.sk_auto.push(new SKILL_1.SKILL(_data));
     }
     addSk_active(data) {
-        this.sk_active.push(new SKILL_1.SKILL(data));
+        let _data = data;
+        if (typeof (data) == 'string') {
+            _data = { name: data, type: shareFace_1.SKILL_type.主动技能 };
+        }
+        else {
+            _data.type = shareFace_1.SKILL_type.主动技能;
+        }
+        try {
+            this.sk_active.push(new SKILL_1.SKILL(_data));
+        }
+        catch (error) {
+            debugger;
+        }
+        return true;
+    }
+    /**
+     * 移除自身技能
+     * @param idx
+     */
+    rm_skill(idx) {
+        if (idx < 0 || idx >= this.sk_active.length) {
+            return;
+        }
+        this.sk_active.splice(idx, 1);
+    }
+    /**
+     * 接收到触发事件
+     * 遍历自身触发效果
+     */
+    trigger(condition, tag, bt) {
+        let allSkill = this.get_skill_all(true);
+        allSkill.forEach((sk) => {
+            sk.trigger_tick(condition, this, tag, bt);
+        });
+    }
+    /**
+     *
+     * @returns 获取所有技能
+     */
+    get_skill_all(auto = false) {
+        let allSkill = [];
+        allSkill = allSkill.concat(this.sk_active);
+        allSkill = allSkill.concat(this.inherit.sk_active);
+        if (auto) {
+            allSkill = allSkill.concat(this.sk_auto);
+            // allSkill = allSkill.concat(this.inherit.sk_auto);
+        }
+        return allSkill;
     }
     /**此单位战斗回合开始 */
     battle_round_begins(bt) {
         if (this.is_die()) {
             return;
         }
+        let allSkill = this.get_skill_all();
         // 1.过滤出CD符合的技能
-        let availableSkills = this.sk_active.filter(skill => skill.next_round() == 0);
+        let availableSkills = allSkill.filter(skill => skill.next_round() == 0);
         if (availableSkills.length === 0) {
             console.log('No cd skills');
             return;
@@ -347,12 +519,13 @@ class body_base {
         return this._outAtt[idx];
     }
     // 受到伤害
-    damage(val, bt) {
+    damage(tag, val, bt) {
         let v = this.hp.getVal();
         v -= val;
         this.hp.setVal(v);
         if (bt) {
             bt.log_data('承伤', this._group, this.name, val);
+            bt.log_data('伤害', tag.get_group(), tag.name, val);
         }
     }
     resHp(val, bt) {

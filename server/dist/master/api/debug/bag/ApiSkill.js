@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const shareFace_1 = require("../../../../shared/shareFace");
+const PtlFace_1 = require("../../../../shared/PtlFace");
 function default_1(call) {
     return __awaiter(this, void 0, void 0, function* () {
         let p = call.req._player;
-        p.addItem({ name: call.req.name, type: shareFace_1.Item_Type.技能书, data: { name: call.req.name, data: { from: '背包' } } });
+        p.addItem({ name: call.req.name, type: PtlFace_1.Item_Type.技能书, data: { name: call.req.name }, cont: 1 });
         call.succ({});
     });
 }
