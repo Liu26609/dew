@@ -26,7 +26,7 @@ class temp_text {
      * 道具查看
      */
     async prop_look(data: { type: Item_Type; temp: any }, cls: message) {
-        if(!data || !data.temp){
+        if (!data || !data.temp) {
             cls.send_v1('物品查看出错.请上报日志')
             return;
         }
@@ -38,10 +38,20 @@ class temp_text {
             case Item_Type.技能书:
                 text = await this.temp_prop_skill(data.temp)
                 break;
+            case Item_Type.道具:
+                text = await this.temp_prop_item(data.temp)
+                break;
             default:
                 break;
         }
         cls.send_v1(text)
+    }
+    private async temp_prop_item(data: any) {
+        let text = '';
+        text += '📜道具查看\n'
+        text += `道具名称：${data.name}\n`;
+        text += `道具描述：${data.desc}\n`;
+        return text
     }
     private async temp_prop_equip(data: prop_item_equip) {
         await APP.checkSys(data.sys);
@@ -54,7 +64,7 @@ class temp_text {
         }
         return text;
     }
-    private async temp_prop_skill(data:prop_item_skill) {
+    private async temp_prop_skill(data: prop_item_skill) {
         let text = '';
         text += '📜技能详情\n'
         text += `名称: ${data.name}\n`

@@ -95,7 +95,7 @@ class server {
         }
         let req = await client.callApi(apiName, posData);
         if (req.isSucc) {
-            let _s = req['sys'];
+            let _s = req.res['sys'];
             if (_s && !APP.bodySysCfg.has(_s)) {
                 let req_cfg = await this.api('common/GetBodySysCfg', { key: _s })
                 if (req_cfg) {

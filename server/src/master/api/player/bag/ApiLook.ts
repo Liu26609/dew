@@ -4,6 +4,7 @@ import { player } from "../../../lib/unity/player";
 import { bag_getType } from "../../../lib/unity/base/bags";
 import { Item_Type, prop_item_equip, prop_item_skill } from "../../../../shared/PtlFace";
 import { SKILL } from "../../../lib/skill/SKILL";
+import xlsxToJson from "../../../../model/xlsxToJson";
 
 export default async function (call: ApiCall<ReqLook, ResLook>) {
     let p = call.req._player as player;
@@ -39,10 +40,10 @@ export default async function (call: ApiCall<ReqLook, ResLook>) {
             temp = sk
             break;
         case Item_Type.道具:
-            // TODO：道具系统
+            let info = xlsxToJson.cfg.get('道具表')?.get(item.name)
             temp = {
                 name: item.name,
-                desc: '暂未实现功能'
+                desc: info.desc || '还没有写描述功能哦'
             }
             break;
         default:

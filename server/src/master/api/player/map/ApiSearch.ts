@@ -60,7 +60,7 @@ $at输入[历练 + 世界名]进入指定世界`;
             if(win.id == p.id){
                 let killLeve = die.leve.getVal();
                 b.addGift(win.id,{ name: '金币', cont: 1,type:Item_Type.道具 })
-                b.addGift(win.id,{ name: 'EXP', cont: killLeve,type:Item_Type.道具 })
+                b.addGift(win.id,{ name: '经验', cont: killLeve,type:Item_Type.道具 })
                 b.addGift(win.id,{ name: '测试道具', cont: 999,type:Item_Type.道具 })
             }
         }

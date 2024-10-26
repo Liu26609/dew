@@ -16,7 +16,10 @@ export default async function (call: ApiCall<ReqSign, ResSign>) {
         call.error('今日已经签到过了');
         return;
     }
-    let gitfs = [{ name: '金币', cont: 1,type:Item_Type.道具 }]
+    let gitfs = [
+        { name: '金币', cont: 1,type:Item_Type.道具 },
+        { name: '强化石', cont: 99,type:Item_Type.道具 },
+    ]
     // 签到成功
     // 奖励
     call.succ({

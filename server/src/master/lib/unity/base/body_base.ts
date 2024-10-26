@@ -184,7 +184,7 @@ export class body_base {
             case '金币':
                 this.wallet_add(data.name, data.cont)
                 break;
-            case 'EXP':
+            case '经验':
                 this._addExp(data.cont)
                 break;
             default:

@@ -4,7 +4,7 @@ import { logger } from "./logger";
 export interface server_cfg {
     port: number,
     json: boolean,
-    logger: Logger
+    logger?: Logger
 }
 export class serverBase {
     s_http!: HttpServer<any>;
@@ -29,18 +29,19 @@ export class serverBase {
      */
     async _startServer_http(proto: any, cfg: { port: number }) {
         this.s_http = serverBase.create_httpServer(proto, {
-            ...cfg,
             json: true,
-            logger: logger
+            logger: logger,
+            ...cfg,
+
         });
         await this.s_http.autoImplementApi(path.resolve(this._dir, `./api`))
         await this.s_http.start();
     }
     async _startServer_wss(proto: any, cfg: { port: number }) {
         this.s_wss = serverBase.create_wssServer(proto, {
-            ...cfg,
             json: true,
-            logger: logger
+            logger: logger,
+            ...cfg,
         })
         await this.s_wss.autoImplementApi(path.resolve(this._dir, `./api`))
         await this.s_wss.start();
