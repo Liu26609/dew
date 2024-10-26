@@ -65,7 +65,7 @@ export default class message {
     send(delaytime?: number) {
         let str = '';
         if (this.platform === 'qq') {
-            str += '\n';
+            str += '✨来消息啦✨\n';
         }
         for (let index = 0; index < this.temp.length; index++) {
             const element = this.temp[index];

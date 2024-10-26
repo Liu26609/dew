@@ -20,7 +20,5 @@ export default class {
             return;
         }
         await server.api('player/info/SetName',{new:name},cls)
-        cls.addLine(`已修改用户名为：${name}`);
-        cls.send();
     }
 }

@@ -3,7 +3,8 @@ export enum template {
     未注册 = '未注册',
     测试 = '测试',
     战斗日志 = '战斗日志',
-    文本消息 = '文本消息'
+    文本消息 = '文本消息',
+    交易创建 = '交易/创建',
 }
 export interface MsgAction extends BaseMessage {
     template: template;
@@ -26,7 +27,11 @@ export interface MSG_BATTLELOG {
     killLog: any[];
     gitfs: any[];
 }
-
+export interface transaction_create {
+    /**交易原因 */
+    res:string
+    items: { name: string, now: number,need:number }[]
+}
 export const conf: BaseConf = {
 
 }

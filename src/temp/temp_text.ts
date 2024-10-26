@@ -1,4 +1,5 @@
 import APP from "../APP";
+import { transaction_create } from "../shared/master/MsgAction";
 import { ResList } from "../shared/master/player/bag/PtlList";
 import { Item_Type, prop_item_equip, prop_item_skill } from "../shared/PtlFace";
 import message from "../trigger/message";
@@ -71,6 +72,37 @@ class temp_text {
         text += `冷却: ${data.cd}回合\n`
         text += `类型: ${data.type === 0 ? '主动技能' : '被动技能'}\n`
         text += `技能描述: ${data.desc}\n`
+        return text;
+    }
+
+    transaction_create(data: transaction_create) {
+        // ┏┄═⚖️交易确认═━┄
+        // 强化XX装备所需消耗预览
+        // ────────────
+        // ┌🌈金币x1000
+        // └✅当前拥有:5000
+        // ┌💠强化石x200
+        // └✅当前拥有:5000
+        // ╞══🏧操作选择═━┄
+        // 【确认】         【取消】
+        // ┗┄━═══════━┄
+
+        let text = '';
+        text += '┏┄═⚖️交易确认═━┄\n';
+        text += `${data.res}\n`;
+        text += '───────────\n';
+        for (let i = 0; i < data.items.length; i++) {
+            const element = data.items[i];
+            text += `┌💠${element.name}x${element.need}\n`;
+            if(element.now < element.need){
+                text += `└❌当前拥有:${element.now}\n`;
+            }else{
+                text += `└✅当前拥有:${element.now}\n`;
+            }
+        }
+        text += '╞══🏧操作选择═━┄\n'
+        text += '【确认】         【取消】\n';
+        text += '┗┄━═══════━┄';
         return text;
     }
 }

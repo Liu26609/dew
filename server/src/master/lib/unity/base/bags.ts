@@ -7,6 +7,11 @@ export enum bag_getType {
     index,
     name
 }
+// 道具保留名
+export enum itemSysName{
+    金币 = '金币',
+    经验 = '经验',
+}
 export default class bags {
     items: (prop_item | undefined)[] = []
     _body!: body_base;
@@ -44,6 +49,23 @@ export default class bags {
         return this.items[index];
     }
     private _get_item_name(name:string,type:Item_Type) {
+        let selfItem;
+        switch (name) {
+            case itemSysName.金币:
+                selfItem = {
+                    name: name,
+                    type: type,
+                    cont: this._body.wallet_get(name),
+                    data: {}
+                }
+                break;
+            default:
+                break;
+        }
+        if(selfItem){
+            return selfItem;
+        }
+      
 
         for (let i = 0; i < this.items.length; i++) {
             const element = this.items[i];
@@ -137,6 +159,14 @@ export default class bags {
                     delaytime: 1
                 })
                 console.error('背包-技能学习失败')
+                break;
+            case Item_Type.道具:
+                this._body.sendMessageg('Action', {
+                    template: template.文本消息,
+                    data: `[使用失败]此道具不可直接使用`,
+                    messageId: '',
+                    delaytime: 1
+                })
                 break;
             default:
                 break;

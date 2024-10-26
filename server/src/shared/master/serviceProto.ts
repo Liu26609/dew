@@ -32,6 +32,8 @@ import { ReqRename, ResRename } from './player/skill/PtlRename';
 import { ReqRm, ResRm } from './player/skill/PtlRm';
 import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
+import { ReqCancel, ResCancel } from './transaction/PtlCancel';
+import { ReqConfirm, ResConfirm } from './transaction/PtlConfirm';
 import { ReqBuild, ResBuild } from './work/PtlBuild';
 
 export interface ServiceType {
@@ -164,6 +166,14 @@ export interface ServiceType {
             req: ReqPing,
             res: ResPing
         },
+        "transaction/Cancel": {
+            req: ReqCancel,
+            res: ResCancel
+        },
+        "transaction/Confirm": {
+            req: ReqConfirm,
+            res: ResConfirm
+        },
         "work/Build": {
             req: ReqBuild,
             res: ResBuild
@@ -175,7 +185,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 30,
+    "version": 31,
     "services": [
         {
             "id": 7,
@@ -437,6 +447,22 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "api",
             "conf": {
                 "check_onlyid": false
+            }
+        },
+        {
+            "id": 38,
+            "name": "transaction/Cancel",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 39,
+            "name": "transaction/Confirm",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
             }
         },
         {
@@ -941,6 +967,10 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 3,
                     "value": "文本消息"
+                },
+                {
+                    "id": 5,
+                    "value": "交易/创建"
                 }
             ]
         },
@@ -1983,6 +2013,54 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "PtlPing/ResPing": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "transaction/PtlCancel/ReqCancel": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "transaction/PtlCancel/ResCancel": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "transaction/PtlConfirm/ReqConfirm": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "transaction/PtlConfirm/ResConfirm": {
             "type": "Interface",
             "extends": [
                 {

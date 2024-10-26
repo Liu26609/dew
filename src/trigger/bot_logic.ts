@@ -47,7 +47,7 @@ export default class bot_logic {
                 p = 'qq';
                 break;
             case 'qqguild':
-                p = 'qq'
+                p = 'qqguild'
             break;
             default:
                 break;

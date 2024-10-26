@@ -8,7 +8,7 @@ import { att_line, att_val, body_bar } from "./body_com"
 import { _att_key, prop_item, SKILL_type } from "../../../../shared/protocols/shareFace";
 import xlsxToJson from "../../../../model/xlsxToJson";
 import { inherit } from "./inherit";
-import bags from "./bags";
+import bags, { itemSysName } from "./bags";
 import equip from "./equip";
 import { template } from "../../../../shared/master/MsgAction";
 import { Item_Type } from "../../../../shared/PtlFace";
@@ -173,6 +173,15 @@ export class body_base {
             }
         }
     }
+    wallet_get(key: string) {
+        let item = this.wallet.find((item) => {
+            return item.key == key;
+        })
+        if (item) {
+            return item.val;
+        }
+        return 0;
+    }
     wallet_add(key: string, val: number) {
         if (!this.wallet[key]) {
             this.wallet[key] = 0;
@@ -181,10 +190,10 @@ export class body_base {
     }
     private _addItem_道具(data: any) {
         switch (data.name) {
-            case '金币':
+            case itemSysName.金币:
                 this.wallet_add(data.name, data.cont)
                 break;
-            case '经验':
+            case itemSysName.经验:
                 this._addExp(data.cont)
                 break;
             default:
