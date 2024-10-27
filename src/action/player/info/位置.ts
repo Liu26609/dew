@@ -1,4 +1,5 @@
 import server from "../../../server";
+import { temp_card } from "../../../temp/temp_text";
 import message from "../../../trigger/message"
 
 
@@ -11,21 +12,20 @@ export default class {
     async init(cls: message) {
         let req = await server.api('player/info/Position', {}, cls)
         if (!req) return;
+        let temp = new temp_card();
         switch (req.name) {
             case '主神空间':
-                cls.addLine('┏┄══✉️主神空间══━┄')
-                cls.addLine('┃世界玩家:' + req.online)
-                cls.addLine('┗━━━━━━━━━━━━┄')
+                temp.set_title('主神空间', '🌌')
+                temp.line(`世界玩家:${req.online}`)
                 break;
 
             default:
-                cls.addLine('┏┄══✉️我的位置══━┄')
-                cls.addLine('┃当前世界:' + req.name)
-                cls.addLine('┃世界玩家:' + req.online)
-                cls.addLine('┃探索进度:' + req.pgs + '%')
-                cls.addLine('┗━━━━━━━━━━━━┄')
+                temp.set_title('我的位置', '🌍')
+                temp.line(`当前世界:${req.name}`)
+                temp.line(`世界玩家:${req.online}`)
+                temp.line(`探索进度:${req.pgs}%`)
                 break;
         }
-        cls.send()
+        cls.send_v2(temp)
     }
 }

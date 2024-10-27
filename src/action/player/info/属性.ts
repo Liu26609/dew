@@ -1,5 +1,6 @@
 import APP from "../../../APP";
 import server from "../../../server";
+import { temp_card } from "../../../temp/temp_text";
 import message from "../../../trigger/message";
 
 export default class {
@@ -11,9 +12,10 @@ export default class {
         let req = await server.api('player/info/GetBase', {}, cls)
         if(!req)return;
         let _s = req.sys;
-        cls.addLine('┏┄══✉️我的属性══━┄')
-        cls.addLine(`🧙${req.name}`)
-        cls.addLine(`🔯血统:${req.inherit}[${req.className}]`)
+        let temp = new temp_card();
+        temp.set_title('我的属性', '🧙')
+        temp.add(`🔯血统:${req.inherit}[${req.className}]`)
+        temp.add(`🧙${req.name}`)
         let attList = req.att;
         for (let i = 0; i < attList.length; i++) {
             const att = attList[i];
@@ -29,21 +31,19 @@ export default class {
             }
             switch (att.t) {
                 case 'body_bar':
-                    cls.addLine(`┃${APP.getSysCover(_s,att.name)}:${att.now}/${att.max}`)
+                    temp.add(`┃${APP.getSysCover(_s,att.name)}:${att.now}/${att.max}`)
                     break;
                 case 'att_val':
                     if(att.val == 0){
                         continue;
                     }
-                    cls.addLine(`${icon || '┃'}${APP.getSysCover(_s,att.name)}:${att.val}`)
+                    temp.add(`${icon || '┃'}${APP.getSysCover(_s,att.name)}:${att.val}`)
                     break;
                 default:
-                    cls.addLine('┃未知属性类型:' + att.t)
+                    temp.add('┃未知属性类型:' + att.t)
                     break;
             }
         }
-
-        cls.addLine('┗━━━━━━━━━━━━┄')
-        cls.send()
+        cls.send_v2(temp)
     }
 }
