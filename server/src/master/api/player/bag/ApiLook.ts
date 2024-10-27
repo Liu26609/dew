@@ -1,8 +1,7 @@
 import { ApiCall } from "tsrpc";
 import { ReqLook, ResLook } from "../../../../shared/master/player/bag/PtlLook";
 import { player } from "../../../lib/unity/player";
-import { bag_getType } from "../../../lib/unity/base/bags";
-import { Item_Type, prop_item_equip, prop_item_skill } from "../../../../shared/PtlFace";
+import { bag_getType, Item_Type, prop_item_equip, prop_item_skill } from "../../../../shared/PtlFace";
 import { SKILL } from "../../../lib/skill/SKILL";
 import xlsxToJson from "../../../../model/xlsxToJson";
 
@@ -26,6 +25,7 @@ export default async function (call: ApiCall<ReqLook, ResLook>) {
                 name: item.name,
                 att: item.data.attList,
                 sys: item.data.sys,
+                leve_strengthen: item.data.leve_strengthen,
                 tips: '还没有写描述功能哦'
             } as prop_item_equip;
             break;

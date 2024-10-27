@@ -11,7 +11,9 @@ export default async function (call: ApiCall<ReqLook, ResLook>) {
    }
    call.succ({
       name:eq.name,
+      leve_strengthen:eq.leve_strengthen,
       sys:eq.sys as string,
-      att:eq.attList
+      att:eq.attList,
+      tips:'暂无装备描述'
    })
 }

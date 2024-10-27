@@ -3,7 +3,7 @@ import {  prop_item } from "../../../shared/protocols/shareFace";
 import { Item_Type } from "../../../shared/PtlFace";
 import common from "../common";
 import ET, { ET_K } from "../ET";
-import { battle_group } from "../face/FACE_BODY";
+import { battle_group } from "../../../shared/FACE_BODY";
 import { SKILL_eff_type } from "../face/FACE_SKILL";
 import { body_base } from "../unity/base/body_base";
 import { player } from "../unity/player";

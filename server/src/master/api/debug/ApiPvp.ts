@@ -1,6 +1,6 @@
 import { ApiCall } from "tsrpc";
 import { ReqPvp, ResPvp } from "../../../shared/master/debug/PtlPvp";
-import { battle_group } from "../../lib/face/FACE_BODY";
+import { battle_group } from "../../../shared/FACE_BODY";
 import { battle } from "../../lib/battle/battle";
 import { test_battle } from "../../lib/battle/test.battle";
 import { player } from "../../lib/unity/player";

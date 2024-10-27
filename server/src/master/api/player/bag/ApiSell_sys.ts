@@ -1,8 +1,7 @@
 import { ApiCall } from "tsrpc";
 import { ReqSell_sys, ResSell_sys } from "../../../../shared/master/player/bag/PtlSell_sys";
 import { player } from "../../../lib/unity/player";
-import { bag_getType } from "../../../lib/unity/base/bags";
-import { Item_Type } from "../../../../shared/PtlFace";
+import { bag_getType, Item_Type } from "../../../../shared/PtlFace";
 import { template } from "../../../../shared/master/MsgAction";
 import xlsxToJson from "../../../../model/xlsxToJson";
 

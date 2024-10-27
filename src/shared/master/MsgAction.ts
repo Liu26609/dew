@@ -5,6 +5,7 @@ export enum template {
     战斗日志 = '战斗日志',
     文本消息 = '文本消息',
     交易创建 = '交易/创建',
+    纯文字 = '纯文字',
 }
 export interface MsgAction extends BaseMessage {
     template: template;

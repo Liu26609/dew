@@ -17,6 +17,7 @@ import { ReqUse, ResUse } from './player/bag/PtlUse';
 import { ReqList as ReqList_1, ResList as ResList_1 } from './player/equip/PtlList';
 import { ReqLook as ReqLook_1, ResLook as ResLook_1 } from './player/equip/PtlLook';
 import { ReqReName, ResReName } from './player/equip/PtlReName';
+import { ReqStrengthen, ResStrengthen } from './player/equip/PtlStrengthen';
 import { ReqTakeOff, ResTakeOff } from './player/equip/PtlTakeOff';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
 import { ReqPosition, ResPosition } from './player/info/PtlPosition';
@@ -106,6 +107,10 @@ export interface ServiceType {
             req: ReqReName,
             res: ResReName
         },
+        "player/equip/Strengthen": {
+            req: ReqStrengthen,
+            res: ResStrengthen
+        },
         "player/equip/TakeOff": {
             req: ReqTakeOff,
             res: ResTakeOff
@@ -185,7 +190,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 31,
+    "version": 33,
     "services": [
         {
             "id": 7,
@@ -324,6 +329,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 33,
             "name": "player/equip/ReName",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 40,
+            "name": "player/equip/Strengthen",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -971,6 +984,10 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 5,
                     "value": "交易/创建"
+                },
+                {
+                    "id": 6,
+                    "value": "纯文字"
                 }
             ]
         },
@@ -1279,13 +1296,16 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "extends": [
                 {
-                    "id": 0,
+                    "id": 1,
                     "type": {
                         "type": "Reference",
-                        "target": "../protocols/master_base/BaseResponse"
+                        "target": "../PtlFace/prop_item_equip"
                     }
                 }
-            ],
+            ]
+        },
+        "../PtlFace/prop_item_equip": {
+            "type": "Interface",
             "properties": [
                 {
                     "id": 0,
@@ -1296,20 +1316,96 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 },
                 {
                     "id": 1,
+                    "name": "att",
+                    "type": {
+                        "type": "Any"
+                    }
+                },
+                {
+                    "id": 2,
                     "name": "sys",
                     "type": {
                         "type": "String"
                     }
                 },
                 {
-                    "id": 2,
-                    "name": "att",
+                    "id": 3,
+                    "name": "leve_strengthen",
                     "type": {
-                        "type": "Array",
-                        "elementType": {
-                            "type": "Any"
-                        }
+                        "type": "Reference",
+                        "target": "../FACE_BODY/_bar"
                     }
+                },
+                {
+                    "id": 4,
+                    "name": "tips",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "../FACE_BODY/_bar": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../FACE_BODY/_base_com"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    },
+                    "optional": true
+                },
+                {
+                    "id": 1,
+                    "name": "key",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "max",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "now",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "lastTime",
+                    "type": {
+                        "type": "Number"
+                    },
+                    "optional": true
+                }
+            ]
+        },
+        "../FACE_BODY/_base_com": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "t",
+                    "type": {
+                        "type": "String"
+                    },
+                    "optional": true
                 }
             ]
         },
@@ -1342,6 +1438,46 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "player/equip/PtlReName/ResReName": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "player/equip/PtlStrengthen/ReqStrengthen": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "idx",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "from",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "player/equip/PtlStrengthen/ResStrengthen": {
             "type": "Interface",
             "extends": [
                 {

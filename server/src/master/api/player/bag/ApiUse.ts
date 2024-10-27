@@ -1,8 +1,8 @@
 import { ApiCall } from "tsrpc";
 import { ReqUse, ResUse } from "../../../../shared/master/player/bag/PtlUse";
 import { player } from "../../../lib/unity/player";
-import { bag_getType } from "../../../lib/unity/base/bags";
 import { template } from "../../../../shared/master/MsgAction";
+import { bag_getType } from "../../../../shared/PtlFace";
 
 export default async function (call: ApiCall<ReqUse, ResUse>) {
     let p = call.req._player as player;

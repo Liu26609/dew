@@ -1,12 +1,9 @@
 import { template } from "../../../../shared/master/MsgAction";
 import { prop_item } from "../../../../shared/protocols/shareFace";
-import { Item_Type } from "../../../../shared/PtlFace";
+import { bag_getType, Item_Type } from "../../../../shared/PtlFace";
 import { body_base } from "./body_base";
 import equip from "./equip";
-export enum bag_getType {
-    index,
-    name
-}
+
 // 道具保留名
 export enum itemSysName{
     金币 = '金币',

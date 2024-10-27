@@ -1,4 +1,4 @@
-import { _att_key } from "../../../shared/protocols/shareFace"
+import { _att_key } from "./protocols/shareFace"
 
 export interface _base_com{
     t?:string

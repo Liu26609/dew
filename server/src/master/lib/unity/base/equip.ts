@@ -2,7 +2,7 @@ import xlsxToJson from "../../../../model/xlsxToJson";
 import { _att_key } from "../../../../shared/protocols/shareFace";
 import common from "../../common";
 import word from "../../word";
-import { att_val } from "./body_com";
+import { att_val, body_bar } from "./body_com";
 /**
  * 装备体系
  * 装备位置
@@ -12,6 +12,10 @@ export default class equip {
     id: string = '1';
     // 生成时的唯一ID
     uuid: string = common.v4();
+    /**
+     * 强化等级
+     */
+    leve_strengthen: body_bar = new body_bar({name:'强化等级',key:'leve_strengthen',max:100,now:0});
     sys:string = '修仙';
     // 装备名称 - 涉及改名 单独记录
     name: string = '未命名装备';
@@ -61,7 +65,7 @@ export default class equip {
         for (let i = 0; i < this.attList.length; i++) {
             const att = this.attList[i];
             if (att.key == key) {
-                return att.val
+                return att.val + this.leve_strengthen.now / 15 * att.val;
             }
         }
         return 0;

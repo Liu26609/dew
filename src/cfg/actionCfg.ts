@@ -154,6 +154,7 @@ actionCfg.push({
         "@bot 装备(查看我的装备)",
         "@bot 装备查看 ID",
         "@bot 装备卸下 ID",
+        "@bot 装备强化 ID",
         "@bot 装备改名 ID 新名称",
     ],
     path: 'player/info/装备'

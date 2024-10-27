@@ -1,13 +1,13 @@
+import { _bar } from "../../../FACE_BODY";
 import { BaseRequest, BaseResponse, BaseConf } from "../../../protocols/master_base";
+import { prop_item_equip } from "../../../PtlFace";
 
 export interface ReqLook extends BaseRequest {
     idx:number
 }
 
-export interface ResLook extends BaseResponse {
-    name:string
-    sys:string
-    att:any[]
+export interface ResLook extends prop_item_equip {
+
 }
 
 export const conf: BaseConf = {

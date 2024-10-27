@@ -1,5 +1,6 @@
 import APP from "../../../APP";
 import server from "../../../server";
+import temp_text, { temp_card } from "../../../temp/temp_text";
 import message from "../../../trigger/message"
 
 
@@ -24,11 +25,18 @@ export default class {
                 case '查看':
                     this.look(cls, data[1])
                     break;
+                case '强化':
+                    this.strengthen(cls, data[1])
+                    break;
                 default:
                     this.list(cls)
                     break;
             }
         }
+    }
+    async strengthen(cls: message,idx:number){
+        let req = await server.api('player/equip/Strengthen',{idx:idx,from:'equip'},cls)
+        if (!req) return;
     }
     async rename(cls:message,idx:number,rename:string){
         let req = await server.api('player/equip/ReName',{idx:idx,name:rename},cls)
@@ -43,39 +51,30 @@ export default class {
     async look(cls: message,idx:number) {
         let req = await server.api('player/equip/Look',{idx:idx},cls)
         if(!req)return
-        let temp = `装备信息\n`;
-        temp += `名称:${req.name}\n`;
-        temp += `来源:${req.sys}\n`;
-         temp += `----血统属性\n`;
-        for (let i = 0; i < req.att.length; i++) {
-            const element = req.att[i];
-            temp += `┃${APP.getSysCover(req.sys,element.name)}:${element.val}\n`
-        }
-        cls.addLine(temp)
-        cls.send()
+        let card = await temp_text.temp_prop_equip(req)
+        card.set_title_line('可选操作','🔧')
+        card.add(`【装备强化 ${idx}】【装备卸下 ${idx}】`)
+        cls.send_v2(card)
     }
     async list(cls: message) {
         // 查看血统
         let req = await server.api('player/equip/List', {}, cls)
         if (!req) return;
-
         let list = req.list;
-
-        let temp = `🔵我的装备\n`;
+        let temp = new temp_card()
         let useCont = 0;
+        temp.set_title('我的装备', '🧙')
         for (let i = 0; i < list.length; i++) {
             const element = list[i];
             if (!element) {
                 continue;
             }
             useCont += 1;
-            temp += `[${i + 1}]${element.type}·${element.name}\n`
+            temp.add(`[${i + 1}]${element.type}·${element.name}`)
         }
         if (!useCont) {
-            temp += `你身上还没有一件装备呢~`
+            temp.line(`你身上还没有一件装备呢~`)
         }
-        cls.addLine(temp)
-        cls.send()
-
+        cls.send_v2(temp)
     }
 }

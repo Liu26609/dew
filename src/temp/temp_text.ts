@@ -3,39 +3,39 @@ import { transaction_create } from "../shared/master/MsgAction";
 import { ResList } from "../shared/master/player/bag/PtlList";
 import { Item_Type, prop_item_equip, prop_item_skill } from "../shared/PtlFace";
 import message from "../trigger/message";
-export class temp_card{
-    list:string[] = [];
-    constructor(){
+export class temp_card {
+    list: string[] = [];
+    constructor() {
 
     }
-    set_title(title:string,icon?:string){
-        if(!icon){
+    set_title(title: string, icon?: string) {
+        if (!icon) {
             icon = '📜';
         }
         this.list.push(`ⓘ      ${icon}${title}        ⓧ`)
     }
-    set_title_line(title:string,icon?:string){
-        if(!icon){
+    set_title_line(title: string, icon?: string) {
+        if (!icon) {
             icon = '📜'
         }
         this.list.push(`✦─✧${icon}${title}✧─✦`)
 
     }
-    br(){
+    br() {
         this.list.push(``)
     }
-    line(str:string){
+    line(str: string) {
         this.list.push(`「${str}」`)
     }
-    add(str:string){
+    add(str: string) {
         this.list.push(`${str}`)
     }
-    text(){
+    text() {
         let text = '';
         for (let i = 0; i < this.list.length; i++) {
             const element = this.list[i];
             text += `${element}\n`;
-            if(i == 0){
+            if (i == 0) {
                 text += `◤                                    ◥\n`
             }
         }
@@ -54,7 +54,7 @@ class temp_text {
     bag_list(data: ResList, cls: message) {
         if (!data) return;
         let temp = new temp_card();
-        temp.set_title('背包信息','🎒')
+        temp.set_title('背包信息', '🎒')
         for (let i = 0; i < data.list.length; i++) {
             const element = data.list[i];
             temp.add(`[${element.idx + 1}]${element.name}X${element.cont}`)
@@ -72,7 +72,7 @@ class temp_text {
             cls.send_v1('物品查看出错.请上报日志')
             return;
         }
-        let text:temp_card;
+        let text: temp_card;
         switch (data.type) {
             case Item_Type.装备:
                 text = await this.temp_prop_equip(data.temp)
@@ -91,19 +91,20 @@ class temp_text {
     private async temp_prop_item(data: any) {
 
         let temp = new temp_card();
-        temp.set_title('道具查看','📦')
+        temp.set_title('道具查看', '📦')
         temp.add(`🏷️名称-${data.name}`)
-        temp.set_title_line('道具描述','ℹ️')
+        temp.set_title_line('道具描述', 'ℹ️')
         temp.add(`「${data.desc}」`)
 
         return temp
     }
-    private async temp_prop_equip(data: prop_item_equip) {
+    async temp_prop_equip(data: prop_item_equip) {
         let temp = new temp_card();
-        temp.set_title('装备查看','🗡️')
-        temp.add(`🏷️名称-${data.name}`)
+        temp.set_title('装备查看', '🗡️')
+        temp.add(`🏷️${data.name}+${data.leve_strengthen.now}`)
         temp.add(`「${data.tips}」`)
-        temp.set_title_line('装备属性','🔺')
+        temp.add(`✡️来源:${data.sys}`)
+        temp.set_title_line('装备属性', '🔺')
         for (let i = 0; i < data.att.length; i++) {
             const element = data.att[i];
             temp.add(`┃${APP.getSysCover(data.sys, element.name)}:${element.val}`)
@@ -112,9 +113,9 @@ class temp_text {
     }
     private async temp_prop_skill(data: prop_item_skill) {
         let temp = new temp_card();
-        temp.set_title('技能查看','🧙')
+        temp.set_title('技能查看', '🧙')
         temp.add(`🏷️名称-${data.name}`)
-        temp.set_title_line('技能描述','ℹ️')
+        temp.set_title_line('技能描述', 'ℹ️')
         temp.add(`「${data.desc}」`)
         temp.br();
         temp.add(`冷却：${data.cd}回合`)
@@ -125,19 +126,19 @@ class temp_text {
 
     transaction_create(data: transaction_create) {
         let temp = new temp_card();
-        temp.set_title('交易确认','⚖️')
+        temp.set_title('交易确认', '⚖️')
         for (let i = 0; i < data.items.length; i++) {
             const element = data.items[i];
             temp.add(`┌💠${element.name}x${element.need}`)
-            if(element.now < element.need){
+            if (element.now < element.need) {
                 temp.add(`└❌当前拥有:${element.now}`)
-            }else{
+            } else {
                 temp.add(`└✅当前拥有:${element.now}`)
             }
         }
-        temp.set_title_line('交易原因','ℹ️')
+        temp.set_title_line('交易原因', 'ℹ️')
         temp.add(`「${data.res}」`)
-        temp.set_title_line('操作选择','🏧')
+        temp.set_title_line('操作选择', '🏧')
         temp.add('【确认】         【取消】')
         return temp;
     }

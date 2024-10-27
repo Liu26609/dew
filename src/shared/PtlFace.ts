@@ -1,7 +1,10 @@
+import { _bar } from "./FACE_BODY"
+
 export interface prop_item_equip {
     name: string
     att: any
     sys: string
+    leve_strengthen:_bar
     tips: string
 }
 export interface prop_item_skill {
@@ -25,4 +28,8 @@ export enum Item_Type {
     装备,
     道具,
     none,
+}
+export enum bag_getType {
+    index,
+    name
 }

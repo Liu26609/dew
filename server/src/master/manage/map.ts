@@ -3,7 +3,7 @@ import { template } from "../../shared/master/MsgAction";
 import { Item_Type } from "../../shared/PtlFace";
 import { battle } from "../lib/battle/battle";
 import common from "../lib/common";
-import { battle_group } from "../lib/face/FACE_BODY";
+import { battle_group } from "../../shared/FACE_BODY";
 import { itemSysName } from "../lib/unity/base/bags";
 import { body_base } from "../lib/unity/base/body_base";
 import { monster } from "../lib/unity/monster";

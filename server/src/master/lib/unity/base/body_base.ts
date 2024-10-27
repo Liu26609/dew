@@ -2,7 +2,7 @@ import { WsClient } from "tsrpc";
 import { ServiceType } from "../../../../shared/master/serviceProto";
 import { battle } from "../../battle/battle";
 import common from "../../common";
-import { battle_group } from "../../face/FACE_BODY";
+import { battle_group } from "../../../../shared/FACE_BODY";
 import { SKILL } from "../../skill/SKILL";
 import { att_line, att_val, body_bar } from "./body_com"
 import { _att_key, prop_item, SKILL_type } from "../../../../shared/protocols/shareFace";
