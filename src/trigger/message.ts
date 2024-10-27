@@ -1,5 +1,6 @@
 import inputManage from "../inputManage";
 import ET, { ET_K } from "../lib/ET";
+import { temp_card } from "../temp/temp_text";
 
 /**
  * 多平台消息处理中间件
@@ -88,5 +89,8 @@ export default class message {
         str += temp;
         str += '\n文字排版dev 0.02'
         this.session.sendQueued(str, 0.2)
+    }
+    send_v2(temp: temp_card) {
+        this.session.sendQueued(temp.text(), 0.2)
     }
 }

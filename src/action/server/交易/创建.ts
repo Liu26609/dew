@@ -9,6 +9,6 @@ export default class {
     }
     async step(cls: message,data:MsgAction){
         let info = data.data as transaction_create;
-        cls.send_v1(temp_text.transaction_create(info))
+        cls.send_v2(temp_text.transaction_create(info))
     }
 }

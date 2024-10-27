@@ -3,7 +3,47 @@ import { transaction_create } from "../shared/master/MsgAction";
 import { ResList } from "../shared/master/player/bag/PtlList";
 import { Item_Type, prop_item_equip, prop_item_skill } from "../shared/PtlFace";
 import message from "../trigger/message";
+export class temp_card{
+    list:string[] = [];
+    constructor(){
 
+    }
+    set_title(title:string,icon?:string){
+        if(!icon){
+            icon = '📜';
+        }
+        this.list.push(`ⓘ      ${icon}${title}        ⓧ`)
+    }
+    set_title_line(title:string,icon?:string){
+        if(!icon){
+            icon = '📜'
+        }
+        this.list.push(`✦─✧${icon}${title}✧─✦`)
+
+    }
+    br(){
+        this.list.push(``)
+    }
+    line(str:string){
+        this.list.push(`「${str}」`)
+    }
+    add(str:string){
+        this.list.push(`${str}`)
+    }
+    text(){
+        let text = '';
+        for (let i = 0; i < this.list.length; i++) {
+            const element = this.list[i];
+            text += `${element}\n`;
+            if(i == 0){
+                text += `◤                                    ◥\n`
+            }
+        }
+        text += `◣                                    ◢\n`
+        text += `✎文字排版:v0.3`
+        return text;
+    }
+}
 class temp_text {
     constructor() {
 
@@ -13,15 +53,16 @@ class temp_text {
      */
     bag_list(data: ResList, cls: message) {
         if (!data) return;
-        let temp = `背包信息\n`;
+        let temp = new temp_card();
+        temp.set_title('背包信息','🎒')
         for (let i = 0; i < data.list.length; i++) {
             const element = data.list[i];
-            temp += `[${element.idx + 1}]┃${element.name}X${element.cont}\n`
+            temp.add(`[${element.idx + 1}]${element.name}X${element.cont}`)
         }
         if (data.list.length == 0) {
-            temp += `你的背包里什么东西都没有呢~`
+            temp.add('你的背包里什么东西都没有呢~')
         }
-        cls.send_v1(temp)
+        cls.send_v2(temp)
     }
     /**
      * 道具查看
@@ -31,7 +72,7 @@ class temp_text {
             cls.send_v1('物品查看出错.请上报日志')
             return;
         }
-        let text = '';
+        let text:temp_card;
         switch (data.type) {
             case Item_Type.装备:
                 text = await this.temp_prop_equip(data.temp)
@@ -45,65 +86,60 @@ class temp_text {
             default:
                 break;
         }
-        cls.send_v1(text)
+        cls.send_v2(text)
     }
     private async temp_prop_item(data: any) {
-        let text = '';
-        text += '📜道具查看\n'
-        text += `道具名称：${data.name}\n`;
-        text += `道具描述：${data.desc}\n`;
-        return text
+
+        let temp = new temp_card();
+        temp.set_title('道具查看','📦')
+        temp.add(`🏷️名称-${data.name}`)
+        temp.set_title_line('道具描述','ℹ️')
+        temp.add(`「${data.desc}」`)
+
+        return temp
     }
     private async temp_prop_equip(data: prop_item_equip) {
-        await APP.checkSys(data.sys);
-        let text = '';
-        text += `装备名称：${data.name}\n`;
-        text += `装备描述：${data.tips}\n`;
+        let temp = new temp_card();
+        temp.set_title('装备查看','🗡️')
+        temp.add(`🏷️名称-${data.name}`)
+        temp.add(`「${data.tips}」`)
+        temp.set_title_line('装备属性','🔺')
         for (let i = 0; i < data.att.length; i++) {
             const element = data.att[i];
-            text += `┃${APP.getSysCover(data.sys, element.name)}:${element.val}\n`
+            temp.add(`┃${APP.getSysCover(data.sys, element.name)}:${element.val}`)
         }
-        return text;
+        return temp;
     }
     private async temp_prop_skill(data: prop_item_skill) {
-        let text = '';
-        text += '📜技能详情\n'
-        text += `名称: ${data.name}\n`
-        text += `冷却: ${data.cd}回合\n`
-        text += `类型: ${data.type === 0 ? '主动技能' : '被动技能'}\n`
-        text += `技能描述: ${data.desc}\n`
-        return text;
+        let temp = new temp_card();
+        temp.set_title('技能查看','🧙')
+        temp.add(`🏷️名称-${data.name}`)
+        temp.set_title_line('技能描述','ℹ️')
+        temp.add(`「${data.desc}」`)
+        temp.br();
+        temp.add(`冷却：${data.cd}回合`)
+        temp.add(`类型：${data.type === 0 ? '主动技能' : '被动技能'}`)
+        return temp;
+
     }
 
     transaction_create(data: transaction_create) {
-        // ┏┄═⚖️交易确认═━┄
-        // 强化XX装备所需消耗预览
-        // ────────────
-        // ┌🌈金币x1000
-        // └✅当前拥有:5000
-        // ┌💠强化石x200
-        // └✅当前拥有:5000
-        // ╞══🏧操作选择═━┄
-        // 【确认】         【取消】
-        // ┗┄━═══════━┄
-
-        let text = '';
-        text += '┏┄═⚖️交易确认═━┄\n';
-        text += `${data.res}\n`;
-        text += '───────────\n';
+        let temp = new temp_card();
+        temp.set_title('交易确认','⚖️')
         for (let i = 0; i < data.items.length; i++) {
             const element = data.items[i];
-            text += `┌💠${element.name}x${element.need}\n`;
+            temp.add(`┌💠${element.name}x${element.need}`)
             if(element.now < element.need){
-                text += `└❌当前拥有:${element.now}\n`;
+                temp.add(`└❌当前拥有:${element.now}`)
             }else{
-                text += `└✅当前拥有:${element.now}\n`;
+                temp.add(`└✅当前拥有:${element.now}`)
             }
         }
-        text += '╞══🏧操作选择═━┄\n'
-        text += '【确认】         【取消】\n';
-        text += '┗┄━═══════━┄';
-        return text;
+        temp.set_title_line('交易原因','ℹ️')
+        temp.add(`「${data.res}」`)
+        temp.set_title_line('操作选择','🏧')
+        temp.add('【确认】         【取消】')
+        return temp;
     }
 }
 export default new temp_text();

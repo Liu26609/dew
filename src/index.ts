@@ -4,6 +4,7 @@ import bot_logic from './trigger/bot_logic'
 import ET from './lib/ET'
 import server from './server'
 import inputManage from './inputManage'
+import {} from "@satorijs/adapter-qq";
 import common from './lib/common'
 import actionCfg from './cfg/actionCfg'
 import { Trie } from './lib/trie'
@@ -13,10 +14,10 @@ export const name = 'dew-bot'
 const path = require('path');
 export interface Config {
   调试模式: boolean,
-  图片压缩服务器:string,
+  图片压缩服务器: string,
   忽略指令空格: boolean,
   服务器地址: string,
-  wss:boolean
+  wss: boolean
 }
 export let log: any
 export const inject = ['puppeteer'];
@@ -124,13 +125,12 @@ image: Dict 图片
       session.content = session.content.replace('/', '');
     }
     session.content = session.content.replace('hp', ' -h');
-    // '<at id="4708089599809513869"> 属性</at>'
     log.info('[ctx-转换后]', session.content)
     return next()
   }, true)
   ctx.on('message', async (session) => {
     let _logic = new bot_logic(session)
-
+  
     let msg = _logic.getCls_msg(session)
     inputManage.input_msg(msg)
   })

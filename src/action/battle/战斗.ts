@@ -10,7 +10,5 @@ export default class {
 
     async init(cls: message) {
         let res = await server.api('battle/Battle', {}, cls)
-        console.log(res)
-
     }
 }

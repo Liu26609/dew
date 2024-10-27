@@ -1,4 +1,5 @@
 import server from "../../../server";
+import { temp_card } from "../../../temp/temp_text";
 import message from "../../../trigger/message";
 
 
@@ -22,20 +23,14 @@ export default class {
         }
     }
     search_monster(cls: message, data: any) {
-        let temp = `╞════🔵发现敌人═━┄\n`
+        let temp = new temp_card();
+        temp.set_title('发现敌人', '⚔️')
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
-            temp += `🔵${element.name}`
-            // 最后一行不要\n
-            if (i == data.length - 1) {
-                temp += '\n';
-            } else {
-                temp += `\n`
-            }
+            temp.add(`🟥${element.name}`)
         }
-        temp += `[战斗]开始快速战斗\n`
-        temp += `[探索]继续探索\n`
-        cls.addLine(temp)
-        cls.send()
+        temp.set_title_line('选择行动', '🔍')
+        temp.add(`【战斗】         【探索】`)
+        cls.send_v2(temp)
     }
 }

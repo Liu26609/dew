@@ -13,7 +13,6 @@ class battleText {
         // 战斗数据模块
         let dataLog_A = data
         let dataLog = ''
-        dataLog += `╞═══🔵战斗数据═━┄\n`
         let dataUnityMap = new Map();
         for (const key in dataLog_A) {
             const data = dataLog_A[key];
@@ -31,12 +30,17 @@ class battleText {
             dataLog += `│▌总${key}${APP.numberToChinese(val)}`;
         }
         dataLog += '\n';
+        let allSize = dataUnityMap.size;
         dataUnityMap.forEach((unity, name) => {
             dataLog += `🐍${name}`
             for (const key in unity) {
                 dataLog += `│▌${key}${APP.numberToChinese(unity[key])}`
             }
-            dataLog += '\n'
+            // 如果是最后一个，不换行
+            allSize -= 1;
+            if (allSize != 0) {
+                dataLog += '\n'
+            }
         });
         // 战斗数据模块
         return dataLog
@@ -44,7 +48,7 @@ class battleText {
     /**
      * 获取技能统计
      */
-    getSkLog(data:any){
+    getSkLog(data: any) {
         let A = data;
         let text = '';
         for (const userName in A) {
@@ -58,7 +62,7 @@ class battleText {
                     line += `${APP.getIcon(effItem.key)}${APP.numberToChinese(effItem.val)}`;
                 }
             }
-            text += line + '\n'
+            text += line
         }
         return text;
     }
@@ -66,16 +70,20 @@ class battleText {
     /**
      * 获取击杀日志
      */
-    getKillLog(data:any){
-        let killLog =data;
-        if(killLog.length == 0){
+    getKillLog(data: any) {
+        let killLog = data;
+        if (killLog.length == 0) {
             return ''
         }
-        let temp = `╞═══🔵击杀统计═━┄\n`
+        let temp = ``
         for (let index = 0; index < killLog.length; index++) {
             const element = killLog[index];
-            temp += `${element.round}->🐍${element.use}击杀🐍${element.tag}\n`
-        } 
+            temp += `${element.round}>🐍${element.use}🗡️🐍${element.tag}`
+            // 如果index不是最后一个
+            if (index != killLog.length - 1) {
+                temp += '\n'
+            }
+        }
         return temp;
     }
 }
