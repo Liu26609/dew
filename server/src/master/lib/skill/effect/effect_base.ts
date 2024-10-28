@@ -57,7 +57,7 @@ export class effect {
     active(sk: SKILL, use: body_base, tag: body_base[], cont: number = 1,bt:battle) {
 
     }
-    get_val(use: body_base) {
+    get_val(sk: SKILL,use: body_base) {
         try {
             let val_str = this.data.val_str;
             // 将val_str按计算符号分割
@@ -72,13 +72,24 @@ export class effect {
                 if (/(\+|\-|\*|\/)/.test(element)) {
                     continue;
                 }
-                let line = use.get_att(element);
-                //    如果line是undefined，则直接替换为0
-                if (!line) {
-                    val_str = val_str.replace(element, '0');
-                    continue;
+                let val = 0;
+                switch (element) {
+                    case '技能等级':
+                        val = 1;
+                        break;
+                    default:
+                        let line = use.get_att(element);
+                        //    如果line是undefined，则直接替换为0
+                        if (!line) {
+                            val_str = val_str.replace(element, '0');
+                            continue;
+                        }
+                        val = line.getVal();
+                        break;
                 }
-                let val = line.getVal();
+       
+
+
                 val_str = val_str.replace(element, val.toString());
             }
             let calculateVal = new Function('val_str', `return ${val_str}`);

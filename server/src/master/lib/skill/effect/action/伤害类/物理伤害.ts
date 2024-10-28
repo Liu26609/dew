@@ -27,7 +27,7 @@ class e extends effect {
                 debugger
             }
 
-            let val = this.get_val(use);
+            let val = this.get_val(sk,use);
             if (val <= 0) {
                 sk.log(this.tag, 0);
                 return;

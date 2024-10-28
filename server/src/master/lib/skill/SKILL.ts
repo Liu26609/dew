@@ -1,4 +1,5 @@
-import { SKILL_type } from "../../../shared/protocols/shareFace";
+import exp from "constants";
+import { _att_key, SKILL_type } from "../../../shared/protocols/shareFace";
 import cfg_active from "../../cfg/skillCfg/active_Cfg";
 import cfg_auto from "../../cfg/skillCfg/auto_Cfg";
 import { battle } from "../battle/battle";
@@ -8,6 +9,7 @@ import { body_base } from "../unity/base/body_base";
 import { unity } from "../unity/unity";
 import word from "../word";
 import { effect } from "./effect/effect_base";
+import { body_bar } from "../unity/base/body_com";
 
 export class SKILL {
     name: string;
@@ -39,6 +41,11 @@ export class SKILL {
      * data
      */
     private _log: { key: string, val: any }[] = [];
+    /**
+     * 技能等级
+     */
+    leve:number = 1;
+    exp:body_bar = new body_bar({ key: _att_key.经验值, max: 100, now: 0 })
     data: any = {};
     trigger?: { condition: SKILL_eff_condition, effect: effect[] } = undefined;
     constructor(data: any) {
@@ -48,6 +55,11 @@ export class SKILL {
 
         this.type = data.type;
         this.name = data.name;
+        this.leve = data.leve || 1;
+        if(data.exp){
+            this.exp = new body_bar(data.exp)
+        }
+
 
         const temp_res = this.type == SKILL_type.主动技能 ? cfg_active.get(this.name) : cfg_auto.get(this.name);
         if (!temp_res) {
@@ -86,6 +98,17 @@ export class SKILL {
             }
         }
     }
+    /**
+     * 增加技能经验
+     * @param val 
+     */
+    add_exp(val:number){
+        this.exp.now += val;
+        if(this.exp.now >= this.exp.max){
+            this.exp.now = 0;
+            this.leve += 1;
+        }
+    }
     set_rename(name: string) {
         this.data.rename = name;
     }
@@ -104,6 +127,7 @@ export class SKILL {
     }
     save() {
         return {
+            leve:this.leve,
             name: this.name,
             type: this.type,
             data: this.data,
