@@ -86,5 +86,17 @@ class battleText {
         }
         return temp;
     }
+    /**
+     * 获取战利品日志
+     */
+    getGiftLog(data: any) {
+        let gifts = data;
+        let temp = ''
+        for (let index = 0; index < gifts.length; index++) {
+            const element = gifts[index];
+            temp += `${element.icon}${element.name}x${element.cont}`
+        }
+        return temp;
+    }
 }
 export default new battleText()

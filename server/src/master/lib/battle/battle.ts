@@ -1,5 +1,5 @@
 import { template } from "../../../shared/master/MsgAction";
-import {  prop_item } from "../../../shared/protocols/shareFace";
+import { prop_item } from "../../../shared/protocols/shareFace";
 import { Item_Type } from "../../../shared/PtlFace";
 import common from "../common";
 import ET, { ET_K } from "../ET";
@@ -7,6 +7,7 @@ import { battle_group } from "../../../shared/FACE_BODY";
 import { SKILL_eff_type } from "../face/FACE_SKILL";
 import { body_base } from "../unity/base/body_base";
 import { player } from "../unity/player";
+import xlsxToJson from "../../../model/xlsxToJson";
 let counter = 1;
 /**
  * 战场
@@ -73,7 +74,7 @@ export class battle {
         }
     }
 
-    addGift(id: string, item:prop_item) {
+    addGift(id: string, item: prop_item) {
         let list = this._gift.get(id) || [];
         if (item.type == Item_Type.道具 || item.type == Item_Type.none) {
             let existingItem = list.find((i: any) => i.name === item.name);
@@ -84,6 +85,22 @@ export class battle {
             }
         } else {
             list.push(item);
+        }
+        if (!item.icon) {
+            switch (item.type) {
+                case Item_Type.道具:
+                    item.icon = xlsxToJson.cfg.get('道具表')?.get(item.name)?.icon
+                    break;
+                case Item_Type.装备:
+                    item.icon = '⚔️'
+                    break;
+                case Item_Type.技能书:
+                    item.icon = '🔮'
+                    break;
+                default:
+                    console.error('未知类型icon', item)
+                    break;
+            }
         }
         this._gift.set(id, list);
     }

@@ -51,7 +51,7 @@ $at输入[历练 + 世界名]进入指定世界`;
                 killLog: log.killLog,
                 gitfs: gitfs,
             }
-            p.addItem(gitfs)
+            p.addItem(gitfs);
             p.sendMessageg('Action', {
                 template: template.战斗日志,
                 data:data,

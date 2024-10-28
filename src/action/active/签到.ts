@@ -1,4 +1,5 @@
 import server from "../../server";
+import { temp_card } from "../../temp/temp_text";
 import message from "../../trigger/message";
 
 
@@ -11,17 +12,18 @@ export default class {
     async init(cls: message) {
         let req = await server.api('active/Sign', {}, cls)
         if (!req) return;
-        let temp = `╞════🔵签到成功═━┄\n`
-        temp += `共计签到${req.consecutive_sign_count}天\n`
-        temp += `累计签到${req.sign_count}\n`
-        temp += `今日排名${req.todayRank}\n`
-        temp += `╞════🔵签到奖励═━┄\n`
+        let temp = new temp_card()
+        temp.set_title('签到成功','✨️')
+        temp.add(`🎰共计签到${req.consecutive_sign_count}天`)
+        temp.add(`🎐累计签到${req.sign_count}天`)
+        temp.add(`🏆️今日排名${req.todayRank}`)
+        temp.set_title_line('签到奖励','🎁')
+
         let gifts = req.gitfs;
         for (let index = 0; index < gifts.length; index++) {
             const element = gifts[index];
-            temp += `🎁${element.name}x${element.cont}\n`
+            temp.add(`🎁${element.name}x${element.cont}`)
         }
-        cls.addLine(temp)
-        cls.send()
+        cls.send_v2(temp)
     }
 }

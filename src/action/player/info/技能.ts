@@ -1,7 +1,7 @@
 import APP from "../../../APP";
 import server from "../../../server";
 import { Item_Type } from "../../../shared/PtlFace";
-import temp_text from "../../../temp/temp_text";
+import temp_text, { temp_card } from "../../../temp/temp_text";
 import message from "../../../trigger/message"
 
 
@@ -55,17 +55,15 @@ export default class {
         temp_text.prop_look({type:Item_Type.技能书,temp:req},cls)
     }
     async look(cls: message) {
-        console.log('查看全部技能')
         let req = await server.api('player/skill/List',{},cls);
         if(!req)return;
         let list = req.list;
-        let temp = '';
-        temp += '📜技能列表\n'
+        let temp = new temp_card();
+        temp.set_title('技能列表','📜')
         for (let i = 0; i < list.length; i++) {
             const element = list[i];
-            temp += `${i + 1}.${element.name}\n`
+            temp.add(`[${i + 1}]${element.name}`)
         }
-        cls.addLine(temp)
-        cls.send()
+        cls.send_v2(temp);
     }
 }
