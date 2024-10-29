@@ -32,7 +32,7 @@ class battleText {
         dataLog += '\n';
         let allSize = dataUnityMap.size;
         dataUnityMap.forEach((unity, name) => {
-            dataLog += `🐍${name}`
+            dataLog += `${name}`
             for (const key in unity) {
                 dataLog += `│▌${key}${APP.numberToChinese(unity[key])}`
             }
@@ -52,7 +52,7 @@ class battleText {
         let A = data;
         let text = '';
         for (const userName in A) {
-            let line = `🐍${userName}`
+            let line = `${userName}`
             const element = A[userName];
             for (const skName in element) {
                 line += `│▌${skName}`
@@ -78,7 +78,7 @@ class battleText {
         let temp = ``
         for (let index = 0; index < killLog.length; index++) {
             const element = killLog[index];
-            temp += `${element.round}>🐍${element.use}🗡️🐍${element.tag}`
+            temp += `${element.round}>${element.use}🗡️${element.tag}`
             // 如果index不是最后一个
             if (index != killLog.length - 1) {
                 temp += '\n'

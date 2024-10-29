@@ -27,7 +27,7 @@ export default class {
         temp.set_title('发现敌人', '⚔️')
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
-            temp.add(`🟥${element.name}`)
+            temp.add(`${element.name}`)
         }
         temp.set_title_line('选择行动', '🔍')
         temp.add(`【战斗】         【探索】`)
