@@ -13,7 +13,7 @@
     "build": "tsc && npm run copy-assets",
     "copy-assets": "copyfiles -u 1 src/**/*.{html,css,font,ttf} lib/",
     "prepub": "npm version patch",
-    "pub": "npm publish --access public"
+    "pub": "node compress.js &&  npm publish --access public"
   },
   "author": "楚轩",
   "license": "MIT",
