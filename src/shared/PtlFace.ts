@@ -4,7 +4,7 @@ export interface prop_item_equip {
     name: string
     att: any
     sys: string
-    leve_strengthen:_bar
+    leve_strengthen: _bar
     tips: string
 }
 export interface prop_item_skill {
@@ -21,6 +21,9 @@ export interface prop_item_skill {
     type: number;
     /**技能描述 */
     desc: string;
+    /**技能等级 */
+    leve: number;
+    leve_exp: _bar;
 }
 export enum Item_Type {
     技能书,

@@ -143,6 +143,7 @@ actionCfg.push({
         "@bot 技能查看 ID",
         "@bot 技能遗忘 ID",
         "@bot 技能改名 ID 新名字",
+        "@bot 技能升级 ID",
     ],
     path: 'player/info/技能'
 })

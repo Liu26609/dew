@@ -114,11 +114,12 @@ class temp_text {
     private async temp_prop_skill(data: prop_item_skill) {
         let temp = new temp_card();
         temp.set_title('技能查看', '🧙')
-        temp.add(`🏷️名称-${data.name}`)
+        temp.add(`🏷️${data.name}Lv.${data.leve}`)
+        temp.add(`⏳EXP:${data.leve_exp.now.toFixed(0)}/${data.leve_exp.max.toFixed(0)}`)
         temp.set_title_line('技能描述', 'ℹ️')
         temp.add(`「${data.desc}」`)
         temp.br();
-        temp.add(`冷却：${data.cd}回合`)
+        temp.add(`🕢冷却：${data.cd}回合`)
         temp.add(`类型：${data.type === 0 ? '主动技能' : '被动技能'}`)
         return temp;
 

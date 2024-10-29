@@ -31,6 +31,7 @@ import { ReqList as ReqList_2, ResList as ResList_2 } from './player/skill/PtlLi
 import { ReqLook as ReqLook_2, ResLook as ResLook_2 } from './player/skill/PtlLook';
 import { ReqRename, ResRename } from './player/skill/PtlRename';
 import { ReqRm, ResRm } from './player/skill/PtlRm';
+import { ReqUpLeve, ResUpLeve } from './player/skill/PtlUpLeve';
 import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
 import { ReqCancel, ResCancel } from './transaction/PtlCancel';
@@ -163,6 +164,10 @@ export interface ServiceType {
             req: ReqRm,
             res: ResRm
         },
+        "player/skill/UpLeve": {
+            req: ReqUpLeve,
+            res: ResUpLeve
+        },
         "Miss": {
             req: ReqMiss,
             res: ResMiss
@@ -190,7 +195,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 34,
+    "version": 35,
     "services": [
         {
             "id": 7,
@@ -441,6 +446,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 28,
             "name": "player/skill/Rm",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 41,
+            "name": "player/skill/UpLeve",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -1970,36 +1983,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "target": "../protocols/master_base/BaseResponse"
                     }
                 }
-            ],
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "name",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 2,
-                    "name": "cd",
-                    "type": {
-                        "type": "Number"
-                    }
-                },
-                {
-                    "id": 3,
-                    "name": "type",
-                    "type": {
-                        "type": "Number"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "desc",
-                    "type": {
-                        "type": "String"
-                    }
-                }
             ]
         },
         "../PtlFace/prop_item_skill": {
@@ -2031,6 +2014,21 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "desc",
                     "type": {
                         "type": "String"
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "leve",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 5,
+                    "name": "leve_exp",
+                    "type": {
+                        "type": "Reference",
+                        "target": "../FACE_BODY/_bar"
                     }
                 }
             ]
@@ -2097,6 +2095,39 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "player/skill/PtlRm/ResRm": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "player/skill/PtlUpLeve/ReqUpLeve": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "idx",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "player/skill/PtlUpLeve/ResUpLeve": {
             "type": "Interface",
             "extends": [
                 {

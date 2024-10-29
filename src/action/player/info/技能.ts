@@ -29,6 +29,9 @@ export default class {
                 case '改名':
                     this.rename(cls, skill_id, data[2])
                     break;
+                case '升级':
+                    this.up_level(cls, skill_id)
+                    break;
                 default:
                     cls.addLine('你好像输入了一个无效指令呢~[指令 + hp]可查看帮助')
                     cls.send()
@@ -53,6 +56,9 @@ export default class {
             idx:idx
         },cls);
         temp_text.prop_look({type:Item_Type.技能书,temp:req},cls)
+    }
+    async up_level(cls: message, idx: number) {
+        await server.api('player/skill/UpLeve',{idx:idx},cls);
     }
     async look(cls: message) {
         let req = await server.api('player/skill/List',{},cls);
