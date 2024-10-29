@@ -87,7 +87,6 @@ export default class message {
             str += '.\n';
         }
         str += temp;
-        str += '\n文字排版dev 0.02'
         this.session.sendQueued(str, delaytime || 0.2)
     }
     send_v2(temp: temp_card, delaytime?: number) {

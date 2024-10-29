@@ -76,7 +76,7 @@ actionCfg.push({
     key_tips: '基础指令',
     tips: "基础指令",
     example: ["@bot 基础指令"],
-    path: 'common/menu'
+    path: 'common/菜单'
 })
 actionCfg.push({
     key: "确认",
