@@ -3,6 +3,7 @@ import { transaction_create } from "../shared/master/MsgAction";
 import { ResList } from "../shared/master/player/bag/PtlList";
 import { Item_Type, prop_item_equip, prop_item_skill } from "../shared/PtlFace";
 import message from "../trigger/message";
+import temp_img from "./temp_img";
 export class temp_card {
     list: string[] = [];
     constructor() {
@@ -76,17 +77,20 @@ class temp_text {
         switch (data.type) {
             case Item_Type.装备:
                 text = await this.temp_prop_equip(data.temp)
+                cls.send_v2(text)
                 break;
             case Item_Type.技能书:
-                text = await this.temp_prop_skill(data.temp)
+                text = await this.temp_prop_skill(data.temp, cls)
+                cls.send_v2(text)
                 break;
             case Item_Type.道具:
                 text = await this.temp_prop_item(data.temp)
+                cls.send_v2(text)
+
                 break;
             default:
                 break;
         }
-        cls.send_v2(text)
     }
     private async temp_prop_item(data: any) {
 
@@ -111,7 +115,7 @@ class temp_text {
         }
         return temp;
     }
-    private async temp_prop_skill(data: prop_item_skill) {
+    async temp_prop_skill(data: prop_item_skill, cls: message) {
         let temp = new temp_card();
         temp.set_title('技能查看', '🧙')
         temp.add(`🏷️${data.name}Lv.${data.leve}`)
@@ -121,6 +125,10 @@ class temp_text {
         temp.br();
         temp.add(`🕢冷却：${data.cd}回合`)
         temp.add(`类型：${data.type === 0 ? '主动技能' : '被动技能'}`)
+
+        // 图片模式
+        // temp_img.temp_prop_skill(data,cls)
+
         return temp;
 
     }

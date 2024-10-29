@@ -167,8 +167,8 @@ actionCfg.push({
     example: [
         "@bot 设置(查看可设置列表)",
         "@bot 设置 设置项 (设置参数)",
-        "@bot 设置 战斗日志 开",
+        "@bot 设置 消息模式 图片/文字",
     ],
-    path: 'common/setUp'
+    path: 'common/设置'
 })
 export default actionCfg;

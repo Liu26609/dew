@@ -2,6 +2,7 @@ import fs from 'fs';
 import { h } from 'koishi'
 import message from '../trigger/message';
 import server_tool from '../server_tool';
+import { prop_item_skill } from '../shared/PtlFace';
 const path = require('path');
 class temp_img {
     commonCss: string;
@@ -68,6 +69,20 @@ class temp_img {
         const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
         await cls.session.send(leaderboardImage);
         await page.close();
+    }
+    async temp_prop_skill(data: prop_item_skill, cls: message) {
+        const _data = {
+            name: data.name,
+            sk_type: data.type,
+            cd: data.cd,
+            desc:data.desc,
+            leve: {
+                num: data.leve,
+                bar: `${((data.leve_exp.now / data.leve_exp.max) * 100).toFixed(2)}%`
+            }
+        };
+        this.render(cls, 'skill', _data)
+
     }
 }
 export default new temp_img();

@@ -35,3 +35,7 @@ export enum bag_getType {
     index,
     name
 }
+export interface _user_cfg{
+    /**是否开启图片模式 */
+    img:boolean
+}

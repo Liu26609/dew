@@ -3,6 +3,7 @@ import { ReqSign, ResSign } from './active/PtlSign';
 import { ReqBattle, ResBattle } from './battle/PtlBattle';
 import { ReqOut, ResOut } from './battle/PtlOut';
 import { ReqGetBodySysCfg, ResGetBodySysCfg } from './common/PtlGetBodySysCfg';
+import { ReqSetUp, ResSetUp } from './common/PtlSetUp';
 import { ReqSkill, ResSkill } from './debug/bag/PtlSkill';
 import { ReqBattle as ReqBattle_1, ResBattle as ResBattle_1 } from './debug/PtlBattle';
 import { ReqPvp, ResPvp } from './debug/PtlPvp';
@@ -55,6 +56,10 @@ export interface ServiceType {
         "common/GetBodySysCfg": {
             req: ReqGetBodySysCfg,
             res: ResGetBodySysCfg
+        },
+        "common/SetUp": {
+            req: ReqSetUp,
+            res: ResSetUp
         },
         "debug/bag/Skill": {
             req: ReqSkill,
@@ -195,7 +200,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 35,
+    "version": 37,
     "services": [
         {
             "id": 7,
@@ -227,6 +232,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "api",
             "conf": {
                 "check_onlyid": false
+            }
+        },
+        {
+            "id": 42,
+            "name": "common/SetUp",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
             }
         },
         {
@@ -694,6 +707,58 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "cfg",
                     "type": {
                         "type": "Any"
+                    }
+                }
+            ]
+        },
+        "common/PtlSetUp/ReqSetUp": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "key",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "value",
+                    "type": {
+                        "type": "Boolean"
+                    }
+                }
+            ]
+        },
+        "common/PtlSetUp/ResSetUp": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 1,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../PtlFace/_user_cfg"
+                    }
+                }
+            ]
+        },
+        "../PtlFace/_user_cfg": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "img",
+                    "type": {
+                        "type": "Boolean"
                     }
                 }
             ]

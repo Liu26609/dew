@@ -60,7 +60,7 @@ export default class {
             name: req.name,
             sk_type: req.type,
             cd: req.cd,
-            desc: '造成大量伤害',
+            desc: req.desc,
             leve: {
                 num: req.leve,
                 bar: `${((req.leve_exp.now / req.leve_exp.max) * 100).toFixed(2)}%`
