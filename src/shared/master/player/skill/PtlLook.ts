@@ -1,3 +1,4 @@
+import { _bar } from "../../../FACE_BODY";
 import { BaseRequest, BaseResponse, BaseConf } from "../../../protocols/master_base";
 import { prop_item_skill } from "../../../PtlFace";
 
@@ -14,19 +15,7 @@ export interface ReqLook extends BaseRequest {
  * 技能描述
  */
 export interface ResLook extends prop_item_skill, BaseResponse {
-    /**技能名称 */
-    name: string;
-    /**
-     * 技能cd
-     */
-    cd:number;
-    /**
-     * 0 主动技能,
-     * 1 被动技能
-     */
-    type: number;
-    /**技能描述 */
-    desc: string;
+
 }
 
 export const conf: BaseConf = {

@@ -14,13 +14,11 @@
         <img src="{{show}}" alt="" srcset="">
     </div>
     <div class="skill_desc">
-        🆎{{sk_type}}/{{useUp}}/⌛CD{{cd}}秒,技能效果如下:<br>{{desc}}
+        🆎{{sk_type}} ⌛CD{{cd}}回合<br>{{desc}}
     </div>
-    <div class="score_div">
-        评分:{{score}}
-    </div>
+
     <div class="score_leve">
-        LV.{{leve.num}}({{leve_bar}})
+        LV.{{leve.num}}(⌛{{leve.bar}})
     </div>
 
     <img src="https://gitee.com/ChuXuanD30/resources_skill/raw/master/bg/1.jpg" alt="" srcset="">
@@ -131,20 +129,7 @@ img {
     white-space: nowrap;
 }
 
-.score_div {
-    width: 612px;
-    position: absolute;
-    left: 100px;
-    bottom: 55px;
-    height: 54px;
-    text-align: left;
-    overflow: hidden;
-    color: #ffffff;
-    font-family: cn;
-    font-size: 37px;
-    -webkit-text-stroke: 0.5px #ffffff;
-    text-shadow: 0px 0px 1px #000, 0px 0px 8px #000000, 0px 0px 16px #000000, 0px 0px 32px #000000, 0px 0px 64px #000000, 0px 0px 128px #000000;
-}
+
 
 .score_leve {
     width: 609px;

@@ -1,6 +1,7 @@
 import APP from "../../../APP";
 import server from "../../../server";
 import { Item_Type } from "../../../shared/PtlFace";
+import temp_img from "../../../temp/temp_img";
 import temp_text, { temp_card } from "../../../temp/temp_text";
 import message from "../../../trigger/message"
 
@@ -18,7 +19,7 @@ export default class {
         } else if (data.length >= 1) {
             let actionKey = data[0]
             let skill_id = data[1]
-            console.log('actionKey',actionKey)
+            console.log('actionKey', actionKey)
             switch (actionKey) {
                 case '查看':
                     this.look_index(cls, skill_id)
@@ -40,32 +41,44 @@ export default class {
         }
     }
     async rename(cls: message, idx: number, name: string) {
-        let req = await server.api('player/skill/Rename',{idx:idx,rename:name},cls);
-        if(!req)return;
+        let req = await server.api('player/skill/Rename', { idx: idx, rename: name }, cls);
+        if (!req) return;
         cls.addLine('技能改名成功')
         cls.send()
     }
     async rm(cls: message, idx: number) {
-        let req = await server.api('player/skill/Rm',{idx:idx},cls);
-        if(!req)return;
+        let req = await server.api('player/skill/Rm', { idx: idx }, cls);
+        if (!req) return;
         cls.addLine('技能遗忘成功')
         cls.send()
     }
     async look_index(cls: message, idx: number) {
-        let req = await server.api('player/skill/Look',{
-            idx:idx
-        },cls);
-        temp_text.prop_look({type:Item_Type.技能书,temp:req},cls)
+        let req = await server.api('player/skill/Look', {
+            idx: idx
+        }, cls);
+        const data = {
+            name: req.name,
+            sk_type: req.type,
+            cd: req.cd,
+            desc: '造成大量伤害',
+            leve: {
+                num: req.leve,
+                bar: `${((req.leve_exp.now / req.leve_exp.max) * 100).toFixed(2)}%`
+            }
+        };
+
+        temp_img.render(cls, 'skill', data)
+        // temp_text.prop_look({ type: Item_Type.技能书, temp: req }, cls)
     }
     async up_level(cls: message, idx: number) {
-        await server.api('player/skill/UpLeve',{idx:idx},cls);
+        await server.api('player/skill/UpLeve', { idx: idx }, cls);
     }
     async look(cls: message) {
-        let req = await server.api('player/skill/List',{},cls);
-        if(!req)return;
+        let req = await server.api('player/skill/List', {}, cls);
+        if (!req) return;
         let list = req.list;
         let temp = new temp_card();
-        temp.set_title('技能列表','📜')
+        temp.set_title('技能列表', '📜')
         for (let i = 0; i < list.length; i++) {
             const element = list[i];
             temp.add(`[${i + 1}]${element.name}`)

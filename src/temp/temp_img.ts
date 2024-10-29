@@ -49,18 +49,9 @@ class temp_img {
             return String(value);
         });
     }
-    async test(cls: message) {
-        const variables = {
-            sk_type: '攻击',
-            useUp: '5次',
-            cd: '10',
-            desc: '造成大量伤害',
-            score: '95',
-            leve: { num: '3', bar: '75%' }
-        };
-
-        let tempHtml = this.pageContents.get('skill');
-        tempHtml = this.renderTemplate(tempHtml, variables);
+    async render(cls: message,name:string,data:any) {
+        let tempHtml = this.pageContents.get(name);
+        tempHtml = this.renderTemplate(tempHtml, data);
         const page = await this.ctx.puppeteer.page();
         await page.setContent(tempHtml, { waitUntil: 'networkidle2' });
         const leaderboardElement = await page.$('body');
