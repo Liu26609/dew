@@ -23,7 +23,6 @@ export interface prop_item_skill {
     desc: string;
 }
 export enum Item_Type {
-    经验,
     技能书,
     装备,
     道具,

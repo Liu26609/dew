@@ -86,7 +86,7 @@ export default class game_map {
                 }
 
                 if (win.id == p.id) {
-                    c.addGift(p.id, { name: '💠探索进度', cont: 1, type: Item_Type.none })
+                    c.addGift(p.id, { icon:'💠',name: '探索进度', cont: 1, type: Item_Type.none })
                     this.add_pgs(p.id, data.length);
                 }
             },
