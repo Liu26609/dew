@@ -3,35 +3,39 @@ const path = require('path');
 const UglifyJS = require('uglify-js');
 
 const srcDir = 'lib';
-const distFile = 'lib/index.js';
+const distDir = 'lib';
 
-function getAllFiles(dir, fileList = []) {
+function ensureDirectoryExistence(filePath) {
+    const dirname = path.dirname(filePath);
+    if (fs.existsSync(dirname)) {
+        return true;
+    }
+    ensureDirectoryExistence(dirname);
+    fs.mkdirSync(dirname);
+}
+
+function compressFiles(dir, baseDir) {
     fs.readdirSync(dir).forEach(file => {
         const filePath = path.join(dir, file);
+        const relativePath = path.relative(baseDir, filePath);
+        const distPath = path.join(distDir, relativePath);
+
         if (fs.lstatSync(filePath).isDirectory()) {
-            getAllFiles(filePath, fileList);
+            compressFiles(filePath, baseDir);
         } else if (filePath.endsWith('.js')) {
-            fileList.push(filePath);
+            const result = UglifyJS.minify(fs.readFileSync(filePath, 'utf8'));
+            if (result.error) {
+                console.error(`Error compressing ${filePath}:`, result.error);
+            } else {
+                ensureDirectoryExistence(distPath);
+                fs.writeFileSync(distPath, result.code, 'utf8');
+                console.log(`Compressed ${filePath} to ${distPath}`);
+            }
+        } else if (filePath.endsWith('.d.ts')) {
+            fs.unlinkSync(filePath);
+            console.log(`Deleted ${filePath}`);
         }
     });
-    return fileList;
 }
 
-function mergeAndCompressFiles(files) {
-    let combinedCode = '';
-    files.forEach(file => {
-        const fileContent = fs.readFileSync(file, 'utf8');
-        combinedCode += fileContent + '\n';
-    });
-
-    const result = UglifyJS.minify(combinedCode);
-    if (result.error) {
-        console.error('Error compressing files:', result.error);
-    } else {
-        fs.writeFileSync(distFile, result.code, 'utf8');
-        console.log(`Compressed files into ${distFile}`);
-    }
-}
-
-const files = getAllFiles(srcDir);
-mergeAndCompressFiles(files);
+compressFiles(srcDir, srcDir);
