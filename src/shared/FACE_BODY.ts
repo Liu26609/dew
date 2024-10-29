@@ -8,7 +8,6 @@ export interface _bar extends _base_com{
     key: string
     max:number,
     now:number,
-    lastTime?:number
 }
 export interface _line extends _base_com{
     min:number,
