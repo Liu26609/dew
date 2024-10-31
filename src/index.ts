@@ -69,8 +69,16 @@ export async function apply(ctx: Context, config: Config) {
       }
     }
     cls.action(async (_: any, ag: any) => {
-      const classPath = path.resolve(__dirname, `./action/${element.path}`);
       let msg = inputManage.get_msg(_.session.messageId)
+      if(!msg){
+        return
+      }
+      if(inputManage.wait_inputskipMap.has(msg.get_userId())){
+        console.log('skip')
+        return;
+      }
+      
+      const classPath = path.resolve(__dirname, `./action/${element.path}`);
       common.importClass(classPath, [msg, ..._.args])
     })
   }

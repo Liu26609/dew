@@ -9,7 +9,7 @@ export default class {
         temp.add(`🌎[世界]查看世界相关指令`)
         temp.add(`🛠️[设置]个性化设置`)
         temp.set_title_line('指令提示', 'ℹ️')
-        temp.line('你可以对任何指令后面加上hp来查看指令的详细信息,🌰举个栗子=>[属性hp]')
+        temp.line('对任何指令后面加hp可指令食用方法🌰栗子[属性hp]')
         cls.send_v2(temp)
     }
 }

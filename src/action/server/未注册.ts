@@ -6,14 +6,14 @@ export default class {
         this.step(cls,data)
     }
     async step(cls: message,data:MsgAction){
-        cls.addLine('未注册,请注册，输入用户名')
+        cls.addLine('达尔文进化岛V6 - 测试版 欢迎体验')
         cls.send()
-        let input = await cls.wait_nextInput()
-        if(!input){
-            cls.addLine('等待输入超时')
-            cls.send()
-            return
-        }
-        server.api('player/info/SetName',{new:input},cls)
+        // let input = await cls.wait_nextInput()
+        // if(!input){
+        //     cls.addLine('等待输入超时')
+        //     cls.send()
+        //     return
+        // }
+        // server.api('player/info/SetName',{new:input},cls)
     }
 }
