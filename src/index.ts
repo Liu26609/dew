@@ -42,6 +42,7 @@ export async function apply(ctx: Context, config: Config) {
     // 在插件停用时关闭端口
     server.dispose()
   })
+  
   if (CFG.调试模式) {
     CFG.服务器地址 = '127.0.0.1';
     log.info('调试模式-将调用本地服务器')
