@@ -33,6 +33,7 @@ export interface transaction_create {
     res:string
     items: { name: string, now: number,need:number }[]
 }
+
 export const conf: BaseConf = {
 
 }

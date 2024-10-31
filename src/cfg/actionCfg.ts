@@ -21,6 +21,13 @@ actionCfg.push({
     path: "active/签到"
 })
 actionCfg.push({
+    key: "任务",
+    key_tips: '离开当前世界回到主神空间',
+    tips: "离开",
+    example: ["@bot 离开"],
+    path: 'player/task/菜单'
+})
+actionCfg.push({
     key: "世界/逃跑",
     key_tips: '保命要紧，战术撤退',
     tips: "",

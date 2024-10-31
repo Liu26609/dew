@@ -1,4 +1,4 @@
-import { _bar } from "./FACE_BODY"
+import { _bar } from "./master/shareFace"
 
 export interface prop_item_equip {
     name: string

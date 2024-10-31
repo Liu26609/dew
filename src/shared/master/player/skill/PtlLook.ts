@@ -1,6 +1,5 @@
-import { _bar } from "../../../FACE_BODY";
 import { BaseRequest, BaseResponse, BaseConf } from "../../../protocols/master_base";
-import { prop_item_skill } from "../../../PtlFace";
+import { prop_item_skill } from "../../shareFace";
 
 /**
  * 查看自身指定技能

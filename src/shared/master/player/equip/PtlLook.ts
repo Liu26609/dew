@@ -1,4 +1,3 @@
-import { _bar } from "../../../FACE_BODY";
 import { BaseRequest, BaseResponse, BaseConf } from "../../../protocols/master_base";
 import { prop_item_equip } from "../../../PtlFace";
 

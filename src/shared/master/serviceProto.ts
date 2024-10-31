@@ -33,6 +33,7 @@ import { ReqLook as ReqLook_2, ResLook as ResLook_2 } from './player/skill/PtlLo
 import { ReqRename, ResRename } from './player/skill/PtlRename';
 import { ReqRm, ResRm } from './player/skill/PtlRm';
 import { ReqUpLeve, ResUpLeve } from './player/skill/PtlUpLeve';
+import { ReqLook as ReqLook_3, ResLook as ResLook_3 } from './player/task/PtlLook';
 import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
 import { ReqCancel, ResCancel } from './transaction/PtlCancel';
@@ -173,6 +174,10 @@ export interface ServiceType {
             req: ReqUpLeve,
             res: ResUpLeve
         },
+        "player/task/Look": {
+            req: ReqLook_3,
+            res: ResLook_3
+        },
         "Miss": {
             req: ReqMiss,
             res: ResMiss
@@ -200,10 +205,10 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 37,
+    "version": 2,
     "services": [
         {
-            "id": 7,
+            "id": 0,
             "name": "active/Sign",
             "type": "api",
             "conf": {
@@ -211,7 +216,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 14,
+            "id": 1,
             "name": "battle/Battle",
             "type": "api",
             "conf": {
@@ -219,7 +224,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 8,
+            "id": 2,
             "name": "battle/Out",
             "type": "api",
             "conf": {
@@ -227,7 +232,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 18,
+            "id": 3,
             "name": "common/GetBodySysCfg",
             "type": "api",
             "conf": {
@@ -235,7 +240,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 42,
+            "id": 4,
             "name": "common/SetUp",
             "type": "api",
             "conf": {
@@ -243,7 +248,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 15,
+            "id": 5,
             "name": "debug/bag/Skill",
             "type": "api",
             "conf": {
@@ -251,7 +256,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 3,
+            "id": 6,
             "name": "debug/Battle",
             "type": "api",
             "conf": {
@@ -259,7 +264,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 9,
+            "id": 7,
             "name": "debug/Pvp",
             "type": "api",
             "conf": {
@@ -267,7 +272,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 10,
+            "id": 8,
             "name": "debug/Save",
             "type": "api",
             "conf": {
@@ -275,7 +280,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 30,
+            "id": 9,
             "name": "debug/TakeOffEquip",
             "type": "api",
             "conf": {
@@ -283,7 +288,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 29,
+            "id": 10,
             "name": "debug/Upequip",
             "type": "api",
             "conf": {
@@ -291,13 +296,13 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 4,
+            "id": 11,
             "name": "Action",
             "type": "msg",
             "conf": {}
         },
         {
-            "id": 24,
+            "id": 12,
             "name": "player/bag/List",
             "type": "api",
             "conf": {
@@ -305,7 +310,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 35,
+            "id": 13,
             "name": "player/bag/Look",
             "type": "api",
             "conf": {
@@ -313,7 +318,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 36,
+            "id": 14,
             "name": "player/bag/Sell_sys",
             "type": "api",
             "conf": {
@@ -321,7 +326,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 37,
+            "id": 15,
             "name": "player/bag/Use",
             "type": "api",
             "conf": {
@@ -329,7 +334,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 31,
+            "id": 16,
             "name": "player/equip/List",
             "type": "api",
             "conf": {
@@ -337,7 +342,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 32,
+            "id": 17,
             "name": "player/equip/Look",
             "type": "api",
             "conf": {
@@ -345,7 +350,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 33,
+            "id": 18,
             "name": "player/equip/ReName",
             "type": "api",
             "conf": {
@@ -353,7 +358,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 40,
+            "id": 19,
             "name": "player/equip/Strengthen",
             "type": "api",
             "conf": {
@@ -361,7 +366,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 34,
+            "id": 20,
             "name": "player/equip/TakeOff",
             "type": "api",
             "conf": {
@@ -369,7 +374,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 11,
+            "id": 21,
             "name": "player/info/GetBase",
             "type": "api",
             "conf": {
@@ -377,7 +382,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 13,
+            "id": 22,
             "name": "player/info/Position",
             "type": "api",
             "conf": {
@@ -385,7 +390,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 5,
+            "id": 23,
             "name": "player/info/SetName",
             "type": "api",
             "conf": {
@@ -393,7 +398,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 19,
+            "id": 24,
             "name": "player/inherit/Info",
             "type": "api",
             "conf": {
@@ -401,7 +406,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 22,
+            "id": 25,
             "name": "player/inherit/Reset",
             "type": "api",
             "conf": {
@@ -409,7 +414,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 23,
+            "id": 26,
             "name": "player/map/Out",
             "type": "api",
             "conf": {
@@ -417,7 +422,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 16,
+            "id": 27,
             "name": "player/map/Search",
             "type": "api",
             "conf": {
@@ -425,7 +430,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 17,
+            "id": 28,
             "name": "player/map/Start",
             "type": "api",
             "conf": {
@@ -433,7 +438,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 25,
+            "id": 29,
             "name": "player/skill/List",
             "type": "api",
             "conf": {
@@ -441,7 +446,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 26,
+            "id": 30,
             "name": "player/skill/Look",
             "type": "api",
             "conf": {
@@ -449,7 +454,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 27,
+            "id": 31,
             "name": "player/skill/Rename",
             "type": "api",
             "conf": {
@@ -457,7 +462,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 28,
+            "id": 32,
             "name": "player/skill/Rm",
             "type": "api",
             "conf": {
@@ -465,7 +470,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 41,
+            "id": 33,
             "name": "player/skill/UpLeve",
             "type": "api",
             "conf": {
@@ -473,7 +478,15 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 6,
+            "id": 34,
+            "name": "player/task/Look",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 35,
             "name": "Miss",
             "type": "api",
             "conf": {
@@ -481,7 +494,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 0,
+            "id": 36,
             "name": "Ping",
             "type": "api",
             "conf": {
@@ -489,7 +502,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 38,
+            "id": 37,
             "name": "transaction/Cancel",
             "type": "api",
             "conf": {
@@ -497,7 +510,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 39,
+            "id": 38,
             "name": "transaction/Confirm",
             "type": "api",
             "conf": {
@@ -505,7 +518,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
-            "id": 2,
+            "id": 39,
             "name": "work/Build",
             "type": "api",
             "conf": {
@@ -546,7 +559,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "optional": true
                 },
                 {
-                    "id": 4,
+                    "id": 2,
                     "name": "_messageid",
                     "type": {
                         "type": "String"
@@ -743,7 +756,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "extends": [
                 {
-                    "id": 1,
+                    "id": 0,
                     "type": {
                         "type": "Reference",
                         "target": "../PtlFace/_user_cfg"
@@ -821,7 +834,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ],
             "properties": [
                 {
-                    "id": 6,
+                    "id": 0,
                     "name": "data",
                     "type": {
                         "type": "Reference",
@@ -1052,7 +1065,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "value": "测试"
                 },
                 {
-                    "id": 4,
+                    "id": 2,
                     "value": "战斗日志"
                 },
                 {
@@ -1060,11 +1073,11 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "value": "文本消息"
                 },
                 {
-                    "id": 5,
+                    "id": 4,
                     "value": "交易/创建"
                 },
                 {
-                    "id": 6,
+                    "id": 5,
                     "value": "纯文字"
                 }
             ]
@@ -1162,15 +1175,15 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ],
             "properties": [
                 {
-                    "id": 1,
+                    "id": 0,
                     "name": "type",
                     "type": {
                         "type": "Reference",
-                        "target": "../PtlFace/Item_Type"
+                        "target": "shareFace/Item_Type"
                     }
                 },
                 {
-                    "id": 0,
+                    "id": 1,
                     "name": "temp",
                     "type": {
                         "type": "Any"
@@ -1178,7 +1191,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "../PtlFace/Item_Type": {
+        "shareFace/Item_Type": {
             "type": "Enum",
             "members": [
                 {
@@ -1370,7 +1383,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "extends": [
                 {
-                    "id": 1,
+                    "id": 0,
                     "type": {
                         "type": "Reference",
                         "target": "../PtlFace/prop_item_equip"
@@ -1407,7 +1420,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "leve_strengthen",
                     "type": {
                         "type": "Reference",
-                        "target": "../FACE_BODY/_bar"
+                        "target": "../master/shareFace/_bar"
                     }
                 },
                 {
@@ -1419,14 +1432,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "../FACE_BODY/_bar": {
+        "../master/shareFace/_bar": {
             "type": "Interface",
             "extends": [
                 {
                     "id": 0,
                     "type": {
                         "type": "Reference",
-                        "target": "../FACE_BODY/_base_com"
+                        "target": "../master/shareFace/_base_com"
                     }
                 }
             ],
@@ -1459,18 +1472,10 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Number"
                     }
-                },
-                {
-                    "id": 4,
-                    "name": "lastTime",
-                    "type": {
-                        "type": "Number"
-                    },
-                    "optional": true
                 }
             ]
         },
-        "../FACE_BODY/_base_com": {
+        "../master/shareFace/_base_com": {
             "type": "Interface",
             "properties": [
                 {
@@ -1628,28 +1633,28 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     }
                 },
                 {
-                    "id": 3,
+                    "id": 1,
                     "name": "sys",
                     "type": {
                         "type": "String"
                     }
                 },
                 {
-                    "id": 4,
+                    "id": 2,
                     "name": "inherit",
                     "type": {
                         "type": "String"
                     }
                 },
                 {
-                    "id": 2,
+                    "id": 3,
                     "name": "className",
                     "type": {
                         "type": "String"
                     }
                 },
                 {
-                    "id": 1,
+                    "id": 4,
                     "name": "att",
                     "type": {
                         "type": "Array",
@@ -2035,14 +2040,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "extends": [
                 {
-                    "id": 1,
+                    "id": 0,
                     "type": {
                         "type": "Reference",
-                        "target": "../PtlFace/prop_item_skill"
+                        "target": "shareFace/prop_item_skill"
                     }
                 },
                 {
-                    "id": 0,
+                    "id": 1,
                     "type": {
                         "type": "Reference",
                         "target": "../protocols/master_base/BaseResponse"
@@ -2050,7 +2055,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "../PtlFace/prop_item_skill": {
+        "shareFace/prop_item_skill": {
             "type": "Interface",
             "properties": [
                 {
@@ -2093,8 +2098,64 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "leve_exp",
                     "type": {
                         "type": "Reference",
-                        "target": "../FACE_BODY/_bar"
+                        "target": "shareFace/_bar"
                     }
+                }
+            ]
+        },
+        "shareFace/_bar": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "shareFace/_base_com"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    },
+                    "optional": true
+                },
+                {
+                    "id": 1,
+                    "name": "key",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "max",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "now",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "shareFace/_base_com": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "t",
+                    "type": {
+                        "type": "String"
+                    },
+                    "optional": true
                 }
             ]
         },
@@ -2201,6 +2262,157 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "type": "Reference",
                         "target": "../protocols/master_base/BaseResponse"
                     }
+                }
+            ]
+        },
+        "player/task/PtlLook/ReqLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/task/PtlLook/ResLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "shareFace/taskData"
+                    }
+                }
+            ]
+        },
+        "shareFace/taskData": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "desc",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "condition",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Interface",
+                            "properties": [
+                                {
+                                    "id": 0,
+                                    "name": "type",
+                                    "type": {
+                                        "type": "String"
+                                    }
+                                },
+                                {
+                                    "id": 1,
+                                    "name": "target",
+                                    "type": {
+                                        "type": "Any"
+                                    }
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "progress",
+                                    "type": {
+                                        "type": "Number"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "isComplete",
+                    "type": {
+                        "type": "Boolean"
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "isReward",
+                    "type": {
+                        "type": "Boolean"
+                    }
+                },
+                {
+                    "id": 5,
+                    "name": "reward",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Reference",
+                            "target": "shareFace/prop_item"
+                        }
+                    }
+                },
+                {
+                    "id": 6,
+                    "name": "endtime",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "shareFace/prop_item": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "type",
+                    "type": {
+                        "type": "Reference",
+                        "target": "shareFace/Item_Type"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "icon",
+                    "type": {
+                        "type": "String"
+                    },
+                    "optional": true
+                },
+                {
+                    "id": 3,
+                    "name": "cont",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "data",
+                    "type": {
+                        "type": "Any"
+                    },
+                    "optional": true
                 }
             ]
         },
