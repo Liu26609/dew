@@ -120,6 +120,10 @@ export interface taskData {
   desc: string;
   // 任务条件
   condition: {
+    /**
+     * 任务说明
+     */
+    desc: string,
       // 任务类型
       type: string,
       // 任务目标
