@@ -1,13 +1,12 @@
 import { BaseRequest, BaseResponse, BaseConf } from "../../../protocols/master_base";
-import { Item_Type } from "../../shareFace";
+import { taskData } from "../../shareFace";
 
 export interface ReqLook extends BaseRequest {
-    idx:number
+    
 }
 
-export interface ResLook extends BaseResponse {
-    type:Item_Type
-    temp:any
+export interface ResLook extends taskData {
+    
 }
 
 export const conf: BaseConf = {
