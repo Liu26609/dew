@@ -51,6 +51,16 @@ export async function apply(ctx: Context, config: Config) {
   reg_ignoreSeperator(ctx, config)
   // puppeteer 初始化
   temp_img.init(ctx)
+  // 遍历index配置
+  let actionPath = path.resolve(__dirname, './action');
+  let files = common.getFiles(actionPath)
+  for (let index = 0; index < files.length; index++) {
+    const element = files[index];
+    if (element.indexOf('index') == -1) {
+      continue;
+    }
+    common.importClass(element, [ctx])
+  }
 
   for (let index = 0; index < actionCfg.length; index++) {
     const element = actionCfg[index];

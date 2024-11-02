@@ -68,5 +68,22 @@ class APP {
         }
         return '⚠️'
     }
+    /**
+     * 计算剩余时间
+     */
+    countdown(seconds: number) {
+        seconds = seconds /1000
+        const days = Math.floor(seconds / (24 * 3600));
+        const hours = Math.floor((seconds % (24 * 3600)) / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const remainingSeconds = Math.floor(seconds % 60);
+
+        let countdown = '';
+        if (days > 0) countdown += `${days}天`;
+        if (hours > 0 || days > 0) countdown += `${hours}小时`;
+        if (minutes > 0 || hours > 0 || days > 0) countdown += `${minutes}分`;
+        countdown += `${remainingSeconds}秒`;
+        return countdown;
+    }
 }
 export default new APP();

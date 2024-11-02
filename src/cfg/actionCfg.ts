@@ -21,13 +21,6 @@ actionCfg.push({
     path: "active/签到"
 })
 actionCfg.push({
-    key: "任务",
-    key_tips: '离开当前世界回到主神空间',
-    tips: "离开",
-    example: ["@bot 离开"],
-    path: 'player/task/菜单'
-})
-actionCfg.push({
     key: "世界/逃跑",
     key_tips: '保命要紧，战术撤退',
     tips: "",
@@ -114,6 +107,13 @@ actionCfg.push({
     tips: "改名",
     example: ["@bot 改名"],
     path: 'player/info/改名'
+})
+actionCfg.push({
+    key: "角色/任务",
+    key_tips: '超多奖励等你来拿',
+    tips: "任务",
+    example: ["@bot 任务"],
+    path: 'player/task/菜单'
 })
 actionCfg.push({
     key: "角色/背包 <操作:string><ID:number>",

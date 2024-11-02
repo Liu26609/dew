@@ -1,6 +1,7 @@
 import APP from "../APP";
 import { transaction_create } from "../shared/master/MsgAction";
 import { ResList } from "../shared/master/player/bag/PtlList";
+import { taskData } from "../shared/master/shareFace";
 import { Item_Type, prop_item_equip, prop_item_skill } from "../shared/PtlFace";
 import message from "../trigger/message";
 import temp_img from "./temp_img";
@@ -132,7 +133,31 @@ class temp_text {
         return temp;
 
     }
+    temp_task(data: taskData) {
+        let taskData = data;
+        let temp = new temp_card();
+        temp.set_title('任务详情', '📜')
+        temp.line(`[${taskData.name}]${taskData.desc}`)
+        temp.set_title_line('任务条件', '🎯')
+        for (let i = 0; i < taskData.condition.length; i++) {
+            const element = taskData.condition[i];
+            let str = element.desc.replace('target', `(${element.progress}/${element.target})`)
+            let icon = element.target > element.progress ? '❌' : '✅'
+            temp.add(`${icon}${str}`)
+        }
+        temp.set_title_line('任务奖励', '🎁')
+        for (let i = 0; i < taskData.reward.length; i++) {
+            const element = taskData.reward[i];
+            temp.add(`${element.icon}${element.name}X${element.cont}`)
+        }
+        if (taskData.isComplete) {
+            temp.set_title_line('任务状态', '✅')
+            temp.add('任务已完成奖励已经发放')
+        }
 
+        temp.add(`🕢剩余${APP.countdown(taskData.endtime - Date.now())}`)
+        return temp
+    }
     transaction_create(data: transaction_create) {
         let temp = new temp_card();
         temp.set_title('交易确认', '⚖️')

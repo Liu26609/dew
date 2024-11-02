@@ -1,3 +1,6 @@
+import path from "path";
+import fs from "fs";
+
 const { v4: uuidv4 } = require('uuid');
 class common {
     constructor(){
@@ -21,5 +24,20 @@ class common {
         const EffectClass = effectModule.default;
         return new EffectClass(...agm);
     }
+    getFiles(dir: string): string[] {
+        let results: string[] = [];
+        let list = fs.readdirSync(dir);
+
+        list.forEach((file)=> {
+          file = path.resolve(dir, file);
+          let stat = fs.statSync(file);
+          if (stat && stat.isDirectory()) {
+            results = results.concat(this.getFiles(file));
+          } else {
+            results.push(file);
+          }
+        });
+        return results;
+      }
 }
 export default new common()
