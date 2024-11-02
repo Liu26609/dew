@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-dew-bot",
   "description": "[开发中]大型多人RPG文字游戏  达尔文进化岛V6",
-  "version": "1.0.74",
+  "version": "1.0.75",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -21,9 +21,7 @@
     "plugin",
     "game"
   ],
-  "devDependencies": {
-    
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/Liu26609/dew.git"
