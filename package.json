@@ -4,13 +4,11 @@
   "version": "1.0.69",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
-  "type": "commonjs",
   "files": [
-    "lib",
-    "dist"
+    "lib"
   ],
   "scripts": {
-    "build": "tsc && npm run copy-assets",
+    "build": "node esbuild.config.mjs",
     "copy-assets": "copyfiles -u 1 src/**/*.{html,css,font,ttf} lib/",
     "prepub": "npm version patch",
     "pub": "npm publish --access public"
@@ -24,6 +22,11 @@
     "plugin",
     "game"
   ],
+  "devDependencies": {
+    "esbuild": "^0.23.1",
+    "esbuild-plugin-copy": "^2.1.1",
+    "esbuild-register": "^3.6.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Liu26609/dew.git"
