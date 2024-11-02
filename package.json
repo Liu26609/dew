@@ -8,7 +8,6 @@
     "lib"
   ],
   "scripts": {
-    "build": "node esbuild.config.mjs",
     "copy-assets": "copyfiles -u 1 src/**/*.{html,css,font,ttf} lib/",
     "prepub": "npm version patch",
     "pub": "npm publish --access public"
@@ -23,9 +22,7 @@
     "game"
   ],
   "devDependencies": {
-    "esbuild": "^0.23.1",
-    "esbuild-plugin-copy": "^2.1.1",
-    "esbuild-register": "^3.6.0"
+    
   },
   "repository": {
     "type": "git",
