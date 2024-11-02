@@ -1,7 +1,7 @@
 import esbuild from 'esbuild'
 import { copy } from 'esbuild-plugin-copy';
 const options = {
-    entryPoints: ['./src/index.ts'], // 使用通配符指定多个入口点
+    entryPoints: ['./src/**/*.ts'], // 使用通配符指定多个入口点
     bundle: true,
     outdir: 'lib',
     outbase: './src', // 保留目录结构
