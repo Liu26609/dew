@@ -49,8 +49,7 @@ export async function apply(ctx: Context, config: Config) {
   }
   // 忽略指令空格
   reg_ignoreSeperator(ctx, config)
-  // puppeteer 初始化
-  temp_img.init(ctx)
+
   // 遍历index配置
   let actionPath = path.resolve(__dirname, './action');
   let files = common.getFiles(actionPath)
@@ -61,7 +60,8 @@ export async function apply(ctx: Context, config: Config) {
     }
     common.importClass(element, [ctx])
   }
-
+  // puppeteer 初始化
+  temp_img.init(ctx)
   for (let index = 0; index < actionCfg.length; index++) {
     const element = actionCfg[index];
     let cls = ctx.command(element.key, `💡${element.key_tips}`)
