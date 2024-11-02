@@ -14,6 +14,7 @@ export default class {
         let temp = new temp_card();
         temp.set_title('任务清单', '📜')
         temp.add('😄每日任务')
+        temp.add('😄每周任务')
         cls.send_v2(temp)
        
     }

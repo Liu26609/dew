@@ -8,7 +8,7 @@ export default class {
     }
 
     async start(cls: message) {
-        let req = await server.api('player/task/Look', {}, cls)
+        let req = await server.api('player/task/Look', {name:cls.get_content()}, cls)
         if (!req) return;
         
         cls.send_v2(temp_text.temp_task(req))
