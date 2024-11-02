@@ -14,7 +14,7 @@ const options = {
             // 复制静态文件并保留目录结构
             assets: {
                 from: ['./src/**/*.html', './src/**/*.css', './src/**/*.ttf'],
-                to: ['./html'],
+                to: ['./'],
                 keepStructure: true, // 保留目录结构
             },
         }),
