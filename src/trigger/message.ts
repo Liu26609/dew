@@ -95,6 +95,10 @@ export default class message {
             str += '✨来消息啦✨\n';
         }
         str += temp.text();
-        this.session.sendQueued(str, delaytime || 0.2)
+        if(delaytime){
+            this.session.sendQueued(str, delaytime || 0.2)
+        }else{
+            this.session.sendQueued(str)
+        }
     }
 }

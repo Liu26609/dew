@@ -14,7 +14,6 @@ export const name = 'dew-bot'
 const path = require('path');
 export interface Config {
   调试模式: boolean,
-  图片压缩服务器: string,
   忽略指令空格: boolean,
   服务器地址: string,
   wss: boolean
@@ -27,8 +26,6 @@ export const Config: Schema<Config> = Schema.object({
   调试模式: Schema.boolean().default(false).description('个人开发调试用'),
   忽略指令空格: Schema.boolean().default(true).description('默认允许省略指令名后的空格'),
   服务器地址: Schema.string().default('139.159.214.249'),
-  图片压缩服务器: Schema.string().default('139.159.214.249'),
-  // 139.159.214.249
 })
 
 export let CFG: Config;
@@ -98,7 +95,7 @@ export async function apply(ctx: Context, config: Config) {
     if (!server.init) {
       await server.setWsUrl(`${CFG.wss ? 'wss' : 'ws'}://${CFG.服务器地址}:8848`);
     }
-    server_tool.setApiUrl(`${CFG.图片压缩服务器}:8849`)
+    server_tool.setApiUrl(`139.159.214.249:8849`)
     inputManage.init()
 
   })
