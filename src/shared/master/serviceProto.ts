@@ -1,5 +1,8 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { ReqSign, ResSign } from './active/PtlSign';
+import { ReqDel, ResDel } from './backend/skill/PtlDel';
+import { ReqEdit, ResEdit } from './backend/skill/PtlEdit';
+import { ReqEffect_list, ResEffect_list } from './backend/skill/PtlEffect_list';
 import { ReqBattle, ResBattle } from './battle/PtlBattle';
 import { ReqOut, ResOut } from './battle/PtlOut';
 import { ReqGetBodySysCfg, ResGetBodySysCfg } from './common/PtlGetBodySysCfg';
@@ -45,6 +48,18 @@ export interface ServiceType {
         "active/Sign": {
             req: ReqSign,
             res: ResSign
+        },
+        "backend/skill/Del": {
+            req: ReqDel,
+            res: ResDel
+        },
+        "backend/skill/Edit": {
+            req: ReqEdit,
+            res: ResEdit
+        },
+        "backend/skill/Effect_list": {
+            req: ReqEffect_list,
+            res: ResEffect_list
         },
         "battle/Battle": {
             req: ReqBattle,
@@ -205,7 +220,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 4,
+    "version": 5,
     "services": [
         {
             "id": 0,
@@ -213,6 +228,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "api",
             "conf": {
                 "check_onlyid": true
+            }
+        },
+        {
+            "id": 40,
+            "name": "backend/skill/Del",
+            "type": "api",
+            "conf": {
+                "check_onlyid": false
+            }
+        },
+        {
+            "id": 41,
+            "name": "backend/skill/Edit",
+            "type": "api",
+            "conf": {
+                "check_onlyid": false
+            }
+        },
+        {
+            "id": 42,
+            "name": "backend/skill/Effect_list",
+            "type": "api",
+            "conf": {
+                "check_onlyid": false
             }
         },
         {
@@ -631,6 +670,108 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "type": "String"
                     },
                     "optional": true
+                }
+            ]
+        },
+        "backend/skill/PtlDel/ReqDel": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "id",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "backend/skill/PtlDel/ResDel": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "backend/skill/PtlEdit/ReqEdit": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "data",
+                    "type": {
+                        "type": "Any"
+                    }
+                }
+            ]
+        },
+        "backend/skill/PtlEdit/ResEdit": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "backend/skill/PtlEffect_list/ReqEffect_list": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "backend/skill/PtlEffect_list/ResEffect_list": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "list",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Any"
+                        }
+                    }
                 }
             ]
         },
