@@ -3,6 +3,9 @@ import { ReqSign, ResSign } from './active/PtlSign';
 import { ReqDel, ResDel } from './backend/skill/PtlDel';
 import { ReqEdit, ResEdit } from './backend/skill/PtlEdit';
 import { ReqEffect_list, ResEffect_list } from './backend/skill/PtlEffect_list';
+import { ReqQuery_eff, ResQuery_eff } from './backend/skill/PtlQuery_eff';
+import { ReqQuery, ResQuery } from './backend/skill/PtlQuery';
+import { ReqSkill_list, ResSkill_list } from './backend/skill/PtlSkill_list';
 import { ReqBattle, ResBattle } from './battle/PtlBattle';
 import { ReqOut, ResOut } from './battle/PtlOut';
 import { ReqGetBodySysCfg, ResGetBodySysCfg } from './common/PtlGetBodySysCfg';
@@ -31,6 +34,7 @@ import { ReqReset, ResReset } from './player/inherit/PtlReset';
 import { ReqOut as ReqOut_1, ResOut as ResOut_1 } from './player/map/PtlOut';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
+import { ReqCreate, ResCreate } from './player/skill/PtlCreate';
 import { ReqList as ReqList_2, ResList as ResList_2 } from './player/skill/PtlList';
 import { ReqLook as ReqLook_2, ResLook as ResLook_2 } from './player/skill/PtlLook';
 import { ReqRename, ResRename } from './player/skill/PtlRename';
@@ -60,6 +64,18 @@ export interface ServiceType {
         "backend/skill/Effect_list": {
             req: ReqEffect_list,
             res: ResEffect_list
+        },
+        "backend/skill/Query_eff": {
+            req: ReqQuery_eff,
+            res: ResQuery_eff
+        },
+        "backend/skill/Query": {
+            req: ReqQuery,
+            res: ResQuery
+        },
+        "backend/skill/Skill_list": {
+            req: ReqSkill_list,
+            res: ResSkill_list
         },
         "battle/Battle": {
             req: ReqBattle,
@@ -169,6 +185,10 @@ export interface ServiceType {
             req: ReqStart,
             res: ResStart
         },
+        "player/skill/Create": {
+            req: ReqCreate,
+            res: ResCreate
+        },
         "player/skill/List": {
             req: ReqList_2,
             res: ResList_2
@@ -220,7 +240,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 5,
+    "version": 9,
     "services": [
         {
             "id": 0,
@@ -249,6 +269,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 42,
             "name": "backend/skill/Effect_list",
+            "type": "api",
+            "conf": {
+                "check_onlyid": false
+            }
+        },
+        {
+            "id": 43,
+            "name": "backend/skill/Query_eff",
+            "type": "api",
+            "conf": {
+                "check_onlyid": false
+            }
+        },
+        {
+            "id": 44,
+            "name": "backend/skill/Query",
+            "type": "api",
+            "conf": {
+                "check_onlyid": false
+            }
+        },
+        {
+            "id": 45,
+            "name": "backend/skill/Skill_list",
             "type": "api",
             "conf": {
                 "check_onlyid": false
@@ -477,6 +521,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
+            "id": 46,
+            "name": "player/skill/Create",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
             "id": 29,
             "name": "player/skill/List",
             "type": "api",
@@ -689,7 +741,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "id": 0,
                     "name": "id",
                     "type": {
-                        "type": "String"
+                        "type": "Any"
                     }
                 }
             ]
@@ -752,6 +804,117 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "backend/skill/PtlEffect_list/ResEffect_list": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "list",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Any"
+                        }
+                    }
+                }
+            ]
+        },
+        "backend/skill/PtlQuery_eff/ReqQuery_eff": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "id",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "backend/skill/PtlQuery_eff/ResQuery_eff": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "data",
+                    "type": {
+                        "type": "Any"
+                    }
+                }
+            ]
+        },
+        "backend/skill/PtlQuery/ReqQuery": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "id",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "backend/skill/PtlQuery/ResQuery": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "backend/skill/PtlSkill_list/ReqSkill_list": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "backend/skill/PtlSkill_list/ResSkill_list": {
             "type": "Interface",
             "extends": [
                 {
@@ -897,15 +1060,15 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "extends": [
                 {
-                    "id": 0,
+                    "id": 1,
                     "type": {
                         "type": "Reference",
-                        "target": "../PtlFace/_user_cfg"
+                        "target": "shareFace/_user_cfg"
                     }
                 }
             ]
         },
-        "../PtlFace/_user_cfg": {
+        "shareFace/_user_cfg": {
             "type": "Interface",
             "properties": [
                 {
@@ -1524,15 +1687,15 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "extends": [
                 {
-                    "id": 0,
+                    "id": 1,
                     "type": {
                         "type": "Reference",
-                        "target": "../PtlFace/prop_item_equip"
+                        "target": "shareFace/prop_item_equip"
                     }
                 }
             ]
         },
-        "../PtlFace/prop_item_equip": {
+        "shareFace/prop_item_equip": {
             "type": "Interface",
             "properties": [
                 {
@@ -1561,7 +1724,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "leve_strengthen",
                     "type": {
                         "type": "Reference",
-                        "target": "../master/shareFace/_bar"
+                        "target": "shareFace/_bar"
                     }
                 },
                 {
@@ -1573,14 +1736,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "../master/shareFace/_bar": {
+        "shareFace/_bar": {
             "type": "Interface",
             "extends": [
                 {
                     "id": 0,
                     "type": {
                         "type": "Reference",
-                        "target": "../master/shareFace/_base_com"
+                        "target": "shareFace/_base_com"
                     }
                 }
             ],
@@ -1616,7 +1779,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "../master/shareFace/_base_com": {
+        "shareFace/_base_com": {
             "type": "Interface",
             "properties": [
                 {
@@ -2111,6 +2274,150 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
+        "player/skill/PtlCreate/ReqCreate": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "type",
+                    "type": {
+                        "type": "Reference",
+                        "target": "shareFace/SKILL_type"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "target",
+                    "type": {
+                        "type": "Reference",
+                        "target": "face/FACE_SKILL/SKILL_target"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "rang_type",
+                    "type": {
+                        "type": "Reference",
+                        "target": "face/FACE_SKILL/SKILL_rang"
+                    }
+                }
+            ]
+        },
+        "shareFace/SKILL_type": {
+            "type": "Enum",
+            "members": [
+                {
+                    "id": 0,
+                    "value": 0
+                },
+                {
+                    "id": 1,
+                    "value": 1
+                }
+            ]
+        },
+        "face/FACE_SKILL/SKILL_target": {
+            "type": "Enum",
+            "members": [
+                {
+                    "id": 0,
+                    "value": "敌方"
+                },
+                {
+                    "id": 1,
+                    "value": "自己"
+                }
+            ]
+        },
+        "face/FACE_SKILL/SKILL_rang": {
+            "type": "Enum",
+            "members": [
+                {
+                    "id": 0,
+                    "value": 0
+                },
+                {
+                    "id": 1,
+                    "value": 1
+                }
+            ]
+        },
+        "player/skill/PtlCreate/ResCreate": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 1,
+                    "type": {
+                        "type": "Reference",
+                        "target": "shareFace/prop_item_skill"
+                    }
+                },
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "shareFace/prop_item_skill": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "cd",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "type",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "desc",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "leve",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 5,
+                    "name": "leve_exp",
+                    "type": {
+                        "type": "Reference",
+                        "target": "shareFace/_bar"
+                    }
+                }
+            ]
+        },
         "player/skill/PtlList/ReqList": {
             "type": "Interface",
             "extends": [
@@ -2193,110 +2500,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "type": "Reference",
                         "target": "../protocols/master_base/BaseResponse"
                     }
-                }
-            ]
-        },
-        "shareFace/prop_item_skill": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "name",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "cd",
-                    "type": {
-                        "type": "Number"
-                    }
-                },
-                {
-                    "id": 2,
-                    "name": "type",
-                    "type": {
-                        "type": "Number"
-                    }
-                },
-                {
-                    "id": 3,
-                    "name": "desc",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 4,
-                    "name": "leve",
-                    "type": {
-                        "type": "Number"
-                    }
-                },
-                {
-                    "id": 5,
-                    "name": "leve_exp",
-                    "type": {
-                        "type": "Reference",
-                        "target": "shareFace/_bar"
-                    }
-                }
-            ]
-        },
-        "shareFace/_bar": {
-            "type": "Interface",
-            "extends": [
-                {
-                    "id": 0,
-                    "type": {
-                        "type": "Reference",
-                        "target": "shareFace/_base_com"
-                    }
-                }
-            ],
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "name",
-                    "type": {
-                        "type": "String"
-                    },
-                    "optional": true
-                },
-                {
-                    "id": 1,
-                    "name": "key",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 2,
-                    "name": "max",
-                    "type": {
-                        "type": "Number"
-                    }
-                },
-                {
-                    "id": 3,
-                    "name": "now",
-                    "type": {
-                        "type": "Number"
-                    }
-                }
-            ]
-        },
-        "shareFace/_base_com": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "t",
-                    "type": {
-                        "type": "String"
-                    },
-                    "optional": true
                 }
             ]
         },

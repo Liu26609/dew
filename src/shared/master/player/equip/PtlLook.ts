@@ -1,5 +1,5 @@
 import { BaseRequest, BaseResponse, BaseConf } from "../../../protocols/master_base";
-import { prop_item_equip } from "../../../PtlFace";
+import { prop_item_equip } from "../../shareFace";
 
 export interface ReqLook extends BaseRequest {
     idx:number

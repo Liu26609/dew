@@ -1,5 +1,5 @@
 import { BaseRequest, BaseResponse, BaseConf } from "../../protocols/master_base";
-import { _user_cfg } from "../../PtlFace";
+import { _user_cfg } from "../shareFace";
 /**
  * 用户个人设置
  */

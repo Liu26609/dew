@@ -1,11 +1,11 @@
 import { BaseRequest, BaseResponse, BaseConf } from "../../../protocols/master_base";
 
-export interface ReqDel extends BaseRequest {
-    id:any
+export interface ReqQuery_eff extends BaseRequest {
+    id:number
 }
 
-export interface ResDel extends BaseResponse {
-    
+export interface ResQuery_eff extends BaseResponse {
+    data:any
 }
 
 export const conf: BaseConf = {
