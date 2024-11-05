@@ -2,7 +2,7 @@ import fs from 'fs';
 import { h } from 'koishi'
 import message from '../trigger/message';
 import server_tool from '../server_tool';
-import { prop_item_skill } from '../shared/PtlFace';
+import { prop_item_skill } from '../shared/master/shareFace';
 const path = require('path');
 class temp_img {
     commonCss: string;

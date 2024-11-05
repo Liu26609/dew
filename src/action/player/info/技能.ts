@@ -1,6 +1,5 @@
 import APP from "../../../APP";
 import server from "../../../server";
-import { Item_Type } from "../../../shared/PtlFace";
 import temp_img from "../../../temp/temp_img";
 import temp_text, { temp_card } from "../../../temp/temp_text";
 import message from "../../../trigger/message"
