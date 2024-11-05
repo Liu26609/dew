@@ -1,8 +1,7 @@
 import APP from "../APP";
 import { transaction_create } from "../shared/master/MsgAction";
 import { ResList } from "../shared/master/player/bag/PtlList";
-import { taskData } from "../shared/master/shareFace";
-import { Item_Type, prop_item_equip, prop_item_skill } from "../shared/PtlFace";
+import { Item_Type, prop_item_equip, prop_item_skill, taskData } from "../shared/master/shareFace";
 import message from "../trigger/message";
 import temp_img from "./temp_img";
 export class temp_card {
