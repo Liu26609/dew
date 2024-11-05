@@ -5,6 +5,7 @@
 
 # 简介
 RPG大型多人文字RPG游戏
+![规划一期](./plan/规划一期.png)
 # 平台支持
 ![Example Image](https://img.shields.io/badge/koishi沙箱-√-r)
 ![Example Image](https://img.shields.io/badge/telegram-√-r)
