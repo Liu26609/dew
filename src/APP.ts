@@ -1,6 +1,7 @@
 import emojiCfg from "./cfg/emojiCfg";
 import { logger } from "./index_bot";
 import server from "./server";
+import { _att_key } from "./shared/master/shareFace";
 
 class APP {
     bodySysCfg: Map<string, Map<string, string>> = new Map();
@@ -26,6 +27,51 @@ class APP {
             }
         }
         return k
+    }
+    getAttIcon(k:_att_key){
+        let icon = ''
+        switch (k) {
+            case _att_key.生命值:
+                icon = '❤️'
+                break;
+            case _att_key.物理攻击:
+                icon = '🗡️'
+                break;
+            case _att_key.物理防御:
+                icon = '🛡️'
+                break;
+            case _att_key.魔法攻击:
+                icon = '🔮'
+                break;
+            case _att_key.魔法防御:
+                icon = '🔰'
+                break;
+            case _att_key.物理暴击率:
+                icon = '💥'
+                break;
+            case _att_key.魔法暴击率:
+                icon = '💥'
+                break;
+            case _att_key.魔法值:
+                icon = '🔮'
+                break;
+            case _att_key.战斗力:
+                icon = '🔥'
+                break;
+            case _att_key.经验值:
+                icon = '⏳'
+                break;
+            case _att_key.生命恢复:
+                icon = '🌿'
+                break;
+            case _att_key.魔法恢复:
+                icon = '🌿'
+                break;
+            default:
+                icon = '❓'
+                break;
+        }
+        return icon
     }
     async checkSys(s: string) {
         if (this.bodySysCfg.has(s)) {

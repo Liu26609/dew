@@ -111,7 +111,7 @@ class temp_text {
         temp.set_title_line('装备属性', '🔺')
         for (let i = 0; i < data.att.length; i++) {
             const element = data.att[i];
-            temp.add(`┃${APP.getSysCover(data.sys, element.name)}:${element.val}`)
+            temp.add(`${APP.getAttIcon(element.key)}${APP.getSysCover(data.sys, element.name)}:${element.val}`)
         }
         return temp;
     }

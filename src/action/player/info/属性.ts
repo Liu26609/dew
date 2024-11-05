@@ -20,24 +20,18 @@ export default class {
         for (let i = 0; i < attList.length; i++) {
             const att = attList[i];
             if(att.hide)continue;
-            let icon;
-            switch (att.key) {
-                case '战斗力':
-                    icon = '🔥'
-                    break;
-            
-                default:
-                    break;
-            }
+            let icon = APP.getAttIcon(att.key);
             switch (att.t) {
                 case 'body_bar':
-                    temp.add(`┃${APP.getSysCover(_s,att.name)}:${att.now}/${att.max}`)
+                    temp.add(`${icon}${APP.getSysCover(_s,att.name)}:${att.now}/${att.max}`)
                     break;
                 case 'att_val':
                     if(att.val == 0){
                         continue;
                     }
-                    temp.add(`${icon || '┃'}${APP.getSysCover(_s,att.name)}:${att.val}`)
+                    if(!att.hide){
+                        temp.add(`${icon}${APP.getSysCover(_s,att.name)}:${att.val}`)
+                    }
                     break;
                 default:
                     temp.add('┃未知属性类型:' + att.t)
