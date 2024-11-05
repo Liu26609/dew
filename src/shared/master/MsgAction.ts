@@ -31,7 +31,7 @@ export interface MSG_BATTLELOG {
 export interface transaction_create {
     /**交易原因 */
     res:string
-    items: { name: string, now: number,need:number }[]
+    items: { name: string, now: number,need:number,icon:string }[]
 }
 
 export const conf: BaseConf = {

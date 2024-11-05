@@ -46,13 +46,6 @@ export default class {
             const element = req.att[i];
             temp += `┃${APP.getSysCover(_s,element.name)}:${element.val}\n`
         }
-        if(req.skills.length > 0){
-            temp += `----血统技能\n`
-            for (let i = 0; i < req.skills.length; i++) {
-                const element = req.skills[i];
-                temp += `┃${element}\n`
-            }
-        }
         cls.addLine(temp)
         cls.send()
         

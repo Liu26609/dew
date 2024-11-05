@@ -15,7 +15,6 @@ export interface ResInfo extends BaseResponse {
     from:string
     // 系统
     sys:string
-    skills:string[]
     att:any[]
 }
 

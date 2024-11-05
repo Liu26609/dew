@@ -1,26 +1,13 @@
 @font-face {
     font-family: 'xiaomai';
-    src: url('../font/xiaomai.ttf');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'ttf';
-    src: url('../font/ttf_cn.ttf');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'number';
-    src: url('../font/number.ttf');
+    src: url('https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/font/xiaomai.ttf');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'cn';
-    src: url('../font/cn.ttf');
+    src: url('https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/font/cn.ttf');
     font-weight: normal;
     font-style: normal;
 }

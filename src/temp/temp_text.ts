@@ -162,7 +162,7 @@ class temp_text {
         temp.set_title('交易确认', '⚖️')
         for (let i = 0; i < data.items.length; i++) {
             const element = data.items[i];
-            temp.add(`┌💠${element.name}x${element.need}`)
+            temp.add(`┌${element.icon}${element.name}x${element.need}`)
             if (element.now < element.need) {
                 temp.add(`└❌当前拥有:${element.now}`)
             } else {
