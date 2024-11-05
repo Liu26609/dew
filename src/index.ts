@@ -10,6 +10,7 @@ import actionCfg from './cfg/actionCfg'
 import { Trie } from './lib/trie'
 import temp_img from './temp/temp_img';
 import server_tool from './server_tool';
+import { helpCfg } from './cfg/helpCfg';
 export const name = 'dew-bot'
 const path = require('path');
 export interface Config {
@@ -31,6 +32,7 @@ export const Config: Schema<Config> = Schema.object({
 export let CFG: Config;
 
 export async function apply(ctx: Context, config: Config) {
+  ctx.i18n.define("zh-CN", helpCfg);
   CFG = config;
   log = ctx.logger('[game]');
   ctx.on('dispose', () => {
@@ -67,13 +69,14 @@ export async function apply(ctx: Context, config: Config) {
     // cls.option('改名', '<val:string>')
     // }
     if (element.tips.length > 0) {
-      cls.usage(`════🔵指令描述═━┄\n${element.tips}`)
+      cls.usage(`✦─✧📜指令介绍✧─✦\n「${element.tips}」`)
     }
     if (element.example.length > 0) {
-      cls.example(`✨指令有空格哦✨`)
+      // cls.example(`✨指令有空格哦✨`)
       for (let i = 0; i < element.example.length; i++) {
         const example = element.example[i];
-        cls.example(`🌰${example}`)
+        let icon = '①②③④⑤⑥⑦⑧⑨⑩'
+        cls.example(`${icon[i]}${example}`)
       }
     }
     cls.action(async (_: any, ag: any) => {
