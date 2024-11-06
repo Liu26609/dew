@@ -22,16 +22,17 @@
     "plugin",
     "game"
   ],
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/Liu26609/dew.git"
   },
   "peerDependencies": {
-    "tsrpc": "^3.4.16",
-    "koishi": "^4.18.0"
+    "handlebars": "^4.7.8",
+    "koishi": "^4.18.0",
+    "tsrpc": "^3.4.16"
   },
   "dependencies": {
+    "handlebars": "^4.7.8",
     "terser": "^5.36.0",
     "tsrpc": "^3.4.16"
   }

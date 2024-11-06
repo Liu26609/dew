@@ -107,7 +107,7 @@ class temp_text {
         temp.set_title('装备查看', '🗡️')
         temp.add(`🏷️${data.name}+${data.leve_strengthen.now}`)
         temp.add(`「${data.tips}」`)
-        temp.add(`✡️来源:${data.sys}`)
+        temp.add(`✡️${data.sys}·${data.type}`)
         temp.set_title_line('装备属性', '🔺')
         for (let i = 0; i < data.att.length; i++) {
             const element = data.att[i];

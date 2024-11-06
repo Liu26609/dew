@@ -1,5 +1,6 @@
 import APP from "../../../APP";
 import server from "../../../server";
+import temp_img from "../../../temp/temp_img";
 import temp_text, { temp_card } from "../../../temp/temp_text";
 import message from "../../../trigger/message"
 
@@ -55,6 +56,19 @@ export default class {
         card.set_title_line('可选操作','🔧')
         card.add(`【装备强化 ${idx}】【装备卸下 ${idx}】`)
         cls.send_v2(card)
+
+
+        let att = [];
+        for (let i = 0; i < req.att.length; i++) {
+            const element = req.att[i];
+            att.push(`${APP.getSysCover(req.sys, element.name)}:${element.val}`)
+        }
+        temp_img.render(cls, 'equip', {
+            sys:req.sys,
+            type:req.type,
+            name:req.name,
+            att:att,
+        })
     }
     async list(cls: message) {
         // 查看血统

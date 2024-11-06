@@ -2,6 +2,7 @@ export interface prop_item_equip {
   name: string
   att: any
   sys: string
+  type:string
   leve_strengthen: _bar
   tips: string
 }
@@ -71,7 +72,7 @@ export interface prop_item{
   data?:any;
 }
 export enum body_sys{
-  修仙 = '修仙',
+  修真 = '修真',
   // 
   斗罗 = '斗罗',
   // 百级魂师‌
@@ -91,7 +92,9 @@ export enum body_sys{
  * 
  * 角色: 修仙
  * 装备栏位 [法宝]
- * 如果没有 则随机一个位置装备 并且效果只生效 80% 不再附带技能
+ * 
+ * 装备类型 - 修真器具
+ * 角色只要是同一体系 并且 装备栏没有此类型那么就可以装备
  */
 
 export enum _att_key{
@@ -139,13 +142,6 @@ export interface taskData {
   reward: prop_item[];
   // 任务结束倒计时
   endtime: number;
-}
-export interface prop_item_equip {
-  name: string
-  att: any
-  sys: string
-  leve_strengthen: _bar
-  tips: string
 }
 export interface prop_item_skill {
   /**技能名称 */

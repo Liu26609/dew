@@ -4,6 +4,7 @@ import message from '../trigger/message';
 import server_tool from '../server_tool';
 import { prop_item_skill } from '../shared/master/shareFace';
 const path = require('path');
+import Handlebars from 'handlebars';
 class temp_img {
     commonCss: string;
     pageContents = new Map<string, string>()
@@ -40,17 +41,8 @@ class temp_img {
     }
     // 通用模板替换函数
     private renderTemplate(template: string, variables: Record<string, any>): string {
-        return template.replace(/{{(.*?)}}/g, (_, key) => {
-            const keys = key.split('.').map(k => k.trim());
-            let value: any = variables;
-            for (const k of keys) {
-                value = value[k];
-                if (value === undefined) {
-                    return '';
-                }
-            }
-            return String(value);
-        });
+        const compiledTemplate = Handlebars.compile(template);
+        return compiledTemplate(variables);
     }
     async render(cls: message, name: string, data: any) {
         let tempHtml = this.pageContents.get(name);
