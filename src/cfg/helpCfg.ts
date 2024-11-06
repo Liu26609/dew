@@ -14,7 +14,7 @@ export let helpCfg = {
                 "not-found": "指令未找到。",
                 "hint-authority": "括号内为对应的最低权限等级",
                 "hint-subcommand": "标有星号的表示含有子指令",
-                "command-title": "ⓘ      📜指令提示        ⓧ\n触发指令:{0}",
+                "command-title": "📜指令提示ⓘ\n触发指令:{0}",
                 "command-aliases": "别名：{0}。",
                 "command-examples": "✦─✧🌰举个栗子✧─✦",
                 "command-authority": "最低权限：{0} 级。",
