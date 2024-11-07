@@ -22,6 +22,13 @@ export class temp_card {
         this.list.push(`✦─✧${icon}${title}✧─✦`)
 
     }
+    select(select: string[]) {
+        this.set_title_line('操作选择', '🏧')
+        for (let i = 0; i < select.length; i++) {
+            const element = select[i];
+            this.add(`【${element}】`)
+        }
+    }
     br() {
         this.list.push(``)
     }
@@ -41,7 +48,7 @@ export class temp_card {
             }
         }
         text += `◣                                    ◢\n`
-        text += `✎文字排版:v0.3`
+        text += `✎文字排版:v0.31`
         return text;
     }
 }

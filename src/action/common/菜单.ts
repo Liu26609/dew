@@ -7,6 +7,7 @@ export default class {
         temp.set_title('基础指令', '📚')
         temp.add(`🧙[角色]查看自身相关指令`)
         temp.add(`🌎[世界]查看世界相关指令`)
+        temp.add(`✨[日常活动]常驻活动查看`)
         temp.add(`🛠️[设置]个性化设置`)
         temp.set_title_line('指令提示', 'ℹ️')
         temp.line('对任何指令后面加hp可指令食用方法🌰栗子[属性hp]')

@@ -3,13 +3,6 @@ import actionCfg from "../../cfg/actionCfg"
 export default class{
     constructor(){
         actionCfg.push({
-            key: "角色",
-            key_tips: '角色功能列表',
-            tips: "角色",
-            example: ["@bot 角色"],
-            path: 'player/菜单'
-        })
-        actionCfg.push({
             key: "角色/角色改名",
             key_tips: '角色改名',
             tips: "改名",

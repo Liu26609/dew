@@ -66,7 +66,7 @@ export default class message {
     send(delaytime?: number) {
         let str = '';
         if (this.platform === 'qq') {
-            str += '✨来消息啦✨\n';
+            str += '✨\n';
         }
         for (let index = 0; index < this.temp.length; index++) {
             const element = this.temp[index];
@@ -77,14 +77,14 @@ export default class message {
                 str += element.data + '\n';
             }
         }
-        str += '\n文字排版dev 0.01'
+        str += '\n文字排版dev 0.02'
         this.session.sendQueued(str, delaytime ? delaytime * 1000 : 0.2)
         this.clear();
     }
     send_v1(temp: string, delaytime?: number) {
         let str = '';
         if (this.platform === 'qq') {
-            str += '.\n';
+            str += '✨\n';
         }
         str += temp;
         this.session.sendQueued(str, delaytime || 0.2)
@@ -92,7 +92,7 @@ export default class message {
     send_v2(temp: temp_card, delaytime?: number) {
         let str = '';
         if (this.platform === 'qq') {
-            str += '✨来消息啦✨\n';
+            str += '✨\n';
         }
         str += temp.text();
         if(delaytime){

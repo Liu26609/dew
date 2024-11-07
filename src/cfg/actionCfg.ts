@@ -13,13 +13,7 @@ interface _data {
     path: string
 }
 let actionCfg: _data[] = [];
-actionCfg.push({
-    key: "日常活动/签到",
-    key_tips: '每日一签',
-    tips: "签到天数越多奖励越多\n每日签到排名越高奖励越多",
-    example: ["@bot 签到"],
-    path: "active/签到"
-})
+
 actionCfg.push({
     key: "世界/逃跑",
     key_tips: '保命要紧，战术撤退',
