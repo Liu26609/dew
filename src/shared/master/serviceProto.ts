@@ -35,7 +35,6 @@ import { ReqReset, ResReset } from './player/inherit/PtlReset';
 import { ReqOut as ReqOut_1, ResOut as ResOut_1 } from './player/map/PtlOut';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
-import { ReqCreate, ResCreate } from './player/skill/PtlCreate';
 import { ReqList as ReqList_2, ResList as ResList_2 } from './player/skill/PtlList';
 import { ReqLook as ReqLook_2, ResLook as ResLook_2 } from './player/skill/PtlLook';
 import { ReqRename, ResRename } from './player/skill/PtlRename';
@@ -189,10 +188,6 @@ export interface ServiceType {
         "player/map/Start": {
             req: ReqStart,
             res: ResStart
-        },
-        "player/skill/Create": {
-            req: ReqCreate,
-            res: ResCreate
         },
         "player/skill/List": {
             req: ReqList_2,
@@ -528,14 +523,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 28,
             "name": "player/map/Start",
-            "type": "api",
-            "conf": {
-                "check_onlyid": true
-            }
-        },
-        {
-            "id": 46,
-            "name": "player/skill/Create",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -2430,63 +2417,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
         "player/map/PtlStart/ResStart": {
             "type": "Interface",
             "extends": [
-                {
-                    "id": 0,
-                    "type": {
-                        "type": "Reference",
-                        "target": "../protocols/master_base/BaseResponse"
-                    }
-                }
-            ]
-        },
-        "player/skill/PtlCreate/ReqCreate": {
-            "type": "Interface",
-            "extends": [
-                {
-                    "id": 0,
-                    "type": {
-                        "type": "Reference",
-                        "target": "../protocols/master_base/BaseRequest"
-                    }
-                }
-            ],
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "type",
-                    "type": {
-                        "type": "Reference",
-                        "target": "shareFace/SKILL_type"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "target",
-                    "type": {
-                        "type": "Reference",
-                        "target": "face/FACE_SKILL/SKILL_target"
-                    }
-                },
-                {
-                    "id": 2,
-                    "name": "rang_type",
-                    "type": {
-                        "type": "Reference",
-                        "target": "face/FACE_SKILL/SKILL_rang"
-                    }
-                }
-            ]
-        },
-        "player/skill/PtlCreate/ResCreate": {
-            "type": "Interface",
-            "extends": [
-                {
-                    "id": 1,
-                    "type": {
-                        "type": "Reference",
-                        "target": "shareFace/prop_item_skill"
-                    }
-                },
                 {
                     "id": 0,
                     "type": {

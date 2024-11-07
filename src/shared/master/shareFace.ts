@@ -22,12 +22,14 @@ export interface _line extends _base_com{
 export interface _att_val extends _base_com{
   name?:string,
   key:_att_key,
-  val:number
+  val:number,
+  hide?:boolean
+
 }
 export interface _att_line extends _base_com{
   name:string,
   key:string,
-  val:_line
+  val:_line;
 }
 
 export enum battle_group {
