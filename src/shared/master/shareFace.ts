@@ -23,7 +23,6 @@ export interface _att_val extends _base_com{
   name?:string,
   key:_att_key,
   val:number
-  hide?:boolean
 }
 export interface _att_line extends _base_com{
   name:string,
