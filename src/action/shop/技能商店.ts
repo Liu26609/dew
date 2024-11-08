@@ -34,6 +34,7 @@ export default class {
         temp.add(`⏰刷新时间: ${APP.countdown(req.down_time - Date.now())}`)
         temp.add(`💰价格:${req.price.name}*${req.price.cont}`)
         temp.add(`💡购买指令[技能购买]`)
+        temp.add(`↓↓↓↓技能预览图↓↓↓↓`)
         cls.send_v2(temp)
     }
 }

@@ -19,7 +19,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 3,
+    "version": 4,
     "services": [
         {
             "id": 0,
@@ -37,15 +37,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
     "types": {
         "PtlCompressImg/ReqCompressImg": {
             "type": "Interface",
-            "extends": [
-                {
-                    "id": 0,
-                    "type": {
-                        "type": "Reference",
-                        "target": "../protocols/tool_base/BaseRequest"
-                    }
-                }
-            ],
             "properties": [
                 {
                     "id": 0,
@@ -54,31 +45,11 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "type": "Buffer",
                         "arrayType": "Uint8Array"
                     }
-                },
-                {
-                    "id": 1,
-                    "name": "quality",
-                    "type": {
-                        "type": "Number"
-                    },
-                    "optional": true
                 }
             ]
-        },
-        "../protocols/tool_base/BaseRequest": {
-            "type": "Interface"
         },
         "PtlCompressImg/ResCompressImg": {
             "type": "Interface",
-            "extends": [
-                {
-                    "id": 0,
-                    "type": {
-                        "type": "Reference",
-                        "target": "../protocols/tool_base/BaseResponse"
-                    }
-                }
-            ],
             "properties": [
                 {
                     "id": 0,
@@ -89,9 +60,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     }
                 }
             ]
-        },
-        "../protocols/tool_base/BaseResponse": {
-            "type": "Interface"
         },
         "PtlPing/ReqPing": {
             "type": "Interface",
@@ -105,6 +73,9 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
+        "../protocols/tool_base/BaseRequest": {
+            "type": "Interface"
+        },
         "PtlPing/ResPing": {
             "type": "Interface",
             "extends": [
@@ -116,6 +87,9 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     }
                 }
             ]
+        },
+        "../protocols/tool_base/BaseResponse": {
+            "type": "Interface"
         }
     }
 };
