@@ -44,6 +44,8 @@ import { ReqList as ReqList_3, ResList as ResList_3 } from './player/task/PtlLis
 import { ReqLook as ReqLook_3, ResLook as ResLook_3 } from './player/task/PtlLook';
 import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
+import { ReqBuy, ResBuy } from './shop/skill/PtlBuy';
+import { ReqLook as ReqLook_4, ResLook as ResLook_4 } from './shop/skill/PtlLook';
 import { ReqCancel, ResCancel } from './transaction/PtlCancel';
 import { ReqConfirm, ResConfirm } from './transaction/PtlConfirm';
 import { ReqBuild, ResBuild } from './work/PtlBuild';
@@ -225,6 +227,14 @@ export interface ServiceType {
         "Ping": {
             req: ReqPing,
             res: ResPing
+        },
+        "shop/skill/Buy": {
+            req: ReqBuy,
+            res: ResBuy
+        },
+        "shop/skill/Look": {
+            req: ReqLook_4,
+            res: ResLook_4
         },
         "transaction/Cancel": {
             req: ReqCancel,
@@ -603,6 +613,22 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "api",
             "conf": {
                 "check_onlyid": false
+            }
+        },
+        {
+            "id": 49,
+            "name": "shop/skill/Buy",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 50,
+            "name": "shop/skill/Look",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
             }
         },
         {
@@ -2885,6 +2911,126 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Reference",
                         "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "shop/skill/PtlBuy/ReqBuy": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "shop/skill/PtlBuy/ResBuy": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "skill",
+                    "type": {
+                        "type": "Union",
+                        "members": [
+                            {
+                                "id": 0,
+                                "type": {
+                                    "type": "Reference",
+                                    "target": "shareFace/prop_item_skill"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": null
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "shop/skill/PtlLook/ReqLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "shop/skill/PtlLook/ResLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "data",
+                    "type": {
+                        "type": "Reference",
+                        "target": "shareFace/prop_item_skill"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "stock",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "price",
+                    "type": {
+                        "type": "Interface",
+                        "properties": [
+                            {
+                                "id": 0,
+                                "name": "name",
+                                "type": {
+                                    "type": "String"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "name": "cont",
+                                "type": {
+                                    "type": "Number"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "down_time",
+                    "type": {
+                        "type": "Number"
                     }
                 }
             ]

@@ -5,6 +5,7 @@ import server_tool from '../server_tool';
 import { prop_item_skill } from '../shared/master/shareFace';
 const path = require('path');
 import Handlebars from 'handlebars';
+import inputManage from '../inputManage';
 class temp_img {
     commonCss: string;
     pageContents = new Map<string, string>()
@@ -45,40 +46,47 @@ class temp_img {
         return compiledTemplate(variables);
     }
     async render(cls: message, name: string, data: any) {
-        let tempHtml = this.pageContents.get(name);
-        tempHtml = this.renderTemplate(tempHtml, data);
-        const page = await this.ctx.puppeteer.page();
-        await page.setContent(tempHtml, { waitUntil: 'networkidle2' });
-
-        // Wait for all images and fonts to load
-        await page.evaluate(async () => {
-            const images = Array.from(document.images);
-            await Promise.all(images.map(img => {
-                if (img.complete) return;
-                return new Promise((resolve, reject) => {
-                    img.addEventListener('load', resolve);
-                    img.addEventListener('error', reject);
-                });
-            }));
-
-            const fonts = document.fonts;
-            await fonts.ready;
-        });
-
-        const leaderboardElement = await page.$('body');
-        const boundingBox = await leaderboardElement.boundingBox();
-        await page.setViewport({
-            width: Math.ceil(boundingBox.width),
-            height: Math.ceil(boundingBox.height),
-        });
-        const imgBuf = await leaderboardElement.screenshot({ captureBeyondViewport: false });
-        console.log(`Original image size: ${imgBuf.length} bytes`);
-        let sendBuff = new Uint8Array(imgBuf)
-        let req = await server_tool.api('CompressImg', { imgBuf: sendBuff })
-        console.log(`Compressed image size: ${req.imgBuf.length} bytes`);
-        const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
-        await cls.session.send(leaderboardImage);
-        // await page.close();
+        inputManage.walt_imgRenderMap.set(cls.get_userId(), true);
+        try {
+            let tempHtml = this.pageContents.get(name);
+            tempHtml = this.renderTemplate(tempHtml, data);
+            const page = await this.ctx.puppeteer.page();
+            await page.setContent(tempHtml, { waitUntil: 'networkidle2' });
+    
+            // Wait for all images and fonts to load
+            await page.evaluate(async () => {
+                const images = Array.from(document.images);
+                await Promise.all(images.map(img => {
+                    if (img.complete) return;
+                    return new Promise((resolve, reject) => {
+                        img.addEventListener('load', resolve);
+                        img.addEventListener('error', reject);
+                    });
+                }));
+    
+                const fonts = document.fonts;
+                await fonts.ready;
+            });
+    
+            const leaderboardElement = await page.$('body');
+            const boundingBox = await leaderboardElement.boundingBox();
+            await page.setViewport({
+                width: Math.ceil(boundingBox.width),
+                height: Math.ceil(boundingBox.height),
+            });
+            const imgBuf = await leaderboardElement.screenshot({ captureBeyondViewport: false });
+            console.log(`Original image size: ${imgBuf.length} bytes`);
+            let sendBuff = new Uint8Array(imgBuf)
+            let req = await server_tool.api('CompressImg', { imgBuf: sendBuff })
+            console.log(`Compressed image size: ${req.imgBuf.length} bytes`);
+            const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
+            await cls.session.send(leaderboardImage);
+            await page.close();
+            inputManage.walt_imgRenderMap.delete(cls.get_userId());
+        } catch (error) {
+            inputManage.walt_imgRenderMap.delete(cls.get_userId());
+        }
+       
     }
     async temp_prop_skill(data: prop_item_skill, cls: message) {
         const _data = {

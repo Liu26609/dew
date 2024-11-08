@@ -7,6 +7,7 @@ import message from "./trigger/message";
 
 class inputManage {
     wait_inputskipMap: Map<string, boolean> = new Map();
+    walt_imgRenderMap:Map<string,boolean> = new Map();
     messageMap: Map<string, message> = new Map();
     constructor() {
     }
@@ -36,6 +37,11 @@ class inputManage {
     input_msg(cls: message) {
         if (this.wait_inputskipMap.has(cls.get_userId())) {
             console.log('skip')
+            return;
+        }
+
+        if (this.walt_imgRenderMap.has(cls.get_userId())) {
+            cls.send_v1('消息太快啦')
             return;
         }
         this.messageMap.set(cls.get_msgId(), cls);

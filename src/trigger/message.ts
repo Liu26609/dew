@@ -87,7 +87,11 @@ export default class message {
             str += '✨\n';
         }
         str += temp;
-        this.session.sendQueued(str, delaytime || 0.2)
+        if(delaytime){
+            this.session.send(str)
+        }else{
+            this.session.sendQueued(str, delaytime || 0.2)
+        }
     }
     send_v2(temp: temp_card, delaytime?: number) {
         let str = '';
