@@ -78,7 +78,7 @@ class temp_img {
         console.log(`Compressed image size: ${req.imgBuf.length} bytes`);
         const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
         await cls.session.send(leaderboardImage);
-        // await page.close();
+        await page.close();
     }
     async temp_prop_skill(data: prop_item_skill, cls: message) {
         const _data = {

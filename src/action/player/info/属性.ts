@@ -1,5 +1,6 @@
 import APP from "../../../APP";
 import server from "../../../server";
+import temp_img from "../../../temp/temp_img";
 import { temp_card } from "../../../temp/temp_text";
 import message from "../../../trigger/message";
 
@@ -38,6 +39,37 @@ export default class {
                     break;
             }
         }
+        let barstr = [];
+        let attstr = [];
+        for (let i = 0; i < attList.length; i++) {
+            const att = attList[i];
+            if(att.hide)continue;
+            let icon = APP.getAttIcon(att.key);
+            switch (att.t) {
+                case 'body_bar':
+                    barstr.push(`${icon}${APP.getSysCover(_s,att.name)} ${att.now}/${att.max}`)
+                    break;
+                case 'att_val':
+                    if(att.val == 0){
+                        continue;
+                    }
+                    if(!att.hide){
+                        attstr.push(`${icon}${APP.getSysCover(_s,att.name)}  ${att.val}`)
+                    }
+                    break;
+                default:
+                    temp.add('┃未知属性类型:' + att.t)
+                    break;
+            }
+        }
+        temp_img.render(cls,'att',{
+            name:req.name,
+            leve:req.leve,
+            inherit:req.inherit,
+            className:req.className,
+            att:attstr,
+            barstr:barstr
+        })
         cls.send_v2(temp)
     }
 }

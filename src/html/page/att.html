@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/common.css">
     <link rel="stylesheet" href="https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/att.css">
 </head>
 
 <body style="width: 1091px;">
-    <div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="zh-Hans-CN" dir="ltr">
+    <div style="font-family: cn;" id="mw-content-text" class="mw-body-content mw-content-ltr" lang="zh-Hans-CN" dir="ltr">
         <div class="mw-parser-output">
             <div class="row">
                 <div class="col-lg-4 col-xs-12 kapai">
@@ -42,8 +43,8 @@
                         width="496" height="404" class="kapai-stripe">
                     </p>
                     <div class="kapai-more">
-                        <div class="font-f">占位文字</div>
-                        <div class="font-comm">职业XX</div>
+                        <div class="font-f">Lv.{{leve}}</div>
+                        <div class="font-comm">{{inherit}}</div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-xs-12 kapai-data">
@@ -54,16 +55,15 @@
                         </p>
                         <div style="width: calc(100% - 56px)" class="flex-col">
                             <div class="flex-row" style="border-bottom: 1px solid #b9b2ab; padding-bottom: 4px;">
-                                <div style="font-weight: lighter;">占位名字</div>
-                                <div>占位文字内容</div>
+                                <div style="font-weight: lighter;">宝宝巴士</div>
+                                <div>基因锁:未开启</div>
                             </div>
                             <div class="flex-row">
                                 <div style="font-size:26px;">{{name}}</div>
                                 <div class="flex-col" style="text-align: right; ">
-                                    <!-- 血统 -->
-                                    <div>{{inherit}}</div>
                                     <!-- 境界名称 -->
                                     <div>{{className}}</div>
+                                    <div>空白区域1</div>
                                 </div>
                             </div>
                         </div>
@@ -73,11 +73,25 @@
                             title="calss=bea-line" width="1330" height="31">
                     </p>
                     <div class="kapai-data-bg"></div>
-                    <div class="jiNeng-box flex-col">
+                    <div class="jiNeng-box flex-col" style="font-size: 24px;">
                         <div class="jiNeng flex-row">
                             <div style="width: calc(100% - 64px);color:#FFFFFF" class="flex-col" >
-                                <div>😄占位文字</div>
-                                <div>😄占位文字</div>
+                            {{#each barstr}}
+                            <div style="margin-bottom: 10px;">
+                                <div style="width: 100%;height: 24px;background: rgba(255,255,255,0.2);border-radius: 15px;position: relative;">
+                                    <div style="width: 70%;height: 100%;background: rgba(255,255,255,0.8);border-radius: 15px;"></div>
+                                    <div style="width: 100%;
+    text-align: center;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);color: #000;text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;font-size: 21px;">{{this}}</div>
+                                </div>
+                            </div>
+                            {{/each}}
+                            </div>
+                        </div>
+                        <div class="jiNeng flex-row">
+                            <div style="width: calc(100% - 64px);color:#FFFFFF" class="flex-col" >
+                                {{#each att}}
+                                <div>{{this}}</div>
+                                {{/each}}
                             </div>
                         </div>
                     </div>
@@ -86,5 +100,11 @@
         </div>
     </div>
 </body>
+<style>
 
+.kapai-more>div:nth-child(1) {
+    font-size: 30px;
+
+}
+</style>
 </html>

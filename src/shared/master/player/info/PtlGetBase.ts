@@ -7,6 +7,7 @@ export interface ReqGetBase extends BaseRequest {
 export interface ResGetBase extends BaseResponse {
     name:string,
     sys:string,
+    leve:number,
     /**
      * 血统名称
      */
