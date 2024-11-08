@@ -23,7 +23,6 @@ export default class {
                 temp.set_title('我的位置', '🌍')
                 temp.line(`当前世界:${req.name}`)
                 temp.line(`世界玩家:${req.online}`)
-                temp.line(`探索进度:${req.pgs}%`)
                 break;
         }
         cls.send_v2(temp)

@@ -100,7 +100,7 @@ export enum body_sys{
 
 export enum _att_key{
   战斗力 = '战斗力',
-  生命值 = '生命',
+  生命值 = '生命值',
   生命恢复 = '生命恢复',
   魔法值 = '魔法值',
   魔法恢复 = '魔法恢复',
@@ -143,6 +143,8 @@ export interface taskData {
   reward: prop_item[];
   // 任务结束倒计时
   endtime: number;
+  // 是否标记删除
+  del?:boolean
 }
 export interface prop_item_skill {
   /**技能名称 */

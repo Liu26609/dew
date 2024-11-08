@@ -10,8 +10,6 @@ export interface ResPosition extends BaseResponse {
     name:string
     /**副本在线玩家数 */
     online:number
-    /**探索进度 */
-    pgs:number
 }
 
 export const conf: BaseConf = {

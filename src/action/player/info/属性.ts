@@ -47,7 +47,7 @@ export default class {
             let icon = APP.getAttIcon(att.key);
             switch (att.t) {
                 case 'body_bar':
-                    barstr.push(`${icon}${APP.getSysCover(_s,att.name)} ${att.now}/${att.max}`)
+                    barstr.push({key:`${APP.getSysCover(_s,att.name)} ${att.now}/${att.max}`,bar:(att.now/att.max)*100})
                     break;
                 case 'att_val':
                     if(att.val == 0){
@@ -65,6 +65,7 @@ export default class {
         temp_img.render(cls,'att',{
             name:req.name,
             leve:req.leve,
+            sys:req.sys,
             inherit:req.inherit,
             className:req.className,
             att:attstr,

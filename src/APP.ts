@@ -1,12 +1,51 @@
+import path from "path";
 import emojiCfg from "./cfg/emojiCfg";
 import { logger } from "./index_bot";
+import inputManage from "./inputManage";
 import server from "./server";
 import { _att_key } from "./shared/master/shareFace";
+import common from "./lib/common";
 
 class APP {
     bodySysCfg: Map<string, Map<string, string>> = new Map();
+    private ctx: any;
     constructor() {
 
+    }
+    init(ctx:any){
+        this.ctx = ctx;
+    }
+    addCommon(cfg:any){
+        const element = cfg;
+        let cls = this.ctx.command(element.key, `💡${element.key_tips}`)
+        // option 不适合本机器人
+        // if (element.option) {
+        // cls.option('改名', '<val:string>')
+        // }
+        if (element.tips.length > 0) {
+          cls.usage(`✦─✧📜指令介绍✧─✦\n「${element.tips}」`)
+        }
+        if (element.example.length > 0) {
+          // cls.example(`✨指令有空格哦✨`)
+          for (let i = 0; i < element.example.length; i++) {
+            const example = element.example[i];
+            let icon = '①②③④⑤⑥⑦⑧⑨⑩'
+            cls.example(`${icon[i]}${example}`)
+          }
+        }
+        cls.action(async (_: any, ag: any) => {
+          let msg = inputManage.get_msg(_.session.messageId)
+          if(!msg){
+            return
+          }
+          if(inputManage.wait_inputskipMap.has(msg.get_userId())){
+            console.log('skip')
+            return;
+          }
+          
+          const classPath = path.resolve(__dirname, `./action/${element.path}`);
+          common.importClass(classPath, [msg, ..._.args])
+        })
     }
     setSysCfg(cfg: any) {
         const groups = cfg.cover.split('\n');

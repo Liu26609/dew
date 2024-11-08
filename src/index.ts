@@ -11,6 +11,7 @@ import { Trie } from './lib/trie'
 import temp_img from './temp/temp_img';
 import server_tool from './server_tool';
 import { helpCfg } from './cfg/helpCfg';
+import APP from './APP';
 export const name = 'dew-bot'
 const path = require('path');
 export interface Config {
@@ -61,37 +62,39 @@ export async function apply(ctx: Context, config: Config) {
   }
   // puppeteer 初始化
   temp_img.init(ctx)
+  APP.init(ctx);
   for (let index = 0; index < actionCfg.length; index++) {
     const element = actionCfg[index];
-    let cls = ctx.command(element.key, `💡${element.key_tips}`)
-    // option 不适合本机器人
-    // if (element.option) {
-    // cls.option('改名', '<val:string>')
+    APP.addCommon(element)
+    // let cls = ctx.command(element.key, `💡${element.key_tips}`)
+    // // option 不适合本机器人
+    // // if (element.option) {
+    // // cls.option('改名', '<val:string>')
+    // // }
+    // if (element.tips.length > 0) {
+    //   cls.usage(`✦─✧📜指令介绍✧─✦\n「${element.tips}」`)
     // }
-    if (element.tips.length > 0) {
-      cls.usage(`✦─✧📜指令介绍✧─✦\n「${element.tips}」`)
-    }
-    if (element.example.length > 0) {
-      // cls.example(`✨指令有空格哦✨`)
-      for (let i = 0; i < element.example.length; i++) {
-        const example = element.example[i];
-        let icon = '①②③④⑤⑥⑦⑧⑨⑩'
-        cls.example(`${icon[i]}${example}`)
-      }
-    }
-    cls.action(async (_: any, ag: any) => {
-      let msg = inputManage.get_msg(_.session.messageId)
-      if(!msg){
-        return
-      }
-      if(inputManage.wait_inputskipMap.has(msg.get_userId())){
-        console.log('skip')
-        return;
-      }
+    // if (element.example.length > 0) {
+    //   // cls.example(`✨指令有空格哦✨`)
+    //   for (let i = 0; i < element.example.length; i++) {
+    //     const example = element.example[i];
+    //     let icon = '①②③④⑤⑥⑦⑧⑨⑩'
+    //     cls.example(`${icon[i]}${example}`)
+    //   }
+    // }
+    // cls.action(async (_: any, ag: any) => {
+    //   let msg = inputManage.get_msg(_.session.messageId)
+    //   if(!msg){
+    //     return
+    //   }
+    //   if(inputManage.wait_inputskipMap.has(msg.get_userId())){
+    //     console.log('skip')
+    //     return;
+    //   }
       
-      const classPath = path.resolve(__dirname, `./action/${element.path}`);
-      common.importClass(classPath, [msg, ..._.args])
-    })
+    //   const classPath = path.resolve(__dirname, `./action/${element.path}`);
+    //   common.importClass(classPath, [msg, ..._.args])
+    // })
   }
 
   ctx.on('ready', async () => {

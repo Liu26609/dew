@@ -40,6 +40,7 @@ import { ReqLook as ReqLook_2, ResLook as ResLook_2 } from './player/skill/PtlLo
 import { ReqRename, ResRename } from './player/skill/PtlRename';
 import { ReqRm, ResRm } from './player/skill/PtlRm';
 import { ReqUpLeve, ResUpLeve } from './player/skill/PtlUpLeve';
+import { ReqList as ReqList_3, ResList as ResList_3 } from './player/task/PtlList';
 import { ReqLook as ReqLook_3, ResLook as ResLook_3 } from './player/task/PtlLook';
 import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
@@ -209,6 +210,10 @@ export interface ServiceType {
             req: ReqUpLeve,
             res: ResUpLeve
         },
+        "player/task/List": {
+            req: ReqList_3,
+            res: ResList_3
+        },
         "player/task/Look": {
             req: ReqLook_3,
             res: ResLook_3
@@ -240,7 +245,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 16,
+    "version": 17,
     "services": [
         {
             "id": 47,
@@ -563,6 +568,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 33,
             "name": "player/skill/UpLeve",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 48,
+            "name": "player/task/List",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -2175,13 +2188,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Number"
                     }
-                },
-                {
-                    "id": 2,
-                    "name": "pgs",
-                    "type": {
-                        "type": "Number"
-                    }
                 }
             ]
         },
@@ -2624,6 +2630,42 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
+        "player/task/PtlList/ReqList": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/task/PtlList/ResList": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "list",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "String"
+                        }
+                    }
+                }
+            ]
+        },
         "player/task/PtlLook/ReqLook": {
             "type": "Interface",
             "extends": [
@@ -2745,6 +2787,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Number"
                     }
+                },
+                {
+                    "id": 7,
+                    "name": "del",
+                    "type": {
+                        "type": "Boolean"
+                    },
+                    "optional": true
                 }
             ]
         },
