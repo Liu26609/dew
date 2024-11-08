@@ -22,9 +22,14 @@ export default class {
         temp.add(`🕢战斗共计${req.round}回合`)
         temp.set_title_line('击杀统计','💀')
         temp.add(battleText.getKillLog(req.killLog));
-        temp.set_title_line('战利品🎁','🎁')
-        let gifts = req.gitfs;
-        temp.add(battleText.getGiftLog(gifts))
+
+        
+        if(req.gitfs.length > 0){
+            temp.set_title_line('战利品🎁','🎁')
+            let gifts = req.gitfs;
+            temp.add(battleText.getGiftLog(gifts))
+        }
+
         cls.send_v2(temp)
     }
 }
