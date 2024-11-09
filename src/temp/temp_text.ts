@@ -85,6 +85,8 @@ class temp_text {
             case Item_Type.装备:
                 text = await this.temp_prop_equip(data.temp)
                 cls.send_v2(text)
+
+                temp_img.temp_prop_equip(data.temp,cls)
                 break;
             case Item_Type.技能书:
                 text = await this.temp_prop_skill(data.temp, cls)
@@ -113,7 +115,7 @@ class temp_text {
         let temp = new temp_card();
         temp.set_title('装备查看', '🗡️')
         temp.add(`🏷️${data.name}+${data.leve_strengthen.now}`)
-        temp.add(`「${data.tips}」`)
+        temp.add(`「${data.desc}」`)
         temp.add(`✡️${data.sys}·${data.type}`)
         temp.set_title_line('装备属性', '🔺')
         for (let i = 0; i < data.att.length; i++) {

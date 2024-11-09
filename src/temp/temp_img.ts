@@ -2,10 +2,12 @@ import fs from 'fs';
 import { h } from 'koishi'
 import message from '../trigger/message';
 import server_tool from '../server_tool';
-import { prop_item_skill } from '../shared/master/shareFace';
+import { prop_item_equip, prop_item_skill } from '../shared/master/shareFace';
 const path = require('path');
 import Handlebars from 'handlebars';
 import inputManage from '../inputManage';
+import APP from '../APP';
+import common from '../lib/common';
 class temp_img {
     commonCss: string;
     pageContents = new Map<string, string>()
@@ -101,6 +103,23 @@ class temp_img {
         };
         this.render(cls, 'skill', _data)
 
+    }
+    temp_prop_equip(data:prop_item_equip,cls:message){
+        let att = [];
+        for (let i = 0; i < data.att.length; i++) {
+            const element = data.att[i];
+            att.push(`${APP.getSysCover(data.sys, element.name)}:${element.val}`)
+        }
+        // ${common.cover_quality(req.data.quality)}级
+        this.render(cls, 'equip', {
+            sys:data.sys,
+            type:data.type,
+            name:data.name,
+            desc:data.desc,
+            quality:common.cover_quality(data.quality),
+            att:att,
+            from:data.from
+        })
     }
 }
 export default new temp_img();

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>装备样式</title>
     <link rel="stylesheet" href="https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/common.css">
-    <link rel="stylesheet" href="https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/equip2.css">
+    <link rel="stylesheet" href="https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/equip.css">
 </head>
 
 <body style="width: 600px;">
@@ -47,32 +47,35 @@
                                 <h2 class="not-h2-style">
                                     <span class="mw-headline">{{name}} +0</span>
                                 </h2>
-                                <div style="color:#FFAF52; font-size:x-large;">★★★★★</div>
+                                <div class="quality-text">{{quality}}</div>
                             </div>
                             <div class="card-title2"
                                 style="width:100%; background:#FFAF52; border-radius:5px; color:white; padding:6px 10px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25); margin-top:20px;">
                                 {{#each att}}
-                                <p>{{this}}</p>
+                                <p style="font-size:18px;margin: 0px 0;">{{this}}</p>
                                 {{/each}}
                             </div>
-                            <div class="card-title2" style="width:100%; margin-top:16px;">装备描述 - 来历介绍</div>
+                            <div class="card-title2" style="width:100%; margin-top:16px;">装备描述</div>
                             <div style="width:100%; margin-top:8px;">
                                 装备由
-                                <span style="color:rgb(69 113 236)">匿名用户</span>
+                                <span style="color:rgb(69 113 236)">{{from.author}}</span>
                                 于
-                                <span style="color:rgb(69 113 236)">2024年</span>
+                                <span style="color:rgb(69 113 236)">{{from.source_map}}</span>
                                 在
-                                <span style="color:rgb(69 113 236)">测试地图</span>
+                                <span style="color:rgb(69 113 236)">{{from.create_time}}</span>
                                 通过
-                                <span style="color:rgb(69 113 236)">击杀测试木桩</span>
+                                <span style="color:rgb(69 113 236)">{{from.source_type}}</span>
                                 获得。
                                 该装备为
                                 <span style="color:rgb(69 113 236)">{{sys}}</span>
                                 系
                                 <span style="color:rgb(69 113 236)">{{type}}</span>类装备。
+                                <div>
+                                    {{desc}}
+                                </div>
                             </div>
                             <div style="margin:16px 0 0 0;">
-                                <div class="card-title3">装备觉醒 - 附带技能</div>
+                                <div class="card-title3">装备觉醒</div>
                                 <div class="card-content3">
                                     <div class="foldFrame" style="border: #d29d31 2px solid;border-radius: 5px;">
                                         <div class="foldName"
@@ -95,5 +98,43 @@
         </div>
     </div>
 </body>
+<style>
+    /* 品质等级样式 */
+.quality-text {
+    font-size: 28px;
+    font-weight: bold;
+    background: linear-gradient(to bottom, #FF69B4, #800080);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(128, 0, 128, 0.3);
+    padding: 4px 8px;
+    border-radius: 4px;
+    position: relative;
+    animation: shine 2s infinite;
+}
 
+.quality-text::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 4px;
+    z-index: -1;
+}
+
+@keyframes shine {
+    0% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.2);
+    }
+    100% {
+        filter: brightness(1);
+    }
+}
+</style>
 </html>

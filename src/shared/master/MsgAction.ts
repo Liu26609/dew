@@ -31,7 +31,6 @@ export interface MSG_BATTLELOG {
     gitfs: any[];
 }
 export interface MSG_OFFLINE_REWARD {
-    tips:string;
     /**
      * 离线时间
      */

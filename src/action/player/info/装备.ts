@@ -57,18 +57,7 @@ export default class {
         card.add(`【装备强化 ${idx}】【装备卸下 ${idx}】`)
         cls.send_v2(card)
 
-
-        let att = [];
-        for (let i = 0; i < req.att.length; i++) {
-            const element = req.att[i];
-            att.push(`${APP.getSysCover(req.sys, element.name)}:${element.val}`)
-        }
-        temp_img.render(cls, 'equip', {
-            sys:req.sys,
-            type:req.type,
-            name:req.name,
-            att:att,
-        })
+        temp_img.temp_prop_equip(req,cls)
     }
     async list(cls: message) {
         // 查看血统

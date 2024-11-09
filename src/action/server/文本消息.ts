@@ -33,7 +33,7 @@ export default class {
             inputManage.skip(cls.get_userId(), true);
             setTimeout(() => {
                 inputManage.skip(cls.get_userId(), false);
-            }, data.delaytime * 1100 * msgCont);
+            }, data.delaytime * msgCont);
         }
     }
 }

@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import { quality } from "../shared/master/face_master";
 
 const { v4: uuidv4 } = require('uuid');
 class common {
@@ -24,6 +25,18 @@ class common {
         const EffectClass = effectModule.default;
         return new EffectClass(...agm);
     }
+    cover_quality(q: quality): string {
+      let qualityName = quality[q];
+      // 处理前缀带下划线的情况
+      if (qualityName.startsWith('_')) {
+          return  qualityName.substring(1) + '-';
+      }
+      // 处理后缀带_p的情况
+      if (qualityName.endsWith('_p')) {
+          return qualityName.substring(0, qualityName.length - 2) + '+';
+      }
+      return qualityName;
+  }
     getFiles(dir: string): string[] {
         let results: string[] = [];
         let list = fs.readdirSync(dir);

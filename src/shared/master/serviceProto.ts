@@ -1,4 +1,5 @@
 import { ServiceProto } from 'tsrpc-proto';
+import { ReqCreate_equip, ResCreate_equip } from './active/PtlCreate_equip';
 import { ReqCreate_skill, ResCreate_skill } from './active/PtlCreate_skill';
 import { ReqSign, ResSign } from './active/PtlSign';
 import { ReqDel, ResDel } from './backend/skill/PtlDel';
@@ -44,14 +45,20 @@ import { ReqList as ReqList_3, ResList as ResList_3 } from './player/task/PtlLis
 import { ReqLook as ReqLook_3, ResLook as ResLook_3 } from './player/task/PtlLook';
 import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
-import { ReqBuy, ResBuy } from './shop/skill/PtlBuy';
-import { ReqLook as ReqLook_4, ResLook as ResLook_4 } from './shop/skill/PtlLook';
+import { ReqBuy, ResBuy } from './shop/equip/PtlBuy';
+import { ReqLook as ReqLook_4, ResLook as ResLook_4 } from './shop/equip/PtlLook';
+import { ReqBuy as ReqBuy_1, ResBuy as ResBuy_1 } from './shop/skill/PtlBuy';
+import { ReqLook as ReqLook_5, ResLook as ResLook_5 } from './shop/skill/PtlLook';
 import { ReqCancel, ResCancel } from './transaction/PtlCancel';
 import { ReqConfirm, ResConfirm } from './transaction/PtlConfirm';
 import { ReqBuild, ResBuild } from './work/PtlBuild';
 
 export interface ServiceType {
     api: {
+        "active/Create_equip": {
+            req: ReqCreate_equip,
+            res: ResCreate_equip
+        },
         "active/Create_skill": {
             req: ReqCreate_skill,
             res: ResCreate_skill
@@ -228,13 +235,21 @@ export interface ServiceType {
             req: ReqPing,
             res: ResPing
         },
-        "shop/skill/Buy": {
+        "shop/equip/Buy": {
             req: ReqBuy,
             res: ResBuy
         },
-        "shop/skill/Look": {
+        "shop/equip/Look": {
             req: ReqLook_4,
             res: ResLook_4
+        },
+        "shop/skill/Buy": {
+            req: ReqBuy_1,
+            res: ResBuy_1
+        },
+        "shop/skill/Look": {
+            req: ReqLook_5,
+            res: ResLook_5
         },
         "transaction/Cancel": {
             req: ReqCancel,
@@ -255,8 +270,16 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 18,
+    "version": 20,
     "services": [
+        {
+            "id": 51,
+            "name": "active/Create_equip",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
         {
             "id": 47,
             "name": "active/Create_skill",
@@ -616,6 +639,22 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
+            "id": 52,
+            "name": "shop/equip/Buy",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 53,
+            "name": "shop/equip/Look",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
             "id": 49,
             "name": "shop/skill/Buy",
             "type": "api",
@@ -657,7 +696,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
         }
     ],
     "types": {
-        "active/PtlCreate_skill/ReqCreate_skill": {
+        "active/PtlCreate_equip/ReqCreate_equip": {
             "type": "Interface",
             "extends": [
                 {
@@ -670,7 +709,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ],
             "properties": [
                 {
-                    "id": 4,
+                    "id": 0,
                     "name": "cont",
                     "type": {
                         "type": "Number"
@@ -715,7 +754,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "active/PtlCreate_skill/ResCreate_skill": {
+        "active/PtlCreate_equip/ResCreate_equip": {
             "type": "Interface",
             "extends": [
                 {
@@ -737,6 +776,39 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "type": "String"
                     },
                     "optional": true
+                }
+            ]
+        },
+        "active/PtlCreate_skill/ReqCreate_skill": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 4,
+                    "name": "cont",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "active/PtlCreate_skill/ResCreate_skill": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
                 }
             ]
         },
@@ -1811,10 +1883,25 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     }
                 },
                 {
-                    "id": 4,
-                    "name": "tips",
+                    "id": 6,
+                    "name": "desc",
                     "type": {
                         "type": "String"
+                    }
+                },
+                {
+                    "id": 8,
+                    "name": "quality",
+                    "type": {
+                        "type": "Reference",
+                        "target": "face_master/quality"
+                    }
+                },
+                {
+                    "id": 7,
+                    "name": "from",
+                    "type": {
+                        "type": "Any"
                     }
                 }
             ]
@@ -1872,6 +1959,131 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "type": "String"
                     },
                     "optional": true
+                }
+            ]
+        },
+        "face_master/quality": {
+            "type": "Enum",
+            "members": [
+                {
+                    "id": 0,
+                    "value": 1
+                },
+                {
+                    "id": 1,
+                    "value": 2
+                },
+                {
+                    "id": 2,
+                    "value": 3
+                },
+                {
+                    "id": 3,
+                    "value": 4
+                },
+                {
+                    "id": 4,
+                    "value": 5
+                },
+                {
+                    "id": 5,
+                    "value": 6
+                },
+                {
+                    "id": 6,
+                    "value": 7
+                },
+                {
+                    "id": 7,
+                    "value": 8
+                },
+                {
+                    "id": 8,
+                    "value": 9
+                },
+                {
+                    "id": 9,
+                    "value": 10
+                },
+                {
+                    "id": 10,
+                    "value": 11
+                },
+                {
+                    "id": 11,
+                    "value": 12
+                },
+                {
+                    "id": 12,
+                    "value": 13
+                },
+                {
+                    "id": 13,
+                    "value": 14
+                },
+                {
+                    "id": 14,
+                    "value": 15
+                },
+                {
+                    "id": 15,
+                    "value": 16
+                },
+                {
+                    "id": 16,
+                    "value": 17
+                },
+                {
+                    "id": 17,
+                    "value": 18
+                },
+                {
+                    "id": 18,
+                    "value": 19
+                },
+                {
+                    "id": 19,
+                    "value": 20
+                },
+                {
+                    "id": 20,
+                    "value": 21
+                },
+                {
+                    "id": 21,
+                    "value": 22
+                },
+                {
+                    "id": 22,
+                    "value": 23
+                },
+                {
+                    "id": 23,
+                    "value": 24
+                },
+                {
+                    "id": 24,
+                    "value": 25
+                },
+                {
+                    "id": 25,
+                    "value": 26
+                },
+                {
+                    "id": 26,
+                    "value": 27
+                },
+                {
+                    "id": 27,
+                    "value": 28
+                },
+                {
+                    "id": 28,
+                    "value": 29
+                },
+                {
+                    "id": 29,
+                    "value": 30
                 }
             ]
         },
@@ -2845,6 +3057,101 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
+        "shop/equip/PtlBuy/ReqBuy": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "shop/equip/PtlBuy/ResBuy": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "shop/equip/PtlLook/ReqLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "shop/equip/PtlLook/ResLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "data",
+                    "type": {
+                        "type": "Reference",
+                        "target": "shareFace/prop_item_equip"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "stock",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "price",
+                    "type": {
+                        "type": "Interface",
+                        "properties": [
+                            {
+                                "id": 0,
+                                "name": "name",
+                                "type": {
+                                    "type": "String"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "name": "cont",
+                                "type": {
+                                    "type": "Number"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "down_time",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
         "shop/skill/PtlBuy/ReqBuy": {
             "type": "Interface",
             "extends": [
@@ -2865,31 +3172,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Reference",
                         "target": "../protocols/master_base/BaseResponse"
-                    }
-                }
-            ],
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "skill",
-                    "type": {
-                        "type": "Union",
-                        "members": [
-                            {
-                                "id": 0,
-                                "type": {
-                                    "type": "Reference",
-                                    "target": "shareFace/prop_item_skill"
-                                }
-                            },
-                            {
-                                "id": 1,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": null
-                                }
-                            }
-                        ]
                     }
                 }
             ]

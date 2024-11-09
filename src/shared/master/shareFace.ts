@@ -1,10 +1,15 @@
+import { quality } from "./face_master"
+
 export interface prop_item_equip {
   name: string
+  // 基础属性
   att: any
   sys: string
   type:string
   leve_strengthen: _bar
-  tips: string
+  desc: string
+  quality: quality
+  from:any
 }
 export interface _base_com{
   t?:string
