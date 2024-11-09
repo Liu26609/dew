@@ -5,16 +5,10 @@ import { prop_item_skill, SKILL_type } from "../shareFace";
  * 装备祈愿
  */
 export interface ReqCreate_skill extends BaseRequest {
-     // 技能类型
-     type:SKILL_type
-     // 技能目标
-     target:SKILL_target
-     // 技能范围
-     rang_type:SKILL_rang
-     leve:number
+     cont:number
 }
 
-export interface ResCreate_skill extends prop_item_skill,BaseResponse {
+export interface ResCreate_skill extends BaseResponse {
     
 }
 
