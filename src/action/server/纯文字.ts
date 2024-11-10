@@ -10,13 +10,11 @@ export default class {
        
         if (data.data instanceof Array) {
             msgCont = data.data.length;
-            setTimeout(()=>{
                 for (let i = 0; i < data.data.length; i++) {
                     const element = data.data[i];
                     const modifiedData = element.replace(/\$at/g, cls.At());
                     cls.send_v1(modifiedData, data.delaytime * 1000);
                 }
-            },data.delaytime)
         } else {
             const modifiedData = data.data.replace(/\$at/g, cls.At());
             cls.send_v1(modifiedData, data.delaytime * 1000);

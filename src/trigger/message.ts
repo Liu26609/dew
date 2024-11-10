@@ -88,7 +88,7 @@ export default class message {
         }
         str += temp;
         if(delaytime){
-            this.session.sendQueued(str, 0)
+            this.session.sendQueued(str, delaytime)
         }else{
             this.session.send(str)
         }

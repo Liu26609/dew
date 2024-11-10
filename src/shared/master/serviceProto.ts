@@ -270,7 +270,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 21,
+    "version": 22,
     "services": [
         {
             "id": 51,
@@ -2330,6 +2330,23 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ],
             "properties": [
                 {
+                    "id": 2,
+                    "name": "battle",
+                    "type": {
+                        "type": "Boolean"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "pos",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Number"
+                        }
+                    }
+                },
+                {
                     "id": 0,
                     "name": "name",
                     "type": {
@@ -2341,6 +2358,16 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "online",
                     "type": {
                         "type": "Number"
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "list",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Any"
+                        }
                     }
                 }
             ]
@@ -2517,49 +2544,17 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "extends": [
                 {
+                    "id": 1,
+                    "type": {
+                        "type": "Reference",
+                        "target": "player/info/PtlPosition/ResPosition"
+                    }
+                },
+                {
                     "id": 0,
                     "type": {
                         "type": "Reference",
                         "target": "../protocols/master_base/BaseResponse"
-                    }
-                }
-            ],
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "type",
-                    "type": {
-                        "type": "Union",
-                        "members": [
-                            {
-                                "id": 0,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": "monster"
-                                }
-                            },
-                            {
-                                "id": 1,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": "player"
-                                }
-                            },
-                            {
-                                "id": 2,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": "reward"
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "data",
-                    "type": {
-                        "type": "Any"
                     }
                 }
             ]

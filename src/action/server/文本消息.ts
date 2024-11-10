@@ -10,7 +10,6 @@ export default class {
         let msgCont = 1;
         if (data.data instanceof Array) {
             msgCont = data.data.length;
-            setTimeout(() => {
                 for (let i = 0; i < data.data.length; i++) {
                     const element = data.data[i];
                     let temp = new temp_card()
@@ -19,7 +18,6 @@ export default class {
                     temp.line(modifiedData)
                     cls.send_v2(temp, data.delaytime * 1000);
                 }
-            },1000)
         } else {
             setTimeout(() => {
                 let temp = new temp_card()

@@ -1,6 +1,7 @@
 import APP from "../APP";
 import { transaction_create } from "../shared/master/MsgAction";
 import { ResList } from "../shared/master/player/bag/PtlList";
+import { ResPosition } from "../shared/master/player/info/PtlPosition";
 import { Item_Type, prop_item_equip, prop_item_skill, taskData } from "../shared/master/shareFace";
 import message from "../trigger/message";
 import temp_img from "./temp_img";
@@ -140,6 +141,37 @@ class temp_text {
             temp.add(`${APP.getAttIcon(element.key)}${APP.getSysCover(data.sys, element.name)}:${element.val}`)
         }
         return temp;
+    }
+    async temp_position(data:ResPosition,cls:message){
+        let temp = new temp_card();
+        switch (data.name) {
+            case '主神空间':
+                temp.set_title('主神空间', '🌌')
+                temp.add(`🌍坐标${data.pos[0]}-${data.pos[1]}`)
+                temp.add(`🧙世界玩家:${data.online}`)
+                break;
+
+            default:
+                temp.set_title('我的位置', '🌍')
+                temp.add(`🌍坐标${data.pos[0]}-${data.pos[1]}`)
+                temp.line(`当前世界:${data.name}`)
+                temp.add(`🧙世界玩家:${data.online}`)
+                break;
+        }
+        let list = data.list;
+        let battle = data.battle;
+        temp.set_title('当前位置', '⚔️')
+        for (let i = 0; i < list.length; i++) {
+            const element = list[i];
+            temp.add(`${element.name}`)
+        }
+        temp.set_title_line('选择行动', '🔍')
+        if(battle){
+            temp.add(`【战斗】         【探索】`)
+        }else{
+            temp.add(`         【探索】`)
+        }
+        cls.send_v2(temp)
     }
     async temp_prop_skill(data: prop_item_skill, cls: message) {
         let temp = new temp_card();
