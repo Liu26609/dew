@@ -4,7 +4,7 @@ import bot_logic from './trigger/bot_logic'
 import ET from './lib/ET'
 import server from './server'
 import inputManage from './inputManage'
-import {} from "@satorijs/adapter-qq";
+import { } from "@satorijs/adapter-qq";
 import common from './lib/common'
 import actionCfg from './cfg/actionCfg'
 import { Trie } from './lib/trie'
@@ -42,7 +42,7 @@ export async function apply(ctx: Context, config: Config) {
     // 在插件停用时关闭端口
     server.dispose()
   })
-  
+
   if (CFG.调试模式) {
     CFG.服务器地址 = '127.0.0.1';
     log.info('调试模式-将调用本地服务器')
@@ -91,7 +91,7 @@ export async function apply(ctx: Context, config: Config) {
     //     console.log('skip')
     //     return;
     //   }
-      
+
     //   const classPath = path.resolve(__dirname, `./action/${element.path}`);
     //   common.importClass(classPath, [msg, ..._.args])
     // })
@@ -138,44 +138,55 @@ image: Dict 图片
   //     let msg = inputManage.get_msg(_.session.messageId)
   //     common.importClass(classPath, [msg, message])
   //   })
-/**
- * 
- *         {
-            "Type": "ReverseWebSocket",
-            "Host": "127.0.0.1",
-            "Port": 8080,
-            "Suffix": "/onebot/v11/ws",
-            "ReconnectInterval": 5000,
-            "HeartBeatInterval": 5000,
-            "HeartBeatEnable": true,
-            "AccessToken": ""
-        },
-        {
-            "Type": "ForwardWebSocket",
-            "Host": "127.0.0.1",
-            "Port": 8081,
-            "HeartBeatInterval": 5000,
-            "HeartBeatEnable": true,
-            "AccessToken": ""
-        },
-         {
-            "Type": "Http",
-            "Host": "127.0.0.1",
-            "Port": 8083,
-            "AccessToken": ""
-        }
- */
+  /**
+   * 
+   *         {
+              "Type": "ReverseWebSocket",
+              "Host": "127.0.0.1",
+              "Port": 8080,
+              "Suffix": "/onebot/v11/ws",
+              "ReconnectInterval": 5000,
+              "HeartBeatInterval": 5000,
+              "HeartBeatEnable": true,
+              "AccessToken": ""
+          },
+          {
+              "Type": "ForwardWebSocket",
+              "Host": "127.0.0.1",
+              "Port": 8081,
+              "HeartBeatInterval": 5000,
+              "HeartBeatEnable": true,
+              "AccessToken": ""
+          },
+           {
+              "Type": "Http",
+              "Host": "127.0.0.1",
+              "Port": 8083,
+              "AccessToken": ""
+          }
+   */
   ctx.middleware((session: any, next) => {
     log.info('[ctx-转换前]', session.content)
-    if(session.platform){
-      session.content = session.content.toLowerCase();
-      // session.content = session.content.replace(/<[^>]*>/gi, '').trim();
-      while (session.content.indexOf('/') > -1) {
-        session.content = session.content.replace('/', '');
+    let content = session.content.toLowerCase()
+    if (session.platform == 'onebot') {
+      const hasAnyAt = /<at id="[^"]*"[^>]*>/i.test(content);
+    
+      if (hasAnyAt) {
+          // 如果有 at 标签，检查是否包含正确的 ID
+          const correctAtRegex = new RegExp(`<at id="${session.bot.config.selfId}"[^>]*>`, 'i');
+          if (!correctAtRegex.test(content)) {
+              return ''  // at 标签存在但 ID 不匹配，验证不通过
+          }
       }
-      session.content = session.content.replace('hp', ' -h');
-      log.info('[ctx-qq-转换后]', session.content)
-    }else{
+      content = content
+        .replace(/<(?!.*?@${session.bot.config.selfId})[^>]*>/gi, '')  // 保留包含selfId的标签，移除其他HTML标签
+        .replace(/\s+/g, '')       // 移除所有空格
+        .replace(/\//g, '')        // 移除所有斜杠
+        .replace('hp', '-h')       // 替换hp为-h
+        .trim();
+      session.content = content;
+      log.info('[ctx-qq-转换后]', session.content, session.bot.config.selfId)
+    } else {
       // <at id="550620904" name="@楚轩"/>
       session.content = session.content.toLowerCase();
       session.content = session.content.replace(/<[^>]*>/gi, '').trim();
@@ -185,12 +196,11 @@ image: Dict 图片
       session.content = session.content.replace('hp', ' -h');
       log.info('[ctx-转换后]', session.content)
     }
-
     return next()
   }, true)
   ctx.on('message', async (session) => {
     let _logic = new bot_logic(session)
-  
+
     let msg = _logic.getCls_msg(session)
     inputManage.input_msg(msg)
   })
