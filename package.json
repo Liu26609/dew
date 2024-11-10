@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "copy-assets": "copyfiles -u 1 src/**/*.{html,css,font,ttf} lib/",
-    "prepub": "npm version patch",
+    "prepub": "npm version minor",
     "pub": "npm publish --access public"
   },
   "author": "楚轩",
