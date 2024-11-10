@@ -33,13 +33,10 @@
                             class="kapai-img">
                     </div>
 
-                    <img src="https://patchwiki.biligame.com/images/ys/5/50/5h8jokudwhvc7dq4gde7xoio4sd5eqy.png"
+                    <img src="https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/ui/5h8jokudwhvc7dq4gde7xoio4sd5eqy.png"
                         width="570" height="977" class="kapai-img">
                     <img
-                        src="https://patchwiki.biligame.com/images/ys/1/1b/j9h26xpbofd4y01phg7tak1hw3xe4mi.png"
-                        width="234" height="286" class="kapai-dice">
-                    <img
-                        src="https://patchwiki.biligame.com/images/ys/b/bc/eq3ly6lrq4mpcq6x4c65ry9990aqrz2.png"
+                        src="https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/ui/eq3ly6lrq4mpcq6x4c65ry9990aqrz2.png"
                         width="496" height="404" class="kapai-stripe">
                     </p>
                     <div class="kapai-more">
@@ -49,14 +46,17 @@
                 </div>
                 <div class="col-lg-4 col-xs-12 kapai-data">
                     <div class="data-topbox">
-                        <p><img alt="卡牌UI-元素-风.png"
-                                src="https://patchwiki.biligame.com/images/ys/3/35/nbqoy2m63thzml89w159ini4yq8gi6w.png"
+                        <!-- 暂时无用的徽章 -->
+                        <!-- <p><img src="https://patchwiki.biligame.com/images/ys/3/35/nbqoy2m63thzml89w159ini4yq8gi6w.png"
                                 width="128" height="128">
-                        </p>
-                        <div style="width: calc(100% - 56px)" class="flex-col">
+                        </p> -->
+                        <div style="width: calc(97%);font-size: 24px;" class="flex-col">
                             <div class="flex-row" style="border-bottom: 1px solid #b9b2ab; padding-bottom: 4px;">
-                                <div style="font-weight: lighter;">宝宝巴士</div>
+                                <div>宝宝巴士</div>
                                 <div>基因锁:未开启</div>
+                            </div>
+                            <div class="flex-row">
+                                <div style="font-size:26px;font-family: xiaomai;"><span>🔥战力</span><span class="power-text" >9999999999</span></div>
                             </div>
                             <div class="flex-row">
                                 <div style="font-size:26px;">{{name}}</div>
@@ -69,8 +69,8 @@
                         </div>
                     </div>
                     <p><img alt="calss=bea-line"
-                            src="https://patchwiki.biligame.com/images/ys/4/42/npwdj013fq4kjtra6yrz1hnaxty0o0f.png"
-                            title="calss=bea-line" width="1330" height="31">
+                            src="https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/ui/npwdj013fq4kjtra6yrz1hnaxty0o0f.png"
+                            width="1330" height="31">
                     </p>
                     <div class="kapai-data-bg"></div>
                     <div class="jiNeng-box flex-col" style="font-size: 24px;">
@@ -105,6 +105,27 @@
 .kapai-more>div:nth-child(1) {
     font-size: 30px;
 
+}
+
+.power-text {
+    background: linear-gradient(to right, #FF0066, #9933FF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(255, 0, 102, 0.3);
+    font-weight: bold;
+}
+
+@keyframes power-shine {
+    0% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.2);
+    }
+    100% {
+        filter: brightness(1);
+    }
 }
 </style>
 </html>

@@ -10,7 +10,7 @@
 </head>
 
 <body style="width: 600px;">
-    <div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="zh-Hans-CN" dir="ltr">
+    <div id="mw-content-text" class="mw-body-content mw-content-ltr" style="font-family: cn;">
         <div class="mw-parser-output">
             <div class="container">
                 <div class="row">
@@ -22,21 +22,17 @@
                                     class="img-frame"
                                     srcset="https://patchwiki.biligame.com/images/ys/b/b8/aszemkvmlkr8mlqbveucrlrktyf4qxq.png">
                                 <div class="img-bg-frame img-bg-frame-5"></div>
-                                <img
-                                    src="https://patchwiki.biligame.com/images/ys/thumb/4/4a/32s8veokd2purnqm4su6rmgx5lx0six.png/220px-%E5%9B%BE%E6%A0%87%E8%83%8C%E6%99%AF-5.png"
+                                <img src="https://patchwiki.biligame.com/images/ys/thumb/4/4a/32s8veokd2purnqm4su6rmgx5lx0six.png/220px-%E5%9B%BE%E6%A0%87%E8%83%8C%E6%99%AF-5.png"
                                     class="img-rarity">
-                                    <img
-                                    src="https://patchwiki.biligame.com/images/ys/thumb/6/65/jje3vkk7hczwiq7bj06829ygetwzpcy.png/220px-%E6%97%A0%E8%83%8C%E6%99%AF-%E6%AD%A6%E5%99%A8-%E6%9F%94%E7%81%AF%E6%8C%BD%E6%AD%8C.png"
+                                <img src="https://patchwiki.biligame.com/images/ys/thumb/6/65/jje3vkk7hczwiq7bj06829ygetwzpcy.png/220px-%E6%97%A0%E8%83%8C%E6%99%AF-%E6%AD%A6%E5%99%A8-%E6%9F%94%E7%81%AF%E6%8C%BD%E6%AD%8C.png"
                                     class="img-main">
                                 <div class="img-bg-top"></div>
                                 <div class="img-button-box">
                                     <div class="bikit-clickable img-button img-button-left"><img
-                                            src="https://patchwiki.biligame.com/images/ys/thumb/a/ab/1845ompx8dcb1oexgh367vendej13rk.png/101px-%E5%9B%BE%E9%89%B4-%E5%88%87%E6%8D%A2%E6%8C%89%E9%92%AE.png"
-                                            srcset="https://patchwiki.biligame.com/images/ys/a/ab/1845ompx8dcb1oexgh367vendej13rk.png"><span
+                                            src="https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/ui/1845ompx8dcb1oexgh367vendej13rk.png"><span
                                             style="left:15px">{{sys}}系</span></div>
                                     <div class="bikit-clickable img-button img-button-right"><img
-                                            src="https://patchwiki.biligame.com/images/ys/thumb/a/ab/1845ompx8dcb1oexgh367vendej13rk.png/101px-%E5%9B%BE%E9%89%B4-%E5%88%87%E6%8D%A2%E6%8C%89%E9%92%AE.png"
-                                            srcset="https://patchwiki.biligame.com/images/ys/a/ab/1845ompx8dcb1oexgh367vendej13rk.png"><span
+                                            src="https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/ui/1845ompx8dcb1oexgh367vendej13rk.png"><span
                                             style="right:15px">{{type}}</span></div>
                                 </div>
                             </div>
@@ -50,13 +46,20 @@
                                 <div class="quality-text">{{quality}}</div>
                             </div>
                             <div class="card-title2"
-                                style="width:100%; background:#FFAF52; border-radius:5px; color:white; padding:6px 10px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25); margin-top:20px;">
+                                style="width:100%; background:#FFAF52; border-radius:5px; color:white; padding:6px 5px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25); margin-top:20px;">
                                 {{#each att}}
                                 <p style="font-size:18px;margin: 0px 0;">{{this}}</p>
                                 {{/each}}
                             </div>
-                            <div class="card-title2" style="width:100%; margin-top:16px;">装备描述</div>
-                            <div style="width:100%; margin-top:8px;">
+                            <div class="card-title2" style="width: 100%;
+                            margin-top: 16px;
+                            font-family: 'cn';
+                            font-size: 27px;">装备描述</div>
+                            <div style="width: 97%;
+                            margin: 8px 18px;
+                            font-family: cn;
+                            font-size: 17px;
+                        ">
                                 装备由
                                 <span style="color:rgb(69 113 236)">{{from.author}}</span>
                                 于
@@ -75,7 +78,7 @@
                                 </div>
                             </div>
                             <div style="margin:16px 0 0 0;">
-                                <div class="card-title3">装备觉醒</div>
+                                <div class="card-title3" style="font-size: 27px;">装备觉醒</div>
                                 <div class="card-content3">
                                     <div class="foldFrame" style="border: #d29d31 2px solid;border-radius: 5px;">
                                         <div class="foldName"
@@ -100,41 +103,44 @@
 </body>
 <style>
     /* 品质等级样式 */
-.quality-text {
-    font-size: 28px;
-    font-weight: bold;
-    background: linear-gradient(to bottom, #FF69B4, #800080);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 2px 2px 4px rgba(128, 0, 128, 0.3);
-    padding: 4px 8px;
-    border-radius: 4px;
-    position: relative;
-    animation: shine 2s infinite;
-}
+    .quality-text {
+        font-size: 38px;
+        font-weight: bold;
+        background: linear-gradient(to bottom, #FF69B4, #800080);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 2px 2px 4px rgba(128, 0, 128, 0.3);
+        padding: 4px 8px;
+        border-radius: 4px;
+        position: relative;
+        animation: shine 2s infinite;
+    }
 
-.quality-text::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 4px;
-    z-index: -1;
-}
+    .quality-text::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 4px;
+        z-index: -1;
+    }
 
-@keyframes shine {
-    0% {
-        filter: brightness(1);
+    @keyframes shine {
+        0% {
+            filter: brightness(1);
+        }
+
+        50% {
+            filter: brightness(1.2);
+        }
+
+        100% {
+            filter: brightness(1);
+        }
     }
-    50% {
-        filter: brightness(1.2);
-    }
-    100% {
-        filter: brightness(1);
-    }
-}
 </style>
+
 </html>

@@ -1544,6 +1544,38 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "target": "../protocols/master_base/BaseRequest"
                     }
                 }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "filter",
+                    "type": {
+                        "type": "Reference",
+                        "target": "shareFace/Item_Type"
+                    },
+                    "optional": true
+                }
+            ]
+        },
+        "shareFace/Item_Type": {
+            "type": "Enum",
+            "members": [
+                {
+                    "id": 0,
+                    "value": 0
+                },
+                {
+                    "id": 1,
+                    "value": 1
+                },
+                {
+                    "id": 2,
+                    "value": 2
+                },
+                {
+                    "id": 3,
+                    "value": 3
+                }
             ]
         },
         "player/bag/PtlList/ResList": {
@@ -1560,6 +1592,15 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "properties": [
                 {
                     "id": 1,
+                    "name": "filter",
+                    "type": {
+                        "type": "Reference",
+                        "target": "shareFace/Item_Type"
+                    },
+                    "optional": true
+                },
+                {
+                    "id": 2,
                     "name": "gold",
                     "type": {
                         "type": "Number"
@@ -1647,27 +1688,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Any"
                     }
-                }
-            ]
-        },
-        "shareFace/Item_Type": {
-            "type": "Enum",
-            "members": [
-                {
-                    "id": 0,
-                    "value": 0
-                },
-                {
-                    "id": 1,
-                    "value": 1
-                },
-                {
-                    "id": 2,
-                    "value": 2
-                },
-                {
-                    "id": 3,
-                    "value": 3
                 }
             ]
         },

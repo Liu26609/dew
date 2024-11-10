@@ -60,15 +60,32 @@ class temp_text {
      */
     bag_list(data: ResList, cls: message) {
         if (!data) return;
+        let filter = data.filter;
+        let title = '我的背包'
+        if(filter != undefined){
+            switch (filter) {
+                case Item_Type.技能书:
+                    title = '技能背包';
+                    break;
+                case Item_Type.装备:
+                    title = '装备背包';
+                    break;
+                case Item_Type.道具:
+                    title = '道具背包';
+                    break;
+                default:
+                    break;
+            }
+        }
         let temp = new temp_card();
-        temp.set_title('背包信息', '🎒')
+        temp.set_title(title, '🎒')
         temp.add(`💰金币:${data.gold}`)
         for (let i = 0; i < data.list.length; i++) {
             const element = data.list[i];
             temp.add(`[${element.idx + 1}]${element.name}X${element.cont}`)
         }
         if (data.list.length == 0) {
-            temp.add('你的背包里什么东西都没有呢~')
+            temp.add(`${title}里什么东西都没有呢~`)
         }
         cls.send_v2(temp)
     }

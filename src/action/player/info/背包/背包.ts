@@ -1,6 +1,7 @@
-import server from "../../../server";
-import temp_text from "../../../temp/temp_text";
-import message from "../../../trigger/message";
+import server from "../../../../server";
+import { Item_Type } from "../../../../shared/master/shareFace";
+import temp_text from "../../../../temp/temp_text";
+import message from "../../../../trigger/message";
 
 export default class {
     constructor(cls: message, ...data) {
@@ -22,6 +23,15 @@ export default class {
                 case '出售':
                     this.sell(cls, data[1], Number(data[2]) || 1)
                     break;
+                case '装备':
+                    this.list(cls, Item_Type.装备)
+                    break;
+                case '技能':
+                    this.list(cls, Item_Type.技能书)
+                    break;
+                case '道具':
+                    this.list(cls, Item_Type.道具)
+                    break;
                 default:
                     this.list(cls)
                     break;
@@ -36,8 +46,8 @@ export default class {
         let req = await server.api('player/bag/Use', { idx: idx, cont: num }, cls);
         console.log('背包使用')
     }
-    async list(cls: message) {
-        let req = await server.api('player/bag/List', {}, cls);
+    async list(cls: message, filter?: Item_Type) {
+        let req = await server.api('player/bag/List', { filter: filter }, cls);
         temp_text.bag_list(req, cls)
     }
     async look(cls: message, idx: number) {
