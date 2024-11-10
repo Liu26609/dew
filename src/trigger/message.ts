@@ -88,9 +88,9 @@ export default class message {
         }
         str += temp;
         if(delaytime){
-            this.session.send(str)
+            this.session.sendQueued(str, 0)
         }else{
-            this.session.sendQueued(str, delaytime || 0.2)
+            this.session.send(str)
         }
     }
     send_v2(temp: temp_card, delaytime?: number) {

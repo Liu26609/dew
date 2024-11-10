@@ -11,7 +11,6 @@ export default class {
         let req = data.data as MSG_BATTLELOG;
         let temp = new temp_card()
         temp.set_title(req.title, '⚔️')
-        temp.line(req.tips)
         temp.set_title_line('己方战报','🟩')
         temp.add(battleText.getSkLog(req.skLog[0]))
         temp.set_title_line('敌方战报','🟥')
@@ -23,9 +22,9 @@ export default class {
         temp.set_title_line('击杀统计','💀')
         temp.add(battleText.getKillLog(req.killLog));
 
-        
+        temp.set_title_line('战斗结果','🏆')
+        temp.add(`${req.tips}`)
         if(req.gitfs.length > 0){
-            temp.set_title_line('战利品🎁','🎁')
             let gifts = req.gitfs;
             temp.add(battleText.getGiftLog(gifts))
         }

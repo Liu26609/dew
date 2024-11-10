@@ -47,8 +47,7 @@ export class temp_card {
                 text += `◤                                    ◥\n`
             }
         }
-        text += `◣                                    ◢\n`
-        text += `✎文字排版:v0.31`
+        text += `◣          ✎V0.32              ◢`
         return text;
     }
 }
@@ -63,6 +62,7 @@ class temp_text {
         if (!data) return;
         let temp = new temp_card();
         temp.set_title('背包信息', '🎒')
+        temp.add(`💰金币:${data.gold}`)
         for (let i = 0; i < data.list.length; i++) {
             const element = data.list[i];
             temp.add(`[${element.idx + 1}]${element.name}X${element.cont}`)

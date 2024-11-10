@@ -11,7 +11,7 @@ export default class {
     async step(cls: message, data: MSG_OFFLINE_REWARD) {
         let card = new temp_card();
         card.set_title('离线奖励', '🎁')
-        card.line(`你已挂机了${APP.countdown(data.time)},以下是你的挂机奖励哦`)
+        card.line(`你已挂机了${APP.countdown(data.time * 1000)},以下是你的挂机奖励哦`)
         let gifts = data.reward;
         for (let index = 0; index < gifts.length; index++) {
             const element = gifts[index];

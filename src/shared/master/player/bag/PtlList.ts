@@ -9,6 +9,7 @@ export interface ReqList extends BaseRequest {
  * 数量
  */
 export interface ResList extends BaseResponse {
+    gold:number,
     list:{name:string,cont:number,idx:number}[]
 }
 
