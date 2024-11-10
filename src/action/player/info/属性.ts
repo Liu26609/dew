@@ -66,6 +66,7 @@ export default class {
             name:req.name,
             leve:req.leve,
             sys:req.sys,
+            fight:req.fight,
             inherit:req.inherit,
             className:req.className,
             att:attstr,
