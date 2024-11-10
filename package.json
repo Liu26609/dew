@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-dew-bot",
   "description": "[开发中]大型多人RPG文字游戏  达尔文进化岛V6",
-  "version": "0.91",
+  "version": "1.0.91",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "type": "commonjs",
@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "copy-assets": "copyfiles -u 1 src/**/*.{html,css,font,ttf} lib/",
-    "prepub": "npm version minor",
+    "prepub": "npm version patch",
     "pub": "npm publish --access public"
   },
   "author": "楚轩",
