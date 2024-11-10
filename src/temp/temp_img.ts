@@ -8,6 +8,7 @@ import Handlebars from 'handlebars';
 import inputManage from '../inputManage';
 import APP from '../APP';
 import common from '../lib/common';
+import { ResInfo } from '../shared/master/player/inherit/PtlInfo';
 class temp_img {
     commonCss: string;
     pageContents = new Map<string, string>()
@@ -120,6 +121,31 @@ class temp_img {
             att:att,
             from:data.from
         })
+    }
+    temp_inherit(data:ResInfo, cls:message) {
+        let _s = data.sys;
+        // 过滤掉值为0的属性
+        let filteredAtt = data.att.filter(element => element.val > 0);
+        
+        // 处理属性数据
+        let processedAtt = filteredAtt.map(element => {
+            // 在max数组中查找对应属性的最大值
+            const maxValue = data.max.find(m => m.name === element.name)?.val || 100;
+            return {
+                name: APP.getSysCover(_s, element.name),
+                val: element.val,
+                max: maxValue
+            };
+        });
+        
+        const renderData = {
+            name: data.name,
+            quality:common.cover_quality(data.quality),
+            from: data.from,
+            att: JSON.stringify(processedAtt)  // 传入处理后的属性数据
+        };
+        
+        this.render(cls, 'inherit', renderData);
     }
 }
 export default new temp_img();

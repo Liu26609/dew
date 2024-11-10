@@ -1,4 +1,5 @@
 import { BaseRequest, BaseResponse, BaseConf } from "../../../protocols/master_base";
+import { quality } from "../../face_master";
 
 export interface ReqInfo extends BaseRequest {
     
@@ -12,10 +13,12 @@ export interface ReqInfo extends BaseRequest {
  */
 export interface ResInfo extends BaseResponse {
     name:string
+    quality:quality
     from:string
     // 系统
     sys:string
     att:any[]
+    max:any[]
 }
 
 export const conf: BaseConf = {

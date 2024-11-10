@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>角色展示页</title>
+    <link rel="stylesheet" href="https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/common.css" media="print"
+        onload="this.media='all'">
+    <style>
+        .character-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #f5f5f5;
+            font-family: "Microsoft YaHei", sans-serif;
+            position: relative;
+        }
+
+
+
+
+        .character-image {
+            width: 100%;
+        }
+
+        .character-info {
+            background: radial-gradient(
+                circle at center,
+                rgba(0, 0, 0, 0.6) 0%,
+                rgba(0, 0, 0, 0.5) 40%,
+                rgba(0, 0, 0, 0.3) 60%,
+                rgba(0, 0, 0, 0.1) 80%,
+                rgba(0, 0, 0, 0) 100%
+            );
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+        }
+
+        .character-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 80px;
+            position: absolute;
+            top: -46px;
+            right: 35px;
+            color: white;
+            font-family: xiaomai;
+            text-shadow: 
+                1px 1px 2px rgba(0, 0, 0, 0.3),   /* 右下 */
+                -1px -1px 2px rgba(0, 0, 0, 0.3), /* 左上 */
+                1px -1px 2px rgba(0, 0, 0, 0.3),  /* 右上 */
+                -1px 1px 2px rgba(0, 0, 0, 0.3);  /* 左下 */
+        }
+
+        .character-quote {
+            font-size: 22px;
+            font-family: xiaomai;
+            line-height: 1.6;
+            color: #ffffff;
+            margin-bottom: 20px;
+            margin-top: 49px;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .source-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            font-family: xiaomai;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .source-text {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .rank-text {
+            font-size: 50px;
+            font-weight: bold;
+            background: linear-gradient(to right, #FF69B4, #9933FF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+        }
+
+        .radar-container {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 321px;
+            height: 300px;
+            border-radius:50%
+        }
+    </style>
+</head>
+
+<body style="width: 600px;">
+    <div class="character-card">
+        <img src="https://img2.baidu.com/it/u=2879107562,174409399&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1427" alt="角色立绘"
+            class="character-image">
+
+        <div class="character-info">
+            <div class="character-name">{{name}}</div>
+            <div class="character-quote">
+                「死亡如风常伴吾身」
+            </div>
+        </div>
+
+        <div class="source-info">
+            <div class="source-text">来源 - {{from}}</div>
+            <div class="rank-text">{{quality}}</div>
+        </div>
+
+        <canvas id="radarChart" class="radar-container"></canvas>
+    </div>
+
+    <script>
+        // 获取传入的属性数据
+        const statsData = {{{att}}};  // 使用三个大括号避免HTML转义
+
+        function drawRadarChart() {
+            const canvas = document.getElementById('radarChart');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = 300;
+            canvas.height = 300;
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 80;
+
+            // 使用传入的属性数据，使用实际的最大值进行标准化
+            const stats = statsData.map(item => ({
+                name: item.name,
+                value: item.val / item.max  // 使用对应属性的最大值进行标准化
+            }));
+
+            const sides = stats.length;
+            const angle = (Math.PI * 2) / sides;
+
+            // 绘制背景网格
+            ctx.beginPath();
+            for (let i = 0; i <= 5; i++) {
+                const ratio = (i + 1) / 5;
+                ctx.beginPath();
+                for (let j = 0; j < sides; j++) {
+                    const x = centerX + radius * ratio * Math.cos(angle * j - Math.PI / 2);
+                    const y = centerY + radius * ratio * Math.sin(angle * j - Math.PI / 2);
+                    if (j === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.stroke();
+            }
+
+            // 绘制数值区域
+            ctx.beginPath();
+            for (let i = 0; i < sides; i++) {
+                const x = centerX + radius * stats[i].value * Math.cos(angle * i - Math.PI / 2);
+                const y = centerY + radius * stats[i].value * Math.sin(angle * i - Math.PI / 2);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            
+            // 修改数值区域的渐变
+            const gradient = ctx.createRadialGradient(
+                centerX, centerY, 0,
+                centerX, centerY, radius
+            );
+            gradient.addColorStop(0, 'rgba(255, 105, 180, 1)');  // 降低中心透明度
+            gradient.addColorStop(1, 'rgba(255, 105, 180, 0.5)');    // 边缘完全透明
+            
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 105, 180, 0.4)';  // 降低边框透明度
+            ctx.stroke();
+
+            // 修改绘制文字部分
+            ctx.fillStyle = 'white';
+            ctx.font = '12px xiaomai';
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
+            
+            for (let i = 0; i < sides; i++) {
+                const textRadius = radius + 30;
+                const angle = (Math.PI * 2 / sides) * i - Math.PI / 2;
+                
+                const pointX = centerX + radius * Math.cos(angle);
+                const pointY = centerY + radius * Math.sin(angle);
+                
+                const textX = centerX + textRadius * Math.cos(angle);
+                const textY = centerY + textRadius * Math.sin(angle);
+                
+                // 绘制连接线
+                ctx.beginPath();
+                ctx.moveTo(pointX, pointY);
+                ctx.lineTo(textX, textY);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.stroke();
+                
+                // 修改文字绘制函数，添加半透明背景
+                drawTextWithBackground(ctx, stats[i].name, textX, textY);
+            }
+        }
+
+        // 修改文字绘制函数，添加半透明背景
+        function drawTextWithBackground(ctx, text, x, y) {
+            const metrics = ctx.measureText(text);
+            const padding = 3;  // 文字周围的内边距
+            
+            // 绘制半透明背景
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';  // 30%透明度的黑色背景
+            ctx.fillRect(
+                x - metrics.width/2 - padding,
+                y - 8 - padding,  // 调整背景高度
+                metrics.width + padding * 2,
+                16 + padding * 2  // 固定背景高度
+            );
+            
+            // 绘制文字
+            ctx.fillStyle = 'white';
+            ctx.fillText(text, x, y);
+        }
+
+        // 页面加载完成后绘制雷达图
+        window.onload = drawRadarChart;
+    </script>
+</body>
+
+</html>

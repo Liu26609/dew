@@ -2410,6 +2410,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     }
                 },
                 {
+                    "id": 5,
+                    "name": "quality",
+                    "type": {
+                        "type": "Reference",
+                        "target": "face_master/quality"
+                    }
+                },
+                {
                     "id": 1,
                     "name": "from",
                     "type": {
@@ -2426,6 +2434,16 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 4,
                     "name": "att",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Any"
+                        }
+                    }
+                },
+                {
+                    "id": 6,
+                    "name": "max",
                     "type": {
                         "type": "Array",
                         "elementType": {

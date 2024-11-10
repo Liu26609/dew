@@ -21,9 +21,13 @@ export default class {
         for (let i = 0; i < attList.length; i++) {
             const att = attList[i];
             if(att.hide)continue;
+            // 保留2位小数
+
             let icon = APP.getAttIcon(att.key);
             switch (att.t) {
                 case 'body_bar':
+                    att.now = Math.floor(att.now * 100) / 100
+                    att.max = Math.floor(att.max * 100) / 100
                     temp.add(`${icon}${APP.getSysCover(_s,att.name)}:${att.now}/${att.max}`)
                     break;
                 case 'att_val':
@@ -31,6 +35,7 @@ export default class {
                         continue;
                     }
                     if(!att.hide){
+                        att.val = Math.floor(att.val * 100) / 100
                         temp.add(`${icon}${APP.getSysCover(_s,att.name)}:${att.val}`)
                     }
                     break;
@@ -44,9 +49,13 @@ export default class {
         for (let i = 0; i < attList.length; i++) {
             const att = attList[i];
             if(att.hide)continue;
+              // 保留2位小数
+            
             let icon = APP.getAttIcon(att.key);
             switch (att.t) {
                 case 'body_bar':
+                    att.now = Math.floor(att.now * 100) / 100
+                    att.max = Math.floor(att.max * 100) / 100
                     barstr.push({key:`${APP.getSysCover(_s,att.name)} ${att.now}/${att.max}`,bar:(att.now/att.max)*100})
                     break;
                 case 'att_val':
@@ -54,6 +63,7 @@ export default class {
                         continue;
                     }
                     if(!att.hide){
+                        att.val = Math.floor(att.val * 100) / 100
                         attstr.push(`${icon}${APP.getSysCover(_s,att.name)}  ${att.val}`)
                     }
                     break;
