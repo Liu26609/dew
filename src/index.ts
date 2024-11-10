@@ -138,16 +138,54 @@ image: Dict 图片
   //     let msg = inputManage.get_msg(_.session.messageId)
   //     common.importClass(classPath, [msg, message])
   //   })
-
+/**
+ * 
+ *         {
+            "Type": "ReverseWebSocket",
+            "Host": "127.0.0.1",
+            "Port": 8080,
+            "Suffix": "/onebot/v11/ws",
+            "ReconnectInterval": 5000,
+            "HeartBeatInterval": 5000,
+            "HeartBeatEnable": true,
+            "AccessToken": ""
+        },
+        {
+            "Type": "ForwardWebSocket",
+            "Host": "127.0.0.1",
+            "Port": 8081,
+            "HeartBeatInterval": 5000,
+            "HeartBeatEnable": true,
+            "AccessToken": ""
+        },
+         {
+            "Type": "Http",
+            "Host": "127.0.0.1",
+            "Port": 8083,
+            "AccessToken": ""
+        }
+ */
   ctx.middleware((session: any, next) => {
     log.info('[ctx-转换前]', session.content)
-    session.content = session.content.toLowerCase();
-    session.content = session.content.replace(/<[^>]*>/gi, '').trim();
-    while (session.content.indexOf('/') > -1) {
-      session.content = session.content.replace('/', '');
+    if(session.platform){
+      session.content = session.content.toLowerCase();
+      // session.content = session.content.replace(/<[^>]*>/gi, '').trim();
+      while (session.content.indexOf('/') > -1) {
+        session.content = session.content.replace('/', '');
+      }
+      session.content = session.content.replace('hp', ' -h');
+      log.info('[ctx-qq-转换后]', session.content)
+    }else{
+      // <at id="550620904" name="@楚轩"/>
+      session.content = session.content.toLowerCase();
+      session.content = session.content.replace(/<[^>]*>/gi, '').trim();
+      while (session.content.indexOf('/') > -1) {
+        session.content = session.content.replace('/', '');
+      }
+      session.content = session.content.replace('hp', ' -h');
+      log.info('[ctx-转换后]', session.content)
     }
-    session.content = session.content.replace('hp', ' -h');
-    log.info('[ctx-转换后]', session.content)
+
     return next()
   }, true)
   ctx.on('message', async (session) => {
