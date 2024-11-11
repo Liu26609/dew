@@ -179,8 +179,7 @@ image: Dict 图片
           }
       }
       content = content
-        .replace(/<(?!.*?@${session.bot.config.selfId})[^>]*>/gi, '')  // 保留包含selfId的标签，移除其他HTML标签
-        .replace(/\s+/g, '')       // 移除所有空格
+        .replace(/<(?!.*?@${session.bot.config.selfId})[^>]*>/gi, '')
         .replace(/\//g, '')        // 移除所有斜杠
         .replace('hp', '-h')       // 替换hp为-h
         .trim();
