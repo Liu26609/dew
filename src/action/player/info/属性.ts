@@ -65,7 +65,7 @@ export default class {
                     }
                     if(!att.hide){
                         att.val = Math.floor(att.val * 100) / 100
-                        attstr.push(`${icon}${APP.getSysCover(_s,att.name)}  ${att.val}`)
+                        attstr.push(`${APP.getSysCover(_s,att.name)}  ${att.val}`)
                     }
                     break;
                 default:

@@ -17,6 +17,7 @@ import { ReqGetBodySysCfg, ResGetBodySysCfg } from './common/PtlGetBodySysCfg';
 import { ReqSetUp, ResSetUp } from './common/PtlSetUp';
 import { ReqSkill, ResSkill } from './debug/bag/PtlSkill';
 import { ReqBattle as ReqBattle_1, ResBattle as ResBattle_1 } from './debug/PtlBattle';
+import { ReqOff, ResOff } from './debug/PtlOff';
 import { ReqPvp, ResPvp } from './debug/PtlPvp';
 import { ReqSave, ResSave } from './debug/PtlSave';
 import { ReqTakeOffEquip, ResTakeOffEquip } from './debug/PtlTakeOffEquip';
@@ -129,6 +130,10 @@ export interface ServiceType {
         "debug/Battle": {
             req: ReqBattle_1,
             res: ResBattle_1
+        },
+        "debug/Off": {
+            req: ReqOff,
+            res: ResOff
         },
         "debug/Pvp": {
             req: ReqPvp,
@@ -426,6 +431,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 6,
             "name": "debug/Battle",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 57,
+            "name": "debug/Off",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -1528,6 +1541,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
+        "debug/PtlOff/ReqOff": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "debug/PtlOff/ResOff": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
         "debug/PtlPvp/ReqPvp": {
             "type": "Interface",
             "extends": [
@@ -2077,6 +2114,16 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "type",
                     "type": {
                         "type": "String"
+                    }
+                },
+                {
+                    "id": 10,
+                    "name": "type_hide",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "String"
+                        }
                     }
                 },
                 {
@@ -2890,7 +2937,8 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "id": 2,
                     "name": "type",
                     "type": {
-                        "type": "Number"
+                        "type": "Reference",
+                        "target": "shareFace/SKILL_type"
                     }
                 },
                 {
@@ -2914,6 +2962,19 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "type": "Reference",
                         "target": "shareFace/_bar"
                     }
+                }
+            ]
+        },
+        "shareFace/SKILL_type": {
+            "type": "Enum",
+            "members": [
+                {
+                    "id": 0,
+                    "value": 0
+                },
+                {
+                    "id": 1,
+                    "value": 1
                 }
             ]
         },

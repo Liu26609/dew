@@ -11,4 +11,4 @@ RPG大型多人文字RPG游戏
 ![Example Image](https://img.shields.io/badge/telegram-√-r)
 ![Example Image](https://img.shields.io/badge/QQ-√-r)
 ![Example Image](https://img.shields.io/badge/QQ频道-√-r)
-![Example Image](https://img.shields.io/badge/onebot(不知道为什么会卡死)-√-r)
+![Example Image](https://img.shields.io/badge/onebot-√-r)

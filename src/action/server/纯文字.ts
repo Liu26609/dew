@@ -19,13 +19,5 @@ export default class {
             const modifiedData = data.data.replace(/\$at/g, cls.At());
             cls.send_v1(modifiedData, data.delaytime * 1000);
         }
-
-        if(data.delaytime){
-            inputManage.skip(cls.get_userId(), true);
-            setTimeout(() => {
-                inputManage.skip(cls.get_userId(), false);
-            }, data.delaytime * 1100 * msgCont);
-        }
-
     }
 }

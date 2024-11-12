@@ -7,6 +7,7 @@ export interface prop_item_equip {
   sys: string
   fight: number
   type: string
+  type_hide:string[]
   leve_strengthen: _bar
   desc: string
   quality: quality
@@ -63,7 +64,7 @@ export interface prop_item_skill {
    * 0 主动技能,
    * 1 被动技能
    */
-  type: number;
+  type: SKILL_type;
   /**技能描述 */
   desc: string;
   /**技能等级 */
@@ -155,24 +156,6 @@ export interface taskData {
   endtime: number;
   // 是否标记删除
   del?: boolean
-}
-export interface prop_item_skill {
-  /**技能名称 */
-  name: string;
-  /**
-   * 技能cd
-   */
-  cd: number;
-  /**
-   * 0 主动技能,
-   * 1 被动技能
-   */
-  type: number;
-  /**技能描述 */
-  desc: string;
-  /**技能等级 */
-  leve: number;
-  leve_exp: _bar;
 }
 export enum bag_getType {
   index,

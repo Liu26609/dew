@@ -2,13 +2,14 @@ import fs from 'fs';
 import { h } from 'koishi'
 import message from '../trigger/message';
 import server_tool from '../server_tool';
-import { prop_item_equip, prop_item_skill } from '../shared/master/shareFace';
+import { prop_item_equip, prop_item_skill, SKILL_type } from '../shared/master/shareFace';
 const path = require('path');
 import Handlebars from 'handlebars';
 import inputManage from '../inputManage';
 import APP from '../APP';
 import common from '../lib/common';
 import { ResInfo } from '../shared/master/player/inherit/PtlInfo';
+import { CFG } from '..';
 class temp_img {
     commonCss: string;
     pageContents = new Map<string, string>()
@@ -26,7 +27,7 @@ class temp_img {
         // let commonCss = fs.readFileSync(commonCssFile, 'utf-8');
         // this.commonCss = commonCss;
 
-     
+
         /**
          * 遍历 __dirname, '../html/page' 下的所有html文件
          * fs.readFileSync(html, 'utf-8'); 读取文件内容
@@ -55,7 +56,7 @@ class temp_img {
             tempHtml = this.renderTemplate(tempHtml, data);
             const page = await this.ctx.puppeteer.page();
             await page.setContent(tempHtml, { waitUntil: 'networkidle2' });
-    
+
             // Wait for all images and fonts to load
             await page.evaluate(async () => {
                 const images = Array.from(document.images);
@@ -66,11 +67,11 @@ class temp_img {
                         img.addEventListener('error', reject);
                     });
                 }));
-    
+
                 const fonts = document.fonts;
                 await fonts.ready;
             });
-    
+
             const leaderboardElement = await page.$('body');
             const boundingBox = await leaderboardElement.boundingBox();
             await page.setViewport({
@@ -89,12 +90,13 @@ class temp_img {
         } catch (error) {
             inputManage.walt_imgRenderMap.delete(cls.get_userId());
         }
-       
+
     }
     async temp_prop_skill(data: prop_item_skill, cls: message) {
         const _data = {
             name: data.name,
-            sk_type: data.type,
+            show: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/res/skill_style/test.jpg',
+            sk_type: data.type == SKILL_type.主动技能 ? '主动技能' : '被动技能',
             cd: data.cd,
             desc: data.desc,
             leve: {
@@ -105,7 +107,7 @@ class temp_img {
         this.render(cls, 'skill', _data)
 
     }
-    temp_prop_equip(data:prop_item_equip,cls:message){
+    temp_prop_equip(data: prop_item_equip, cls: message) {
         let att = [];
         for (let i = 0; i < data.att.length; i++) {
             const element = data.att[i];
@@ -113,21 +115,22 @@ class temp_img {
         }
         // ${common.cover_quality(req.data.quality)}级
         this.render(cls, 'equip', {
-            fight:data.fight,
-            sys:data.sys,
-            type:data.type,
-            name:data.name,
-            desc:data.desc,
-            quality:common.cover_quality(data.quality),
-            att:att,
-            from:data.from
+            fight: data.fight,
+            sys: data.sys,
+            type: data.type,
+            name: data.name,
+            type_hide:data.type_hide.join(','),
+            desc: data.desc,
+            quality: common.cover_quality(data.quality),
+            att: att,
+            from: data.from
         })
     }
-    temp_inherit(data:ResInfo, cls:message) {
+    temp_inherit(data: ResInfo, cls: message) {
         let _s = data.sys;
         // 过滤掉值为0的属性
         let filteredAtt = data.att.filter(element => element.val > 0);
-        
+
         // 处理属性数据
         let processedAtt = filteredAtt.map(element => {
             // 在max数组中查找对应属性的最大值
@@ -138,14 +141,14 @@ class temp_img {
                 max: maxValue
             };
         });
-        
+
         const renderData = {
             name: data.name,
-            quality:common.cover_quality(data.quality),
+            quality: common.cover_quality(data.quality),
             from: data.from,
             att: JSON.stringify(processedAtt)  // 传入处理后的属性数据
         };
-        
+
         this.render(cls, 'inherit', renderData);
     }
 }

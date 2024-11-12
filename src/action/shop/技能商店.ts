@@ -13,18 +13,8 @@ export default class {
         let req = await server.api('shop/skill/Look',{},cls)
         if(!req) return;
         
-        // 渲染技能图片
-        const data = {
-            name: req.data.name,
-            sk_type: req.data.type,
-            cd: req.data.cd,
-            desc: req.data.desc,
-            leve: {
-                num: req.data.leve,
-                bar: '0%'
-            }
-        };
-        temp_img.render(cls, 'skill', data)
+
+        temp_img.temp_prop_skill(req.data,cls)
         
         // 显示商店信息
         let temp = new temp_card();

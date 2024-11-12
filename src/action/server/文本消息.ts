@@ -10,22 +10,20 @@ export default class {
         let msgCont = 1;
         if (data.data instanceof Array) {
             msgCont = data.data.length;
-                for (let i = 0; i < data.data.length; i++) {
-                    const element = data.data[i];
-                    let temp = new temp_card()
-                    temp.set_title('系统提示', '📜')
-                    const modifiedData = element.replace(/\$at/g, cls.At());
-                    temp.line(modifiedData)
-                    cls.send_v2(temp, data.delaytime * 1000);
-                }
-        } else {
-            setTimeout(() => {
+            for (let i = 0; i < data.data.length; i++) {
+                const element = data.data[i];
                 let temp = new temp_card()
                 temp.set_title('系统提示', '📜')
-                const modifiedData = data.data.replace(/\$at/g, cls.At());
+                const modifiedData = element.replace(/\$at/g, cls.At());
                 temp.line(modifiedData)
-                cls.send_v2(temp);
-            }, data.delaytime * 1000);
+                cls.send_v2(temp, data.delaytime * 1000);
+            }
+        } else {
+            let temp = new temp_card()
+            temp.set_title('系统提示', '📜')
+            const modifiedData = data.data.replace(/\$at/g, cls.At());
+            temp.line(modifiedData)
+            cls.send_v2(temp, data.delaytime * 1000);
         }
     }
 }

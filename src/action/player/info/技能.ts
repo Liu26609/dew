@@ -55,18 +55,7 @@ export default class {
         let req = await server.api('player/skill/Look', {
             idx: idx
         }, cls);
-        const data = {
-            name: req.name,
-            sk_type: req.type,
-            cd: req.cd,
-            desc: req.desc,
-            leve: {
-                num: req.leve,
-                bar: `${((req.leve_exp.now / req.leve_exp.max) * 100).toFixed(2)}%`
-            }
-        };
-
-        temp_img.render(cls, 'skill', data)
+        temp_img.temp_prop_skill(req,cls)
         // temp_text.prop_look({ type: Item_Type.技能书, temp: req }, cls)
     }
     async up_level(cls: message, idx: number) {
