@@ -17,6 +17,7 @@ export default class {
         temp.set_title('我的属性', '🧙')
         temp.add(`🔯血统:${req.inherit}[${req.className}]`)
         temp.add(`🧙${req.name}`)
+        temp.add(`🔥战力${req.fight}`)
         let attList = req.att;
         for (let i = 0; i < attList.length; i++) {
             const att = attList[i];

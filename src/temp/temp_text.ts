@@ -133,6 +133,7 @@ class temp_text {
         let temp = new temp_card();
         temp.set_title('装备查看', '🗡️')
         temp.add(`🏷️${data.name}+${data.leve_strengthen.now}`)
+        temp.add(`🔥战力:${data.fight}`)
         temp.add(`「${data.desc}」`)
         temp.add(`✡️${data.sys}·${data.type}`)
         temp.set_title_line('装备属性', '🔺')

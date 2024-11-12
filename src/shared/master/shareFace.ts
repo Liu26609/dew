@@ -5,36 +5,37 @@ export interface prop_item_equip {
   // 基础属性
   att: any
   sys: string
-  type:string
+  fight: number
+  type: string
   leve_strengthen: _bar
   desc: string
   quality: quality
-  from:any
+  from: any
 }
-export interface _base_com{
-  t?:string
+export interface _base_com {
+  t?: string
 }
-export interface _bar extends _base_com{
+export interface _bar extends _base_com {
   name?: string
   key: string
-  max:number,
-  now:number,
+  max: number,
+  now: number,
 }
-export interface _line extends _base_com{
-  min:number,
-  max:number
+export interface _line extends _base_com {
+  min: number,
+  max: number
 }
-export interface _att_val extends _base_com{
-  name?:string,
-  key:_att_key,
-  val:number,
-  hide?:boolean
+export interface _att_val extends _base_com {
+  name?: string,
+  key: _att_key,
+  val: number,
+  hide?: boolean
 
 }
-export interface _att_line extends _base_com{
-  name:string,
-  key:string,
-  val:_line;
+export interface _att_line extends _base_com {
+  name: string,
+  key: string,
+  val: _line;
 }
 
 export enum battle_group {
@@ -69,15 +70,15 @@ export interface prop_item_skill {
   leve: number;
   leve_exp: _bar;
 }
-export interface prop_item{
-  name:string 
+export interface prop_item {
+  name: string
   // 自识别是否可叠加
-  type:Item_Type
-  icon?:string
-  cont:number
-  data?:any;
+  type: Item_Type
+  icon?: string
+  cont: number
+  data?: any;
 }
-export enum body_sys{
+export enum body_sys {
   修真 = '修真',
   // 
   斗罗 = '斗罗',
@@ -88,22 +89,26 @@ export enum body_sys{
   火影忍者 = '火影忍者',
   // 普通巫师、终极巫师
 }
-/**
- * 修仙系统允许装备 [法宝,本名法宝.]
- * 古代科技 [手枪]
- * 现代科技 [手枪]
- * 系统 + 装备类型
- * 
- * 装备类型  修仙-法宝
- * 
- * 角色: 修仙
- * 装备栏位 [法宝]
- * 
- * 装备类型 - 修真器具
- * 角色只要是同一体系 并且 装备栏没有此类型那么就可以装备
- */
 
-export enum _att_key{
+// 定义属性权重
+export const attributeWeights = {
+  生命值: 0.5,
+  生命恢复: 0.3,
+  魔法值: 0.4,
+  魔法恢复: 0.2,
+  等级: 1.0,
+  物理攻击: 0.8,
+  魔法攻击: 0.7,
+  物理防御: 0.6,
+  魔法防御: 0.5,
+  技能急速: 0.4,
+  物理暴击率: 0.9,
+  魔法暴击率: 0.9,
+  物理护盾: 0.5,
+  魔法护盾: 0.5,
+  生命护盾: 0.5,
+};
+export enum _att_key {
   战斗力 = '战斗力',
   生命值 = '生命值',
   生命恢复 = '生命恢复',
@@ -116,7 +121,7 @@ export enum _att_key{
   物理防御 = '物理防御',
   魔法防御 = '魔法防御',
   技能急速 = '技能急速',
-  
+
   物理暴击率 = '物理暴击率',
   魔法暴击率 = '魔法暴击率',
   物理护盾 = '物理护盾',
@@ -133,12 +138,12 @@ export interface taskData {
      * 任务说明
      */
     desc: string,
-      // 任务类型
-      type: string,
-      // 任务目标
-      target: any,
-      // 任务进度
-      progress: number,
+    // 任务类型
+    type: string,
+    // 任务目标
+    target: any,
+    // 任务进度
+    progress: number,
   }[];
   // 是否完成
   isComplete: boolean;
@@ -149,7 +154,7 @@ export interface taskData {
   // 任务结束倒计时
   endtime: number;
   // 是否标记删除
-  del?:boolean
+  del?: boolean
 }
 export interface prop_item_skill {
   /**技能名称 */
@@ -173,7 +178,7 @@ export enum bag_getType {
   index,
   name
 }
-export interface _user_cfg{
+export interface _user_cfg {
   /**是否开启图片模式 */
-  img:boolean
+  img: boolean
 }

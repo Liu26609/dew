@@ -113,6 +113,7 @@ class temp_img {
         }
         // ${common.cover_quality(req.data.quality)}级
         this.render(cls, 'equip', {
+            fight:data.fight,
             sys:data.sys,
             type:data.type,
             name:data.name,
