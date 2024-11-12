@@ -10,6 +10,9 @@ import { ReqQuery, ResQuery } from './backend/skill/PtlQuery';
 import { ReqSkill_list, ResSkill_list } from './backend/skill/PtlSkill_list';
 import { ReqBattle, ResBattle } from './battle/PtlBattle';
 import { ReqOut, ResOut } from './battle/PtlOut';
+import { ReqAdd, ResAdd } from './bind/PtlAdd';
+import { ReqLook, ResLook } from './bind/PtlLook';
+import { ReqPass, ResPass } from './bind/PtlPass';
 import { ReqGetBodySysCfg, ResGetBodySysCfg } from './common/PtlGetBodySysCfg';
 import { ReqSetUp, ResSetUp } from './common/PtlSetUp';
 import { ReqSkill, ResSkill } from './debug/bag/PtlSkill';
@@ -20,11 +23,11 @@ import { ReqTakeOffEquip, ResTakeOffEquip } from './debug/PtlTakeOffEquip';
 import { ReqUpequip, ResUpequip } from './debug/PtlUpequip';
 import { MsgAction } from './MsgAction';
 import { ReqList, ResList } from './player/bag/PtlList';
-import { ReqLook, ResLook } from './player/bag/PtlLook';
+import { ReqLook as ReqLook_1, ResLook as ResLook_1 } from './player/bag/PtlLook';
 import { ReqSell_sys, ResSell_sys } from './player/bag/PtlSell_sys';
 import { ReqUse, ResUse } from './player/bag/PtlUse';
 import { ReqList as ReqList_1, ResList as ResList_1 } from './player/equip/PtlList';
-import { ReqLook as ReqLook_1, ResLook as ResLook_1 } from './player/equip/PtlLook';
+import { ReqLook as ReqLook_2, ResLook as ResLook_2 } from './player/equip/PtlLook';
 import { ReqReName, ResReName } from './player/equip/PtlReName';
 import { ReqStrengthen, ResStrengthen } from './player/equip/PtlStrengthen';
 import { ReqTakeOff, ResTakeOff } from './player/equip/PtlTakeOff';
@@ -37,18 +40,18 @@ import { ReqOut as ReqOut_1, ResOut as ResOut_1 } from './player/map/PtlOut';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
 import { ReqList as ReqList_2, ResList as ResList_2 } from './player/skill/PtlList';
-import { ReqLook as ReqLook_2, ResLook as ResLook_2 } from './player/skill/PtlLook';
+import { ReqLook as ReqLook_3, ResLook as ResLook_3 } from './player/skill/PtlLook';
 import { ReqRename, ResRename } from './player/skill/PtlRename';
 import { ReqRm, ResRm } from './player/skill/PtlRm';
 import { ReqUpLeve, ResUpLeve } from './player/skill/PtlUpLeve';
 import { ReqList as ReqList_3, ResList as ResList_3 } from './player/task/PtlList';
-import { ReqLook as ReqLook_3, ResLook as ResLook_3 } from './player/task/PtlLook';
+import { ReqLook as ReqLook_4, ResLook as ResLook_4 } from './player/task/PtlLook';
 import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
 import { ReqBuy, ResBuy } from './shop/equip/PtlBuy';
-import { ReqLook as ReqLook_4, ResLook as ResLook_4 } from './shop/equip/PtlLook';
+import { ReqLook as ReqLook_5, ResLook as ResLook_5 } from './shop/equip/PtlLook';
 import { ReqBuy as ReqBuy_1, ResBuy as ResBuy_1 } from './shop/skill/PtlBuy';
-import { ReqLook as ReqLook_5, ResLook as ResLook_5 } from './shop/skill/PtlLook';
+import { ReqLook as ReqLook_6, ResLook as ResLook_6 } from './shop/skill/PtlLook';
 import { ReqCancel, ResCancel } from './transaction/PtlCancel';
 import { ReqConfirm, ResConfirm } from './transaction/PtlConfirm';
 import { ReqBuild, ResBuild } from './work/PtlBuild';
@@ -99,6 +102,18 @@ export interface ServiceType {
             req: ReqOut,
             res: ResOut
         },
+        "bind/Add": {
+            req: ReqAdd,
+            res: ResAdd
+        },
+        "bind/Look": {
+            req: ReqLook,
+            res: ResLook
+        },
+        "bind/Pass": {
+            req: ReqPass,
+            res: ResPass
+        },
         "common/GetBodySysCfg": {
             req: ReqGetBodySysCfg,
             res: ResGetBodySysCfg
@@ -136,8 +151,8 @@ export interface ServiceType {
             res: ResList
         },
         "player/bag/Look": {
-            req: ReqLook,
-            res: ResLook
+            req: ReqLook_1,
+            res: ResLook_1
         },
         "player/bag/Sell_sys": {
             req: ReqSell_sys,
@@ -152,8 +167,8 @@ export interface ServiceType {
             res: ResList_1
         },
         "player/equip/Look": {
-            req: ReqLook_1,
-            res: ResLook_1
+            req: ReqLook_2,
+            res: ResLook_2
         },
         "player/equip/ReName": {
             req: ReqReName,
@@ -204,8 +219,8 @@ export interface ServiceType {
             res: ResList_2
         },
         "player/skill/Look": {
-            req: ReqLook_2,
-            res: ResLook_2
+            req: ReqLook_3,
+            res: ResLook_3
         },
         "player/skill/Rename": {
             req: ReqRename,
@@ -224,8 +239,8 @@ export interface ServiceType {
             res: ResList_3
         },
         "player/task/Look": {
-            req: ReqLook_3,
-            res: ResLook_3
+            req: ReqLook_4,
+            res: ResLook_4
         },
         "Miss": {
             req: ReqMiss,
@@ -240,16 +255,16 @@ export interface ServiceType {
             res: ResBuy
         },
         "shop/equip/Look": {
-            req: ReqLook_4,
-            res: ResLook_4
+            req: ReqLook_5,
+            res: ResLook_5
         },
         "shop/skill/Buy": {
             req: ReqBuy_1,
             res: ResBuy_1
         },
         "shop/skill/Look": {
-            req: ReqLook_5,
-            res: ResLook_5
+            req: ReqLook_6,
+            res: ResLook_6
         },
         "transaction/Cancel": {
             req: ReqCancel,
@@ -270,7 +285,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 23,
+    "version": 24,
     "services": [
         {
             "id": 51,
@@ -355,6 +370,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 2,
             "name": "battle/Out",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 54,
+            "name": "bind/Add",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 55,
+            "name": "bind/Look",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 56,
+            "name": "bind/Pass",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -1119,6 +1158,96 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "battle/PtlOut/ResOut": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "bind/PtlAdd/ReqAdd": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "bind/PtlAdd/ResAdd": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "code",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "bind/PtlLook/ReqLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "bind/PtlLook/ResLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "bind/PtlPass/ReqPass": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "code",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "bind/PtlPass/ResPass": {
             "type": "Interface",
             "extends": [
                 {
