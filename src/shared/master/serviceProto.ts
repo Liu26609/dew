@@ -1224,6 +1224,48 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "target": "../protocols/master_base/BaseResponse"
                     }
                 }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "logs",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Interface",
+                            "properties": [
+                                {
+                                    "id": 0,
+                                    "name": "id",
+                                    "type": {
+                                        "type": "String"
+                                    }
+                                },
+                                {
+                                    "id": 1,
+                                    "name": "bind_id",
+                                    "type": {
+                                        "type": "String"
+                                    }
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "platform",
+                                    "type": {
+                                        "type": "String"
+                                    }
+                                },
+                                {
+                                    "id": 3,
+                                    "name": "time",
+                                    "type": {
+                                        "type": "Number"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
             ]
         },
         "bind/PtlPass/ReqPass": {

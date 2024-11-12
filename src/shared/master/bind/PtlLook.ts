@@ -5,7 +5,7 @@ export interface ReqLook extends BaseRequest {
 }
 
 export interface ResLook extends BaseResponse {
-    
+    logs:{id:string,bind_id:string,platform:string,time:number}[]
 }
 
 export const conf: BaseConf = {
