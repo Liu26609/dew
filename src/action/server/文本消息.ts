@@ -27,11 +27,5 @@ export default class {
                 cls.send_v2(temp);
             }, data.delaytime * 1000);
         }
-        if(data.delaytime){
-            inputManage.skip(cls.get_userId(), true);
-            setTimeout(() => {
-                inputManage.skip(cls.get_userId(), false);
-            }, data.delaytime * msgCont);
-        }
     }
 }

@@ -38,10 +38,10 @@ class APP {
           if(!msg){
             return
           }
-          if(inputManage.wait_inputskipMap.has(msg.get_userId())){
-            console.log('skip')
-            return;
-          }
+        //   if(inputManage.wait_inputskipMap.has(msg.get_userId())){
+        //     console.log('skip')
+        //     return;
+        //   }
           
           const classPath = path.resolve(__dirname, `./action/${element.path}`);
           common.importClass(classPath, [msg, ..._.args])

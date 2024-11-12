@@ -44,9 +44,7 @@ export default class message {
      * @returns 
      */
     async wait_nextInput(t: number = 10) {
-        inputManage.skip(this.get_userId(), true)
         let res = await this.session.prompt(t * 1000)
-        inputManage.skip(this.get_userId(), false)
         if (!res) return undefined;
         return res
     }

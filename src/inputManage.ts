@@ -6,7 +6,6 @@ import { MsgAction } from "./shared/master/MsgAction";
 import message from "./trigger/message";
 
 class inputManage {
-    wait_inputskipMap: Map<string, boolean> = new Map();
     walt_imgRenderMap:Map<string,boolean> = new Map();
     messageMap: Map<string, message> = new Map();
     constructor() {
@@ -24,21 +23,11 @@ class inputManage {
             common.importClass(classPath, [cls, data])
         }, this)
     }
-    skip(id: string, jude: boolean) {
-        if (jude) {
-            this.wait_inputskipMap.set(id, true);
-        } else {
-            this.wait_inputskipMap.delete(id);
-        }
-    }
+
     get_msg(id:string){
         return this.messageMap.get(id)
     }
     input_msg(cls: message) {
-        if (this.wait_inputskipMap.has(cls.get_userId())) {
-            console.log('skip')
-            return;
-        }
 
         if (this.walt_imgRenderMap.has(cls.get_userId())) {
             cls.send_v1('消息太快啦')
