@@ -67,6 +67,7 @@ export interface prop_item_skill {
   type: SKILL_type;
   /**技能描述 */
   desc: string;
+  style_id:string;
   /**技能等级 */
   leve: number;
   leve_exp: _bar;

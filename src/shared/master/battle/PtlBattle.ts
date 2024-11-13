@@ -9,5 +9,6 @@ export interface ResBattle extends BaseResponse {
 }
 
 export const conf: BaseConf = {
-    check_onlyid: true
+    check_onlyid: true,
+    battle: true
 }
