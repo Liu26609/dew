@@ -18,7 +18,8 @@ export interface Config {
   调试模式: boolean,
   忽略指令空格: boolean,
   服务器地址: string,
-  wss: boolean
+  wss: boolean,
+  git密钥: string
 }
 export let log: any
 export const inject = ['puppeteer'];
@@ -28,6 +29,7 @@ export const Config: Schema<Config> = Schema.object({
   调试模式: Schema.boolean().default(false).description('个人开发调试用'),
   忽略指令空格: Schema.boolean().default(true).description('默认允许省略指令名后的空格'),
   服务器地址: Schema.string().default('139.159.214.249'),
+  git密钥: Schema.string().default('7cd3280666bfbf9f47bd4d9056a14f2b').description('gitee私人令牌'),
 })
 
 export let CFG: Config;
@@ -42,7 +44,6 @@ export async function apply(ctx: Context, config: Config) {
     // 在插件停用时关闭端口
     server.dispose()
   })
-
   if (CFG.调试模式) {
     CFG.服务器地址 = '127.0.0.1';
     log.info('调试模式-将调用本地服务器')
@@ -118,7 +119,6 @@ natural: number 正整数
 date: Date 日期
 image: Dict 图片
    */
-
   // ctx.command('啊啊.sub <世界名:number> 进入轮回空间')
   //   .option('世界名', '<世界名> 指定进入的世界')
   //   .usage('注意：参数请写在最前面，不然会被当成 message 的一部分！')

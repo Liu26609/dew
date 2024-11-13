@@ -45,6 +45,59 @@ class battleText {
         // 战斗数据模块
         return dataLog
     }
+    getData_md(data: any) {
+        // 战斗数据模块
+        let dataLog_A = data
+        let dataLog = ''
+        let dataUnityMap = new Map();
+        let totalDamage = 0;
+        let totalTaken = 0;
+
+        // 首先计算总伤害和总承伤
+        for (const key in dataLog_A) {
+            const data = dataLog_A[key];
+            for (const name in data) {
+                let unityData = dataUnityMap.get(name) || {};
+                if (!unityData[key]) {
+                    unityData[key] = data[name]
+                } else {
+                    unityData[key] += data[name]
+                }
+                dataUnityMap.set(name, unityData)
+                
+                if (key === '伤害') totalDamage += data[name];
+                if (key === '承伤') totalTaken += data[name];
+            }
+        }
+
+        // 输出总数据
+        dataLog += `📊 总体数据\n`;
+        dataLog += `🗡️总伤害: ${APP.numberToChinese(totalDamage)}\n`;
+        dataLog += `🛡️总承伤: ${APP.numberToChinese(totalTaken)}\n\n`;
+
+        // 为每个角色生成进度条
+        dataUnityMap.forEach((unity, name) => {
+            dataLog += `<a href="https://qm.qq.com/q/VEua3umPus">${name}</a>\n\n`;
+            
+            // 伤害进度条 (10格)
+            if (unity['伤害']) {
+                const damagePercent = Math.floor((unity['伤害'] / totalDamage) * 10);
+                const damageBar = '🟦'.repeat(damagePercent) + '⬜'.repeat(10 - damagePercent);
+                dataLog += `🗡️伤害: ${damageBar} ${APP.numberToChinese(unity['伤害'])} (${Math.floor((unity['伤害'] / totalDamage) * 100)}%)\n\n`;
+            }
+            
+            // 承伤进度条 (10格)
+            if (unity['承伤']) {
+                const takenPercent = Math.floor((unity['承伤'] / totalTaken) * 10);
+                const takenBar = '🟥'.repeat(takenPercent) + '⬜'.repeat(10 - takenPercent);
+                dataLog += `🛡️承伤: ${takenBar} ${APP.numberToChinese(unity['承伤'])} (${Math.floor((unity['承伤'] / totalTaken) * 100)}%)\n\n`;
+            }
+            
+            dataLog += '\n';
+        });
+
+        return dataLog;
+    }
     /**
      * 获取技能统计
      */
@@ -70,7 +123,33 @@ class battleText {
         }
         return text;
     }
-
+    getSkLog_md(data: any) {
+        let A = data;
+        let text = '';
+        for (const userName in A) {
+            // 分离表情符号和名字
+            const matches = userName.match(/([\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|[\u{1F100}-\u{1F1FF}]|[\u{1F200}-\u{1F2FF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{1F900}-\u{1F9FF}]|[\u{1F000}-\u{1F02F}]|[\u{1F0A0}-\u{1F0FF}]|[\u{1F300}-\u{1F5FF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{1F700}-\u{1F77F}]|[\u{1F780}-\u{1F7FF}]|[\u{1F800}-\u{1F8FF}]|[\u{1F900}-\u{1F9FF}]|[\u{1FA00}-\u{1FA6F}]|[\u{1FA70}-\u{1FAFF}]|[\u{2B05}]|[\u200d])+/gu);
+            const emoji = matches ? matches[0] : '';
+            const name = userName.replace(emoji, '');
+            
+            let line = `${emoji}<a href="https://qm.qq.com/q/VEua3umPus">${name}</a>`
+            const element = A[userName];
+            for (const skName in element) {
+                line += `│▌${skName}`
+                let effArry = element[skName];
+                for (let i = 0; i < effArry.length; i++) {
+                    const effItem = effArry[i];
+                    line += `${APP.getIcon(effItem.key)}${APP.numberToChinese(effItem.val)}`;
+                }
+            }
+            text += line;
+            // 如果不是最后一个，换行
+            if (userName !== Object.keys(A)[Object.keys(A).length - 1]) {
+                text += '\n\n';
+            }
+        }
+        return text;
+    }
     /**
      * 获取击杀日志
      */

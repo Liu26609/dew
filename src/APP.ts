@@ -8,14 +8,14 @@ import common from "./lib/common";
 
 class APP {
     bodySysCfg: Map<string, Map<string, string>> = new Map();
-    private ctx: any;
+    ctx: any;
     constructor() {
 
     }
-    init(ctx:any){
+    init(ctx: any) {
         this.ctx = ctx;
     }
-    addCommon(cfg:any){
+    addCommon(cfg: any) {
         const element = cfg;
         let cls = this.ctx.command(element.key, `💡${element.key_tips}`)
         // option 不适合本机器人
@@ -23,28 +23,28 @@ class APP {
         // cls.option('改名', '<val:string>')
         // }
         if (element.tips.length > 0) {
-          cls.usage(`✦─✧📜指令介绍✧─✦\n「${element.tips}」`)
+            cls.usage(`✦─✧📜指令介绍✧─✦\n「${element.tips}」`)
         }
         if (element.example.length > 0) {
-          // cls.example(`✨指令有空格哦✨`)
-          for (let i = 0; i < element.example.length; i++) {
-            const example = element.example[i];
-            let icon = '①②③④⑤⑥⑦⑧⑨⑩'
-            cls.example(`${icon[i]}${example}`)
-          }
+            // cls.example(`✨指令有空格哦✨`)
+            for (let i = 0; i < element.example.length; i++) {
+                const example = element.example[i];
+                let icon = '①②③④⑤⑥⑦⑧⑨⑩'
+                cls.example(`${icon[i]}${example}`)
+            }
         }
         cls.action(async (_: any, ag: any) => {
-          let msg = inputManage.get_msg(_.session.messageId)
-          if(!msg){
-            return
-          }
-        //   if(inputManage.wait_inputskipMap.has(msg.get_userId())){
-        //     console.log('skip')
-        //     return;
-        //   }
-          
-          const classPath = path.resolve(__dirname, `./action/${element.path}`);
-          common.importClass(classPath, [msg, ..._.args])
+            let msg = inputManage.get_msg(_.session.messageId)
+            if (!msg) {
+                return
+            }
+            //   if(inputManage.wait_inputskipMap.has(msg.get_userId())){
+            //     console.log('skip')
+            //     return;
+            //   }
+
+            const classPath = path.resolve(__dirname, `./action/${element.path}`);
+            common.importClass(classPath, [msg, ..._.args])
         })
     }
     setSysCfg(cfg: any) {
@@ -67,7 +67,7 @@ class APP {
         }
         return k
     }
-    getAttIcon(k:_att_key){
+    getAttIcon(k: _att_key) {
         let icon = ''
         switch (k) {
             case _att_key.生命值:
@@ -147,8 +147,8 @@ class APP {
 
         return result || '0';
     }
-    getIcon(name:string){
-        if(emojiCfg[name]){
+    getIcon(name: string) {
+        if (emojiCfg[name]) {
             return emojiCfg[name]
         }
         return '⚠️'
@@ -157,7 +157,7 @@ class APP {
      * 计算剩余时间
      */
     countdown(seconds: number) {
-        seconds = seconds /1000
+        seconds = seconds / 1000
         const days = Math.floor(seconds / (24 * 3600));
         const hours = Math.floor((seconds % (24 * 3600)) / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
