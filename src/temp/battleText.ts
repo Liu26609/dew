@@ -62,7 +62,11 @@ class battleText {
                     line += `${APP.getIcon(effItem.key)}${APP.numberToChinese(effItem.val)}`;
                 }
             }
-            text += line
+            text += line;
+            // 如果不是最后一个，换行
+            if (userName !== Object.keys(A)[Object.keys(A).length - 1]) {
+                text += '\n';
+            }
         }
         return text;
     }

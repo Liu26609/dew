@@ -5,9 +5,9 @@ export interface ReqBattle extends BaseRequest {
 }
 
 export interface ResBattle extends BaseResponse {
-    data:MSG_BATTLELOG
 }
 
 export const conf: BaseConf = {
-    check_onlyid: true
+    check_onlyid: true,
+    battle: true
 }

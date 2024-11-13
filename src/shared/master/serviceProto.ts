@@ -17,6 +17,7 @@ import { ReqGetBodySysCfg, ResGetBodySysCfg } from './common/PtlGetBodySysCfg';
 import { ReqSetUp, ResSetUp } from './common/PtlSetUp';
 import { ReqSkill, ResSkill } from './debug/bag/PtlSkill';
 import { ReqBattle as ReqBattle_1, ResBattle as ResBattle_1 } from './debug/PtlBattle';
+import { ReqFlow, ResFlow } from './debug/PtlFlow';
 import { ReqOff, ResOff } from './debug/PtlOff';
 import { ReqPvp, ResPvp } from './debug/PtlPvp';
 import { ReqSave, ResSave } from './debug/PtlSave';
@@ -130,6 +131,10 @@ export interface ServiceType {
         "debug/Battle": {
             req: ReqBattle_1,
             res: ResBattle_1
+        },
+        "debug/Flow": {
+            req: ReqFlow,
+            res: ResFlow
         },
         "debug/Off": {
             req: ReqOff,
@@ -290,7 +295,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 26,
+    "version": 28,
     "services": [
         {
             "id": 51,
@@ -432,6 +437,15 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 6,
             "name": "debug/Battle",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true,
+                "battle": true
+            }
+        },
+        {
+            "id": 58,
+            "name": "debug/Flow",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -1464,80 +1478,28 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "target": "../protocols/master_base/BaseResponse"
                     }
                 }
-            ],
-            "properties": [
+            ]
+        },
+        "debug/PtlFlow/ReqFlow": {
+            "type": "Interface",
+            "extends": [
                 {
                     "id": 0,
-                    "name": "data",
                     "type": {
                         "type": "Reference",
-                        "target": "MsgAction/MSG_BATTLELOG"
+                        "target": "../protocols/master_base/BaseRequest"
                     }
                 }
             ]
         },
-        "MsgAction/MSG_BATTLELOG": {
+        "debug/PtlFlow/ResFlow": {
             "type": "Interface",
-            "properties": [
+            "extends": [
                 {
                     "id": 0,
-                    "name": "title",
                     "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "tips",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 2,
-                    "name": "round",
-                    "type": {
-                        "type": "Number"
-                    }
-                },
-                {
-                    "id": 3,
-                    "name": "skLog",
-                    "type": {
-                        "type": "Array",
-                        "elementType": {
-                            "type": "Any"
-                        }
-                    }
-                },
-                {
-                    "id": 4,
-                    "name": "dataLog",
-                    "type": {
-                        "type": "Array",
-                        "elementType": {
-                            "type": "Any"
-                        }
-                    }
-                },
-                {
-                    "id": 5,
-                    "name": "killLog",
-                    "type": {
-                        "type": "Array",
-                        "elementType": {
-                            "type": "Any"
-                        }
-                    }
-                },
-                {
-                    "id": 6,
-                    "name": "gitfs",
-                    "type": {
-                        "type": "Array",
-                        "elementType": {
-                            "type": "Any"
-                        }
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
                     }
                 }
             ]
