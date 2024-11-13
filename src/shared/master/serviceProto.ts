@@ -290,7 +290,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 24,
+    "version": 26,
     "services": [
         {
             "id": 51,
@@ -369,7 +369,8 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "name": "battle/Battle",
             "type": "api",
             "conf": {
-                "check_onlyid": true
+                "check_onlyid": true,
+                "battle": true
             }
         },
         {
@@ -2944,6 +2945,13 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 3,
                     "name": "desc",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 6,
+                    "name": "style_id",
                     "type": {
                         "type": "String"
                     }

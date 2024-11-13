@@ -23,4 +23,8 @@ export interface BaseConf{
      * 是否检查用户唯一ID
      */
     check_onlyid:boolean
+    /**
+     * 是否检查用户唯一ID
+     */
+    battle?:boolean 
 }

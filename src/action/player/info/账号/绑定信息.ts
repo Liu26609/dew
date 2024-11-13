@@ -14,14 +14,15 @@ export default class {
 
         let card = new temp_card();
         card.set_title('绑定记录');
-        card.line(`唯一编号#${bindLogs.logs[0].bind_id}`)
+        card.line(`原始账号#${bindLogs.logs[0].bind_id}`)
+        card.line(`我的ID#${cls.get_userId()}`)
+        card.set_title_line(`新增绑定`)
         for (let index = 0; index < bindLogs.logs.length; index++) {
             const element = bindLogs.logs[index];
-            card.set_title_line(`新增绑定`)
-            card.add(`平台#${element.id}`)
+            card.add(`平台#${element.platform}`)
             card.add(`ID#${element.id}`)
             const date = new Date(element.time);
-            card.add(`${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`)
+            card.add(`时间:${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`)
         }
         cls.send_v2(card)
     }

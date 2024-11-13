@@ -22,7 +22,6 @@ export default class {
         temp.set_title_line('击杀统计','💀')
         temp.add(battleText.getKillLog(req.killLog));
 
-        temp.set_title_line('战斗结果','🏆')
         temp.add(`${req.tips}`)
         if(req.gitfs.length > 0){
             let gifts = req.gitfs;
