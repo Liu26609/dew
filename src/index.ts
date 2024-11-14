@@ -19,7 +19,8 @@ export interface Config {
   忽略指令空格: boolean,
   服务器地址: string,
   wss: boolean,
-  git密钥: string
+  git密钥: string,
+  仓库地址: string,
 }
 export let log: any
 export const inject = ['puppeteer'];
@@ -30,6 +31,7 @@ export const Config: Schema<Config> = Schema.object({
   忽略指令空格: Schema.boolean().default(true).description('默认允许省略指令名后的空格'),
   服务器地址: Schema.string().default('139.159.214.249'),
   git密钥: Schema.string().default('7cd3280666bfbf9f47bd4d9056a14f2b').description('gitee私人令牌'),
+  仓库地址: Schema.string().default('cxd30/bot-ui').description('仓库地址'),
 })
 
 export let CFG: Config;

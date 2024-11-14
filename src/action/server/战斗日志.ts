@@ -4,6 +4,7 @@ import battleText from '../../temp/battleText';
 import { temp_card } from '../../temp/temp_text';
 import APP from '../../APP';
 import { CFG } from '../..';
+import { logger } from '../../index_bot';
 export default class {
     constructor(cls: message, data: MsgAction) {
         console.log('回合战斗', data)
@@ -18,15 +19,14 @@ export default class {
         // temp.set_title_line('己方战报', '🟩')
         // temp.add(battleText.getSkLog(req.skLog[0]))
         // temp.set_title_line('敌方战报', '🟥')
-        temp.add(battleText.getSkLog(req.skLog[1]))
+        // temp.add(battleText.getSkLog(req.skLog[1]))
         // 战斗数据
-        temp.set_title_line('战斗数据', '🔥')
-        temp.add(battleText.getData(req.dataLog[0]))
-        temp.add(`🕢战斗共计${req.round}回合`)
+        // temp.set_title_line('战斗数据', '🔥')
+        // temp.add(battleText.getData(req.dataLog[0]))
         // temp.set_title_line('击杀统计', '💀')
         // temp.add(battleText.getKillLog(req.killLog));
-
         temp.add(`${req.tips}`)
+        temp.add(`🕢战斗共计${req.round}回合`)
         if (req.gitfs.length > 0) {
             let gifts = req.gitfs;
             temp.add(battleText.getGiftLog(gifts))
@@ -35,10 +35,10 @@ export default class {
         cls.send_v2(temp)
     }
     render_gitText(req: MSG_BATTLELOG) {
-        let postlink = `https://gitee.com/api/v5/repos/cxd30/bot-ui/contents/battle_log/${Date.now()}.md`;
+        let postlink = `https://gitee.com/api/v5/repos/${CFG.仓库地址}/contents/battle_log/${Date.now()}.md`;
         // let postlink = `https://gitee.com/api/v5/repos/ChuXuanD30/dew-bot/contents/battle_log/${Date.now()}.md`;
         // let getlink = `https://gitee.com/ChuXuanD30/bot-ui/blob/master/battle_log/${Date.now()}.md`
-        let getlink = `https://gitee.com/cxd30/bot-ui/blob/master/battle_log/${Date.now()}.md`
+        let getlink = `https://gitee.com/${CFG.仓库地址}/blob/master/battle_log/${Date.now()}.md`
         let content = ''
         // 己方战报
         content += `<div align="center">\n\n## 📜己方战报\n\n</div>\n`
@@ -49,7 +49,7 @@ export default class {
         content += `${battleText.getSkLog_md(req.skLog[1])}\n\n`
 
         // 战斗数据
-        content += `<div align="center">\n\n## 🔥🔥战斗数据🔥🔥\n\n</div>\n`
+        content += `<div align="center">\n\n## 🔥🔥己方战斗统计🔥🔥\n\n</div>\n`
         content += `${battleText.getData_md(req.dataLog[0])}\n`
         content += `🕢战斗共计<a href="https://qm.qq.com/q/VEua3umPus">${req.round}</a>回合\n\n`
         // 击杀统计
@@ -79,9 +79,9 @@ export default class {
                     responseType: 'json'
             }
         ).then(res => {
-            console.log('战斗日志上报成功');
+            logger.info('战斗日志上报成功')
         }).catch(err => {
-            console.log('战斗日志上报失败');
+            logger.error('战斗日志上报失败', err)
         })
         return getlink
     }
