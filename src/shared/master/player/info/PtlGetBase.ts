@@ -1,10 +1,11 @@
 import { BaseRequest, BaseResponse, BaseConf } from "../../../protocols/master_base";
+import { MSG_ATT_INFO } from "../../MsgAction";
 
 export interface ReqGetBase extends BaseRequest {
     
 }
 
-export interface ResGetBase extends BaseResponse {
+export interface ResGetBase extends MSG_ATT_INFO,BaseResponse {
     name:string,
     sys:string,
     /**

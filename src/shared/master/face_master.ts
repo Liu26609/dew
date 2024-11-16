@@ -30,3 +30,11 @@ export enum quality{
     SSSR,
     SSSR_p,
 }
+export interface followData {
+    id: string;
+    uuid: string;
+    name: string;
+    fight: number;
+    quality: quality;
+    collect: number[];
+}

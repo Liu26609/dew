@@ -6,7 +6,7 @@ export default class{
             key: "角色/角色改名",
             key_tips: '角色改名',
             tips: "改名",
-            example: ["@bot 改名"],
+            example: ["@bot 角色改名"],
             path: 'player/info/改名'
         })
         actionCfg.push({

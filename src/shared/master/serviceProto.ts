@@ -1,4 +1,5 @@
 import { ServiceProto } from 'tsrpc-proto';
+import { ReqFollow, ResFollow } from './active/draw/PtlFollow';
 import { ReqCreate_equip, ResCreate_equip } from './active/PtlCreate_equip';
 import { ReqCreate_skill, ResCreate_skill } from './active/PtlCreate_skill';
 import { ReqSign, ResSign } from './active/PtlSign';
@@ -33,6 +34,9 @@ import { ReqLook as ReqLook_2, ResLook as ResLook_2 } from './player/equip/PtlLo
 import { ReqReName, ResReName } from './player/equip/PtlReName';
 import { ReqStrengthen, ResStrengthen } from './player/equip/PtlStrengthen';
 import { ReqTakeOff, ResTakeOff } from './player/equip/PtlTakeOff';
+import { ReqList as ReqList_2, ResList as ResList_2 } from './player/follow/PtlList';
+import { ReqLook as ReqLook_3, ResLook as ResLook_3 } from './player/follow/PtlLook';
+import { ReqUp, ResUp } from './player/follow/PtlUp';
 import { ReqGetBase, ResGetBase } from './player/info/PtlGetBase';
 import { ReqPosition, ResPosition } from './player/info/PtlPosition';
 import { ReqSetName, ResSetName } from './player/info/PtlSetName';
@@ -41,25 +45,29 @@ import { ReqReset, ResReset } from './player/inherit/PtlReset';
 import { ReqOut as ReqOut_1, ResOut as ResOut_1 } from './player/map/PtlOut';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
-import { ReqList as ReqList_2, ResList as ResList_2 } from './player/skill/PtlList';
-import { ReqLook as ReqLook_3, ResLook as ResLook_3 } from './player/skill/PtlLook';
+import { ReqList as ReqList_3, ResList as ResList_3 } from './player/skill/PtlList';
+import { ReqLook as ReqLook_4, ResLook as ResLook_4 } from './player/skill/PtlLook';
 import { ReqRename, ResRename } from './player/skill/PtlRename';
 import { ReqRm, ResRm } from './player/skill/PtlRm';
 import { ReqUpLeve, ResUpLeve } from './player/skill/PtlUpLeve';
-import { ReqList as ReqList_3, ResList as ResList_3 } from './player/task/PtlList';
-import { ReqLook as ReqLook_4, ResLook as ResLook_4 } from './player/task/PtlLook';
+import { ReqList as ReqList_4, ResList as ResList_4 } from './player/task/PtlList';
+import { ReqLook as ReqLook_5, ResLook as ResLook_5 } from './player/task/PtlLook';
 import { ReqMiss, ResMiss } from './PtlMiss';
 import { ReqPing, ResPing } from './PtlPing';
 import { ReqBuy, ResBuy } from './shop/equip/PtlBuy';
-import { ReqLook as ReqLook_5, ResLook as ResLook_5 } from './shop/equip/PtlLook';
+import { ReqLook as ReqLook_6, ResLook as ResLook_6 } from './shop/equip/PtlLook';
 import { ReqBuy as ReqBuy_1, ResBuy as ResBuy_1 } from './shop/skill/PtlBuy';
-import { ReqLook as ReqLook_6, ResLook as ResLook_6 } from './shop/skill/PtlLook';
+import { ReqLook as ReqLook_7, ResLook as ResLook_7 } from './shop/skill/PtlLook';
 import { ReqCancel, ResCancel } from './transaction/PtlCancel';
 import { ReqConfirm, ResConfirm } from './transaction/PtlConfirm';
 import { ReqBuild, ResBuild } from './work/PtlBuild';
 
 export interface ServiceType {
     api: {
+        "active/draw/Follow": {
+            req: ReqFollow,
+            res: ResFollow
+        },
         "active/Create_equip": {
             req: ReqCreate_equip,
             res: ResCreate_equip
@@ -192,6 +200,18 @@ export interface ServiceType {
             req: ReqTakeOff,
             res: ResTakeOff
         },
+        "player/follow/List": {
+            req: ReqList_2,
+            res: ResList_2
+        },
+        "player/follow/Look": {
+            req: ReqLook_3,
+            res: ResLook_3
+        },
+        "player/follow/Up": {
+            req: ReqUp,
+            res: ResUp
+        },
         "player/info/GetBase": {
             req: ReqGetBase,
             res: ResGetBase
@@ -225,12 +245,12 @@ export interface ServiceType {
             res: ResStart
         },
         "player/skill/List": {
-            req: ReqList_2,
-            res: ResList_2
+            req: ReqList_3,
+            res: ResList_3
         },
         "player/skill/Look": {
-            req: ReqLook_3,
-            res: ResLook_3
+            req: ReqLook_4,
+            res: ResLook_4
         },
         "player/skill/Rename": {
             req: ReqRename,
@@ -245,12 +265,12 @@ export interface ServiceType {
             res: ResUpLeve
         },
         "player/task/List": {
-            req: ReqList_3,
-            res: ResList_3
+            req: ReqList_4,
+            res: ResList_4
         },
         "player/task/Look": {
-            req: ReqLook_4,
-            res: ResLook_4
+            req: ReqLook_5,
+            res: ResLook_5
         },
         "Miss": {
             req: ReqMiss,
@@ -265,16 +285,16 @@ export interface ServiceType {
             res: ResBuy
         },
         "shop/equip/Look": {
-            req: ReqLook_5,
-            res: ResLook_5
+            req: ReqLook_6,
+            res: ResLook_6
         },
         "shop/skill/Buy": {
             req: ReqBuy_1,
             res: ResBuy_1
         },
         "shop/skill/Look": {
-            req: ReqLook_6,
-            res: ResLook_6
+            req: ReqLook_7,
+            res: ResLook_7
         },
         "transaction/Cancel": {
             req: ReqCancel,
@@ -295,8 +315,16 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 28,
+    "version": 30,
     "services": [
+        {
+            "id": 59,
+            "name": "active/draw/Follow",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
         {
             "id": 51,
             "name": "active/Create_equip",
@@ -570,6 +598,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
             }
         },
         {
+            "id": 60,
+            "name": "player/follow/List",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 61,
+            "name": "player/follow/Look",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 62,
+            "name": "player/follow/Up",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
             "id": 21,
             "name": "player/info/GetBase",
             "type": "api",
@@ -763,7 +815,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
         }
     ],
     "types": {
-        "active/PtlCreate_equip/ReqCreate_equip": {
+        "active/draw/PtlFollow/ReqFollow": {
             "type": "Interface",
             "extends": [
                 {
@@ -821,7 +873,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "active/PtlCreate_equip/ResCreate_equip": {
+        "active/draw/PtlFollow/ResFollow": {
             "type": "Interface",
             "extends": [
                 {
@@ -843,6 +895,39 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "type": "String"
                     },
                     "optional": true
+                }
+            ]
+        },
+        "active/PtlCreate_equip/ReqCreate_equip": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "cont",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "active/PtlCreate_equip/ResCreate_equip": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
                 }
             ]
         },
@@ -1702,6 +1787,10 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 6,
                     "value": "离线奖励"
+                },
+                {
+                    "id": 7,
+                    "value": "属性面板"
                 }
             ]
         },
@@ -2415,6 +2504,160 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
+        "player/follow/PtlList/ReqList": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/follow/PtlList/ResList": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "upBattle",
+                    "type": {
+                        "type": "Reference",
+                        "target": "face_master/followData"
+                    },
+                    "optional": true
+                },
+                {
+                    "id": 1,
+                    "name": "list",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Reference",
+                            "target": "face_master/followData"
+                        }
+                    }
+                }
+            ]
+        },
+        "face_master/followData": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "id",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "uuid",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "fight",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "quality",
+                    "type": {
+                        "type": "Reference",
+                        "target": "face_master/quality"
+                    }
+                },
+                {
+                    "id": 5,
+                    "name": "collect",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Number"
+                        }
+                    }
+                }
+            ]
+        },
+        "player/follow/PtlLook/ReqLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/follow/PtlLook/ResLook": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "player/follow/PtlUp/ReqUp": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "idx",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "player/follow/PtlUp/ResUp": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
         "player/info/PtlGetBase/ReqGetBase": {
             "type": "Interface",
             "extends": [
@@ -2430,6 +2673,13 @@ export const serviceProto: ServiceProto<ServiceType> = {
         "player/info/PtlGetBase/ResGetBase": {
             "type": "Interface",
             "extends": [
+                {
+                    "id": 1,
+                    "type": {
+                        "type": "Reference",
+                        "target": "MsgAction/MSG_ATT_INFO"
+                    }
+                },
                 {
                     "id": 0,
                     "type": {
@@ -2483,6 +2733,70 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 },
                 {
                     "id": 4,
+                    "name": "att",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Any"
+                        }
+                    }
+                }
+            ]
+        },
+        "MsgAction/MSG_ATT_INFO": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "sys",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "style_url",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "fight",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "leve",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 5,
+                    "name": "inherit",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 6,
+                    "name": "className",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 7,
                     "name": "att",
                     "type": {
                         "type": "Array",

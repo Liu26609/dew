@@ -8,6 +8,7 @@ export enum template {
     交易创建 = '交易/创建',
     纯文字 = '纯文字',
     离线奖励 = '离线奖励',
+    属性面板 = '属性面板',
 }
 export interface MsgAction extends BaseMessage {
     template: template;
@@ -39,6 +40,22 @@ export interface MSG_OFFLINE_REWARD {
      * 奖励
      */
     reward: prop_item[];
+}
+export interface MSG_ATT_INFO{
+    name:string,
+    sys:string,
+    style_url:string,
+    /**
+     * 战力
+     */
+    fight:number,
+    leve:number,
+    /**
+     * 血统名称
+     */
+    inherit:string,
+    className: string,
+    att: any[]
 }
 export interface transaction_create {
     /**交易原因 */

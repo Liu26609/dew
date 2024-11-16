@@ -45,44 +45,7 @@ export default class {
                     break;
             }
         }
-        let barstr = [];
-        let attstr = [];
-        for (let i = 0; i < attList.length; i++) {
-            const att = attList[i];
-            if(att.hide)continue;
-              // 保留2位小数
-            
-            let icon = APP.getAttIcon(att.key);
-            switch (att.t) {
-                case 'body_bar':
-                    att.now = Math.floor(att.now * 100) / 100
-                    att.max = Math.floor(att.max * 100) / 100
-                    barstr.push({key:`${APP.getSysCover(_s,att.name)} ${att.now}/${att.max}`,bar:(att.now/att.max)*100})
-                    break;
-                case 'att_val':
-                    if(att.val == 0){
-                        continue;
-                    }
-                    if(!att.hide){
-                        att.val = Math.floor(att.val * 100) / 100
-                        attstr.push(`${APP.getSysCover(_s,att.name)}  ${att.val}`)
-                    }
-                    break;
-                default:
-                    temp.add('┃未知属性类型:' + att.t)
-                    break;
-            }
-        }
-        temp_img.render(cls,'att',{
-            name:req.name,
-            leve:req.leve,
-            sys:req.sys,
-            fight:req.fight,
-            inherit:req.inherit,
-            className:req.className,
-            att:attstr,
-            barstr:barstr
-        })
+        temp_img.temp_att_info(req,cls)
         cls.send_v2(temp)
     }
 }

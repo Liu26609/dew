@@ -10,6 +10,7 @@ import APP from '../APP';
 import common from '../lib/common';
 import { ResInfo } from '../shared/master/player/inherit/PtlInfo';
 import { CFG } from '..';
+import { MSG_ATT_INFO } from '../shared/master/MsgAction';
 class temp_img {
     commonCss: string;
     pageContents = new Map<string, string>()
@@ -91,6 +92,51 @@ class temp_img {
             inputManage.walt_imgRenderMap.delete(cls.get_userId());
         }
 
+    }
+    temp_att_info(data: MSG_ATT_INFO, cls: message) {
+        let attList = data.att;
+        let _s = data.sys;
+        let barstr = [];
+        let attstr = [];
+        for (let i = 0; i < attList.length; i++) {
+            const att = attList[i];
+            if(att.hide)continue;
+              // 保留2位小数
+            
+            switch (att.t) {
+                case 'body_bar':
+                    att.now = Math.floor(att.now * 100) / 100
+                    att.max = Math.floor(att.max * 100) / 100
+                    barstr.push({key:`${APP.getSysCover(_s,att.name)} ${att.now}/${att.max}`,bar:(att.now/att.max)*100})
+                    break;
+                case 'att_val':
+                    if(att.val == 0){
+                        continue;
+                    }
+                    if(att.hide){
+                        continue;
+                    }
+                    if(typeof att.val == 'number'){
+                        att.val = Math.floor(att.val * 100) / 100
+                    }
+                    attstr.push(`${APP.getSysCover(_s,att.name)}  ${att.val}`)
+                    break;
+                default:
+                    attstr.push('┃未知属性类型:' + att.t)
+                    break;
+            }
+        }
+        this.render(cls,'att',{
+            name:data.name,
+            leve:data.leve,
+            sys:data.sys,
+            style_url:data.style_url,
+            fight:data.fight,
+            inherit:data.inherit,
+            className:data.className,
+            att:attstr,
+            barstr:barstr
+        })
     }
     async temp_prop_skill(data: prop_item_skill, cls: message) {
         const _data = {
