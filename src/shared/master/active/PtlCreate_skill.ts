@@ -1,6 +1,4 @@
 import { BaseRequest, BaseResponse, BaseConf } from "../../protocols/master_base";
-import { SKILL_target, SKILL_rang } from "../face/FACE_SKILL";
-import { prop_item_skill, SKILL_type } from "../shareFace";
 /**
  * 装备祈愿
  */

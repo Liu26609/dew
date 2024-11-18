@@ -44,10 +44,6 @@ export enum SKILL_eff_type_恢复类 {
 export enum SKILL_eff_condition{
     受到普通攻击时 = '受到普通攻击时',
 }
-export enum SKILL_rang{
-    单体,
-    范围
-}
 
 export enum Buff_keys{
     无敌 = '无敌',

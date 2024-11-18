@@ -79,17 +79,14 @@ export default class message {
         this.session.sendQueued(str, delaytime ? delaytime * 1000 : 0.2)
         this.clear();
     }
-    send_v1(temp: string, delaytime?: number) {
+    send_v1(temp: string) {
         let str = '';
         if (this.platform === 'qq') {
             str += '✨\n';
         }
         str += temp;
-        if(delaytime){
-            this.session.sendQueued(str, delaytime)
-        }else{
-            this.session.send(str)
-        }
+        this.session.sendQueued(str)
+
     }
     send_v2(temp: temp_card, delaytime?: number) {
         let str = '';
