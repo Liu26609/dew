@@ -52,7 +52,7 @@ class battleText {
         let dataUnityMap = new Map();
         let totalDamage = 0;
         let totalTaken = 0;
-
+        let totalRes = 0;
         // 首先计算总伤害和总承伤
         for (const key in dataLog_A) {
             const data = dataLog_A[key];
@@ -67,12 +67,14 @@ class battleText {
                 
                 if (key === '伤害') totalDamage += data[name];
                 if (key === '承伤') totalTaken += data[name];
+                if (key === '治疗') totalRes += data[name];
             }
         }
 
         // 输出总数据
         dataLog += `📊 总体数据\n`;
         dataLog += `🗡️总伤害: ${APP.numberToChinese(totalDamage)}\n`;
+        dataLog += `💖总治疗: ${APP.numberToChinese(totalRes)}\n`;
         dataLog += `🛡️总承伤: ${APP.numberToChinese(totalTaken)}\n\n`;
 
         // 为每个角色生成进度条
@@ -92,7 +94,12 @@ class battleText {
                 const takenBar = '🟥'.repeat(takenPercent) + '⬜'.repeat(10 - takenPercent);
                 dataLog += `🛡️承伤: ${takenBar} ${APP.numberToChinese(unity['承伤'])} (${Math.floor((unity['承伤'] / totalTaken) * 100)}%)\n\n`;
             }
-            
+             // 承伤进度条 (10格)
+             if (unity['治疗']) {
+                const takenPercent = Math.floor((unity['治疗'] / totalTaken) * 10);
+                const takenBar = '🟥'.repeat(takenPercent) + '⬜'.repeat(10 - takenPercent);
+                dataLog += `💖治疗: ${takenBar} ${APP.numberToChinese(unity['治疗'])} (${Math.floor((unity['治疗'] / totalTaken) * 100)}%)\n\n`;
+            }
             dataLog += '\n';
         });
 
