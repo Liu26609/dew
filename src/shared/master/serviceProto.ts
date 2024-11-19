@@ -18,6 +18,7 @@ import { ReqGetBodySysCfg, ResGetBodySysCfg } from './common/PtlGetBodySysCfg';
 import { ReqSetUp, ResSetUp } from './common/PtlSetUp';
 import { ReqSkill, ResSkill } from './debug/bag/PtlSkill';
 import { ReqBattle as ReqBattle_1, ResBattle as ResBattle_1 } from './debug/PtlBattle';
+import { ReqCreateM, ResCreateM } from './debug/PtlCreateM';
 import { ReqFlow, ResFlow } from './debug/PtlFlow';
 import { ReqOff, ResOff } from './debug/PtlOff';
 import { ReqPvp, ResPvp } from './debug/PtlPvp';
@@ -139,6 +140,10 @@ export interface ServiceType {
         "debug/Battle": {
             req: ReqBattle_1,
             res: ResBattle_1
+        },
+        "debug/CreateM": {
+            req: ReqCreateM,
+            res: ResCreateM
         },
         "debug/Flow": {
             req: ReqFlow,
@@ -315,7 +320,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 30,
+    "version": 31,
     "services": [
         {
             "id": 59,
@@ -469,6 +474,14 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "conf": {
                 "check_onlyid": true,
                 "battle": true
+            }
+        },
+        {
+            "id": 63,
+            "name": "debug/CreateM",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
             }
         },
         {
@@ -1554,6 +1567,30 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "debug/PtlBattle/ResBattle": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "debug/PtlCreateM/ReqCreateM": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "debug/PtlCreateM/ResCreateM": {
             "type": "Interface",
             "extends": [
                 {

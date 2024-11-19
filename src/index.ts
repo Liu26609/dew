@@ -47,8 +47,8 @@ export async function apply(ctx: Context, config: Config) {
     server.dispose()
   })
   if (CFG.调试模式) {
-    CFG.服务器地址 = '127.0.0.1';
-    log.info('调试模式-将调用本地服务器')
+    // CFG.服务器地址 = '127.0.0.1';
+    log.info('调试模式-debug专用')
   }
   // 忽略指令空格
   reg_ignoreSeperator(ctx, config)
