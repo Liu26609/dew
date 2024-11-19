@@ -7,7 +7,7 @@ export enum SKILL_target{
     自己 = '自己',
     // 自己_召唤,
     // 自己_宠物,
-    // 我方,
+    我方 = '我方',
     // 队友_死亡,
     // 队友_召唤,
     // 队友_宠物
@@ -28,21 +28,21 @@ export enum SKILL_eff_path{
     buff = 'buff'
 }
 export enum SKILL_eff_type_增益类 {
-    附加暴击 = '附加暴击',
+    附加暴击 = '附加暴击',//已实现
     魔法伤害 = '魔法伤害',
     真实伤害 = '真实伤害',
 }
 export enum SKILL_eff_type_伤害类 {
-    物理伤害 = '物理伤害',
-    魔法伤害 = '魔法伤害',
-    真实伤害 = '真实伤害',
+    物理伤害 = '物理伤害',//已实现
+    魔法伤害 = '魔法伤害',//已实现
+    真实伤害 = '真实伤害',//已实现
 }
 export enum SKILL_eff_type_恢复类 {
-    生命恢复,
-    魔法恢复,
+    生命恢复 = '生命恢复',//已实现
+    魔法恢复 = '魔法恢复',
 }
 export enum SKILL_eff_condition{
-    受到普通攻击时 = '受到普通攻击时',
+    受到普通攻击时 = '受到普通攻击时',//已实现
 }
 
 export enum Buff_keys{
