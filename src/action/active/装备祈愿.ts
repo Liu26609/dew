@@ -1,5 +1,4 @@
 import server from "../../server";
-import { SKILL_rang, SKILL_target } from "../../shared/master/face/FACE_SKILL";
 import { SKILL_type } from "../../shared/master/shareFace";
 import temp_img from "../../temp/temp_img";
 import { temp_card } from "../../temp/temp_text";
