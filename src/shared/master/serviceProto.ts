@@ -320,7 +320,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 31,
+    "version": 32,
     "services": [
         {
             "id": 59,
@@ -1828,6 +1828,10 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 7,
                     "value": "属性面板"
+                },
+                {
+                    "id": 8,
+                    "value": "世界/位置信息"
                 }
             ]
         },
@@ -2864,49 +2868,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Reference",
                         "target": "../protocols/master_base/BaseResponse"
-                    }
-                }
-            ],
-            "properties": [
-                {
-                    "id": 2,
-                    "name": "battle",
-                    "type": {
-                        "type": "Boolean"
-                    }
-                },
-                {
-                    "id": 3,
-                    "name": "pos",
-                    "type": {
-                        "type": "Array",
-                        "elementType": {
-                            "type": "Number"
-                        }
-                    }
-                },
-                {
-                    "id": 0,
-                    "name": "name",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "online",
-                    "type": {
-                        "type": "Number"
-                    }
-                },
-                {
-                    "id": 4,
-                    "name": "list",
-                    "type": {
-                        "type": "Array",
-                        "elementType": {
-                            "type": "Any"
-                        }
                     }
                 }
             ]

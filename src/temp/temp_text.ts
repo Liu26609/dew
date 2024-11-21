@@ -143,37 +143,6 @@ class temp_text {
         }
         return temp;
     }
-    async temp_position(data:ResPosition,cls:message){
-        let temp = new temp_card();
-        switch (data.name) {
-            case '主神空间':
-                temp.set_title('主神空间', '🌌')
-                temp.add(`🌍坐标${data.pos[0]}-${data.pos[1]}`)
-                temp.add(`🧙世界玩家:${data.online}`)
-                break;
-
-            default:
-                temp.set_title('我的位置', '🌍')
-                temp.add(`🌍坐标${data.pos[0]}-${data.pos[1]}`)
-                temp.line(`当前世界:${data.name}`)
-                temp.add(`🧙世界玩家:${data.online}`)
-                break;
-        }
-        let list = data.list;
-        let battle = data.battle;
-        temp.set_title('当前位置', '⚔️')
-        for (let i = 0; i < list.length; i++) {
-            const element = list[i];
-            temp.add(`${element.name}`)
-        }
-        temp.set_title_line('选择行动', '🔍')
-        if(battle){
-            temp.add(`【战斗】         【探索】`)
-        }else{
-            temp.add(`         【探索】`)
-        }
-        cls.send_v2(temp)
-    }
     async temp_prop_skill(data: prop_item_skill, cls: message) {
         let temp = new temp_card();
         temp.set_title('技能查看', '🧙')

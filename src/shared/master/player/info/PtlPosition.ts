@@ -5,15 +5,7 @@ import { BaseRequest, BaseResponse, BaseConf } from "../../../protocols/master_b
 export interface ReqPosition extends BaseRequest {
 }
 
-export interface ResPosition extends BaseResponse {
-    battle:boolean
-    pos:number[]
-    /**副本名称 */
-    name:string
-    /**副本在线玩家数 */
-    online:number
-    list:any[]
-}
+export interface ResPosition extends BaseResponse {}
 
 export const conf: BaseConf = {
     check_onlyid: true

@@ -9,6 +9,7 @@ export enum template {
     纯文字 = '纯文字',
     离线奖励 = '离线奖励',
     属性面板 = '属性面板',
+    位置信息 = '世界/位置信息',
 }
 export interface MsgAction extends BaseMessage {
     template: template;
@@ -40,6 +41,15 @@ export interface MSG_OFFLINE_REWARD {
      * 奖励
      */
     reward: prop_item[];
+}
+export interface MSG_POSITION_INFO{
+    battle:boolean
+    pos:number[]
+    /**副本名称 */
+    name:string
+    /**副本在线玩家数 */
+    online:number
+    list:any[]
 }
 export interface MSG_ATT_INFO{
     name:string,
