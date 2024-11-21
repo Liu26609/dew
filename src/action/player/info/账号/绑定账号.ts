@@ -1,6 +1,5 @@
 import server from "../../../../server";
-import { Item_Type } from "../../../../shared/master/shareFace";
-import temp_text, { temp_card } from "../../../../temp/temp_text";
+import { temp_card } from "../../../../temp/temp_text";
 import message from "../../../../trigger/message";
 
 export default class {
@@ -26,8 +25,8 @@ export default class {
             return;
         }
         let bindCode = await server.api('bind/Add', {}, cls)
-        cls.send_v1('请及时切换到需要绑定的角色账号上输入以下验证码\n复制以下完整内容即可\n↓↓↓↓↓↓↓↓↓',1)
-        cls.send_v1(`${bindCode.code}`,2)
+        cls.send_v1('请及时切换到需要绑定的角色账号上输入以下验证码\n复制以下完整内容即可\n↓↓↓↓↓↓↓↓↓')
+        cls.send_v1(`${bindCode.code}`)
     }
 
 }
