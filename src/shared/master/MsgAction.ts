@@ -10,6 +10,7 @@ export enum template {
     离线奖励 = '离线奖励',
     属性面板 = '属性面板',
     位置信息 = '世界/位置信息',
+    操作面板 = '操作/创建'
 }
 export interface MsgAction extends BaseMessage {
     template: template;
@@ -66,6 +67,10 @@ export interface MSG_ATT_INFO{
     inherit:string,
     className: string,
     att: any[]
+}
+export interface MSG_OPERATE{
+    title:string,
+    res:string
 }
 export interface transaction_create {
     /**交易原因 */
