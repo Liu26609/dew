@@ -330,7 +330,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 35,
+    "version": 36,
     "services": [
         {
             "id": 59,
@@ -1858,13 +1858,10 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 8,
                     "value": "世界/位置信息"
-<<<<<<< HEAD
-=======
                 },
                 {
                     "id": 9,
                     "value": "操作/创建"
->>>>>>> 2ff102c976f1acee079a739044b637bf58ee480d
                 }
             ]
         },
@@ -3076,13 +3073,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
         "player/map/PtlSearch/ResSearch": {
             "type": "Interface",
             "extends": [
-                {
-                    "id": 1,
-                    "type": {
-                        "type": "Reference",
-                        "target": "player/info/PtlPosition/ResPosition"
-                    }
-                },
                 {
                     "id": 0,
                     "type": {

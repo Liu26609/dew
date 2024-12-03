@@ -8,10 +8,7 @@ export default class {
     }
 
     async start(cls: message) {
-        let req = await server.api('player/map/Out', {}, cls)
-        if (!req) return;
-        cls.addLine('🔵已回到主神空间')
-        cls.send()
+        await server.api('player/map/Out', {}, cls)
     }
 
 }

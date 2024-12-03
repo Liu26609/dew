@@ -44,13 +44,13 @@ export interface MSG_OFFLINE_REWARD {
     reward: prop_item[];
 }
 export interface MSG_POSITION_INFO{
-    battle:boolean
     pos:number[]
     /**副本名称 */
     name:string
     /**副本在线玩家数 */
     online:number
     list:any[]
+    select:string[]
 }
 export interface MSG_ATT_INFO{
     name:string,
