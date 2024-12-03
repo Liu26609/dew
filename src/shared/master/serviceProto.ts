@@ -46,6 +46,8 @@ import { ReqReset, ResReset } from './player/inherit/PtlReset';
 import { ReqOut as ReqOut_1, ResOut as ResOut_1 } from './player/map/PtlOut';
 import { ReqSearch, ResSearch } from './player/map/PtlSearch';
 import { ReqStart, ResStart } from './player/map/PtlStart';
+import { ReqCancel, ResCancel } from './player/operate/PtlCancel';
+import { ReqConfirm, ResConfirm } from './player/operate/PtlConfirm';
 import { ReqList as ReqList_3, ResList as ResList_3 } from './player/skill/PtlList';
 import { ReqLook as ReqLook_4, ResLook as ResLook_4 } from './player/skill/PtlLook';
 import { ReqRename, ResRename } from './player/skill/PtlRename';
@@ -59,8 +61,8 @@ import { ReqBuy, ResBuy } from './shop/equip/PtlBuy';
 import { ReqLook as ReqLook_6, ResLook as ResLook_6 } from './shop/equip/PtlLook';
 import { ReqBuy as ReqBuy_1, ResBuy as ResBuy_1 } from './shop/skill/PtlBuy';
 import { ReqLook as ReqLook_7, ResLook as ResLook_7 } from './shop/skill/PtlLook';
-import { ReqCancel, ResCancel } from './transaction/PtlCancel';
-import { ReqConfirm, ResConfirm } from './transaction/PtlConfirm';
+import { ReqCancel as ReqCancel_1, ResCancel as ResCancel_1 } from './transaction/PtlCancel';
+import { ReqConfirm as ReqConfirm_1, ResConfirm as ResConfirm_1 } from './transaction/PtlConfirm';
 import { ReqBuild, ResBuild } from './work/PtlBuild';
 
 export interface ServiceType {
@@ -249,6 +251,14 @@ export interface ServiceType {
             req: ReqStart,
             res: ResStart
         },
+        "player/operate/Cancel": {
+            req: ReqCancel,
+            res: ResCancel
+        },
+        "player/operate/Confirm": {
+            req: ReqConfirm,
+            res: ResConfirm
+        },
         "player/skill/List": {
             req: ReqList_3,
             res: ResList_3
@@ -302,12 +312,12 @@ export interface ServiceType {
             res: ResLook_7
         },
         "transaction/Cancel": {
-            req: ReqCancel,
-            res: ResCancel
+            req: ReqCancel_1,
+            res: ResCancel_1
         },
         "transaction/Confirm": {
-            req: ReqConfirm,
-            res: ResConfirm
+            req: ReqConfirm_1,
+            res: ResConfirm_1
         },
         "work/Build": {
             req: ReqBuild,
@@ -320,7 +330,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 31,
+    "version": 34,
     "services": [
         {
             "id": 59,
@@ -693,6 +703,22 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 28,
             "name": "player/map/Start",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 64,
+            "name": "player/operate/Cancel",
+            "type": "api",
+            "conf": {
+                "check_onlyid": true
+            }
+        },
+        {
+            "id": 66,
+            "name": "player/operate/Confirm",
             "type": "api",
             "conf": {
                 "check_onlyid": true
@@ -1828,6 +1854,10 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 7,
                     "value": "属性面板"
+                },
+                {
+                    "id": 8,
+                    "value": "世界/位置信息"
                 }
             ]
         },
@@ -2866,49 +2896,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "target": "../protocols/master_base/BaseResponse"
                     }
                 }
-            ],
-            "properties": [
-                {
-                    "id": 2,
-                    "name": "battle",
-                    "type": {
-                        "type": "Boolean"
-                    }
-                },
-                {
-                    "id": 3,
-                    "name": "pos",
-                    "type": {
-                        "type": "Array",
-                        "elementType": {
-                            "type": "Number"
-                        }
-                    }
-                },
-                {
-                    "id": 0,
-                    "name": "name",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "online",
-                    "type": {
-                        "type": "Number"
-                    }
-                },
-                {
-                    "id": 4,
-                    "name": "list",
-                    "type": {
-                        "type": "Array",
-                        "elementType": {
-                            "type": "Any"
-                        }
-                    }
-                }
             ]
         },
         "player/info/PtlSetName/ReqSetName": {
@@ -3134,6 +3121,64 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "player/map/PtlStart/ResStart": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "player/operate/PtlCancel/ReqCancel": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "player/operate/PtlCancel/ResCancel": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "player/operate/PtlConfirm/ReqConfirm": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../protocols/master_base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "id",
+                    "type": {
+                        "type": "String"
+                    },
+                    "optional": true
+                }
+            ]
+        },
+        "player/operate/PtlConfirm/ResConfirm": {
             "type": "Interface",
             "extends": [
                 {
