@@ -330,7 +330,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 34,
+    "version": 35,
     "services": [
         {
             "id": 59,
@@ -1858,6 +1858,13 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 8,
                     "value": "世界/位置信息"
+<<<<<<< HEAD
+=======
+                },
+                {
+                    "id": 9,
+                    "value": "操作/创建"
+>>>>>>> 2ff102c976f1acee079a739044b637bf58ee480d
                 }
             ]
         },

@@ -72,20 +72,7 @@ actionCfg.push({
     example: ["@bot 基础指令"],
     path: 'common/菜单'
 })
-actionCfg.push({
-    key: "确认",
-    key_tips: '确认',
-    tips: "确认",
-    example: ["@bot 确认"],
-    path: 'common/确认交易'
-})
-actionCfg.push({
-    key: "取消",
-    key_tips: '取消',
-    tips: "取消",
-    example: ["@bot 取消"],
-    path: 'common/取消交易'
-})
+
 
 
 actionCfg.push({

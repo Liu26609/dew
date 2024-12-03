@@ -11,7 +11,5 @@ export default class {
 
     async init(cls: message) {
         let req = await server.api('player/info/Position', {}, cls)
-        if (!req) return;
-        temp_text.temp_position(req, cls)
     }
 }
