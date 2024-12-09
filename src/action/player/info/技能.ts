@@ -67,9 +67,13 @@ export default class {
         let list = req.list;
         let temp = new temp_card();
         temp.set_title('技能列表', '📜')
-        for (let i = 0; i < list.length; i++) {
-            const element = list[i];
-            temp.add(`[${i + 1}]${element.name}`)
+        if (list.length == 0) {
+            temp.add('你还没有技能哦~')
+        } else {
+            for (let i = 0; i < list.length; i++) {
+                const element = list[i];
+                temp.add(`[${i + 1}]${element.name}`)
+            }
         }
         cls.send_v2(temp);
     }
