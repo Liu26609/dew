@@ -58,24 +58,22 @@ export default class {
             pageSize: 100,
             searchInfo: {}
         })
-        const dataTime = res.data.list[0].updatedAt;
         const currentTime = Math.floor(Date.now() / 1000);
-        const timeDifference = currentTime - dataTime;
+        let halfHourCount = 0;
 
-        // 输出距离最近充值订单的时间
-        const hours = Math.floor(timeDifference / 3600);
-        const minutes = Math.floor((timeDifference % 3600) / 60);
-        const seconds = timeDifference % 60;
-        let str = ``;
-
-        // 最近半小时内没有充值订单
-        if (timeDifference > 1800) {
-            str += '🔴'
-        } else {
-            str += '🟢'
+        // Calculate the number of recharge entries within the last half hour
+        for (let i = 0; i < res.data.list.length; i++) {
+            const dataTime = res.data.list[i].updatedAt;
+            const timeDifference = currentTime - dataTime;
+            if (timeDifference <= 1800) {
+                halfHourCount++;
+            } else {
+                break; // Since the list is ordered by time, we can stop once we find an entry older than 30 minutes
+            }
         }
-        str += `充值时差:${hours}时${minutes}分`;
-        str = `<p>${str}</p>`;
+
+        let str = `<p>近半小时内充值条数: ${halfHourCount}</p>`;
+
         // 最近30条充值记录已完成的状态比例低于30% status = 2
         let count = 0;
         for (let i = 0; i < res.data.list.length; i++) {
@@ -90,7 +88,7 @@ export default class {
         } else {
             str += '🟢'
         }
-        str += `近30分钟内充值总笔数${res.data.list.length},充值成功率${(rate*100).toFixed(2)}%`;
+        str += `近30分钟内充值总笔数${halfHourCount},充值成功率${(rate*100).toFixed(2)}%`;
         str += `</p>`;
         return str
     }
@@ -132,9 +130,9 @@ export default class {
         }
         let rate = count / res.data.list.length;
         if(rate > 0.3){
-            return `<p>🔴近30条验证码使用率:${(rate * 100).toFixed(2)}%</p>`
-        }else{
             return `<p>🟢近30条验证码使用率:${(rate * 100).toFixed(2)}%</p>`
+        }else{
+            return `<p>🔴近30条验证码使用率:${(rate * 100).toFixed(2)}%</p>`
         }
     }
 
