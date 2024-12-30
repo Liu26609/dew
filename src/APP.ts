@@ -7,6 +7,7 @@ import { _att_key } from "./shared/master/shareFace";
 import common from "./lib/common";
 
 class APP {
+    follow_list: Map<string, any> = new Map();
     bodySysCfg: Map<string, Map<string, string>> = new Map();
     ctx: any;
     constructor() {
