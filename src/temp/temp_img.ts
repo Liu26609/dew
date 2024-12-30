@@ -78,12 +78,13 @@ class temp_img {
 
             // Wait for 5 seconds before taking a screenshot
             await common.sleep(2000)
-            const mainContentElement = await page.$('.el-row');
-            const boundingBox = await mainContentElement.boundingBox();
             await page.setViewport({
-                width: Math.ceil(boundingBox.width),
-                height: Math.ceil(boundingBox.height),
+                width: 750,
+                height: 1000,
             });
+            const mainContentElement = await page.$('.el-row');
+            // const boundingBox = await mainContentElement.boundingBox();
+           
             const imgBuf = await mainContentElement.screenshot({ captureBeyondViewport: false });
             console.log(`Original image size: ${imgBuf.length} bytes`);
             let sendBuff = new Uint8Array(imgBuf)
