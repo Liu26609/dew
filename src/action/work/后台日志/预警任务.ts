@@ -2,6 +2,7 @@ import message from "../../../trigger/message"
 import BaseApiServer from "../../../backendApi/apiServer"
 import APP from "../../../APP";
 import temp_img from "../../../temp/temp_img";
+import { CFG } from "../../..";
 let auto = false;
 export default class {
     constructor(cls: message, ...data) {
@@ -18,11 +19,12 @@ export default class {
                 const minutes = now.getMinutes();
                 const seconds = now.getSeconds();
                 const milliseconds = now.getMilliseconds();
-                const delay = (30 - (minutes % 30)) * 60 * 1000 - seconds * 1000 - milliseconds;
+                const delay = (CFG.预警定时 - (minutes % CFG.预警定时)) * 60 * 1000 - seconds * 1000 - milliseconds;
 
                 setTimeout(() => {
+                    console.log('开始执行预警任务');
                     executeTask();
-                    setInterval(executeTask, 1000 * 60 * 30);
+                    setInterval(executeTask, 1000 * 60 * CFG.预警定时);
                 }, delay);
             };
 
@@ -72,13 +74,16 @@ export default class {
             }
         }
 
-        let str = `<p>近半小时内充值条数: ${halfHourCount}</p>`;
+        let str = ``;
 
         // 最近30条充值记录已完成的状态比例低于30% status = 2
         let count = 0;
+        // 充值成功金额
+        let success_amount = 0;
         for (let i = 0; i < res.data.list.length; i++) {
             if (res.data.list[i].status == 2) {
                 count++;
+                success_amount += res.data.list[i].amount / 100;
             }
         }
         str += `<p>`;
@@ -88,7 +93,7 @@ export default class {
         } else {
             str += '🟢'
         }
-        str += `近30分钟内充值总笔数${halfHourCount},充值成功率${(rate*100).toFixed(2)}%`;
+        str += `近30分钟内充值总笔数${halfHourCount},充值成功率${(rate*100).toFixed(2)}%,充值成功金额${success_amount}`;
         str += `</p>`;
         return str
     }
@@ -103,13 +108,19 @@ export default class {
         })
         // 定时发送最近半小时内提现的待审核数量
         let count = 0;
+        // 待审核提现 
+        let wait_count = 0;
         for (let i = 0; i < res.data.list.length; i++) {
             if (res.data.list[i].status == 1) {
                 count++;
+                if(res.data.list[i].souAmount){
+                    wait_count += res.data.list[i].souAmount / 100;
+                }
             }
+            
         }
         if(count > 0){
-            return `<p>🔴近100次提现待审核数量:${count}</p>`
+            return `<p>🔴近100次提现待审核数量:${count}${wait_count > 0 ? `,待审核金额:${wait_count}元` : ''}</p>`
         }else{
             return `<p>🟢近100次提现无待审核</p>`
         }

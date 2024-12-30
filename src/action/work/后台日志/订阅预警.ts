@@ -9,8 +9,8 @@ export default class {
 
     async start(cls: message, ...data) {
         console.log(cls);
-        cls.send_v1(`已订阅预警消息${cls.get_name()}`);
         APP.follow_list.set(cls.get_userId(), cls);
+        cls.send_v1(`已订阅预警消息${cls.get_name()}(已订阅数:${APP.follow_list.size})`);
         // cls.send_v1(`${str}<button text="预警检查" type="input">再来一次</button>`)
     }
 
