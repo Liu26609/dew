@@ -2,7 +2,7 @@ import message from "../../../trigger/message"
 import BaseApiServer from "../../../backendApi/apiServer"
 import APP from "../../../APP";
 import temp_img from "../../../temp/temp_img";
-import { CFG } from "../../..";
+import { CFG, log } from "../../..";
 let auto = false;
 export default class {
     constructor(cls: message, ...data) {
@@ -22,7 +22,7 @@ export default class {
                 const delay = (CFG.预警定时 - (minutes % CFG.预警定时)) * 60 * 1000 - seconds * 1000 - milliseconds;
 
                 setTimeout(() => {
-                    console.log('开始执行预警任务');
+                    log.info('[预警任务]', '开始执行预警任务',APP.follow_list.size);
                     executeTask();
                     setInterval(executeTask, 1000 * 60 * CFG.预警定时);
                 }, delay);
