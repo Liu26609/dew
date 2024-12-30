@@ -1,26 +1,44 @@
 import message from "../../../trigger/message"
 import BaseApiServer from "../../../backendApi/apiServer"
 import APP from "../../../APP";
+import temp_img from "../../../temp/temp_img";
 let auto = false;
 export default class {
     constructor(cls: message, ...data) {
         console.log('绑定信息', data)
         this.start(cls, false)
         if(!auto){
-            setInterval(async () => {
+            const executeTask = async () => {
                 auto = true;
-            await this.start(cls, true)
-            }, 1000 * 60 * 30)
+                await this.start(cls, true);
+            };
+
+            const scheduleTask = () => {
+                const now = new Date();
+                const minutes = now.getMinutes();
+                const seconds = now.getSeconds();
+                const milliseconds = now.getMilliseconds();
+                const delay = (30 - (minutes % 30)) * 60 * 1000 - seconds * 1000 - milliseconds;
+
+                setTimeout(() => {
+                    executeTask();
+                    setInterval(executeTask, 1000 * 60 * 30);
+                }, delay);
+            };
+
+            scheduleTask();
         }
     }
 
     async start(cls: message, auto) {
         console.log(cls);
-        let str = ``
+        let img = await temp_img.render_url(cls);
+        let str = ``;
         let res =  await this.check_1();
         str += `${res}`;
         str += await this.check_2();
         str += await this.check_3();
+        str += img;
         if(!auto){
             let 是否订阅 = APP.follow_list.has(cls.get_userId());
             cls.send_v1(`${str}<button text="预警检查" type="input">再来一次</button><button text="${是否订阅 ? '取消订阅' : '订阅预警'}" type="input">${是否订阅 ? '取消订阅' : '订阅预警'}</button>`)
@@ -37,7 +55,7 @@ export default class {
             orderKey: "created_at",
             orderType: "desc",
             page: 1,
-            pageSize: 30,
+            pageSize: 100,
             searchInfo: {}
         })
         const dataTime = res.data.list[0].updatedAt;
@@ -72,7 +90,7 @@ export default class {
         } else {
             str += '🟢'
         }
-        str += `近30条充值完成比例:${(rate*100).toFixed(2)}%`;
+        str += `近30分钟内充值总笔数${res.data.list.length},充值成功率${(rate*100).toFixed(2)}%`;
         str += `</p>`;
         return str
     }

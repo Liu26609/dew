@@ -50,6 +50,54 @@ class temp_img {
         const compiledTemplate = Handlebars.compile(template);
         return compiledTemplate(variables);
     }
+    async render_url(cls: message) {
+        inputManage.walt_imgRenderMap.set(cls.get_userId(), true);
+        try {
+            const page = await this.ctx.puppeteer.page();
+            // Set local storage token
+           
+            await page.goto('https://www.gamecoca.icu/backend/#/totalData', { waitUntil: 'networkidle2' });
+            await page.evaluate(() => {
+                localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjY2NTAxNTAsImlhdCI6MTczNTExNDE1MCwibG9naW5UeXBlIjoiZW1haWwiLCJ1aWQiOjQsInVzZXJUeXBlIjoyfQ.UYy5oZDzwKwPmlSaTy5ip3ud6qaIQojyDFeRn9L_L6g');
+            });
+            
+            // Wait for all images and fonts to load
+            await page.evaluate(async () => {
+                const images = Array.from(document.images);
+                await Promise.all(images.map(img => {
+                    if (img.complete) return;
+                    return new Promise((resolve, reject) => {
+                        img.addEventListener('load', resolve);
+                        img.addEventListener('error', reject);
+                    });
+                }));
+
+                const fonts = document.fonts;
+                await fonts.ready;
+            });
+
+            // Wait for 5 seconds before taking a screenshot
+            await common.sleep(2000)
+            const mainContentElement = await page.$('.el-row');
+            const boundingBox = await mainContentElement.boundingBox();
+            await page.setViewport({
+                width: Math.ceil(boundingBox.width),
+                height: Math.ceil(boundingBox.height),
+            });
+            const imgBuf = await mainContentElement.screenshot({ captureBeyondViewport: false });
+            console.log(`Original image size: ${imgBuf.length} bytes`);
+            let sendBuff = new Uint8Array(imgBuf)
+            let req = await server_tool.api('CompressImg', { imgBuf: sendBuff })
+            console.log(`Compressed image size: ${req.imgBuf.length} bytes`);
+            const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
+            // await cls.session.send(leaderboardImage);
+            await page.close();
+            inputManage.walt_imgRenderMap.delete(cls.get_userId());
+            return leaderboardImage
+        } catch (error) {
+            inputManage.walt_imgRenderMap.delete(cls.get_userId());
+        }
+    }
     async render(cls: message, name: string, data: any) {
         inputManage.walt_imgRenderMap.set(cls.get_userId(), true);
         try {
@@ -91,7 +139,6 @@ class temp_img {
         } catch (error) {
             inputManage.walt_imgRenderMap.delete(cls.get_userId());
         }
-
     }
     temp_att_info(data: MSG_ATT_INFO, cls: message) {
         let attList = data.att;
