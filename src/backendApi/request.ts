@@ -1,7 +1,7 @@
 import axios, {  AxiosResponse } from "axios";
 
 const request = axios.create({
-  baseURL: 'http://47.76.131.222/',
+  baseURL: 'https://www.gamecoca.icu/',
   timeout: 300000,
 });
 
@@ -9,7 +9,8 @@ request.interceptors.request.use(
   (config) => {
     if (config.headers) {
       config.headers['Content-Type'] = 'application/json';
-      config.headers['Authorization'] = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjU0MzQyMTQsImlhdCI6MTczMzg5ODIxNCwibG9naW5UeXBlIjoiZW1haWwiLCJ1aWQiOjQsInVzZXJUeXBlIjoyfQ.E6w6LEMKrT-ut7YN3TMTK9LnMpvoGIZ-NcrJ51JQM9E`;
+      // config.headers['Authorization'] = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjU0MzQyMTQsImlhdCI6MTczMzg5ODIxNCwibG9naW5UeXBlIjoiZW1haWwiLCJ1aWQiOjQsInVzZXJUeXBlIjoyfQ.E6w6LEMKrT-ut7YN3TMTK9LnMpvoGIZ-NcrJ51JQM9E`;
+      config.headers['Authorization'] = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjY2NTAxNTAsImlhdCI6MTczNTExNDE1MCwibG9naW5UeXBlIjoiZW1haWwiLCJ1aWQiOjQsInVzZXJUeXBlIjoyfQ.UYy5oZDzwKwPmlSaTy5ip3ud6qaIQojyDFeRn9L_L6g`;
     }
     return config;
   },
