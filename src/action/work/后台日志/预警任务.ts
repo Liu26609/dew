@@ -83,7 +83,7 @@ export default class {
         }
         str += `<p>`;
         let rate = count / res.data.list.length;
-        if (rate < 0.3) {
+        if (rate < 0.3 || halfHourCount < 10) {
             str += '🔴'
         } else {
             str += '🟢'
@@ -129,7 +129,7 @@ export default class {
             }
         }
         let rate = count / res.data.list.length;
-        if(rate > 0.3){
+        if(rate > 0.5){
             return `<p>🟢近30条验证码使用率:${(rate * 100).toFixed(2)}%</p>`
         }else{
             return `<p>🔴近30条验证码使用率:${(rate * 100).toFixed(2)}%</p>`
