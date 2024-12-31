@@ -22,7 +22,6 @@ export default class {
         }
         if (this.scheduleTask) {
             // 移除
-            clearTimeout(this.scheduleTask);
             clearInterval(this.scheduleTask);
             this.scheduleTask = null;
         }
@@ -32,19 +31,15 @@ export default class {
             await this.start(cls, true);
         };
 
-        const now = new Date();
-        const minutes = now.getMinutes();
-        const seconds = now.getSeconds();
-        const milliseconds = now.getMilliseconds();
-        const delay = ((CFG.预警定时 - (minutes % CFG.预警定时)) * 60 * 1000) - (seconds * 1000) - milliseconds;
+        // const now = new Date();
+        // const minutes = now.getMinutes();
+        // const seconds = now.getSeconds();
+        // const milliseconds = now.getMilliseconds();
+        // const delay = ((CFG.预警定时 - (minutes % CFG.预警定时)) * 60 * 1000) - (seconds * 1000) - milliseconds;
 
-        cls.send_v1(`定时:${CFG.预警定时}分钟,${(delay / 1000 / 60).toFixed(2)}分钟后开始通知`);
+        cls.send_v1(`定时:${CFG.预警定时}分钟`);
 
-        this.scheduleTask = setTimeout(() => {
-            log.info('[预警任务]', '开始执行预警任务', APP.follow_list.size);
-            executeTask();
-            this.scheduleTask = setInterval(executeTask, 1000 * 60 * CFG.预警定时);
-        }, delay);
+        this.scheduleTask = setInterval(executeTask, 1000 * 60 * CFG.预警定时);
 
     }
     async start(cls: message, auto) {
