@@ -9,8 +9,8 @@ export default class {
         console.log('绑定信息', data)
         this.start(cls, false)
         if(!auto){
+            auto = true;
             const executeTask = async () => {
-                auto = true;
                 await this.start(cls, true);
             };
 
