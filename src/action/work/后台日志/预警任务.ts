@@ -3,6 +3,7 @@ import BaseApiServer from "../../../backendApi/apiServer"
 import APP from "../../../APP";
 import temp_img from "../../../temp/temp_img";
 import { CFG, log } from "../../..";
+import { clearInterval } from "timers";
 let auto = false;
 export default class {
     // 定时
@@ -23,23 +24,29 @@ export default class {
         if (this.scheduleTask) {
             // 移除
             clearInterval(this.scheduleTask);
+            clearInterval(this.scheduleTask);
             this.scheduleTask = null;
         }
         
         const executeTask = async () => {
-            console.log('执行预警任务 ----- ')
             await this.start(cls, true);
         };
 
-        // const now = new Date();
-        // const minutes = now.getMinutes();
-        // const seconds = now.getSeconds();
-        // const milliseconds = now.getMilliseconds();
-        // const delay = ((CFG.预警定时 - (minutes % CFG.预警定时)) * 60 * 1000) - (seconds * 1000) - milliseconds;
+        const scheduleTask = () => {
+            const now = new Date();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const milliseconds = now.getMilliseconds();
+            const delay = (CFG.预警定时 - (minutes % CFG.预警定时)) * 60 * 1000 - seconds * 1000 - milliseconds;
 
-        cls.send_v1(`定时:${CFG.预警定时}分钟`);
+            setTimeout(() => {
+                log.info('[预警任务]', '开始执行预警任务',APP.follow_list.size);
+                executeTask();
+                setInterval(executeTask, 1000 * 60 * CFG.预警定时);
+            }, delay);
+        };
 
-        this.scheduleTask = setInterval(executeTask, 1000 * 60 * CFG.预警定时);
+        scheduleTask();
 
     }
     async start(cls: message, auto) {
