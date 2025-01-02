@@ -82,18 +82,18 @@ export default class {
             searchInfo: {}
         })
         const currentTime = Math.floor(Date.now() / 1000);
-        let halfHourCount = 0;
-        let success_amount = 0;
-        let succress_count = 0;
+        let 总笔数 = 0;
+        let 成功金额 = 0;
+        let 成功笔数 = 0;
         // Calculate the number of recharge entries within the last half hour
         for (let i = 0; i < res.data.list.length; i++) {
             const dataTime = res.data.list[i].updatedAt;
             const timeDifference = currentTime - dataTime;
             if (timeDifference <= 1800) {
-                halfHourCount++;
+                总笔数++;
                 if (res.data.list[i].status == 2) {
-                    succress_count++;
-                    success_amount += res.data.list[i].amount / 100;
+                    成功笔数++;
+                    成功金额 += res.data.list[i].amount / 100;
                 }
             } else {
                 break; // Since the list is ordered by time, we can stop once we find an entry older than 30 minutes
@@ -101,13 +101,14 @@ export default class {
         }
         let str = ``;
         str += `<p>`;
-        let rate = succress_count / halfHourCount;
-        if (rate < 0.3 || halfHourCount < 10) {
+        let rate = 成功笔数 / 总笔数;
+        if (rate < 0.3 || 总笔数 < 10) {
             str += '🔴'
         } else {
             str += '🟢'
         }
-        str += `近30分钟内充值总笔数${halfHourCount},充值成功率${(rate * 100).toFixed(2)}%,充值成功金额${success_amount}`;
+        let 成功率 = (rate * 100).toFixed(2);
+        str += `近30分钟内充值总笔数${总笔数}(${成功率}%),成功${成功笔数}笔(金额${成功金额})`;
         str += `</p>`;
         return str
     }
