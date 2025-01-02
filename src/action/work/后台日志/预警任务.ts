@@ -76,32 +76,25 @@ export default class {
         })
         const currentTime = Math.floor(Date.now() / 1000);
         let halfHourCount = 0;
-
+        let success_amount = 0;
+        let succress_count = 0;
         // Calculate the number of recharge entries within the last half hour
         for (let i = 0; i < res.data.list.length; i++) {
             const dataTime = res.data.list[i].updatedAt;
             const timeDifference = currentTime - dataTime;
             if (timeDifference <= 1800) {
                 halfHourCount++;
+                if (res.data.list[i].status == 2) {
+                    succress_count++;
+                    success_amount += res.data.list[i].amount / 100;
+                }
             } else {
                 break; // Since the list is ordered by time, we can stop once we find an entry older than 30 minutes
             }
         }
-
         let str = ``;
-
-        // 最近30条充值记录已完成的状态比例低于30% status = 2
-        let count = 0;
-        // 充值成功金额
-        let success_amount = 0;
-        for (let i = 0; i < res.data.list.length; i++) {
-            if (res.data.list[i].status == 2) {
-                count++;
-                success_amount += res.data.list[i].amount / 100;
-            }
-        }
         str += `<p>`;
-        let rate = count / res.data.list.length;
+        let rate = succress_count / halfHourCount;
         if (rate < 0.3 || halfHourCount < 10) {
             str += '🔴'
         } else {
