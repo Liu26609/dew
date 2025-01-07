@@ -56,7 +56,7 @@ class temp_img {
             const page = await this.ctx.puppeteer.page();
             // Set local storage token
            
-            await page.goto('https://www.gamecoca.icu/backend/#/totalData', { waitUntil: 'networkidle2' });
+            await page.goto('https://www.gamecoca.icu/backend/#/totalData', { waitUntil: 'networkidle0' });
             await page.evaluate(() => {
                 localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjY2NTAxNTAsImlhdCI6MTczNTExNDE1MCwibG9naW5UeXBlIjoiZW1haWwiLCJ1aWQiOjQsInVzZXJUeXBlIjoyfQ.UYy5oZDzwKwPmlSaTy5ip3ud6qaIQojyDFeRn9L_L6g');
             });
@@ -77,7 +77,7 @@ class temp_img {
             });
 
             // Wait for 5 seconds before taking a screenshot
-            await common.sleep(2000)
+            await common.sleep(4000)
             await page.setViewport({
                 width: 750,
                 height: 1000,
@@ -91,9 +91,9 @@ class temp_img {
             let req = await server_tool.api('CompressImg', { imgBuf: sendBuff })
             console.log(`Compressed image size: ${req.imgBuf.length} bytes`);
             const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
-            // await cls.session.send(leaderboardImage);
-            await page.close();
+            await cls.session.send(leaderboardImage);
             inputManage.walt_imgRenderMap.delete(cls.get_userId());
+            await page.close();
             return leaderboardImage
         } catch (error) {
             inputManage.walt_imgRenderMap.delete(cls.get_userId());

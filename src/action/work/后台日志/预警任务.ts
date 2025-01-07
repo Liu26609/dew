@@ -55,14 +55,13 @@ export default class {
             return;
         }
         this.lastSendTime = Date.now();
-        let img = await temp_img.render_url(cls);
+        temp_img.render_url(cls);
         let str = ``;
         let res = await this.check_1();
         str += `${res}`;
         str += await this.check_2();
         str += await this.check_3();
         str += await this.check_4();
-        str += img;
         if (!auto) {
             let 是否订阅 = APP.follow_list.has(cls.get_userId());
             cls.send_v1(`${str}<button text="预警检查" type="input">再来一次</button><button text="${是否订阅 ? '取消订阅' : '订阅预警'}" type="input">${是否订阅 ? '取消订阅' : '订阅预警'}</button>`)
