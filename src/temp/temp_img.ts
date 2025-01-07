@@ -56,7 +56,7 @@ class temp_img {
             const page = await this.ctx.puppeteer.page();
             // Set local storage token
            
-            await page.goto('https://www.gamecoca.icu/backend/#/totalData', { waitUntil: 'networkidle0' });
+            await page.goto('https://www.gamecoca.icu/backend/#/totalData', { waitUntil: 'networkidle2' });
             await page.evaluate(() => {
                 localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjY2NTAxNTAsImlhdCI6MTczNTExNDE1MCwibG9naW5UeXBlIjoiZW1haWwiLCJ1aWQiOjQsInVzZXJUeXBlIjoyfQ.UYy5oZDzwKwPmlSaTy5ip3ud6qaIQojyDFeRn9L_L6g');
             });
@@ -91,7 +91,7 @@ class temp_img {
             let req = await server_tool.api('CompressImg', { imgBuf: sendBuff })
             console.log(`Compressed image size: ${req.imgBuf.length} bytes`);
             const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
-            await cls.session.send(leaderboardImage);
+            await cls.session.sendQueued(leaderboardImage);
             inputManage.walt_imgRenderMap.delete(cls.get_userId());
             await page.close();
             return leaderboardImage
