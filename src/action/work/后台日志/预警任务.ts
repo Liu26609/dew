@@ -27,7 +27,7 @@ export default class {
             clearInterval(this.scheduleTask);
             this.scheduleTask = null;
         }
-        
+
         const executeTask = async () => {
             await this.start(cls, true);
         };
@@ -40,7 +40,7 @@ export default class {
             const delay = (CFG.预警定时 - (minutes % CFG.预警定时)) * 60 * 1000 - seconds * 1000 - milliseconds;
 
             setTimeout(() => {
-                log.info('[预警任务]', '开始执行预警任务',APP.follow_list.size);
+                log.info('[预警任务]', '开始执行预警任务', APP.follow_list.size);
                 executeTask();
                 setInterval(executeTask, 1000 * 60 * CFG.预警定时);
             }, delay);
@@ -50,7 +50,7 @@ export default class {
 
     }
     async start(cls: message, auto) {
-        if(Date.now() - this.lastSendTime < 100){
+        if (Date.now() - this.lastSendTime < 100) {
             console.log('预警任务太频繁')
             return;
         }
@@ -61,6 +61,7 @@ export default class {
         str += `${res}`;
         str += await this.check_2();
         str += await this.check_3();
+        str += await this.check_4();
         str += img;
         if (!auto) {
             let 是否订阅 = APP.follow_list.has(cls.get_userId());
@@ -161,5 +162,34 @@ export default class {
             return `<p>🔴近30条验证码使用率:${(rate * 100).toFixed(2)}%</p>`
         }
     }
-
+    async check_4() {
+        let api = new BaseApiServer('/admin/v1/user/list')
+        let res = await api.post({
+            isrecharge: 1,
+            orderKey: "created_at",
+            orderType: "desc",
+            page: 1,
+            pageSize: 100,
+            searchInfo: {
+                isrecharge: 1
+            }
+        })
+        let list = res.data.list;
+        // rechargeTimes 充值次数
+        // withdrawTimes 提现次数
+        // 统计 玩家复充率，提现率
+        let 重充次数 = 0;
+        let 提现次数 = 0;
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].rechargeTimes > 1) {
+                重充次数++;
+            }
+            if (list[i].withdrawTimes >= 1) {
+                提现次数++;
+            }
+        }
+        let 复充率 = (重充次数 / list.length * 100).toFixed(2);
+        let 提现率 = (提现次数 / list.length * 100).toFixed(2);
+        return `<p>🟢复充率:${复充率}%,提现率:${提现率}%</p>`
+    }
 }
