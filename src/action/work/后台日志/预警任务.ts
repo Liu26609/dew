@@ -179,10 +179,14 @@ export default class {
         // withdrawTimes 提现次数
         // 统计 玩家复充率，提现率
         let 重充次数 = 0;
+        let 复充人数 = 0;
+        let 复充次数 = 0;
         let 提现次数 = 0;
         for (let i = 0; i < list.length; i++) {
             if (list[i].rechargeTimes > 1) {
                 重充次数++;
+                复充次数 += list[i].rechargeTimes;
+                复充人数++;
             }
             if (list[i].withdrawTimes >= 1) {
                 提现次数++;
@@ -190,6 +194,7 @@ export default class {
         }
         let 复充率 = (重充次数 / list.length * 100).toFixed(2);
         let 提现率 = (提现次数 / list.length * 100).toFixed(2);
-        return `<p>🟢复充率:${复充率}%,提现率:${提现率}%</p>`
+        let 平均复充次数 = (复充次数 / 复充人数).toFixed(2);
+        return `<p>🟢复充率:${复充率}%,提现率:${提现率}%,平均复充次数:${平均复充次数}</p>`
     }
 }
