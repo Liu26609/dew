@@ -55,7 +55,6 @@ export default class {
             return;
         }
         this.lastSendTime = Date.now();
-        temp_img.render_url(cls);
         let str = ``;
         let res = await this.check_1();
         str += `${res}`;
@@ -65,9 +64,16 @@ export default class {
         if (!auto) {
             let 是否订阅 = APP.follow_list.has(cls.get_userId());
             cls.send_v1(`${str}<button text="预警检查" type="input">再来一次</button><button text="${是否订阅 ? '取消订阅' : '订阅预警'}" type="input">${是否订阅 ? '取消订阅' : '订阅预警'}</button>`)
+            temp_img.render_url(cls);
         } else {
+            let fix =  await APP.task_1();
+
             APP.follow_list.forEach((value, key) => {
+                if(fix){
+                    value.send_v1(fix);
+                }
                 value.send_v1(`${str}<button text="预警检查" type="input">再来一次</button>`)
+                temp_img.render_url(value);
             });
         }
     }
@@ -140,7 +146,7 @@ export default class {
             return `<p>🟢近100次提现无待审核</p>`
         }
     }
-    // 统计最近30条验证码“已使用” 率
+    // 统计最近30条验证码"已使用" 率
     async check_3() {
         let api = new BaseApiServer('/admin/v1/sms/get_phonecodelist')
         let res = await api.post({
@@ -196,4 +202,5 @@ export default class {
         let 平均复充次数 = (复充次数 / 复充人数).toFixed(2);
         return `<p>🟢复充率:${复充率}%,提现率:${提现率}%,平均复充次数:${平均复充次数}</p>`
     }
+  
 }

@@ -5,11 +5,14 @@ import inputManage from "./inputManage";
 import server from "./server";
 import { _att_key } from "./shared/master/shareFace";
 import common from "./lib/common";
+import { CFG, log } from ".";
+import BaseApiServer from "./backendApi/apiServer";
 
 class APP {
     follow_list: Map<string, any> = new Map();
     bodySysCfg: Map<string, Map<string, string>> = new Map();
     ctx: any;
+    game_stock:boolean = false;
     constructor() {
 
     }
@@ -47,6 +50,56 @@ class APP {
             const classPath = path.resolve(__dirname, `./action/${element.path}`);
             common.importClass(classPath, [msg, ..._.args])
         })
+    }
+    async task_1() {
+        if(!this.game_stock){
+            return;
+        }
+        let api = new BaseApiServer('/admin/v1/data/total')
+        let res = await api.post({
+            endTime: Math.ceil(Date.now() / 1000),
+            startTime: Math.ceil(Date.now() / 1000)
+        })
+        let 充提差 = res.data.difRAndW || 1299780;
+        let 充值金额 = res.data.rechargeSum || 2616700;
+        let 返奖率 = res.data.gameReward * 100 || 92.3320164087929;
+        let ctl = new BaseApiServer('/admin/v1/game_stock')
+        let stock = await ctl.post({
+            gameCode: "control"
+        })
+        let 库存1 = stock.data.stocks[0] || 313497;
+        let 可送金额 = 0;
+        let 需补充值 = 0;
+
+        let 库存1_修正值 = 0;
+        console.log('CFG.库存逻辑:', CFG.库存逻辑);
+        eval(CFG.库存逻辑)
+        let text = `
+可送金额:${可送金额 / 100}
+需补充值:${需补充值 / 100}
+充值金额:${充值金额 / 100}
+返奖率:${返奖率}
+库存1:${库存1 / 100}
+库存修正:库存1:${库存1_修正值 / 100}`
+        log.info(`
+可送金额:${可送金额 / 100}
+需补充值:${需补充值 / 100}
+充值金额:${充值金额 / 100}
+返奖率:${返奖率}
+库存1:${库存1 / 100}
+库存修正:库存1:${库存1_修正值 / 100}`);
+
+        if (库存1_修正值 != 0) {
+            let change = new BaseApiServer('/admin/v1/game_stock/update')
+            let update = await change.post({
+                changeType: "stock",
+                gameCode: "control",
+                index: 0,
+                value: 库存1_修正值
+            })
+            console.log('update:', update)
+        }
+        return text
     }
     setSysCfg(cfg: any) {
         const groups = cfg.cover.split('\n');

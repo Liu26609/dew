@@ -31,5 +31,33 @@ export default class{
             ],
             path: 'work/后台日志/取消订阅'
         })
+        actionCfg.push({
+            key: "后台/补偿关闭",
+            key_tips: '补偿关闭',
+            tips: "补偿关闭",
+            example: [
+                "@bot 补偿关闭",
+            ],
+            path: 'work/后台日志/补偿关闭'
+        })
+        actionCfg.push({
+            key: "后台/补偿开启",
+            key_tips: '补偿开启',
+            tips: "补偿开启",
+            example: [
+                "@bot 补偿开启",
+            ],
+            path: 'work/后台日志/补偿开启'
+        })
+        actionCfg.push({
+            key: "后台/补偿运行",
+            key_tips: '补偿运行',
+            tips: "补偿运行",
+            example: [
+                "@bot 补偿运行",
+            ],
+            path: 'work/后台日志/补偿运行'
+        })
+
     }
 }
