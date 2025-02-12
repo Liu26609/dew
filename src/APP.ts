@@ -13,7 +13,7 @@ class APP {
     bodySysCfg: Map<string, Map<string, string>> = new Map();
     ctx: any;
     game_stock:boolean = false;
-    
+    scheduleTask = false;
     constructor() {
 
     }

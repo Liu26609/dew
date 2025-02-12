@@ -7,7 +7,6 @@ import { clearInterval } from "timers";
 let auto = false;
 export default class {
     // 定时
-    scheduleTask: any;
     lastSendTime: number = 0;
     constructor(cls: message, ...data) {
         console.log('绑定信息', data)
@@ -15,20 +14,20 @@ export default class {
             this.start(cls, false)
         }
     }
-    open_task(cls: message, type: string) {
-        if (type !== '开启') {
-            return;
-        }
-        if (this.scheduleTask) {
+    open_task(cls: message) {
+        if (APP.scheduleTask) {
             // 移除
             // clearInterval(this.scheduleTask);
             // clearInterval(this.scheduleTask);
             // this.scheduleTask = null;
             return;
         }
+        APP.scheduleTask = true;
         console.log(`预警任务 已开启`)
         const executeTask = async () => {
-            await this.start(cls, true);
+            setTimeout(() => {
+                this.start(cls, true);
+            }, 10000);
         };
 
         const scheduleTask = () => {
@@ -36,15 +35,14 @@ export default class {
             const minutes = now.getMinutes();
             const seconds = now.getSeconds();
             const milliseconds = now.getMilliseconds();
-            const delay = (CFG.预警定时 - (minutes % CFG.预警定时)) * 60 * 1000 - seconds * 1000 - milliseconds + 600000;
-
+            const delay = (CFG.预警定时 - (minutes % CFG.预警定时)) * 60 * 1000 - seconds * 1000 - milliseconds;
+            console.log('delay:',delay / 1000)
             setTimeout(() => {
                 log.info('[预警任务]', '开始执行预警任务', APP.follow_list.size);
                 executeTask();
                 setInterval(executeTask, 1000 * 60 * CFG.预警定时);
             }, delay);
         };
-        this.scheduleTask = true;
         scheduleTask();
     }
     async start(cls: message, auto) {
@@ -56,7 +54,7 @@ export default class {
             APP.follow_list.set(cls.get_userId(), cls);
             cls.send_v1(`预警任务 已订阅`)
         }
-        this.open_task(cls, '开启')
+        this.open_task(cls)
         this.lastSendTime = Date.now();
         let str = ``;
         let res = await this.check_1();
