@@ -1,8 +1,8 @@
 import axios, {  AxiosResponse } from "axios";
 
 const request = axios.create({
-  // baseURL: 'https://www.gamecoca.icu/',
-  baseURL: 'http://47.76.131.222/',
+  baseURL: 'https://www.gamecoca.icu/',
+  // baseURL: 'http://47.76.131.222/',
   timeout: 300000,
 });
 
