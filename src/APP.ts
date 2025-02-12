@@ -56,9 +56,10 @@ class APP {
             return;
         }
         let api = new BaseApiServer('/admin/v1/data/total')
+        let time = Date.now() / 1000
         let res = await api.post({
-            endTime: Math.ceil(Date.now() / 1000),
-            startTime: Math.ceil(Date.now() / 1000)
+            endTime: time,
+            startTime: time
         })
         let 充提差 = res.data.difRAndW || 1299780;
         let 充值金额 = res.data.rechargeSum || 2616700;
