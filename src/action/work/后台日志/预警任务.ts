@@ -38,7 +38,8 @@ export default class {
             const delay = (CFG.预警定时 - (minutes % CFG.预警定时)) * 60 * 1000 - seconds * 1000 - milliseconds;
             console.log('delay:',delay / 1000)
             setTimeout(() => {
-                log.info('[预警任务]', '开始执行预警任务', APP.follow_list.size);
+
+                log.info('[预警任务]1', '开始执行预警任务', APP.follow_list.size);
                 executeTask();
                 setInterval(executeTask, 1000 * 60 * CFG.预警定时);
             }, delay);
