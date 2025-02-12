@@ -13,15 +13,15 @@ export default class{
             ],
             path: 'work/后台日志/预警任务'
         })
-        actionCfg.push({
-            key: "后台/订阅预警",
-            key_tips: '订阅预警',
-            tips: "订阅预警",
-            example: [
-                "@bot 订阅预警",
-            ],
-            path: 'work/后台日志/订阅预警'
-        })
+        // actionCfg.push({
+        //     key: "后台/订阅预警",
+        //     key_tips: '订阅预警',
+        //     tips: "订阅预警",
+        //     example: [
+        //         "@bot 订阅预警",
+        //     ],
+        //     path: 'work/后台日志/订阅预警'
+        // })
         actionCfg.push({
             key: "后台/取消订阅",
             key_tips: '取消订阅',

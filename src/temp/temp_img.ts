@@ -50,17 +50,16 @@ class temp_img {
         const compiledTemplate = Handlebars.compile(template);
         return compiledTemplate(variables);
     }
-    async render_url(cls: message) {
-        inputManage.walt_imgRenderMap.set(cls.get_userId(), true);
+    async render_url(clsa: message[]) {
         try {
+            // inputManage.walt_imgRenderMap.set(cls.get_userId(), true);
             const page = await this.ctx.puppeteer.page();
             // Set local storage token
-           
             await page.goto('https://www.gamecoca.icu/backend/#/totalData', { waitUntil: 'networkidle2' });
             await page.evaluate(() => {
                 localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjY2NTAxNTAsImlhdCI6MTczNTExNDE1MCwibG9naW5UeXBlIjoiZW1haWwiLCJ1aWQiOjQsInVzZXJUeXBlIjoyfQ.UYy5oZDzwKwPmlSaTy5ip3ud6qaIQojyDFeRn9L_L6g');
             });
-            
+
             // Wait for all images and fonts to load
             await page.evaluate(async () => {
                 const images = Array.from(document.images);
@@ -84,19 +83,28 @@ class temp_img {
             });
             const mainContentElement = await page.$('.el-row');
             // const boundingBox = await mainContentElement.boundingBox();
-           
+
             const imgBuf = await mainContentElement.screenshot({ captureBeyondViewport: false });
             console.log(`Original image size: ${imgBuf.length} bytes`);
             let sendBuff = new Uint8Array(imgBuf)
             let req = await server_tool.api('CompressImg', { imgBuf: sendBuff })
             console.log(`Compressed image size: ${req.imgBuf.length} bytes`);
             const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
-            await cls.session.sendQueued(leaderboardImage);
-            inputManage.walt_imgRenderMap.delete(cls.get_userId());
+
+
+            for (let index = 0; index < clsa.length; index++) {
+                const cls = clsa[index];
+                await cls.session.sendQueued(leaderboardImage);
+                // inputManage.walt_imgRenderMap.delete(cls.get_userId());
+                return leaderboardImage
+            }
             await page.close();
-            return leaderboardImage
         } catch (error) {
-            inputManage.walt_imgRenderMap.delete(cls.get_userId());
+            // inputManage.walt_imgRenderMap.delete(cls.get_userId());
+            for (let index = 0; index < clsa.length; index++) {
+                const cls = clsa[index];
+                cls.send_v1('截图发送失败')
+            }
         }
     }
     async render(cls: message, name: string, data: any) {
@@ -148,42 +156,42 @@ class temp_img {
         let attstr = [];
         for (let i = 0; i < attList.length; i++) {
             const att = attList[i];
-            if(att.hide)continue;
-              // 保留2位小数
-            
+            if (att.hide) continue;
+            // 保留2位小数
+
             switch (att.t) {
                 case 'body_bar':
                     att.now = Math.floor(att.now * 100) / 100
                     att.max = Math.floor(att.max * 100) / 100
-                    barstr.push({key:`${APP.getSysCover(_s,att.name)} ${att.now}/${att.max}`,bar:(att.now/att.max)*100})
+                    barstr.push({ key: `${APP.getSysCover(_s, att.name)} ${att.now}/${att.max}`, bar: (att.now / att.max) * 100 })
                     break;
                 case 'att_val':
-                    if(att.val == 0){
+                    if (att.val == 0) {
                         continue;
                     }
-                    if(att.hide){
+                    if (att.hide) {
                         continue;
                     }
-                    if(typeof att.val == 'number'){
+                    if (typeof att.val == 'number') {
                         att.val = Math.floor(att.val * 100) / 100
                     }
-                    attstr.push(`${APP.getSysCover(_s,att.name)}  ${att.val}`)
+                    attstr.push(`${APP.getSysCover(_s, att.name)}  ${att.val}`)
                     break;
                 default:
                     attstr.push('┃未知属性类型:' + att.t)
                     break;
             }
         }
-        this.render(cls,'att',{
-            name:data.name,
-            leve:data.leve,
-            sys:data.sys,
-            style_url:data.style_url,
-            fight:data.fight,
-            inherit:data.inherit,
-            className:data.className,
-            att:attstr,
-            barstr:barstr
+        this.render(cls, 'att', {
+            name: data.name,
+            leve: data.leve,
+            sys: data.sys,
+            style_url: data.style_url,
+            fight: data.fight,
+            inherit: data.inherit,
+            className: data.className,
+            att: attstr,
+            barstr: barstr
         })
     }
     async temp_prop_skill(data: prop_item_skill, cls: message) {
@@ -213,7 +221,7 @@ class temp_img {
             sys: data.sys,
             type: data.type,
             name: data.name,
-            type_hide:data.type_hide.join(','),
+            type_hide: data.type_hide.join(','),
             desc: data.desc,
             quality: common.cover_quality(data.quality),
             att: att,

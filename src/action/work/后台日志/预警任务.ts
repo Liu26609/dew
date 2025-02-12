@@ -13,8 +13,6 @@ export default class {
         console.log('绑定信息', data)
         if (data.length == 0) {
             this.start(cls, false)
-        } else if (data.length == 1) {
-            this.open_task(cls, data[0])
         }
     }
     open_task(cls: message, type: string) {
@@ -23,11 +21,12 @@ export default class {
         }
         if (this.scheduleTask) {
             // 移除
-            clearInterval(this.scheduleTask);
-            clearInterval(this.scheduleTask);
-            this.scheduleTask = null;
+            // clearInterval(this.scheduleTask);
+            // clearInterval(this.scheduleTask);
+            // this.scheduleTask = null;
+            return;
         }
-
+        console.log(`预警任务 已开启`)
         const executeTask = async () => {
             await this.start(cls, true);
         };
@@ -37,7 +36,7 @@ export default class {
             const minutes = now.getMinutes();
             const seconds = now.getSeconds();
             const milliseconds = now.getMilliseconds();
-            const delay = (CFG.预警定时 - (minutes % CFG.预警定时)) * 60 * 1000 - seconds * 1000 - milliseconds;
+            const delay = (CFG.预警定时 - (minutes % CFG.预警定时)) * 60 * 1000 - seconds * 1000 - milliseconds + 600000;
 
             setTimeout(() => {
                 log.info('[预警任务]', '开始执行预警任务', APP.follow_list.size);
@@ -47,13 +46,17 @@ export default class {
         };
 
         scheduleTask();
-
     }
     async start(cls: message, auto) {
         if (Date.now() - this.lastSendTime < 100) {
-            console.log('预警任务太频繁')
+            cls.send_v1(`预警任务太频繁`)
             return;
         }
+        if (!APP.follow_list.has(cls.get_userId()) && !cls.jude_private() && !auto) {
+            APP.follow_list.set(cls.get_userId(), cls);
+            cls.send_v1(`预警任务 已订阅`)
+        }
+        this.open_task(cls, '开启')
         this.lastSendTime = Date.now();
         let str = ``;
         let res = await this.check_1();
@@ -64,17 +67,17 @@ export default class {
         if (!auto) {
             let 是否订阅 = APP.follow_list.has(cls.get_userId());
             cls.send_v1(`${str}<button text="预警检查" type="input">再来一次</button><button text="${是否订阅 ? '取消订阅' : '订阅预警'}" type="input">${是否订阅 ? '取消订阅' : '订阅预警'}</button>`)
-            temp_img.render_url(cls);
+            temp_img.render_url([cls]);
         } else {
-            let fix =  await APP.task_1();
+            let fix = await APP.task_1();
 
             APP.follow_list.forEach((value, key) => {
-                if(fix){
+                if (fix) {
                     value.send_v1(fix);
                 }
                 value.send_v1(`${str}<button text="预警检查" type="input">再来一次</button>`)
-                temp_img.render_url(value);
             });
+            temp_img.render_url([...APP.follow_list.values()]);
         }
     }
     // 1、最近半小时内没有充值订单
@@ -202,5 +205,5 @@ export default class {
         let 平均复充次数 = (复充次数 / 复充人数).toFixed(2);
         return `<p>🟢复充率:${复充率}%,提现率:${提现率}%,平均复充次数:${平均复充次数}</p>`
     }
-  
+
 }
