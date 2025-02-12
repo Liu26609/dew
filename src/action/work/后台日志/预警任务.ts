@@ -44,7 +44,7 @@ export default class {
                 setInterval(executeTask, 1000 * 60 * CFG.预警定时);
             }, delay);
         };
-
+        this.scheduleTask = true;
         scheduleTask();
     }
     async start(cls: message, auto) {
@@ -77,7 +77,7 @@ export default class {
                 }
                 value.send_v1(`${str}<button text="预警检查" type="input">再来一次</button>`)
             });
-            temp_img.render_url([...APP.follow_list.values()]);
+            temp_img.render_url(Array.from(APP.follow_list.values()));
         }
     }
     // 1、最近半小时内没有充值订单

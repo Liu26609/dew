@@ -50,7 +50,7 @@ class temp_img {
         const compiledTemplate = Handlebars.compile(template);
         return compiledTemplate(variables);
     }
-    async render_url(clsa: message[]) {
+    async render_url(clsa: message[],tryCont=0) {
         try {
             // inputManage.walt_imgRenderMap.set(cls.get_userId(), true);
             const page = await this.ctx.puppeteer.page();
@@ -100,11 +100,16 @@ class temp_img {
             }
             await page.close();
         } catch (error) {
+            tryCont += 1;
+            if(tryCont > 5){
+                return;
+            }
             // inputManage.walt_imgRenderMap.delete(cls.get_userId());
             for (let index = 0; index < clsa.length; index++) {
                 const cls = clsa[index];
-                cls.send_v1('截图发送失败')
+                cls.send_v1(`截图发送失败,开始第${tryCont}次重试`);
             }
+            this.render_url(clsa,tryCont);
         }
     }
     async render(cls: message, name: string, data: any) {
