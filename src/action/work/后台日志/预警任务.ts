@@ -27,7 +27,7 @@ export default class {
         const executeTask = async () => {
             setTimeout(() => {
                 this.start(cls, true);
-            }, 10000);
+            }, 30000);
         };
 
         const scheduleTask = () => {

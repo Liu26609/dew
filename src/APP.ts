@@ -57,7 +57,7 @@ class APP {
             return;
         }
         let api = new BaseApiServer('/admin/v1/data/total')
-        let time = Date.now() / 1000
+        let time = Math.ceil(Date.now() / 1000)
         let res = await api.post({
             endTime: time,
             startTime: time
@@ -74,9 +74,10 @@ class APP {
         let 需补充值 = 0;
 
         let 库存1_修正值 = 0;
-        console.log('CFG.库存逻辑:', CFG.库存逻辑);
+        console.log('充提差',充提差,'CFG.库存逻辑:', CFG.库存逻辑);
         eval(CFG.库存逻辑)
         let text = `
+充提差:${充提差 / 100}
 可送金额:${可送金额 / 100}
 需补充值:${需补充值 / 100}
 充值金额:${充值金额 / 100}
