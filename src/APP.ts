@@ -12,7 +12,7 @@ class APP {
     follow_list: Map<string, any> = new Map();
     bodySysCfg: Map<string, Map<string, string>> = new Map();
     ctx: any;
-    game_stock:boolean = false;
+    game_stock: boolean = false;
     scheduleTask = false;
     constructor() {
 
@@ -53,7 +53,7 @@ class APP {
         })
     }
     async task_1() {
-        if(!this.game_stock){
+        if (!this.game_stock) {
             return;
         }
         let api = new BaseApiServer('/admin/v1/data/total')
@@ -62,37 +62,37 @@ class APP {
             endTime: time,
             startTime: time
         })
-        let 充提差 = res.data.difRAndW || 1299780;
-        let 充值金额 = res.data.rechargeSum || 2616700;
-        let 返奖率 = res.data.gameReward * 100 || 92.3320164087929;
+        let 充提差 = res.data.difRAndW || 0;
+        let 充值金额 = res.data.rechargeSum || 0;
+        let 返奖率 = res.data.gameReward * 100 || 0;
         let ctl = new BaseApiServer('/admin/v1/game_stock')
         let stock = await ctl.post({
             gameCode: "control"
         })
-        let 库存1 = stock.data.stocks[0] || 313497;
+        let 库存1 = stock.data.stocks[0] || 0;
         let 可送金额 = 0;
         let 需补充值 = 0;
 
         let 库存1_修正值 = 0;
-        console.log('充提差',充提差,'CFG.库存逻辑:', CFG.库存逻辑);
+        console.log('充提差', 充提差, 'CFG.库存逻辑:', CFG.库存逻辑);
         eval(CFG.库存逻辑)
         let text = `
-充提差:${充提差 / 100}
-可送金额:${可送金额 / 100}
-需补充值:${需补充值 / 100}
-充值金额:${充值金额 / 100}
-返奖率:${返奖率}
-库存1:${库存1 / 100}
-库存修正:库存1:${库存1_修正值 / 100}`
-        log.info(`
-可送金额:${可送金额 / 100}
-需补充值:${需补充值 / 100}
-充值金额:${充值金额 / 100}
-返奖率:${返奖率}
-库存1:${库存1 / 100}
-库存修正:库存1:${库存1_修正值 / 100}`);
+可送金额:${(可送金额 / 100).toFixed(2)}
+需补充值:${(需补充值 / 100).toFixed(2)}
+充值金额:${(充值金额 / 100).toFixed(2)}
+返奖率:${返奖率.toFixed(2)}
+库存1:${(库存1 / 100).toFixed(2)}
+库存修正:库存1:${(库存1_修正值 / 100).toFixed(2)}`
 
-        if (库存1_修正值 != 0) {
+        log.info(`
+可送金额:${(可送金额 / 100).toFixed(2)}
+需补充值:${(需补充值 / 100).toFixed(2)}
+充值金额:${(充值金额 / 100).toFixed(2)}
+返奖率:${返奖率.toFixed(2)}
+库存1:${(库存1 / 100).toFixed(2)}
+库存修正:库存1:${(库存1_修正值 / 100).toFixed(2)}`);
+
+        if (库存1_修正值 != 0 && 返奖率 != 0 && 充值金额 != 0) {
             let change = new BaseApiServer('/admin/v1/game_stock/update')
             let update = await change.post({
                 changeType: "stock",
