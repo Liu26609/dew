@@ -55,7 +55,7 @@ class temp_img {
             // inputManage.walt_imgRenderMap.set(cls.get_userId(), true);
             const page = await this.ctx.puppeteer.page();
             // Set local storage token
-            await page.goto('https://www.gamecoca.icu/backend/#/totalData', { waitUntil: 'networkidle2' });
+            await page.goto('https://www.gamecoca.icu/back/#/totalData', { waitUntil: 'networkidle2' });
             await page.evaluate(() => {
                 localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjY2NTAxNTAsImlhdCI6MTczNTExNDE1MCwibG9naW5UeXBlIjoiZW1haWwiLCJ1aWQiOjQsInVzZXJUeXBlIjoyfQ.UYy5oZDzwKwPmlSaTy5ip3ud6qaIQojyDFeRn9L_L6g');
             });
