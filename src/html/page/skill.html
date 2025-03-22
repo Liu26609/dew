@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/common.css">
+
+</head>
+<body style="background: red;width: 813px;height: 1187px;">
+    <div class="title" id="title">
+        <!-- 这里将通过 JavaScript 填充数据 -->
+    </div>
+    <div class="style_img">
+        <img src="{{show}}" alt="" srcset="">
+    </div>
+    <div class="skill_desc">
+        🆎{{sk_type}} ⌛CD{{cd}}回合<br>{{desc}}
+    </div>
+
+    <div class="score_leve">
+        LV.{{leve.num}}(⌛{{leve.bar}})
+    </div>
+
+    <img src="https://gitee.com/ChuXuanD30/resources_skill/raw/master/bg/1.jpg" alt="" srcset="">
+</body>
+<script>
+    let data = {
+        name: '双龙吐珠'
+    };
+
+    // 将 data.name 填充到 title 中
+    document.getElementById('title').innerText = data.name;
+</script>
+<style>
+.title {
+    position: absolute;
+    left: 61px;
+    top: 51px;
+    color: white;
+    font-size: 63px;
+    font-family: cn;
+    width: 697px;
+    height: 80px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+
+.score_leve {
+    width: 609px;
+    position: absolute;
+    left: 37px;
+    top: 138px;
+    height: 61px;
+    text-align: left;
+    overflow: hidden;
+    color: #ffffff;
+    font-family: xiaomai;
+    font-size: 45px;
+    -webkit-text-stroke: 0.5px #ffffff;
+}
+
+.score_div img {
+    display: inline-block;
+}
+
+.style_img {
+    width: 611px;
+    height: 611px;
+    position: absolute;
+    left: 102px;
+    top: 220px;
+}
+
+.style_img img {
+    width: 100%;
+    height: 100%;
+}
+
+.skill_type {
+    width: 684px;
+    position: absolute;
+    left: 107px;
+    top: 149px;
+    height: 54px;
+    color: white;
+    font-family: cn;
+    position: absolute;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.skill_typeBg {
+    position: absolute;
+    width: 872px;
+    left: -75px;
+    top: 124px;
+    height: 93px;
+    overflow: hidden;
+}
+
+.skill_typeBg img {
+    width: 917px;
+    height: 95px;
+}
+
+.skill_desc {
+    position: absolute;
+    left: 57px;
+    top: 891px;
+    font-size: 24px;
+    width: 695px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 219px;
+    font-weight: bold;
+    font-family: xiaomai;
+}
+
+
+</style>
+</html>
