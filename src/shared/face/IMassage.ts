@@ -17,3 +17,9 @@ export interface Message{
     content: string;
     guildId?: string;
 }
+
+export enum ClientAction{
+    none,
+    image,
+    text
+}

@@ -59,7 +59,7 @@ class server {
     private async connect() {
         let res = await this.wsClient.connect();
         if (!res.isSucc) {
-            console.info('重试断线重连失败2秒后开始重试');
+            console.info('重试断线准备重连');
             setTimeout(async () => {
                 this.connect()
             }, 5000)

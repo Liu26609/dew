@@ -30,7 +30,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 2,
+    "version": 3,
     "services": [
         {
             "id": 0,
@@ -246,10 +246,53 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "target": "base/BaseResponse"
                     }
                 }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "action",
+                    "type": {
+                        "type": "Reference",
+                        "target": "../face/IMassage/ClientAction"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "message",
+                    "type": {
+                        "type": "Reference",
+                        "target": "../face/IMassage/Message"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "data",
+                    "type": {
+                        "type": "Any"
+                    },
+                    "optional": true
+                }
             ]
         },
         "base/BaseResponse": {
             "type": "Interface"
+        },
+        "../face/IMassage/ClientAction": {
+            "type": "Enum",
+            "members": [
+                {
+                    "id": 0,
+                    "value": 0
+                },
+                {
+                    "id": 1,
+                    "value": 1
+                },
+                {
+                    "id": 2,
+                    "value": 2
+                }
+            ]
         },
         "PtlSend/ReqSend": {
             "type": "Interface",
