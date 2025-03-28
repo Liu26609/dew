@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { Context, h } from 'koishi'
 const path = require('path');
-import Handlebars from 'handlebars';
 class puppeteer {
     commonCss: string;
     pageContents = new Map<string, string>()
@@ -20,11 +19,7 @@ class puppeteer {
             this.pageContents.set(key, content);
         });
     }
-    // 通用模板替换函数
-    private renderTemplate(template: string, variables: Record<string, any>): string {
-        const compiledTemplate = Handlebars.compile(template);
-        return compiledTemplate(variables);
-    }
+ 
     async render(name: string, data: any) {
         try {
             let tempHtml = this.pageContents.get(name);
