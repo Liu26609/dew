@@ -19,7 +19,7 @@ export interface Message{
 }
 
 export enum ClientAction{
-    none,
-    image,
-    text
+    none = 'none',
+    image = 'image',
+    text = 'text'
 }

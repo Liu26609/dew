@@ -20,6 +20,7 @@ class server {
         console.info('卸载:server')
         this.init = false;
         if (this.wsClient) {
+            this.wsClient.unlistenMsgAll();
             this.wsClient.disconnect();
         }
     }
@@ -93,7 +94,7 @@ class server {
         let client = this.wsClient || this.httpClient;
         let req = await client.callApi(apiName, posData);
         if (req.isSucc) {
-            console.log(req.res)
+            console.log('apiReq', apiName, req.res)
             return req.res;
         } else {
             console.info('请求出错', apiName, req.err.message)

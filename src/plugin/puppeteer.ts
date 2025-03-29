@@ -7,7 +7,7 @@ class puppeteer {
     private ctx: any;
     init(ctx: Context) {
         this.ctx = ctx;
-        const pagesDir = path.resolve(__dirname, '../html/page');
+        const pagesDir = path.resolve('D:/poject/html/page');
         const files = fs.readdirSync(pagesDir);
         files.forEach(file => {
             const filePath = path.join(pagesDir, file);
@@ -27,7 +27,8 @@ class puppeteer {
             // 替换 let data = 后面的数据
             tempHtml = tempHtml.replace(/let data = \{[^}]*\};/, `let data = ${JSON.stringify(data)};`);
             const page = await this.ctx.puppeteer.page();
-            await page.setContent(tempHtml, { waitUntil: 'networkidle2' });
+            const filePath = path.resolve('D:/poject/html/page', `${name}.html`);
+            await page.goto(`file://${filePath}`, { waitUntil: 'networkidle2' });
 
             // Wait for all images and fonts to load
             await page.evaluate(async () => {

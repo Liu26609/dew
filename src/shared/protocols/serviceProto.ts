@@ -1,5 +1,6 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { MsgChat } from './MsgChat';
+import { MsgMessage } from './MsgMessage';
 import { ReqMessage, ResMessage } from './PtlMessage';
 import { ReqSend, ResSend } from './PtlSend';
 import { ReqCreate, ResCreate } from './test/PtlCreate';
@@ -25,17 +26,24 @@ export interface ServiceType {
         }
     },
     msg: {
-        "Chat": MsgChat
+        "Chat": MsgChat,
+        "Message": MsgMessage
     }
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 3,
+    "version": 4,
     "services": [
         {
             "id": 0,
             "name": "Chat",
             "type": "msg"
+        },
+        {
+            "id": 5,
+            "name": "Message",
+            "type": "msg",
+            "conf": {}
         },
         {
             "id": 4,
@@ -78,6 +86,106 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Date"
                     }
+                }
+            ]
+        },
+        "MsgMessage/MsgMessage": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "base/BaseMessage"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "action",
+                    "type": {
+                        "type": "Reference",
+                        "target": "../face/IMassage/ClientAction"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "Message",
+                    "type": {
+                        "type": "Reference",
+                        "target": "../face/IMassage/Message"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "info",
+                    "type": {
+                        "type": "Any"
+                    },
+                    "optional": true
+                },
+                {
+                    "id": 3,
+                    "name": "data",
+                    "type": {
+                        "type": "Any"
+                    },
+                    "optional": true
+                }
+            ]
+        },
+        "base/BaseMessage": {
+            "type": "Interface"
+        },
+        "../face/IMassage/ClientAction": {
+            "type": "Enum",
+            "members": [
+                {
+                    "id": 3,
+                    "value": "none"
+                },
+                {
+                    "id": 4,
+                    "value": "image"
+                },
+                {
+                    "id": 5,
+                    "value": "text"
+                }
+            ]
+        },
+        "../face/IMassage/Message": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "msgId",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "private",
+                    "type": {
+                        "type": "Boolean"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "content",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "guildId",
+                    "type": {
+                        "type": "String"
+                    },
+                    "optional": true
                 }
             ]
         },
@@ -202,43 +310,16 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "../face/IMassage/Message": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "msgId",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "private",
-                    "type": {
-                        "type": "Boolean"
-                    }
-                },
-                {
-                    "id": 2,
-                    "name": "content",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 3,
-                    "name": "guildId",
-                    "type": {
-                        "type": "String"
-                    },
-                    "optional": true
-                }
-            ]
-        },
         "PtlMessage/ResMessage": {
             "type": "Interface",
             "extends": [
+                {
+                    "id": 1,
+                    "type": {
+                        "type": "Reference",
+                        "target": "MsgMessage/MsgMessage"
+                    }
+                },
                 {
                     "id": 0,
                     "type": {
@@ -246,53 +327,10 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "target": "base/BaseResponse"
                     }
                 }
-            ],
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "action",
-                    "type": {
-                        "type": "Reference",
-                        "target": "../face/IMassage/ClientAction"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "message",
-                    "type": {
-                        "type": "Reference",
-                        "target": "../face/IMassage/Message"
-                    }
-                },
-                {
-                    "id": 2,
-                    "name": "data",
-                    "type": {
-                        "type": "Any"
-                    },
-                    "optional": true
-                }
             ]
         },
         "base/BaseResponse": {
             "type": "Interface"
-        },
-        "../face/IMassage/ClientAction": {
-            "type": "Enum",
-            "members": [
-                {
-                    "id": 0,
-                    "value": 0
-                },
-                {
-                    "id": 1,
-                    "value": 1
-                },
-                {
-                    "id": 2,
-                    "value": 2
-                }
-            ]
         },
         "PtlSend/ReqSend": {
             "type": "Interface",

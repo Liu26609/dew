@@ -1,6 +1,6 @@
 import { UserInfo, ClientInfo, Message, ClientAction } from "../face/IMassage";
 import { BaseRequest, BaseResponse, BaseConf } from "./base";
-
+import { MsgMessage } from "./MsgMessage";
 
 export interface ReqMessage extends BaseRequest {
     UserInfo:UserInfo,
@@ -8,10 +8,7 @@ export interface ReqMessage extends BaseRequest {
     Message:Message
 }
 
-export interface ResMessage extends BaseResponse {
-    action:ClientAction,
-    message:Message,
-    data?:any
+export interface ResMessage extends MsgMessage,BaseResponse {
 }
 
 export const conf: BaseConf = {
