@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { Context, h } from 'koishi'
+import server from './server';
 const path = require('path');
 class puppeteer {
     commonCss: string;
@@ -23,15 +24,19 @@ class puppeteer {
     async render(name: string, data: any) {
         try {
             let tempHtml = this.pageContents.get(name);
-            
+            let tempDir = path.resolve('D:/poject/html/temp');
+            // 如果tempDir不存在，则创建
+            if (!fs.existsSync(tempDir)) {
+                fs.mkdirSync(tempDir, { recursive: true });
+            }
             // 替换 let data = 后面的数据
             tempHtml = tempHtml.replace(/let data = \{[^]*?\};/,`let data = ${JSON.stringify(data)};`);
             // 随机生成一个文件名
             let randomName = `${name}_${Math.random().toString(36).substring(2, 15)}.html`;
-            const savePath = path.resolve('D:/poject/html/temp', randomName);
+            const savePath = path.resolve(tempDir, randomName);
             fs.writeFileSync(savePath, tempHtml, 'utf-8');
             const page = await this.ctx.puppeteer.page();
-            const filePath = path.resolve('D:/poject/html/temp', randomName);
+            const filePath = path.resolve(tempDir, randomName);
             await page.goto(`file://${filePath}`, { waitUntil: 'networkidle2' });
             // Wait for all images and fonts to load
             await page.evaluate(async () => {
@@ -56,11 +61,13 @@ class puppeteer {
             const imgBuf = await leaderboardElement.screenshot({ captureBeyondViewport: false });
             let sendBuff = new Uint8Array(imgBuf)
             await page.close();
-            return h.image(sendBuff, 'image/jpeg');
-            // let req = await server_tool.api('CompressImg', { imgBuf: sendBuff })
-            // console.log(`Compressed image size: ${req.imgBuf.length} bytes`);
-            // const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
-            // return leaderboardImage;
+            // 删除temp savePath 文件
+            fs.rmSync(savePath, { recursive: true, force: true });
+            // return h.image(sendBuff, 'image/jpeg');
+            let req = await server.api('open/CompressImg', { imgBuf: sendBuff })
+            console.log(`Compressed image size: ${req.imgBuf.length} bytes`);
+            const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
+            return leaderboardImage;
         } catch (error) {
             console.log(error)
         }

@@ -92,9 +92,10 @@ class server {
     }
     async api<T extends keyof ServiceType['api']>(apiName: T, posData: ServiceType['api'][T]['req']): Promise<ServiceType['api'][T]['res'] | undefined> {
         let client = this.wsClient || this.httpClient;
+        let start = Date.now()
         let req = await client.callApi(apiName, posData);
         if (req.isSucc) {
-            console.log('apiReq', apiName, req.res)
+            console.log('apiReq', apiName, (Date.now() - start) / 1000, 's')
             return req.res;
         } else {
             console.info('请求出错', apiName, req.err.message)
