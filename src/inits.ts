@@ -6,14 +6,18 @@ import puppeteer from "./plugin/puppeteer";
 import server from "./plugin/server";
 import { MsgMessage } from "./shared/protocols/MsgMessage";
 export default function apply(ctx: Context, config: Config) {
-  puppeteer.init(ctx)
+  ctx.inject(['puppeteer'], (ctx) => {
+    puppeteer.init(ctx)
+  })
   // server.setApiUrl('http://localhost:3000')
   server.start(ctx)
   server.setWsUrl('ws://127.0.0.1:3000')
   server.lisentMsg('Message', ((data: MsgMessage) => {
     try {
       const module = require(`./plugin/serverHandel/${data.action}`).default;
-      new module(data)
+      let handel = new module(data)
+      handel.set(ctx)
+      handel.start(data)
     } catch (error) {
       console.error('模块加载失败:', error)
     }

@@ -20,7 +20,7 @@ export class Help_texas {
     }
 
     initializeDeck() {
-        const suits = ['♠', '♥', '♦', '♣']; // 使用Unicode字符表示花色[4](@ref)
+        const suits = ['♠', '♥', '♣', '♦']; // 使用Unicode字符表示花色[4](@ref)
         const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
         // 生成标准52张牌组[1,4](@ref)
@@ -72,7 +72,13 @@ export class Help_texas {
         if (this.isThreeOfAKind(rankCount)) return { rank: Help_texas.HandRanks.三条 };
         if (this.isTwoPair(rankCount)) return { rank: Help_texas.HandRanks.两对 };
         if (this.isOnePair(rankCount)) return { rank: Help_texas.HandRanks.一对 };
-        return { rank: Help_texas.HandRanks.高牌, highCards: rankValues.slice(0,5) };
+
+        // 处理公共牌数量不够的情况
+        if (communityCards.length < 3) {
+            return { rank: Help_texas.HandRanks.高牌, highCards: rankValues.slice(0, 5) }; // 不足3张时返回高牌
+        }
+
+        return { rank: Help_texas.HandRanks.高牌, highCards: rankValues.slice(0, 5) };
     }
 
     // 具体判断方法（示例实现两个）

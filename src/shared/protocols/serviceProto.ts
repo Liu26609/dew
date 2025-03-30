@@ -32,7 +32,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 4,
+    "version": 5,
     "services": [
         {
             "id": 0,
@@ -118,6 +118,17 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     }
                 },
                 {
+                    "id": 4,
+                    "name": "ClientInfo",
+                    "type": {
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Reference",
+                            "target": "../face/IMassage/ClientInfo"
+                        }
+                    }
+                },
+                {
                     "id": 2,
                     "name": "info",
                     "type": {
@@ -166,6 +177,13 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     }
                 },
                 {
+                    "id": 4,
+                    "name": "userId",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
                     "id": 1,
                     "name": "private",
                     "type": {
@@ -182,6 +200,40 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 3,
                     "name": "guildId",
+                    "type": {
+                        "type": "String"
+                    },
+                    "optional": true
+                }
+            ]
+        },
+        "../face/IMassage/ClientInfo": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "id",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "platform",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "avatar",
                     "type": {
                         "type": "String"
                     },
@@ -271,40 +323,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "isBot",
                     "type": {
                         "type": "Boolean"
-                    },
-                    "optional": true
-                }
-            ]
-        },
-        "../face/IMassage/ClientInfo": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "id",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "platform",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 2,
-                    "name": "name",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 3,
-                    "name": "avatar",
-                    "type": {
-                        "type": "String"
                     },
                     "optional": true
                 }

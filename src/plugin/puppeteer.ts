@@ -25,11 +25,14 @@ class puppeteer {
             let tempHtml = this.pageContents.get(name);
             
             // 替换 let data = 后面的数据
-            tempHtml = tempHtml.replace(/let data = \{[^}]*\};/, `let data = ${JSON.stringify(data)};`);
+            tempHtml = tempHtml.replace(/let data = \{[^]*?\};/,`let data = ${JSON.stringify(data)};`);
+            // 随机生成一个文件名
+            let randomName = `${name}_${Math.random().toString(36).substring(2, 15)}.html`;
+            const savePath = path.resolve('D:/poject/html/temp', randomName);
+            fs.writeFileSync(savePath, tempHtml, 'utf-8');
             const page = await this.ctx.puppeteer.page();
-            const filePath = path.resolve('D:/poject/html/page', `${name}.html`);
+            const filePath = path.resolve('D:/poject/html/temp', randomName);
             await page.goto(`file://${filePath}`, { waitUntil: 'networkidle2' });
-
             // Wait for all images and fonts to load
             await page.evaluate(async () => {
                 const images = Array.from(document.images);
@@ -44,7 +47,6 @@ class puppeteer {
                 const fonts = document.fonts;
                 await fonts.ready;
             });
-
             const leaderboardElement = await page.$('body');
             const boundingBox = await leaderboardElement.boundingBox();
             await page.setViewport({
@@ -52,14 +54,15 @@ class puppeteer {
                 height: Math.ceil(boundingBox.height),
             });
             const imgBuf = await leaderboardElement.screenshot({ captureBeyondViewport: false });
-            console.log(`Original image size: ${imgBuf.length} bytes`);
             let sendBuff = new Uint8Array(imgBuf)
+            await page.close();
             return h.image(sendBuff, 'image/jpeg');
             // let req = await server_tool.api('CompressImg', { imgBuf: sendBuff })
             // console.log(`Compressed image size: ${req.imgBuf.length} bytes`);
             // const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
             // return leaderboardImage;
         } catch (error) {
+            console.log(error)
         }
     }
 }

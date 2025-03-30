@@ -13,6 +13,7 @@ export interface ClientInfo {
 }
 export interface Message{
     msgId: string;
+    userId: string;
     private: boolean;
     content: string;
     guildId?: string;

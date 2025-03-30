@@ -22,6 +22,7 @@ export function apply(ctx: Context) {
       avatar: session.bot.user.avatar,
     }
     let msgInfo: Message = {
+      userId: session.author.id,
       guildId: session.guildId,
       msgId: session.messageId,
       private: !session.guildId,
