@@ -12,25 +12,36 @@
         <!-- 这里将通过 JavaScript 填充数据 -->
     </div>
     <div class="style_img">
-        <img src="{{show}}" alt="" srcset="">
+        <img id="skillImage" src="" alt="" srcset="">
     </div>
-    <div class="skill_desc">
-        🆎{{sk_type}} ⌛CD{{cd}}回合<br>{{desc}}
-    </div>
-
-    <div class="score_leve">
-        LV.{{leve.num}}(⌛{{leve.bar}})
+    <div class="skill_desc" id="skillDesc">
+        <!-- 技能描述 -->
     </div>
 
-    <img src="https://gitee.com/ChuXuanD30/resources_skill/raw/master/bg/1.jpg" alt="" srcset="">
+    <div class="score_leve" id="scoreLevel">
+        <!-- 等级信息 -->
+    </div>
+
+    <img src="../res/1.jpg" alt="" srcset="">
 </body>
 <script>
     let data = {
-        name: '双龙吐珠'
+        name: '双龙吐珠',
+        show: 'path/to/image.jpg', // 替换为实际图片路径
+        sk_type: '技能类型',
+        cd: 3,
+        desc: '技能描述',
+        leve: {
+            num: 1,
+            bar: 0
+        }
     };
 
-    // 将 data.name 填充到 title 中
+    // 填充数据
     document.getElementById('title').innerText = data.name;
+    document.getElementById('skillImage').src = data.show;
+    document.getElementById('skillDesc').innerHTML = `🆎${data.sk_type} ⌛CD${data.cd}回合<br>${data.desc}`;
+    document.getElementById('scoreLevel').innerText = `LV.${data.leve.num}(⌛${data.leve.bar})`;
 </script>
 <style>
 .title {

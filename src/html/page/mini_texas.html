@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>德州扑克</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+
+<body>
+    <div id="app" class="poker-table">
+        <img src="../res/mini/texas/bg.jpg" class="background-image">
+
+        <div class="table">
+            <!-- 总注区域 -->
+            <div v-if="state == 2" class="chip-pool">
+                <div class="chip-pool-info">
+                    <img src="../res/mini/chip/chip5.png" style="width: 15px; height: 15px;"><span
+                        style="color: black;opacity: 0.8;">总注:</span><span
+                        style="color: yellow; text-shadow: 1px 1px 0 rgb(235, 186, 27);">{{chip_area_all.coin}}</span>
+                </div>
+            </div>
+            <!-- 公牌 -->
+            <div v-if="state == 2 || state == 3" class="gongpai">
+                <img v-for="(card, index) in communityCards" :src="getCardUrl(card)" :key="index">
+            </div>
+            <!-- 房间信息 -->
+            <div v-if="state == 1" class="table-info">
+                德州扑克-上不封顶-2人以上自动开始
+            </div>
+            <!-- 用户筹码区域 -->
+            <div v-if="state == 2 || state == 3 && user.id != winUser.id" :class="'user-bet-area-' + index" v-for="(user, index) in users"
+                :key="index">
+                <img src="../res/mini/chip/chip0.png" class="chip-all-area-item"
+                    v-for="(chip, index) in rendeChipArea()" :key="index"
+                    :style="{ position: 'absolute', left: chip.x + 'px', top: chip.y + 'px' }">
+            </div>
+            <!-- 用户在桌面上的位置 -->
+            <!-- top: 46px;
+    left: 305px; -->
+            <div :class="['user', 'user-idx' + index]" v-for="(user, index) in users" :key="index"
+                :style="user.id == winUser.id ? {top: '58px', left: '305px'} : {}">
+                <img class="user-win" v-if="user.id == winUser.id && state == 3" src="../res/mini/texas/win.png">
+                <div class="user-avatar">
+                    <img :src="user.avatar" style="width: 100%;border-radius: 50%;">
+                </div>
+                <div class="user-coin">
+                    <img src="../res/mini/chip/chip5.png" style="height: 100%;"><span
+                        style="color: yellow;font-size: 10px;">{{chip_area_all.coin}}</span>
+                </div>
+                <div class="user-state">
+                    <span>{{user.state.length > 0 ? user.state:user.name}}</span>
+                </div>
+                <!-- 用户手牌 -->
+                <div v-if="state == 2 || state == 3" class="user-hand">
+                    <img class="hand-1" :src="getCardUrl(user.hand[0])">
+                    <img class="hand-2" :src="getCardUrl(user.hand[1])">
+                    <!-- 用户手牌点数 -->
+                    <div class="user-hand-point">
+                        {{user.handName}}
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 用户回合操作区 -->
+            <div class="user-actions" v-if="buttoms.length > 0">
+                <div v-for="(button, index) in buttoms" :key="index" class="action-button"
+                    :style="{ background: getColor(button) }">
+                    {{ button }}
+                </div>
+            </div>
+            <!-- 回合结算 -->
+            <div class="round-ouver">
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let data = {
+            state: 3,
+            users: [
+                { id: '1', avatar: '../res/avatar.jpg', state: '+9999', name: '楚轩', hand: [{ suit: '?', rank: '?' }, { suit: '?', rank: '?' }], handName: '高牌' },
+                { id: '2', avatar: '../res/avatar.jpg', state: '', name: '楚轩', hand: [{ suit: '?', rank: '?' }, { suit: '?', rank: '?' }], handName: '高牌' }
+            ],
+            buttoms: [],
+            communityCards: [{ suit: '?', rank: '?' }],
+            winUser: { id: '1', coin: 1000 }
+        };
+        new Vue({
+            el: '#app',
+            data: {
+                state: 3,
+                chip_area_all: {},
+                users: [],
+                // 操作指令
+                buttoms: [],
+                overLog: [],
+                communityCards: []
+            },
+            created() {
+
+
+                this.chip_area_all = {
+                    coin: 88888,
+                }
+                this.state = data.state
+                this.winUser = data.winUser
+                this.users = data.users;
+                this.buttoms = data.buttoms
+                this.communityCards = data.communityCards.length < 5 ? data.communityCards.concat(Array(5 - data.communityCards.length).fill({ suit: '?', rank: '?' })) : data.communityCards
+            },
+            methods: {
+                getColor(text) {
+                    const colorMap = {
+                        '跟注': '#28a745', // 优化为Bootstrap绿色
+                        '过': '#ffc107', // 优化为Bootstrap黄色
+                        '加注': '#007bff', // 优化为Bootstrap蓝色
+                        '梭哈': '#dc3545', // 优化为Bootstrap红色
+                        '弃牌': '#6c757d', // 优化为Bootstrap灰色
+                        '准备': '#28a745',
+                        '换一桌': '#007bff'
+                    };
+                    return colorMap[text] || '#6c757d';
+                },
+                getCardUrl(info) {
+                    if (info.suit == '?') {
+                        return '../res/mini/poker/backPoker.png'
+                    }
+                    const suits = ['♠', '♥', '♣', '♦'];
+                    const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+                    let suitIndex = suits.indexOf(info.suit);
+                    let rankIndex = ranks.indexOf(info.rank);
+                    let url = `../res/mini/poker/poker_${suitIndex}_${rankIndex + 2}.png`
+                    return url
+                },
+                rendeChipArea() {
+                    const chipPositions = [];
+                    const chipWidth = 15;
+                    const chipHeight = 15;
+                    const tableWidth = 70;
+                    const tableHeight = 47;
+
+                    while (chipPositions.length < 10) {
+                        const x = Math.floor(Math.random() * (tableWidth - chipWidth));
+                        const y = Math.floor(Math.random() * (tableHeight - chipHeight));
+                        const position = { x, y };
+                        // 确保位置不重复
+                        if (!chipPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
+                            chipPositions.push(position);
+                        }
+                    }
+                    return chipPositions;
+                }
+            }
+        });
+    </script>
+
+    <style>
+        @font-face {
+            font-family: 'xiaomai';
+            src: url('../res/font/xiaomai.ttf');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'cn';
+            src: url('../res/font/cn.ttf');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        span {
+            font-size: 12px;
+            font-family: 'cn';
+        }
+
+        div {
+            font-family: 'cn';
+        }
+
+        .user-hand {
+            background: red;
+            position: absolute;
+            right: -17px;
+            bottom: -20px;
+            width: 10px;
+            height: 10px;
+        }
+
+        .hand-1 {
+            bottom: 0;
+            left: -7px;
+            transform: rotate(-10deg);
+        }
+
+        .hand-2 {
+            bottom: -2px;
+            left: 3px;
+            transform: rotate(10deg);
+        }
+
+        .user-hand img {
+            position: absolute;
+            width: 33px;
+        }
+
+        .user-hand-point {
+            color: #ffffff;
+            position: absolute;
+            top: 11px;
+            left: 131%;
+            transform: translateX(-50%);
+            /* font-size: 14px; */
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .table-info {
+            height: 50px;
+            width: 330px;
+            position: absolute;
+            top: 153px;
+            left: 182px;
+            color: bisque;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .gongpai {
+            height: 50px;
+            width: 210px;
+            position: absolute;
+            top: 153px;
+            left: 239px;
+        }
+
+        .chip-pool {
+            height: 50px;
+            width: 205px;
+            position: absolute;
+            top: 100px;
+            left: 239px;
+        }
+
+
+
+        .chip-all-area-item {
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .gongpai img {
+            height: 100%;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+            /* 添加阴影 */
+            border-radius: 7px;
+        }
+
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 667px;
+            height: 375px;
+            overflow: hidden;
+        }
+
+        .poker-table {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .background-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .user {
+            width: 50px;
+            position: absolute;
+
+        }
+
+        .user-win {
+            position: absolute;
+            width: 102px;
+            top: -44px;
+            left: -24px;
+            z-index: 13;
+        }
+
+
+
+        .user-bet-area-0 {
+            width: 70px;
+            height: 47px;
+            position: absolute;
+            top: 209px;
+            left: 315px;
+        }
+
+        .user-bet-area-1 {
+            width: 70px;
+            height: 47px;
+            position: absolute;
+            top: 202px;
+            left: 481px;
+        }
+
+        .user-bet-area-2 {
+            width: 70px;
+            height: 47px;
+            position: absolute;
+            top: 125px;
+            left: 495px;
+        }
+
+        .user-bet-area-3 {
+            width: 70px;
+            height: 47px;
+            position: absolute;
+            top: 94px;
+            left: 413px;
+        }
+
+        .user-bet-area-4 {
+            width: 70px;
+            height: 47px;
+            position: absolute;
+            top: 94px;
+            left: 189px;
+        }
+
+        .user-bet-area-5 {
+            width: 70px;
+            height: 47px;
+            position: absolute;
+            top: 129px;
+            left: 116px;
+        }
+
+        .user-bet-area-6 {
+            width: 70px;
+            height: 47px;
+            position: absolute;
+            top: 213px;
+            left: 116px;
+        }
+
+        .user-idx0 {
+            top: 253px;
+            left: 305px;
+        }
+
+        .user-idx1 {
+            top: 232px;
+            right: 62px;
+        }
+
+        .user-idx2 {
+            top: 86px;
+            right: 52px;
+        }
+
+        .user-idx3 {
+            top: 28px;
+            right: 177px;
+        }
+
+        .user-idx4 {
+            top: 28px;
+            left: 190px;
+        }
+
+        .user-idx5 {
+            top: 82px;
+            left: 38px;
+        }
+
+        .user-idx6 {
+            bottom: 81px;
+            left: 72px;
+        }
+
+
+
+        .user-state {
+            width: 150%;
+            height: 14px;
+            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.8) 20%, rgba(0, 0, 0, 0.589) 80%, transparent);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -19px;
+        }
+
+        .user-coin {
+            width: 150%;
+            height: 12px;
+            background: linear-gradient(90deg, transparent, rgba(139, 69, 19, 0.8) 20%, rgba(139, 69, 19, 0.589) 80%, transparent);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -5px
+        }
+
+        .user-state span {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background-image: linear-gradient(white, white),
+                linear-gradient(45deg, #4ecdc4, #4ecdc4);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            position: relative;
+            left: 50%;
+            overflow: hidden;
+            transform: translateX(-50%);
+        }
+
+        .chip-pool-info {
+            display: flex;
+            align-items: center;
+            /* 垂直居中 */
+            margin: 0 auto;
+            justify-content: center;
+        }
+
+        .user-actions {
+            position: absolute;
+            bottom: 10px;
+            right: -190px;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+            width: 401px;
+            justify-content: flex-start;
+        }
+
+        .action-button {
+            background: green;
+            /* 背景绿色 */
+            color: white;
+            font-weight: bold;
+            text-shadow: 0px 0px 10px black;
+            /* 文字白色 */
+            padding: 5px 20px;
+            /* 内边距 */
+            border-radius: 5px;
+        }
+    </style>
+</body>
+
+</html>
