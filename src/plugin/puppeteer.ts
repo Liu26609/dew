@@ -8,7 +8,7 @@ class puppeteer {
     private ctx: any;
     init(ctx: Context) {
         this.ctx = ctx;
-        const pagesDir = path.resolve('D:/poject/html/page');
+        const pagesDir = path.resolve(__dirname, '../html/page');
         const files = fs.readdirSync(pagesDir);
         files.forEach(file => {
             const filePath = path.join(pagesDir, file);
