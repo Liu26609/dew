@@ -17,8 +17,8 @@
             <div v-if="state == 2" class="chip-pool">
                 <div class="chip-pool-info">
                     <img src="../res/mini/chip/chip5.png" style="width: 15px; height: 15px;"><span
-                        style="color: black;opacity: 0.8;">总注:</span><span
-                        style="color: yellow; text-shadow: 1px 1px 0 rgb(235, 186, 27);">{{chip_area_all.coin}}</span>
+                        style="color: black;font-size: 14px;">总注:</span><span
+                        style="color: yellow; text-shadow: 1px 1px 0 rgb(235, 186, 27);font-size: 14px;">{{chip_area_all.coin}}</span>
                 </div>
             </div>
             <!-- 公牌 -->
@@ -30,8 +30,8 @@
                 德州扑克-上不封顶-2人以上自动开始
             </div>
             <!-- 用户筹码区域 -->
-            <div v-if="state == 2 || state == 3 && user.id != winUser.id" :class="'user-bet-area-' + index" v-for="(user, index) in users"
-                :key="index">
+            <div v-if="state == 2 || state == 3 && user.id != winUser.id" :class="'user-bet-area-' + index"
+                v-for="(user, index) in users" :key="index">
                 <img src="../res/mini/chip/chip0.png" class="chip-all-area-item"
                     v-for="(chip, index) in rendeChipArea()" :key="index"
                     :style="{ position: 'absolute', left: chip.x + 'px', top: chip.y + 'px' }">
@@ -40,7 +40,7 @@
             <!-- top: 46px;
     left: 305px; -->
             <div :class="['user', 'user-idx' + index]" v-for="(user, index) in users" :key="index"
-                :style="user.id == winUser.id ? {top: '58px', left: '305px'} : {}">
+                :style="(user.id == winUser.id && state == 3) ? {top: '58px', left: '305px'} : {}">
                 <img class="user-win" v-if="user.id == winUser.id && state == 3" src="../res/mini/texas/win.png">
                 <div class="user-avatar">
                     <img :src="user.avatar" style="width: 100%;border-radius: 50%;">
@@ -81,7 +81,7 @@
 
     <script>
         let data = {
-            state: 3,
+            state: 2,
             users: [
                 { id: '1', avatar: '../res/avatar.jpg', state: '+9999', name: '楚轩', hand: [{ suit: '?', rank: '?' }, { suit: '?', rank: '?' }], handName: '高牌' },
                 { id: '2', avatar: '../res/avatar.jpg', state: '', name: '楚轩', hand: [{ suit: '?', rank: '?' }, { suit: '?', rank: '?' }], handName: '高牌' }
@@ -240,10 +240,10 @@
         }
 
         .chip-pool {
-            height: 50px;
+            height: 22px;
             width: 205px;
             position: absolute;
-            top: 100px;
+            top: 119px;
             left: 239px;
         }
 
