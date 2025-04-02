@@ -18,7 +18,7 @@
                 <div class="chip-pool-info">
                     <img src="../res/mini/chip/chip5.png" style="width: 15px; height: 15px;"><span
                         style="color: black;font-size: 14px;">总注:</span><span
-                        style="color: yellow; text-shadow: 1px 1px 0 rgb(235, 186, 27);font-size: 14px;">{{chip_area_all.coin}}</span>
+                        style="color: yellow; text-shadow: 1px 1px 0 rgb(235, 186, 27);font-size: 14px;">{{chip_all}}</span>
                 </div>
             </div>
             <!-- 公牌 -->
@@ -47,7 +47,7 @@
                 </div>
                 <div class="user-coin">
                     <img src="../res/mini/chip/chip5.png" style="height: 100%;"><span
-                        style="color: yellow;font-size: 10px;">{{chip_area_all.coin}}</span>
+                        style="color: yellow;font-size: 10px;">{{user.coin}}</span>
                 </div>
                 <div class="user-state">
                     <span>{{user.state.length > 0 ? user.state:user.name}}</span>
@@ -82,9 +82,9 @@
     <script>
         let data = {
             state: 2,
+            chip_all:9988,
             users: [
-                { id: '1', avatar: '../res/avatar.jpg', state: '+9999', name: '楚轩', hand: [{ suit: '?', rank: '?' }, { suit: '?', rank: '?' }], handName: '高牌' },
-                { id: '2', avatar: '../res/avatar.jpg', state: '', name: '楚轩', hand: [{ suit: '?', rank: '?' }, { suit: '?', rank: '?' }], handName: '高牌' }
+                { id: '1', avatar: '../res/avatar.jpg', state: '+9999', name: '楚轩', hand: [{ suit: '?', rank: '?' }, { suit: '?', rank: '?' }], handName: '高牌',coin:999 }
             ],
             buttoms: [],
             communityCards: [{ suit: '?', rank: '?' }],
@@ -94,7 +94,7 @@
             el: '#app',
             data: {
                 state: 3,
-                chip_area_all: {},
+                chip_all: 111,
                 users: [],
                 // 操作指令
                 buttoms: [],
@@ -104,9 +104,7 @@
             created() {
 
 
-                this.chip_area_all = {
-                    coin: 88888,
-                }
+                this.chip_all = data.chip_all;
                 this.state = data.state
                 this.winUser = data.winUser
                 this.users = data.users;
