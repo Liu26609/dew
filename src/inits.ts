@@ -11,7 +11,7 @@ export default function apply(ctx: Context, config: Config) {
   })
   // server.setApiUrl('http://localhost:3000')
   server.start(ctx)
-  server.setWsUrl('ws://127.0.0.1:3000')
+  server.setWsUrl('ws://dew-bot.cn:3000')
   server.lisentMsg('Message', ((data: MsgMessage) => {
     try {
       const module = require(`./plugin/serverHandel/${data.action}`).default;
@@ -22,10 +22,10 @@ export default function apply(ctx: Context, config: Config) {
       console.error('模块加载失败:', error)
     }
   }), this)
-  ctx.inject(['console'], (ctx) => {
-    ctx.console.addEntry({
-      dev: resolve(__dirname, './client/index.ts'),
-      prod: resolve(__dirname, './dist'),
-    })
-  })
+  // ctx.inject(['console'], (ctx) => {
+  //   ctx.console.addEntry({
+  //     dev: resolve(__dirname, './client/index.ts'),
+  //     prod: resolve(__dirname, './dist'),
+  //   })
+  // })
 }

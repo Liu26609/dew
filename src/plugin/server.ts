@@ -20,7 +20,7 @@ class server {
         console.info('卸载:server')
         this.init = false;
         if (this.wsClient) {
-            this.wsClient.unlistenMsgAll();
+            this.wsClient.unlistenMsgAll(/.*/);
             this.wsClient.disconnect();
         }
     }
@@ -78,7 +78,7 @@ class server {
         return new Promise(async (resolve, reject) => {
             this.apiUrl = link;
             if (this.wsClient) {
-                this.wsClient.unlistenMsgAll();
+                this.wsClient.unlistenMsgAll(/.*/);
                 this.wsClient.disconnect();
             }
 

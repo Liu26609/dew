@@ -2,7 +2,7 @@
   "name": "koishi-plugin-dew-bot",
   "description": "达尔文进化岛",
   "preview": true,
-  "version": "0.0.1",
+  "version": "1.0.141",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "contributors": "楚轩<3245000000@qq.com>",
@@ -12,7 +12,11 @@
     "dist"
   ],
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "copy-assets": "copyfiles -u 1 src/**/*.{html,css,font,ttf} lib/",
+    "prepub": "npm version patch",
+    "pub": "npm publish --access public"
+  },
   "keywords": [
     "chatbot",
     "koishi",
