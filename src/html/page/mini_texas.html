@@ -32,8 +32,8 @@
             <!-- 用户筹码区域 -->
             <div v-if="state == 2 || state == 3 && user.id != winUser.id" :class="'user-bet-area-' + index"
                 v-for="(user, index) in users" :key="index">
-                <img src="../res/mini/chip/chip0.png" class="chip-all-area-item"
-                    v-for="(chip, index) in rendeChipArea()" :key="index"
+                <img v-for="(chip, index) in rendeChipArea(user.bet)" :key="index"
+                    :src="'../res/mini/chip/chip' + chip.coin + '.png'" class="chip-all-area-item"
                     :style="{ position: 'absolute', left: chip.x + 'px', top: chip.y + 'px' }">
             </div>
             <!-- 用户在桌面上的位置 -->
@@ -82,9 +82,9 @@
     <script>
         let data = {
             state: 2,
-            chip_all:9988,
+            chip_all: 9988,
             users: [
-                { id: '1', avatar: '../res/avatar.jpg', state: '+9999', name: '楚轩', hand: [{ suit: '?', rank: '?' }, { suit: '?', rank: '?' }], handName: '高牌',coin:999 }
+                { id: '1', avatar: '../res/avatar.jpg', state: '+9999', name: '楚轩', hand: [{ suit: '?', rank: '?' }, { suit: '?', rank: '?' }], handName: '高牌', coin: 999 }
             ],
             buttoms: [],
             communityCards: [{ suit: '?', rank: '?' }],
@@ -135,21 +135,34 @@
                     let url = `../res/mini/poker/poker_${suitIndex}_${rankIndex + 2}.png`
                     return url
                 },
-                rendeChipArea() {
+                rendeChipArea(arry) {
                     const chipPositions = [];
                     const chipWidth = 15;
                     const chipHeight = 15;
                     const tableWidth = 70;
                     const tableHeight = 47;
-
-                    while (chipPositions.length < 10) {
-                        const x = Math.floor(Math.random() * (tableWidth - chipWidth));
-                        const y = Math.floor(Math.random() * (tableHeight - chipHeight));
-                        const position = { x, y };
-                        // 确保位置不重复
-                        if (!chipPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
-                            chipPositions.push(position);
+                    
+                    for (let i = 0; i < arry.length; i++) {
+                        let position;
+                        let coin = arry[i];
+                        let range = 5;
+                        if (coin <= 100) {
+                            range = 0;
+                        } else if (coin <= 200) {
+                            range = 1;
+                        } else if (coin <= 300) {
+                            range = 2;
+                        } else if (coin <= 400) {
+                            range = 3;
+                        } else if (coin <= 500) {
+                            range = 4;
                         }
+                        do {
+                            const x = Math.floor(Math.random() * (tableWidth - chipWidth));
+                            const y = Math.floor(Math.random() * (tableHeight - chipHeight));
+                            position = { x, y, coin };
+                        } while (chipPositions.some(pos => pos.x === position.x && pos.y === position.y));
+                        chipPositions.push(position);
                     }
                     return chipPositions;
                 }

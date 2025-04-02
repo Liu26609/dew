@@ -77,6 +77,11 @@ class server {
         this.init = true;
         return new Promise(async (resolve, reject) => {
             this.apiUrl = link;
+            if (this.wsClient) {
+                this.wsClient.unlistenMsgAll();
+                this.wsClient.disconnect();
+            }
+
             this.wsClient = new WsClient(serviceProto, { server: this.apiUrl });
             const connect = await this.wsClient.connect();
             // this.flowsToken(this.wsClient);
