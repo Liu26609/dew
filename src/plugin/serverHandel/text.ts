@@ -1,6 +1,11 @@
-export default class handelr_text {
+import handel_base from "./handel_base"
+
+export default class handelr_text extends handel_base  {
     constructor(data: any) {
-        console.log('handelr_text:::', data)
+        super(data)
+    }
+    start(data: any) {
+        this.send(data, data.info.text)
     }
 }
 

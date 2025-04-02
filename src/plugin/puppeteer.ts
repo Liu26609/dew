@@ -6,69 +6,58 @@ class puppeteer {
     commonCss: string;
     pageContents = new Map<string, string>()
     private ctx: any;
+    private tempDir: string;
     init(ctx: Context) {
         this.ctx = ctx;
         const pagesDir = path.resolve(__dirname, '../html/page');
         const files = fs.readdirSync(pagesDir);
+        this.tempDir = path.resolve(path.resolve(__dirname, '../html/'), 'temp');
         files.forEach(file => {
             const filePath = path.join(pagesDir, file);
-            let content = fs.readFileSync(filePath, 'utf-8');
-            // 移除HTML注释
-            content = content.replace(/<!--[\s\S]*?-->/g, '');
-            let key = file.replace('.html', '');
-            console.log(`load ${key}.html`)
-            this.pageContents.set(key, content);
+            if (fs.lstatSync(filePath).isFile()) {
+                let content = fs.readFileSync(filePath, 'utf-8');
+                // 移除HTML注释
+                content = content.replace(/<!--[\s\S]*?-->/g, '');
+                let key = file.replace('.html', '');
+                this.pageContents.set(key, content);
+            }
         });
+        // 如果tempDir不存在，则创建
+        if (!fs.existsSync(this.tempDir)) {
+            fs.mkdirSync(this.tempDir, { recursive: true });
+        }else{
+            // 删除tempDir下的所有文件
+            fs.readdirSync(this.tempDir).forEach(file => {
+                fs.unlinkSync(path.resolve(this.tempDir, file));
+            });
+        }
     }
  
     async render(name: string, data: any) {
-        try {
-            let tempHtml = this.pageContents.get(name);
-            let tempDir = path.resolve('D:/poject/html/temp');
-            // 如果tempDir不存在，则创建
-            if (!fs.existsSync(tempDir)) {
-                fs.mkdirSync(tempDir, { recursive: true });
-            }
-            // 替换 let data = 后面的数据
-            tempHtml = tempHtml.replace(/let data = \{[^]*?\};/,`let data = ${JSON.stringify(data)};`);
+        let tempHtml = this.pageContents.get(name).replace(/let data = \{[^]*?\};/,`let data = ${JSON.stringify(data)};`);
             // 随机生成一个文件名
             let randomName = `${name}_${Math.random().toString(36).substring(2, 15)}.html`;
-            const savePath = path.resolve(tempDir, randomName);
+            const savePath = path.resolve(this.tempDir, randomName);
             fs.writeFileSync(savePath, tempHtml, 'utf-8');
             const page = await this.ctx.puppeteer.page();
-            const filePath = path.resolve(tempDir, randomName);
+            const filePath = path.resolve(this.tempDir, randomName);
             await page.goto(`file://${filePath}`, { waitUntil: 'networkidle2' });
-            // Wait for all images and fonts to load
-            await page.evaluate(async () => {
-                const images = Array.from(document.images);
-                await Promise.all(images.map(img => {
-                    if (img.complete) return;
-                    return new Promise((resolve, reject) => {
-                        img.addEventListener('load', resolve);
-                        img.addEventListener('error', reject);
-                    });
-                }));
-
-                const fonts = document.fonts;
-                await fonts.ready;
-            });
             const leaderboardElement = await page.$('body');
             const boundingBox = await leaderboardElement.boundingBox();
             await page.setViewport({
                 width: Math.ceil(boundingBox.width),
                 height: Math.ceil(boundingBox.height),
             });
+        try {
             const imgBuf = await leaderboardElement.screenshot({ captureBeyondViewport: false });
             let sendBuff = new Uint8Array(imgBuf)
-            await page.close();
-            // 删除temp savePath 文件
-            fs.rmSync(savePath, { recursive: true, force: true });
-            // return h.image(sendBuff, 'image/jpeg');
+            page.close();
             let req = await server.api('open/CompressImg', { imgBuf: sendBuff })
             console.log(`Compressed image size: ${req.imgBuf.length} bytes`);
             const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
             return leaderboardImage;
         } catch (error) {
+            page.close();
             console.log(error)
         }
     }
