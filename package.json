@@ -5,8 +5,7 @@
   "version": "1.0.141",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
-  "contributors": "楚轩<3245000000@qq.com>",
-  "homepage": "主页",
+  "contributors": ["楚轩<3245000000@qq.com>"],
   "files": [
     "lib",
     "dist"
