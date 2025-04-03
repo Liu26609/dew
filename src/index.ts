@@ -5,6 +5,7 @@ import inits from './inits'
 import server from './plugin/server'
 import { Message, UserInfo, ClientInfo } from './shared/face/IMassage'
 import { MsgMessage } from './shared/protocols/MsgMessage'
+import sessions from './plugin/sessions'
 export const name = 'dew-bot'
 
 export interface Config { }
@@ -34,6 +35,8 @@ export function apply(ctx: Context) {
       avatar: session.author.avatar,
       isBot: session.author.isBot,
     }
+    sessions.set(msgInfo.userId, session)
+    console.log(sessions.size())
     server.api('Message', {
       UserInfo: userInfo,
       ClientInfo: botInfo,

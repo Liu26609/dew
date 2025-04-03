@@ -1,5 +1,6 @@
 import { MsgMessage } from "../../shared/protocols/MsgMessage";
 import { Context } from "koishi";
+import sessions from "../sessions";
 export default class handel_base {
     ctx: Context;
     constructor(data: MsgMessage) {
@@ -10,13 +11,9 @@ export default class handel_base {
         this.ctx = ctx;
     }
     send(data: MsgMessage,content:any) {
-        // console.log(this.ctx.bots)
         let sendInfo = data.Message;
-        if(sendInfo.private){
-            this.ctx.bots[0].sendPrivateMessage(sendInfo.userId, content)
-        }else{
-            this.ctx.bots[0].sendMessage(sendInfo.guildId, content)
-        }
+        let session = sessions.get(sendInfo.userId)
+        session.send(content)
     }
     start(data: MsgMessage) {
         console.log('handel_base:::', data)

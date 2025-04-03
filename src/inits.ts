@@ -5,10 +5,12 @@ import { resolve } from 'path'
 import puppeteer from "./plugin/puppeteer";
 import server from "./plugin/server";
 import { MsgMessage } from "./shared/protocols/MsgMessage";
+import sessions from "./plugin/sessions";
 export default function apply(ctx: Context, config: Config) {
   ctx.inject(['puppeteer'], (ctx) => {
     puppeteer.init(ctx)
   })
+  sessions.init(ctx)
   // server.setApiUrl('http://localhost:3000')
   server.start(ctx)
   server.setWsUrl('ws://dew-bot.cn:3000')
