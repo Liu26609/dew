@@ -1,15 +1,19 @@
 import { HttpClient, WsClient } from "tsrpc";
 import { ServiceType, serviceProto } from "../shared/protocols/serviceProto";
 import { Context } from "koishi";
-class server {
+import { console } from "./console";
+import { Config } from "..";
+class server extends console{
     private httpClient!: HttpClient<ServiceType>;
     private apiUrl!: string;
     private wsClient!: WsClient<ServiceType>;
-    init: boolean = false;
+    _init: boolean = false;
     constructor() {
-
+        super()
     }
-    start(ctx: Context) {
+    init(ctx: Context,config: Config) {
+        super.init(ctx,config)
+        this.setWsUrl(`${config.服务器地址}:3000`)
         ctx.on('dispose', () => {
             // 修复热重载 监听残留
             this.dispose()
@@ -17,8 +21,8 @@ class server {
     }
     // 卸载
     async dispose() {
-        console.info('卸载:server')
-        this.init = false;
+        this.log('卸载:server')
+        this._init = false;
         if (this.wsClient) {
             this.wsClient.unlistenMsgAll(/.*/);
             this.wsClient.disconnect();
@@ -51,7 +55,7 @@ class server {
         client.flows.postDisconnectFlow.push((v: { isManual: any; }) => {
             if (!v.isManual) {
                 this.connect()
-                console.info('开始断线重连')
+                this.log('开始断线重连')
             }
             // Bot_client.emit(Emitter_bot.server_off);
             return v;
@@ -60,12 +64,12 @@ class server {
     private async connect() {
         let res = await this.wsClient.connect();
         if (!res.isSucc) {
-            console.info('重试断线准备重连');
+            this.log('重试断线准备重连');
             setTimeout(async () => {
                 this.connect()
             }, 5000)
         } else {
-            console.info('断线重连成功');
+            this.log('断线重连成功');
         }
         return res;
     }
@@ -73,8 +77,8 @@ class server {
         return this.wsClient.listenMsg(msgName, ((data: any) => { handler.call(self, data) }))
     }
     async setWsUrl(link: string) {
-        console.info(`server link:${link}`)
-        this.init = true;
+        this.log(`server link:${link}`)
+        this._init = true;
         return new Promise(async (resolve, reject) => {
             this.apiUrl = link;
             if (this.wsClient) {
@@ -87,10 +91,10 @@ class server {
             // this.flowsToken(this.wsClient);
             this.flowsResConnect(this.wsClient);
             if (connect.isSucc) {
-                console.info('服务器连接成功')
+                this.log('服务器连接成功')
                 resolve(true)
             } else {
-                console.error('服务器ws连接失败', connect.errMsg)
+                this.log('服务器ws连接失败', connect.errMsg)
                 reject(connect.errMsg)
             }
         })
@@ -100,10 +104,10 @@ class server {
         let start = Date.now()
         let req = await client.callApi(apiName, posData);
         if (req.isSucc) {
-            console.log('apiReq', apiName, (Date.now() - start) / 1000, 's')
+            this.log('apiReq', apiName, (Date.now() - start) / 1000, 's')
             return req.res;
         } else {
-            console.info('请求出错', apiName, req.err.message)
+            this.log('请求出错', apiName, req.err.message)
         }
     }
 }

@@ -2,13 +2,17 @@ import fs from 'fs';
 import { Context, h } from 'koishi'
 import server from './server';
 const path = require('path');
-class puppeteer {
+import { console } from './console';
+import { Config } from '..';
+class puppeteer extends console{
     commonCss: string;
     pageContents = new Map<string, string>()
     private ctx: any;
     private tempDir: string;
-    init(ctx: Context) {
+    init(ctx: Context,config: Config) {
+        super.init(ctx)
         this.ctx = ctx;
+        this.log('初始化 puppeteer')
         const pagesDir = path.resolve(__dirname, '../html/page');
         const files = fs.readdirSync(pagesDir);
         this.tempDir = path.resolve(path.resolve(__dirname, '../html/'), 'temp');
@@ -53,12 +57,12 @@ class puppeteer {
             let sendBuff = new Uint8Array(imgBuf)
             page.close();
             let req = await server.api('open/CompressImg', { imgBuf: sendBuff })
-            console.log(`Compressed image size: ${req.imgBuf.length} bytes`);
+            this.log(`Compressed image size: ${req.imgBuf.length} bytes`);
             const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
             return leaderboardImage;
         } catch (error) {
             page.close();
-            console.log(error)
+            this.log(error)
         }
     }
 }

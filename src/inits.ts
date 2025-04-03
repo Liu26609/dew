@@ -8,12 +8,12 @@ import { MsgMessage } from "./shared/protocols/MsgMessage";
 import sessions from "./plugin/sessions";
 export default function apply(ctx: Context, config: Config) {
   ctx.inject(['puppeteer'], (ctx) => {
-    puppeteer.init(ctx)
+    puppeteer.init(ctx,config)
   })
   sessions.init(ctx)
   // server.setApiUrl('http://localhost:3000')
-  server.start(ctx)
-  server.setWsUrl('ws://dew-bot.cn:3000')
+  server.init(ctx,config)
+  
   server.lisentMsg('Message', ((data: MsgMessage) => {
     try {
       const module = require(`./plugin/serverHandel/${data.action}`).default;
