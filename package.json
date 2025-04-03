@@ -14,9 +14,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "copy-assets": "copyfiles -u 1 src/**/*.{html,css,font,ttf} lib/",
-    "prepub": "npm version patch",
-    "pub": "npm publish --access public"
+    "prepub": "npm version patch"
   },
   "keywords": [
     "chatbot",
