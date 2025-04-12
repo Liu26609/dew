@@ -2,7 +2,7 @@
   "name": "koishi-plugin-dew-bot",
   "description": "达尔文进化岛",
   "preview": true,
-  "version": "1.0.143",
+  "version": "1.0.146",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "contributors": [
@@ -27,7 +27,7 @@
   },
   "peerDependencies": {
     "@koishijs/plugin-console": "^5.30.7",
-    "tsrpc": "^3.4.17",
-    "koishi": "^4.18.7"
+    "koishi": "^4.18.7",
+    "tsrpc": "^3.4.17"
   }
 }
