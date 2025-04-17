@@ -14,16 +14,3 @@ export interface platformInfo{
     name:string
 }
 
-export interface IAttribute{
-    // 生命
-    hp_now:number,
-    hp_max:number,
-    hp_res:number
-    // 蓝量
-    mp_now:number,
-    mp_max:number,
-    mp_res:number,
-    // 物理伤害
-    phy_min:number,
-    phy_max:number
-}
