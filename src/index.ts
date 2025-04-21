@@ -8,7 +8,7 @@ import { MsgMessage } from './shared/protocols/MsgMessage'
 import sessions from './plugin/sessions'
 export const name = 'dew-bot'
 
-export interface Config { 
+export interface Config {
   调试模式: boolean;
   服务器地址: string;
 }
@@ -19,8 +19,8 @@ export const Config: Schema<Config> = Schema.object({
   服务器地址: Schema.string().default('ws://dew-bot.cn').description('服务器地址'),
 })
 
-export function apply(ctx: Context,config: Config) {
-  ctx.plugin(inits,config)
+export function apply(ctx: Context, config: Config) {
+  ctx.plugin(inits, config)
   ctx.on('message', (session) => {
     // bot id  bot 平台
     let botInfo: ClientInfo = {
@@ -29,12 +29,17 @@ export function apply(ctx: Context,config: Config) {
       name: session.bot.user.name,
       avatar: session.bot.user.avatar,
     }
+    let content = session.content;
+    // 如果 如果消息带/ 或者空格 则去除
+    if (content.includes('/')) {
+      content = content.replace(/\//g, '').replace(/\s+/g, ' ').trim();
+    }
     let msgInfo: Message = {
       userId: session.author.id,
       guildId: session.guildId,
       msgId: session.messageId,
       private: !session.guildId,
-      content: session.content,
+      content: content,
     }
     let userInfo: UserInfo = {
       id: session.author.id,
@@ -52,7 +57,7 @@ export function apply(ctx: Context,config: Config) {
     // server.api('Send', {
     //   content: ''
     // })
-   
+
     // puppeteer.render('mini_texas', {}).then((e) => {
     //   session.send(e)
     // })
