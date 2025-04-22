@@ -109,7 +109,7 @@
                 this.winUser = data.winUser
                 this.users = data.users;
                 this.buttoms = data.buttoms
-                this.communityCards = data.communityCards.length < 5 ? data.communityCards.concat(Array(5 - data.communityCards.length).fill({ suit: '?', rank: '?' })) : data.communityCards
+                // this.communityCards = data.communityCards.length < 5 ? data.communityCards.concat(Array(5 - data.communityCards.length).fill({ suit: '?', rank: '?' })) : data.communityCards
             },
             methods: {
                 getColor(text) {
@@ -136,6 +136,7 @@
                     return url
                 },
                 rendeChipArea(arry) {
+                    arry = [];
                     const chipPositions = [];
                     const chipWidth = 15;
                     const chipHeight = 15;

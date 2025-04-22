@@ -11,39 +11,80 @@
 <body>
     <div id="app">
         <!-- 卡片背景 -->
-        <img class="pos card-frame" src="../res/skill/frame/monster_cl.jpg">
+        <img class="pos card-frame" src="../res/skill/frame/monster_rh.jpg">
         <!-- 卡片名称 -->
         <span class="pos card-name">{{name}}</span>
+        <!-- 循环品质 -->
+        <img v-for="(n, index) in quality" :key="index" :src="'../res/skill/star/level.png'" class="pos filter"
+            :style="{ left: 60 + index * 60 + 'px', top: '70px' }">
+        <!-- 技能主类型，添加阴影 -->
+        <img class="pos filter" src="../res/skill/att/water.png" style="right: 58px;top: 60px;">
+        <!-- 技能形象 -->
+        <img class="pos filter" src="../res/skill/test.jpg" style="right: 99px;top: 220px;width: 614px;">
+        <!-- 描述 -->
+        <div class="pos" style="width: 687px; height: 213px; bottom: 79px; left: 61px;">
+            <div>
+                <div>
+                    <img align="center" class="inline-icon" src="../res/skill/icon/cd.png">
+                    <span style="word-break: break-all; white-space: normal;">
+                        cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+                    </span>
+                </div>
+            </div>
+            <div class="content">
+                <img  align="center" class="inline-icon" src="../res/skill/icon/cd.png">
+                <span class="text-content">
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                </span>
+            </div>
+            <div class="content">
+                <img  align="center" class="inline-icon" src="../res/skill/icon/cd.png">
+                <span class="text-content">
+                    aaaaaaaaaa
+                </span>
+            </div>
+        </div>
     </div>
     <script>
         let data = {
-            name: '测试',
+            name: '测试名称',
+            //品质
+            quality: 10, // 品质
+            type: 1,//技能类型
+            desc: '技能描述'
         };
         new Vue({
             el: '#app',
             data: {
-                name: '技能名称',
+                name: '名称',
+                quality: 5,
+                desc: '描述'
             },
-            created() {
+            mounted() {
                 this.name = data.name;
-
-            },
+                this.quality = data.quality;
+            }
         });
     </script>
     <style>
-        /* @font-face {
+        @font-face {
             font-family: 'xiaomai';
             src: url('../res/font/xiaomai.ttf');
             font-weight: normal;
             font-style: normal;
-        } */
-/* 
+        }
+
         @font-face {
             font-family: 'cn';
             src: url('../res/font/cn.ttf');
             font-weight: normal;
             font-style: normal;
-        } */
+            font-display: swap;
+        }
+
+        .filter {
+            filter: drop-shadow(rgba(0, 0, 0, 0.5) 8px 5px 12px);
+        }
 
         body {
             margin: 0;
@@ -64,13 +105,45 @@
         }
 
         .card-name {
-            font-family: cursive;
+            font-family: cn;
             position: absolute;
-            top: 100px;
+            top: 144px;
             left: 100px;
-            font-size: 20px;
+            font-size: 36px;
             font-weight: bold;
             color: #ffffff;
+        }
+
+        .content {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .text-content {
+            display: inline;
+            white-space: normal;
+            word-wrap: break-word;
+            line-height: 1.4;
+            font-family: 'cn';
+            font-size: 24px;
+            color: #333;
+            max-width: calc(100% - 50px);
+        }
+
+        .inline-icon {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 8px;
+            margin-bottom: 2px;
+            width: 40px;
+            height: 40px;
+            filter: drop-shadow(rgba(0, 0, 0, 0.5) 8px 5px 12px);
+        }
+
+        .pos[style*="width: 687px"] {
+            width: 687px !important;
+            overflow: hidden;
         }
     </style>
 </body>
