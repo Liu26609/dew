@@ -24,29 +24,25 @@
         <!-- 描述 -->
         <div class="pos" style="width: 687px; height: 213px; bottom: 79px; left: 61px;">
             <div>
-                <div>
+                <div class="content">
                     <img class="inline-icon" src="../res/skill/icon/cd.png">
                     <span class="text-content">
                         【技能信息】
-                     </span>
-                    <span  class="text-content">{{name}}
-                        (
-                        <span style="color: #c57d7d;">伤害型</span>
+                    </span>
+                    <span class="text-content">
+                        <span style="color: rgb(237 0 0);">{{classType}}</span>
                         -
-                        {{getQuality(quality)}}级{{type}})
-          
+                        {{getQuality(quality)}}级{{type}}
+                        <img class="inline-icon" src="../res/skill/icon/yx.png">
+                        <span v-if="cd > 0">[技能频率]{{cd}}回合</span>
                     </span>
                 </div>
-            </div>
-            <div class="content">
-                <img  class="inline-icon" src="../res/skill/icon/zb.png">
-                <span class="text-content">
-                    【技能描述】
-                </span>
-                <span class="text-content">
-                    <img  class="inline-icon" src="../res/skill/icon/yx.png">
-                    <span>[技能频率]{{cd}}回合</span>
-                    {{desc}}</span>
+                <div class="content">
+                    <img class="inline-icon" src="../res/skill/icon/zb.png">
+                    <span class="text-content">
+                        【技能描述】{{desc}}
+                    </span>
+                </div>
             </div>
         </div>
     </div>
@@ -59,6 +55,7 @@
             type: '光环技能',
             desc: '游戏开始,对敌方全体造成一次魔法攻击，并且附加[终焉]效果(每回合扣除敌方1生命,如果敌方死于[终焉]效果,那么自身生命回复到100%)',
             cd: 0,
+            classType: '伤害型',
         };
         new Vue({
             el: '#app',
@@ -68,6 +65,7 @@
                 desc: '',
                 type: '',
                 cd: 0,
+                classType: '伤害型',
             },
             mounted() {
                 this.name = data.name;
@@ -75,6 +73,7 @@
                 this.desc = data.desc;
                 this.type = data.type;
                 this.cd = data.cd;
+                this.classType = data.classType;
             },
             methods: {
                 getQuality(quality) {
@@ -134,14 +133,14 @@
         }
 
         .content {
-            display: inline-block;
+            display: block;
             width: 100%;
-            margin-bottom: 15px;
         }
 
         .text-content {
             font-size: 20px;
-            word-break: break-all; white-space: normal;
+            word-break: break-all;
+            white-space: normal;
         }
 
         .inline-icon {
