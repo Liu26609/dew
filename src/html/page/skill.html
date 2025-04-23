@@ -1,141 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/html/common.css">
-
+    <title>游戏王卡片</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
-<body style="background: red;width: 813px;height: 1187px;">
-    <div class="title" id="title">
-        <!-- 这里将通过 JavaScript 填充数据 -->
-    </div>
-    <div class="style_img">
-        <img id="skillImage" src="" alt="" srcset="">
-    </div>
-    <div class="skill_desc" id="skillDesc">
-        <!-- 技能描述 -->
-    </div>
 
-    <div class="score_leve" id="scoreLevel">
-        <!-- 等级信息 -->
+<body>
+    <div id="app">
+        <!-- 卡片背景 -->
+        <img class="pos card-frame" src="../res/skill/frame/monster_rh.jpg">
+        <!-- 卡片名称 -->
+        <span class="pos card-name">{{name}}</span>
+        <!-- 循环品质 -->
+        <img v-for="(n, index) in quality" :key="index" :src="'../res/skill/star/level.png'" class="pos filter"
+            :style="{ left: 60 + index * 60 + 'px', top: '70px' }">
+        <!-- 技能主类型，添加阴影 -->
+        <img class="pos filter" src="../res/skill/att/water.png" style="right: 58px;top: 60px;">
+        <!-- 技能形象 -->
+        <img class="pos filter" src="../res/skill/test.jpg" style="right: 99px;top: 220px;width: 614px;">
+        <!-- 描述 -->
+        <div class="pos" style="width: 687px; height: 213px; bottom: 79px; left: 61px;">
+            <div>
+                <div>
+                    <img class="inline-icon" src="../res/skill/icon/cd.png">
+                    <span class="text-content">
+                        【技能信息】
+                     </span>
+                    <span  class="text-content">{{name}}
+                        (
+                        <span style="color: #c57d7d;">伤害型</span>
+                        -
+                        {{getQuality(quality)}}级{{type}})
+          
+                    </span>
+                </div>
+            </div>
+            <div class="content">
+                <img  class="inline-icon" src="../res/skill/icon/zb.png">
+                <span class="text-content">
+                    【技能描述】
+                </span>
+                <span class="text-content">
+                    <img  class="inline-icon" src="../res/skill/icon/yx.png">
+                    <span>[技能频率]{{cd}}回合</span>
+                    {{desc}}</span>
+            </div>
+        </div>
     </div>
-
-    <img src="../res/1.jpg" alt="" srcset="">
-</body>
-<script>
-    let data = {
-        name: '双龙吐珠',
-        show: 'path/to/image.jpg', // 替换为实际图片路径
-        sk_type: '技能类型',
-        cd: 3,
-        desc: '技能描述',
-        leve: {
-            num: 1,
-            bar: 0
+    <script>
+        let data = {
+            name: '什么·火之呼吸 · 一式',
+            // 品质
+            quality: 9,
+            //技能类型
+            type: '光环技能',
+            desc: '游戏开始,对敌方全体造成一次魔法攻击，并且附加[终焉]效果(每回合扣除敌方1生命,如果敌方死于[终焉]效果,那么自身生命回复到100%)',
+            cd: 0,
+        };
+        new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                quality: 5,
+                desc: '',
+                type: '',
+                cd: 0,
+            },
+            mounted() {
+                this.name = data.name;
+                this.quality = data.quality;
+                this.desc = data.desc;
+                this.type = data.type;
+                this.cd = data.cd;
+            },
+            methods: {
+                getQuality(quality) {
+                    // 品质映射
+                    const qualities = ['F', 'D', 'C', 'B', 'A', 'S', 'SS', 'SSS', 'SR', 'SSR'];
+                    return qualities[quality] || '未知';
+                }
+            }
+        });
+    </script>
+    <style>
+        @font-face {
+            font-family: 'xiaomai';
+            src: url('../res/font/xiaomai.ttf');
+            font-weight: normal;
+            font-style: normal;
         }
-    };
 
-    // 填充数据
-    document.getElementById('title').innerText = data.name;
-    document.getElementById('skillImage').src = data.show;
-    document.getElementById('skillDesc').innerHTML = `🆎${data.sk_type} ⌛CD${data.cd}回合<br>${data.desc}`;
-    document.getElementById('scoreLevel').innerText = `LV.${data.leve.num}(⌛${data.leve.bar})`;
-</script>
-<style>
-.title {
-    position: absolute;
-    left: 61px;
-    top: 51px;
-    color: white;
-    font-size: 63px;
-    font-family: cn;
-    width: 697px;
-    height: 80px;
-    overflow: hidden;
-    display: flex;
-    align-items: flex-end;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+        @font-face {
+            font-family: 'cn';
+            src: url('../res/font/cn.ttf');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
 
+        .filter {
+            filter: drop-shadow(rgba(0, 0, 0, 0.5) 8px 5px 12px);
+        }
 
+        body {
+            margin: 0;
+            padding: 0;
+            width: 813px;
+            height: 1187px;
+            overflow: hidden;
+            position: relative;
+        }
 
-.score_leve {
-    width: 609px;
-    position: absolute;
-    left: 37px;
-    top: 138px;
-    height: 61px;
-    text-align: left;
-    overflow: hidden;
-    color: #ffffff;
-    font-family: xiaomai;
-    font-size: 45px;
-    -webkit-text-stroke: 0.5px #ffffff;
-}
+        .pos {
+            position: absolute;
+        }
 
-.score_div img {
-    display: inline-block;
-}
+        .card-frame {
+            width: 813px;
+            height: 1187px;
+        }
 
-.style_img {
-    width: 611px;
-    height: 611px;
-    position: absolute;
-    left: 102px;
-    top: 220px;
-}
+        .card-name {
+            font-family: cn;
+            position: absolute;
+            top: 144px;
+            left: 100px;
+            font-size: 36px;
+            font-weight: bold;
+            color: #ffffff;
+        }
 
-.style_img img {
-    width: 100%;
-    height: 100%;
-}
+        .content {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 15px;
+        }
 
-.skill_type {
-    width: 684px;
-    position: absolute;
-    left: 107px;
-    top: 149px;
-    height: 54px;
-    color: white;
-    font-family: cn;
-    position: absolute;
-    font-size: 30px;
-    font-weight: bold;
-}
+        .text-content {
+            font-size: 20px;
+            word-break: break-all; white-space: normal;
+        }
 
-.skill_typeBg {
-    position: absolute;
-    width: 872px;
-    left: -75px;
-    top: 124px;
-    height: 93px;
-    overflow: hidden;
-}
+        .inline-icon {
+            display: inline-block;
+            vertical-align: top;
+            width: 30px;
+            height: 30px;
+            filter: drop-shadow(rgba(0, 0, 0, 0.5) 4px 2px 6px);
+        }
 
-.skill_typeBg img {
-    width: 917px;
-    height: 95px;
-}
-
-.skill_desc {
-    position: absolute;
-    left: 57px;
-    top: 891px;
-    font-size: 24px;
-    width: 695px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 219px;
-    font-weight: bold;
-    font-family: xiaomai;
-}
-
-
-</style>
-</html>
+        .pos[style*="width: 687px"] {
+            width: 687px !important;
+            overflow: hidden;
+        }
+    </style>
+</body>

@@ -5,7 +5,11 @@ export default class handelr_text extends handel_base  {
         super(data)
     }
     start(data: any) {
-        this.send(data, data.info.text)
+        if(data.info.type == 'text'){
+            this.send(data, data.data)
+        }else{
+            console.log('未知类型的文本消息')
+        }
     }
 }
 
