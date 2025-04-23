@@ -25,44 +25,63 @@
         <div class="pos" style="width: 687px; height: 213px; bottom: 79px; left: 61px;">
             <div>
                 <div>
-                    <img align="center" class="inline-icon" src="../res/skill/icon/cd.png">
-                    <span style="word-break: break-all; white-space: normal;">
-                        cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+                    <img class="inline-icon" src="../res/skill/icon/cd.png">
+                    <span class="text-content">
+                        【技能信息】
+                     </span>
+                    <span  class="text-content">{{name}}
+                        (
+                        <span style="color: #c57d7d;">伤害型</span>
+                        -
+                        {{getQuality(quality)}}级{{type}})
+          
                     </span>
                 </div>
             </div>
             <div class="content">
-                <img  align="center" class="inline-icon" src="../res/skill/icon/cd.png">
+                <img  class="inline-icon" src="../res/skill/icon/zb.png">
                 <span class="text-content">
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    【技能描述】
                 </span>
-            </div>
-            <div class="content">
-                <img  align="center" class="inline-icon" src="../res/skill/icon/cd.png">
                 <span class="text-content">
-                    aaaaaaaaaa
-                </span>
+                    <img  class="inline-icon" src="../res/skill/icon/yx.png">
+                    <span>[技能频率]{{cd}}回合</span>
+                    {{desc}}</span>
             </div>
         </div>
     </div>
     <script>
         let data = {
-            name: '测试名称',
-            //品质
-            quality: 10, // 品质
-            type: 1,//技能类型
-            desc: '技能描述'
+            name: '什么·火之呼吸 · 一式',
+            // 品质
+            quality: 9,
+            //技能类型
+            type: '光环技能',
+            desc: '游戏开始,对敌方全体造成一次魔法攻击，并且附加[终焉]效果(每回合扣除敌方1生命,如果敌方死于[终焉]效果,那么自身生命回复到100%)',
+            cd: 0,
         };
         new Vue({
             el: '#app',
             data: {
-                name: '名称',
+                name: '',
                 quality: 5,
-                desc: '描述'
+                desc: '',
+                type: '',
+                cd: 0,
             },
             mounted() {
                 this.name = data.name;
                 this.quality = data.quality;
+                this.desc = data.desc;
+                this.type = data.type;
+                this.cd = data.cd;
+            },
+            methods: {
+                getQuality(quality) {
+                    // 品质映射
+                    const qualities = ['F', 'D', 'C', 'B', 'A', 'S', 'SS', 'SSS', 'SR', 'SSR'];
+                    return qualities[quality] || '未知';
+                }
             }
         });
     </script>
@@ -121,24 +140,16 @@
         }
 
         .text-content {
-            display: inline;
-            white-space: normal;
-            word-wrap: break-word;
-            line-height: 1.4;
-            font-family: 'cn';
-            font-size: 24px;
-            color: #333;
-            max-width: calc(100% - 50px);
+            font-size: 20px;
+            word-break: break-all; white-space: normal;
         }
 
         .inline-icon {
             display: inline-block;
             vertical-align: top;
-            margin-right: 8px;
-            margin-bottom: 2px;
-            width: 40px;
-            height: 40px;
-            filter: drop-shadow(rgba(0, 0, 0, 0.5) 8px 5px 12px);
+            width: 30px;
+            height: 30px;
+            filter: drop-shadow(rgba(0, 0, 0, 0.5) 4px 2px 6px);
         }
 
         .pos[style*="width: 687px"] {
