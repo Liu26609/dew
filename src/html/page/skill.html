@@ -10,18 +10,18 @@
 
 <body>
     <div id="app">
-        <!-- 卡片背景 -->
+        
         <img class="pos card-frame" src="../res/skill/frame/monster_rh.jpg">
-        <!-- 卡片名称 -->
-        <span class="pos card-name">{{name}}</span>
-        <!-- 循环品质 -->
+        
+        <span class="pos card-name">No.{{id}} {{name}}</span>
+        
         <img v-for="(n, index) in quality" :key="index" :src="'../res/skill/star/level.png'" class="pos filter"
             :style="{ left: 60 + index * 60 + 'px', top: '70px' }">
-        <!-- 技能主类型，添加阴影 -->
+        
         <img class="pos filter" src="../res/skill/att/water.png" style="right: 58px;top: 60px;">
-        <!-- 技能形象 -->
+        
         <img class="pos filter" src="../res/skill/test.jpg" style="right: 99px;top: 220px;width: 614px;">
-        <!-- 描述 -->
+        
         <div class="pos" style="width: 687px; height: 213px; bottom: 79px; left: 61px;">
             <div>
                 <div class="content">
@@ -47,19 +47,11 @@
         </div>
     </div>
     <script>
-        let data = {
-            name: '什么·火之呼吸 · 一式',
-            // 品质
-            quality: 9,
-            //技能类型
-            type: '光环技能',
-            desc: '游戏开始,对敌方全体造成一次魔法攻击，并且附加[终焉]效果(每回合扣除敌方1生命,如果敌方死于[终焉]效果,那么自身生命回复到100%)',
-            cd: 0,
-            classType: '伤害型',
-        };
+        let data = {"name":"普通攻击","quality":1,"type":"主动技能","desc":"对敌方单体造成物理伤害","cd":0,"classType":"攻击型"};
         new Vue({
             el: '#app',
             data: {
+                id:'a001',
                 name: '',
                 quality: 5,
                 desc: '',
@@ -68,6 +60,7 @@
                 classType: '伤害型',
             },
             mounted() {
+                this.id = data.id;
                 this.name = data.name;
                 this.quality = data.quality;
                 this.desc = data.desc;
@@ -126,7 +119,7 @@
             font-family: cn;
             position: absolute;
             top: 144px;
-            left: 100px;
+            left: 75px;
             font-size: 36px;
             font-weight: bold;
             color: #ffffff;
