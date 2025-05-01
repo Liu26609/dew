@@ -91,10 +91,10 @@ class server extends console{
             // this.flowsToken(this.wsClient);
             this.flowsResConnect(this.wsClient);
             if (connect.isSucc) {
-                this.log('服务器连接成功')
+                this.log('connect success')
                 resolve(true)
             } else {
-                this.log('服务器ws连接失败', connect.errMsg)
+                this.log('connect failed', connect.errMsg)
                 reject(connect.errMsg)
             }
         })

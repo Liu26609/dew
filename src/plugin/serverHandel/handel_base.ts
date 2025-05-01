@@ -13,6 +13,9 @@ export default class handel_base {
     send(data: MsgMessage,content:any) {
         let sendInfo = data.Message;
         let session = sessions.get(sendInfo.userId)
+        if(session.bot.platform){
+            content = '\n' + content;
+        }
         session.send(content)
     }
     start(data: MsgMessage) {

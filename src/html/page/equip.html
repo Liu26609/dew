@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>装备卡片</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="equip-iconBox">
+            <img class="equip-icon-border" src="../res/equip/equip_border.png">
+            <img class="equip-icon-quality" :src="'../res/equip/quality/' + data.quality + '.png'">
+            <img class="equip-icon" :src="'../res/equip/icon/' + data.icon + '.png'" onerror="this.onerror=null; this.src='../res/equip/icon/none.png'">
+        </div>
+        <div class="equip-baseInfo">
+            <div class="equip-name">
+                {{ data.name }}
+            </div>
+            <div class="quality">
+                {{ convertToStars(data.quality) }}
+            </div>
+            <div class="attribute">
+                <div v-for="item in data.attribute" :key="item.key">
+                    {{ item.key }} {{ item.val }}
+                </div>
+            </div>
+            <div class="info-box" v-if="data.skill.length > 0">
+                <div class="info-box-title">附带技能:</div>
+                <div class="info-box-content">
+                    <div v-for="item in data.skill" :key="item.id">
+                        No.{{ item.id }} - {{ item.name }}
+                    </div>
+                </div>
+            </div>
+            <div class="info-box">
+                <div class="info-box-title">装备介绍:</div>
+                <div class="info-box-content">
+                    {{ data.desc }}
+                </div>
+            </div>
+            <div class="info-box">
+                <div class="info-box-title">装备来源:</div>
+                <div class="info-box-content">
+                    {{ data.source }}
+                </div>
+            </div>
+            <div class="info-box">
+                <div class="info-box-title">装备位置:</div>
+                <div class="info-box-content">
+                    {{ data.type }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let data = {
+            name: '星辰法杖111',
+            quality: 0,
+            icon: 'test',
+            attribute: [{ key: '攻击力', val: 100 }, { key: '暴击率', val: 10 }],
+            skill: [{ id: 'p1', name: '金璋皇极' }],
+            desc: '这是一根传奇法杖。相传，这根法杖由古代星辰之力锻造而成，拥有操控星空的神秘力量。传说中，只有被星辰选中的人才能驾驭这根法杖，释放出无与伦比的魔法。许多世纪以来，星辰法杖一直被视为魔法师们梦寐以求的神器，然而它的踪迹却始终神秘莫测。直到有一天，一位年轻的魔法学徒在一场流星雨中偶然发现了它，从此开启了一段充满冒险与奇迹的旅程。',
+            source: '世界掉落 · 十日终焉',
+            type: '武器',
+        };
+        new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                quality: 4,
+                icon: 'none',
+                attribute: [],
+                skill: [],
+                desc: '',
+                source: '',
+                type: '',
+            },
+            mounted() {
+                this.data = data;
+            },
+            methods: {
+                convertToStars(number) {
+                    number = number + 1;
+                    let str = '';
+                    for (let i = 0; i < number; i++) {
+                        str += '★';
+                    }
+                    return str;
+                }
+            }
+        });
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 400px;
+            overflow: hidden;
+            position: relative;
+            background-color: #F8F3EF;
+        }
+
+        #app {
+            width: 95%;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            background-color: #F6F0E5;
+            border-radius: 5px;
+            margin: 10px auto;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .equip-iconBox {
+            /* 居中 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 150px;
+            /* 上下边距 */
+            margin-bottom: 10px;
+        }
+
+        .equip-icon-border {
+            width: 140px;
+            height: 140px;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .equip-icon-quality {
+            width: 140px;
+            height: 140px;
+            position: absolute;
+            border-radius: 50%;
+            background: #3e455647;
+        }
+
+        .equip-icon {
+            width: 100px;
+            height: 100px;
+            /* 绝对居中 */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            /* 边框 */
+            border: 2px solid rgb(255 247 247 / 100%);
+        }
+
+        .equip-baseInfo {
+            height: 100%;
+            margin-left: 30px;
+            margin-right: 30px;
+            color: #3e4556;
+        }
+
+        .quality {
+            color: #FFAF52;
+            font-size: 24px;
+            letter-spacing: 9px;
+            text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.25);
+        }
+
+        .equip-name {
+            text-align: center;
+            color: #50371D;
+            font-weight: bold;
+            font-size: 24px;
+            font-family: cursive;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+        }
+
+        .attribute {
+            background: #FFAF52;
+            border-radius: 5px;
+            color: white;
+            padding: 6px 10px;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .attribute div {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+        }
+
+        .info-box {
+            margin-top: 10px;
+        }
+
+        .info-box-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #3E4556;
+            margin-bottom: 5px;
+        }
+
+        .info-box-content {
+            font-size: 14px;
+            color: #3E4556;
+        }
+    </style>
+</body>

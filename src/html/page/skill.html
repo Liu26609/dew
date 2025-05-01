@@ -10,36 +10,33 @@
 
 <body>
     <div id="app">
-        
-        <img class="pos card-frame" src="../res/skill/frame/monster_rh.jpg">
-        
-        <span class="pos card-name">No.{{id}} {{name}}</span>
-        
-        <img v-for="(n, index) in quality" :key="index" :src="'../res/skill/star/level.png'" class="pos filter"
-            :style="{ left: 60 + index * 60 + 'px', top: '70px' }">
-        
-        <img class="pos filter" src="../res/skill/att/water.png" style="right: 58px;top: 60px;">
-        
-        <img class="pos filter" src="../res/skill/test.jpg" style="right: 99px;top: 220px;width: 614px;">
-        
-        <div class="pos" style="width: 687px; height: 213px; bottom: 79px; left: 61px;">
+
+        <img class="pos card-frame" :src="'../res/skill/frame/' + quality + '.jpg'" style="width: 406.5px; height: 593.5px;">
+
+        <span class="pos card-name" style="top: 72px; left: 37.5px; font-size: 18px;">No.{{id}} {{name}}</span>
+
+        <img v-for="(n, index) in quality" :key="index" :src="'../res/skill/star/' + (quality >= 5 ? 'rank' : 'level') + '.png'" class="pos filter"
+            :style="{ left: 30 + index * 27 + 'px', top: '35px', width: '27px' }">
+
+        <img class="pos filter" src="../res/skill/att/water.png" style="right: 29px;top: 30px;width: 33px;">
+
+        <img class="pos filter" src="../res/skill/test.jpg" style="right: 49.5px;top: 110px;width: 307px;">
+
+        <div class="pos" style="width: 343.5px; height: 106.5px; bottom: 39.5px; left: 30.5px;">
             <div>
                 <div class="content">
-                    <img class="inline-icon" src="../res/skill/icon/cd.png">
-                    <span class="text-content">
+                    <span class="text-content" style="font-size: 10px;">
                         【技能信息】
                     </span>
-                    <span class="text-content">
+                    <span class="text-content" style="font-size: 10px;">
                         <span style="color: rgb(237 0 0);">{{classType}}</span>
                         -
                         {{getQuality(quality)}}级{{type}}
-                        <img class="inline-icon" src="../res/skill/icon/yx.png">
                         <span v-if="cd > 0">[技能频率]{{cd}}回合</span>
                     </span>
                 </div>
                 <div class="content">
-                    <img class="inline-icon" src="../res/skill/icon/zb.png">
-                    <span class="text-content">
+                    <span class="text-content" style="font-size: 10px;">
                         【技能描述】{{desc}}
                     </span>
                 </div>
@@ -47,11 +44,11 @@
         </div>
     </div>
     <script>
-        let data = {"name":"普通攻击","quality":1,"type":"主动技能","desc":"对敌方单体造成物理伤害","cd":0,"classType":"攻击型"};
+        let data = { "name": "普通攻击", "quality": 7, "type": "主动技能", "desc": "对敌方单体造成物理伤害", "cd": 0, "classType": "攻击型" };
         new Vue({
             el: '#app',
             data: {
-                id:'a001',
+                id: 'a001',
                 name: '',
                 quality: 5,
                 desc: '',
@@ -78,30 +75,15 @@
         });
     </script>
     <style>
-        @font-face {
-            font-family: 'xiaomai';
-            src: url('../res/font/xiaomai.ttf');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'cn';
-            src: url('../res/font/cn.ttf');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-
         .filter {
-            filter: drop-shadow(rgba(0, 0, 0, 0.5) 8px 5px 12px);
+            filter: drop-shadow(rgba(0, 0, 0, 0.5) 4px 2.5px 6px);
         }
 
         body {
             margin: 0;
             padding: 0;
-            width: 813px;
-            height: 1187px;
+            width: 406.5px;
+            height: 593.5px;
             overflow: hidden;
             position: relative;
         }
@@ -111,27 +93,29 @@
         }
 
         .card-frame {
-            width: 813px;
-            height: 1187px;
+            width: 406.5px;
+            height: 593.5px;
         }
 
         .card-name {
-            font-family: cn;
             position: absolute;
-            top: 144px;
-            left: 75px;
-            font-size: 36px;
+            top: 72px;
+            left: 37.5px;
+            font-size: 18px;
             font-weight: bold;
             color: #ffffff;
         }
 
         .content {
-            display: block;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
             width: 100%;
+            flex-direction: row;
         }
 
         .text-content {
-            font-size: 20px;
+            font-size: 10px;
             word-break: break-all;
             white-space: normal;
         }
@@ -139,13 +123,13 @@
         .inline-icon {
             display: inline-block;
             vertical-align: top;
-            width: 30px;
-            height: 30px;
-            filter: drop-shadow(rgba(0, 0, 0, 0.5) 4px 2px 6px);
+            width: 15px;
+            height: 15px;
+            filter: drop-shadow(rgba(0, 0, 0, 0.5) 2px 1px 3px);
         }
 
         .pos[style*="width: 687px"] {
-            width: 687px !important;
+            width: 343.5px !important;
             overflow: hidden;
         }
     </style>

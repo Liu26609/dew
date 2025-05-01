@@ -53,12 +53,18 @@ class puppeteer extends console{
                 height: Math.ceil(boundingBox.height),
             });
         try {
-            const imgBuf = await leaderboardElement.screenshot({ captureBeyondViewport: false });
-            let sendBuff = new Uint8Array(imgBuf)
+            const imgBuf = await leaderboardElement.screenshot({ captureBeyondViewport: false, type: 'jpeg' });
+            let sendBuff = new Uint8Array(imgBuf);
             page.close();
-            let req = await server.api('open/CompressImg', { imgBuf: sendBuff })
-            this.log(`Compressed image size: ${req.imgBuf.length} bytes`);
-            const leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
+            let leaderboardImage;
+            if (sendBuff.length < 200 * 1024) { // 如果小于200kb
+                this.log(`not compress ${sendBuff.length / 1024}KB`);
+                leaderboardImage = h.image(sendBuff, 'image/jpeg');
+            } else {
+                let req = await server.api('open/CompressImg', { imgBuf: sendBuff });
+                this.log(`compress ${req.imgBuf.length / 1024}KB`);
+                leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
+            }
             return leaderboardImage;
         } catch (error) {
             page.close();
