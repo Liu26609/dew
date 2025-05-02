@@ -48,10 +48,12 @@ class puppeteer extends console{
             await page.goto(`file://${filePath}`, { waitUntil: 'networkidle2' });
             const leaderboardElement = await page.$('body');
             const boundingBox = await leaderboardElement.boundingBox();
-            await page.setViewport({
-                width: Math.ceil(boundingBox.width),
-                height: Math.ceil(boundingBox.height),
-            });
+            if(boundingBox.height > 0 || boundingBox.width > 0){
+                await page.setViewport({
+                    width: Math.ceil(boundingBox.width),
+                    height: Math.ceil(boundingBox.height),
+                });
+            }
         try {
             const imgBuf = await leaderboardElement.screenshot({ captureBeyondViewport: false, type: 'jpeg' });
             let sendBuff = new Uint8Array(imgBuf);
