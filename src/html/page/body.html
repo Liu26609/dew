@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>角色属性</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+
+<body>
+    <div id="app">
+        <img class="bg-ui" src="../res/body/box.png">
+        <img class="body-show" src="../res/body/share/test.png" alt="">
+        <div class="content">
+            <div class="title-box">
+                <h1 class="title"><span>◆</span>&nbsp;&nbsp;宿主档案&nbsp;&nbsp;<span>◆</span></h1>
+            </div>
+            <div class="slot-1">
+                <span class="slot-1-text">No.558458477</span>
+            </div>
+            <div class="slot-2">
+                <span class="slot-2-text">一阶·修真</span>
+            </div>
+            <div class="slot-3">
+                <span class="slot-3-text">乌蛤马群tt</span>
+            </div>
+            <div class="slot-4">
+                <div class="total-power">
+                    <span class="total-title" style="">总战力</span>
+                    <span class="power-value">4584</span>
+                </div>
+                <div class="attribute w-0">
+                    <div class="attribute-item">
+                        <span>魔法攻击力</span>
+                        <span class="value">7641</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 76%;"></div>
+                    </div>
+                </div>
+                <div class="attribute w-1">
+                    <div class="attribute-item">
+                        <span>魔法防御力</span>
+                        <span class="value">9524</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 95%;"></div>
+                    </div>
+                </div>
+                <div class="attribute w-2">
+                    <div class="attribute-item">
+                        <span>魔法攻击力</span>
+                        <span class="value">3240</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 32%;"></div>
+                    </div>
+                </div>
+                <div class="attribute w-3">
+                    <div class="attribute-item">
+                        <span>魔法防御力</span>
+                        <span class="value">3240</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 32%;"></div>
+                    </div>
+                </div>
+                <div class="attribute w-4">
+                    <div class="attribute-item">
+                        <span>物理攻击力</span>
+                        <span class="value">3240</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 32%;"></div>
+                    </div>
+                </div>
+                <div class="attribute w-5">
+                    <div class="attribute-item">
+                        <span>物理防御力</span>
+                        <span class="value">3240</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 32%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="solt-5">
+                <img src="../res/body/title/test.png">
+            </div>
+            <div class="solt-6">
+                <div class="total-power">
+                    <span class="total-title">Lv.等级</span>
+                    <span class="power-value">100</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let data = {};
+        new Vue({
+            el: '#app',
+            data: {
+
+            },
+            mounted() {
+                this.data = data;
+            },
+            methods: {
+
+            }
+        });
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 368px;
+            height: 624px;
+            overflow: hidden;
+            position: relative;
+            background-color: #F8F3EF;
+        }
+
+        #app {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #F6F0E5;
+        }
+
+        .bg-ui {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .body-show {
+            position: absolute;
+            top: 100px;
+            right: 10px;
+            width: 200px;
+            height: 300px;
+            rotate: 3deg;
+            z-index: 2;
+        }
+
+        .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 3;
+        }
+
+        .title {
+            font-size: 33px;
+            font-weight: bold;
+            color: #49453a;
+            text-align: center;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px #aaa;
+            font-family: cursive;
+            margin: 0 auto;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.8;
+            text-shadow: 1px 1px 2px #757575;
+        }
+
+        .title span {
+            font-size: 12px;
+            font-weight: bold;
+            color: #49453a;
+            text-align: center;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            opacity: 0.7;
+        }
+
+        .title-box {
+            width: 368px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 28px;
+        }
+
+        .slot-1 {
+            position: absolute;
+            top: 93px;
+            left: 37px;
+            width: 94px;
+            height: 19px;
+            rotate: 357deg;
+            display: flex;
+            align-items: center;
+            /* 垂直居中 */
+        }
+
+        .slot-1-text {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2e261c;
+            font-family: cursive;
+            opacity: 0.7;
+        }
+
+        .slot-2 {
+            position: absolute;
+            top: 132px;
+            left: 13px;
+            width: 141px;
+            height: 19px;
+            display: flex;
+            align-items: center;
+            text-align: right;
+            justify-content: flex-end;
+        }
+
+        .slot-2-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: #514d44;
+            line-height: 22px;
+            letter-spacing: -1px;
+            opacity: 0.8;
+            font-family: cursive;
+        }
+
+        .slot-3 {
+            position: absolute;
+            top: 153px;
+            left: 13px;
+            width: 141px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            text-align: right;
+            justify-content: flex-end;
+            border-bottom: 1px solid #524f4796;
+        }
+
+        .slot-3-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #514d41;
+            font-family: cursive;
+            letter-spacing: -1px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .slot-4 {
+            color: #333;
+            position: absolute;
+            top: 190px;
+            left: 13px;
+            width: 141px;
+            height: 217px;
+            font-family: cursive;
+            font-weight: bold;
+            border-bottom: 1px solid #524f4796;
+        }
+
+        .total-power {
+            font-weight: bold;
+            margin: 10px 0;
+            border: 1px solid #524f4796;
+            display: inline-block;
+            padding-right: 3px;
+        }
+
+        .total-title {
+            background: #514f40;
+            color: #fff;
+            font-weight: 100;
+        }
+
+        .power-value {
+            color: #d9534f;
+        }
+
+        .attribute {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .progress-bar {
+            width: 100%;
+            margin: 0 auto;
+            height: 10px;
+            background-color: #c7c3b8;
+            position: relative;
+            opacity: 0.9;
+            border-radius: 5px;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #6d695e;
+            opacity: 0.8;
+            border-radius: 5px;
+        }
+
+        .value {
+            text-align: right;
+            opacity: 0.8;
+        }
+
+        .attribute-item {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .w-0 {
+            width: 100%;
+        }
+
+        .w-1 {
+            width: 97%;
+        }
+
+        .w-2 {
+            width: 96%;
+        }
+
+        .w-3 {
+            width: 95%;
+        }
+
+        .w-4 {
+            width: 94%;
+        }
+
+        .w-5 {
+            width: 93%;
+        }
+
+        .solt-5 {
+            position: absolute;
+            bottom: -339px;
+            right: 16px;
+            rotate: 3deg;
+            width: 205px;
+            display: flex;
+            justify-content: center;
+            opacity: 0.8;
+        }
+
+        .solt-5 img {
+            max-width: 80%;
+            margin: 0;
+        }
+
+        .solt-6 {
+            position: absolute;
+            right: 16px;
+            top: 409px;
+            height: 139px;
+            width: 91%;
+            margin-left: 31px;
+            font-family: cursive;
+            font-weight: bold;
+        }
+
+        .solt-6 .power-value {
+            color: #6d695e;
+        }
+        
+    </style>
+</body>
