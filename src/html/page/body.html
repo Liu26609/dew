@@ -57,6 +57,13 @@
                     <div class="progress-bar">
                         <div class="progress" :style="'width: ' + (data.hp[0] > 0 ? (Math.min(data.hp[0] / data.hp[1], 1) * 100) : 0) + '%; background-color: #ce0303;'"></div>
                     </div>
+                    <div class="attribute-item">
+                        <span class="key">经验值</span>
+                        <span class="value">{{data.exp[0]}}/{{data.exp[1]}}</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" :style="'width: ' + (data.exp[0] > 0 ? (Math.min(data.exp[0] / data.exp[1], 1) * 100) : 0) + '%; background-color: #2196F3;'"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -83,7 +90,8 @@
                 { key: '暴击伤害', val: 250, max: 200,Percents:true },
             ],
             // 生命
-            hp: [3240, 8888]
+            hp: [3240, 8888],
+            exp:[1000,10000]
         };
         new Vue({
             el: '#app',
