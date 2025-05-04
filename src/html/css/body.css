@@ -1,0 +1,264 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 368px;
+    height: 624px;
+    overflow: hidden;
+    position: relative;
+    background-color: #F8F3EF;
+}
+
+#app {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #F6F0E5;
+}
+
+.bg-ui {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.body-show {
+    position: absolute;
+    top: 100px;
+    right: 10px;
+    width: 200px;
+    height: 300px;
+    rotate: 3deg;
+    z-index: 2;
+}
+
+.content {
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    height: 100%;
+    width: 100%;
+}
+
+.title {
+    font-size: 33px;
+    font-weight: bold;
+    color: #49453a;
+    text-align: center;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 2px #aaa;
+    margin: 0 auto;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.8;
+    text-shadow: 1px 1px 2px #757575;
+}
+
+.title span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #49453a;
+    text-align: center;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    opacity: 0.7;
+}
+
+.title-box {
+    width: 368px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 28px;
+}
+
+.slot-1 {
+    position: absolute;
+    top: 93px;
+    left: 37px;
+    width: 94px;
+    height: 19px;
+    rotate: 357deg;
+    display: flex;
+    align-items: center;
+    /* 垂直居中 */
+}
+
+.slot-1-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #2e261c;
+    opacity: 0.7;
+}
+
+.slot-2 {
+    position: absolute;
+    bottom: 30px;
+    left: 41px;
+    width: 141px;
+    height: 24px;
+    align-items: center;
+    text-align: left;
+    rotate: 353deg;
+}
+
+.slot-2-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #514d44;
+    line-height: 22px;
+    letter-spacing: -1px;
+    opacity: 0.8;
+}
+
+.slot-3 {
+    position: absolute;
+    top: 142px;
+    left: 13px;
+    width: 141px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+    justify-content: flex-end;
+    border-bottom: 1px solid #524f4796;
+}
+
+.slot-3-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #514d41;
+    letter-spacing: -1px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.slot-4 {
+    color: #333;
+    position: absolute;
+    top: 190px;
+    left: 13px;
+    width: 141px;
+    font-weight: bold;
+}
+
+.total-power {
+    font-weight: bold;
+    margin: 5px 0;
+    border: 1px solid #524f4796;
+    display: inline-block;
+    padding-right: 3px;
+}
+
+.total-title {
+    background: #514f40;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 2px;
+}
+
+.power-value {
+    color: #d9534f;
+    font-size: 17px;
+}
+
+.attribute {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.progress-bar {
+    width: 100%;
+    margin: 0 auto;
+    height: 10px;
+    background-color: #c7c3b8;
+    position: relative;
+    opacity: 0.9;
+    border-radius: 5px;
+}
+
+.progress {
+    height: 100%;
+    background-color: #6d695e;
+    opacity: 0.8;
+    border-radius: 5px;
+}
+
+.value {
+    text-align: right;
+    font-size: 15.6px;
+    opacity: 0.9;
+}
+
+.key {
+    font-weight: bold;
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+.attribute-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.w-0 {
+    width: 100%;
+}
+
+.w-1 {
+    width: 97%;
+}
+
+.w-2 {
+    width: 96%;
+}
+
+.w-3 {
+    width: 95%;
+}
+
+.w-4 {
+    width: 94%;
+}
+
+.w-5 {
+    width: 93%;
+}
+
+.solt-5 {
+    position: absolute;
+    top: 339px;
+    right: 16px;
+    rotate: 3deg;
+    width: 205px;
+    display: flex;
+    justify-content: center;
+    opacity: 0.8;
+}
+
+.solt-5 img {
+    max-width: 80%;
+    margin: 0;
+}
+
+.solt-6 {
+    position: absolute;
+    right: 15px;
+    top: 405px;
+    font-weight: bold;
+    width: 54%;
+}
+
+.solt-6 .power-value {
+    color: #6d695e;
+}
