@@ -12,10 +12,10 @@
 <body>
     <div id="app">
         <img class="bg-ui" src="../res/body/box.png">
-        <img class="body-show" src="../res/body/share/test.png" alt="">
+        <img class="body-show" :src="data.show"  onerror="this.onerror=null; this.src='../res/body/share/test.png'">
         <div class="content">
             <div class="title-box">
-                <h1 class="title"><span>◆</span>&nbsp;&nbsp;宿主档案&nbsp;&nbsp;<span>◆</span></h1>
+                <h1 class="title"><span>◆</span>&nbsp;&nbsp;{{data.title}}&nbsp;&nbsp;<span>◆</span></h1>
             </div>
             <div class="slot-1">
                 <span class="slot-1-text">No.{{data.id}}</span>
@@ -70,6 +70,7 @@
     </div>
     <script>
         let data = {
+            title:'宿主档案',
             // 战力
             power: 99999,
             // 唯一ID
@@ -78,6 +79,7 @@
             nickName: '测试昵称',
             // 等级
             level: 100,
+            show:'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/show_player%2F1.png',
             // 属性
             attributes: [
                 { key: '物理攻击力', val: 7641, max: 10000,Percents:false },
