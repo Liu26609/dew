@@ -12,16 +12,16 @@
 <body>
     <div id="app">
         <img class="bg-ui" src="../res/body/box.png">
-        <img class="body-show" :src="data.show"  onerror="this.onerror=null; this.src='../res/body/share/test.png'">
+        <img class="body-show" :src="data.show" onerror="this.onerror=null; this.src='../res/body/share/test.png'">
         <div class="content">
             <div class="title-box">
                 <h1 class="title"><span>◆</span>&nbsp;&nbsp;{{data.title}}&nbsp;&nbsp;<span>◆</span></h1>
             </div>
             <div class="slot-1">
-                <span class="slot-1-text">No.{{data.id}}</span>
+                <span class="slot-1-text">UID {{data.id}}</span>
             </div>
             <div class="slot-2">
-                <span class="slot-2-text">未开发·血统</span>
+                <span class="slot-2-text">未开·基因锁</span>
             </div>
             <div class="slot-3">
                 <span class="slot-3-text">{{data.nickName}}</span>
@@ -37,7 +37,9 @@
                         <span class="value">{{attribute.val}}{{attribute.Percents ? '%' : ''}}</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress" :style="'width: ' + (attribute.val > 0 ? (Math.min(attribute.val / attribute.max, 1) * 100) : 0) + '%;'"></div>
+                        <div class="progress"
+                            :style="'width: ' + (attribute.val > 0 ? (Math.min(attribute.val / attribute.max, 1) * 100) : 0) + '%;'">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,46 +57,28 @@
                         <span class="value">{{data.hp[0].toFixed(2)}}/{{data.hp[1].toFixed(2)}}</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress" :style="'width: ' + (data.hp[0] > 0 ? (Math.min(data.hp[0] / data.hp[1], 1) * 100) : 0) + '%; background-color: #ce0303;'"></div>
+                        <div class="progress"
+                            :style="'width: ' + (data.hp[0] > 0 ? (Math.min(data.hp[0] / data.hp[1], 1) * 100) : 0) + '%; background-color: #ce0303;'">
+                        </div>
                     </div>
                     <div class="attribute-item">
                         <span class="key">经验值</span>
                         <span class="value">{{data.exp[0].toFixed(2)}}/{{data.exp[1].toFixed(2)}}</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress" :style="'width: ' + (data.exp[0] > 0 ? (Math.min(data.exp[0] / data.exp[1], 1) * 100) : 0) + '%; background-color: #2196F3;'"></div>
+                        <div class="progress"
+                            :style="'width: ' + (data.exp[0] > 0 ? (Math.min(data.exp[0] / data.exp[1], 1) * 100) : 0) + '%; background-color: #2196F3;'">
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="solt-7">
+                <span v-for="talent in data.talent">{{talent}}</span>
             </div>
         </div>
     </div>
     <script>
-        let data = {
-            title:'宿主档案',
-            // 战力
-            power: 99999,
-            // 唯一ID
-            id: '000001',
-            // 昵称
-            nickName: '测试昵称',
-            // 等级
-            level: 100,
-            show:'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/show_player%2F1.png',
-            // 属性
-            attributes: [
-                { key: '物理攻击力', val: 7641, max: 10000,Percents:false },
-                { key: '物理防御力', val: 9524, max: 10000,Percents:false },
-                { key: '魔法攻击力', val: 3240, max: 10000,Percents:false },
-                { key: '魔法防御力', val: 3240, max: 10000,Percents:false },
-                { key: '技能缩减', val: 40, max: 100,Percents:true },
-                { key: '闪避率', val: 80, max: 100,Percents:true },
-                { key: '暴击率', val: 40, max: 100,Percents:true },
-                { key: '暴击伤害', val: 250, max: 200,Percents:true },
-            ],
-            // 生命
-            hp: [3240, 8888],
-            exp:[1000,10000]
-        };
+        let data = {title:"宿主档案",show:"",power:400,id:"035",nickName:"匿名",level:1,attributes:[{key:"物理攻击",val:10,max:10,Percents:false}],hp:[100,100],exp:[0,10],talent:['???']};
         new Vue({
             el: '#app',
             data: {

@@ -22,20 +22,12 @@ body {
 
 .card-name {
     position: absolute;
-    top: 31px;
+    top: 32px;
     left: 37.5px;
-    font-size: 23px;
+    font-size: 21px;
     font-weight: bold;
     color: #ffffff;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-}
-
-.descArea {
-    width: 349.5px;
-    height: 112.5px;
-    bottom: 34.5px;
-    left: 28.5px;
-    overflow: hidden;
 }
 
 .content {
@@ -44,11 +36,10 @@ body {
     align-items: center;
     width: 100%;
     flex-direction: row;
-    position: relative;
 }
 
 .text-content {
-    font-size: 12px;
+    font-size: 10px;
     word-break: break-all;
     white-space: normal;
 }
@@ -64,12 +55,4 @@ body {
 .pos[style*="width: 687px"] {
     width: 343.5px !important;
     overflow: hidden;
-}
-.bold{
-    font-weight: bold;
-}
-.split-line {
-    border-top: 1px solid #666;
-    margin: 1px 0;
-    width: 100%;
 }

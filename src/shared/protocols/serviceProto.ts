@@ -1,14 +1,31 @@
 import { ServiceProto } from 'tsrpc-proto';
-import { MsgChat } from './MsgChat';
+import { ReqChangeBodyShow, ResChangeBodyShow } from './client/body/PtlChangeBodyShow';
+import { ReqCheck, ResCheck } from './client/PtlCheck';
+import { ReqGetTempKey, ResGetTempKey } from './client/PtlGetTempKey';
+import { ReqLogin, ResLogin } from './client/PtlLogin';
 import { MsgMessage } from './MsgMessage';
 import { ReqCompressImg, ResCompressImg } from './open/PtlCompressImg';
 import { ReqMessage, ResMessage } from './PtlMessage';
-import { ReqSend, ResSend } from './PtlSend';
-import { ReqCreate, ResCreate } from './test/PtlCreate';
 import { ReqTest, ResTest } from './test/PtlTest';
 
 export interface ServiceType {
     api: {
+        "client/body/ChangeBodyShow": {
+            req: ReqChangeBodyShow,
+            res: ResChangeBodyShow
+        },
+        "client/Check": {
+            req: ReqCheck,
+            res: ResCheck
+        },
+        "client/GetTempKey": {
+            req: ReqGetTempKey,
+            res: ResGetTempKey
+        },
+        "client/Login": {
+            req: ReqLogin,
+            res: ResLogin
+        },
         "open/CompressImg": {
             req: ReqCompressImg,
             res: ResCompressImg
@@ -17,32 +34,42 @@ export interface ServiceType {
             req: ReqMessage,
             res: ResMessage
         },
-        "Send": {
-            req: ReqSend,
-            res: ResSend
-        },
-        "test/Create": {
-            req: ReqCreate,
-            res: ResCreate
-        },
         "test/Test": {
             req: ReqTest,
             res: ResTest
         }
     },
     msg: {
-        "Chat": MsgChat,
         "Message": MsgMessage
     }
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 6,
+    "version": 9,
     "services": [
         {
-            "id": 0,
-            "name": "Chat",
-            "type": "msg"
+            "id": 9,
+            "name": "client/body/ChangeBodyShow",
+            "type": "api",
+            "conf": {}
+        },
+        {
+            "id": 7,
+            "name": "client/Check",
+            "type": "api",
+            "conf": {}
+        },
+        {
+            "id": 10,
+            "name": "client/GetTempKey",
+            "type": "api",
+            "conf": {}
+        },
+        {
+            "id": 8,
+            "name": "client/Login",
+            "type": "api",
+            "conf": {}
         },
         {
             "id": 5,
@@ -63,17 +90,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "conf": {}
         },
         {
-            "id": 1,
-            "name": "Send",
-            "type": "api"
-        },
-        {
-            "id": 2,
-            "name": "test/Create",
-            "type": "api",
-            "conf": {}
-        },
-        {
             "id": 3,
             "name": "test/Test",
             "type": "api",
@@ -81,21 +97,205 @@ export const serviceProto: ServiceProto<ServiceType> = {
         }
     ],
     "types": {
-        "MsgChat/MsgChat": {
+        "client/body/PtlChangeBodyShow/ReqChangeBodyShow": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "name",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "base/BaseRequest": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 1,
+                    "name": "_token",
+                    "type": {
+                        "type": "String"
+                    },
+                    "optional": true
+                },
+                {
+                    "id": 2,
+                    "name": "_player",
+                    "type": {
+                        "type": "Any"
+                    },
+                    "optional": true
+                }
+            ]
+        },
+        "client/body/PtlChangeBodyShow/ResChangeBodyShow": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "base/BaseResponse"
+                    }
+                }
+            ]
+        },
+        "base/BaseResponse": {
             "type": "Interface",
             "properties": [
                 {
                     "id": 0,
-                    "name": "content",
+                    "name": "_token",
+                    "type": {
+                        "type": "String"
+                    },
+                    "optional": true
+                }
+            ]
+        },
+        "client/PtlCheck/ReqCheck": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "client/PtlCheck/ResCheck": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "judge",
+                    "type": {
+                        "type": "Boolean"
+                    }
+                }
+            ]
+        },
+        "client/PtlGetTempKey/ReqGetTempKey": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "base/BaseRequest"
+                    }
+                }
+            ]
+        },
+        "client/PtlGetTempKey/ResGetTempKey": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "TmpSecretId",
                     "type": {
                         "type": "String"
                     }
                 },
                 {
                     "id": 1,
-                    "name": "time",
+                    "name": "TmpSecretKey",
                     "type": {
-                        "type": "Date"
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "SecurityToken",
+                    "type": {
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "StartTime",
+                    "type": {
+                        "type": "Number"
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "ExpiredTime",
+                    "type": {
+                        "type": "Number"
+                    }
+                }
+            ]
+        },
+        "client/PtlLogin/ReqLogin": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "account",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "client/PtlLogin/ResLogin": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "base/BaseResponse"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "token",
+                    "type": {
+                        "type": "String"
                     }
                 }
             ]
@@ -229,19 +429,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "base/BaseRequest": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "_user",
-                    "type": {
-                        "type": "Any"
-                    },
-                    "optional": true
-                }
-            ]
-        },
         "open/PtlCompressImg/ResCompressImg": {
             "type": "Interface",
             "extends": [
@@ -263,9 +450,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     }
                 }
             ]
-        },
-        "base/BaseResponse": {
-            "type": "Interface"
         },
         "PtlMessage/ReqMessage": {
             "type": "Interface",
@@ -385,83 +569,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "target": "MsgMessage/MsgMessage"
                     }
                 },
-                {
-                    "id": 0,
-                    "type": {
-                        "type": "Reference",
-                        "target": "base/BaseResponse"
-                    }
-                }
-            ]
-        },
-        "PtlSend/ReqSend": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "content",
-                    "type": {
-                        "type": "String"
-                    }
-                }
-            ]
-        },
-        "PtlSend/ResSend": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "time",
-                    "type": {
-                        "type": "Date"
-                    }
-                }
-            ]
-        },
-        "test/PtlCreate/ReqCreate": {
-            "type": "Interface",
-            "extends": [
-                {
-                    "id": 0,
-                    "type": {
-                        "type": "Reference",
-                        "target": "base/BaseRequest"
-                    }
-                }
-            ],
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "info",
-                    "type": {
-                        "type": "Reference",
-                        "target": "../face/IBody/platformInfo"
-                    }
-                }
-            ]
-        },
-        "../face/IBody/platformInfo": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "id",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "name",
-                    "type": {
-                        "type": "String"
-                    }
-                }
-            ]
-        },
-        "test/PtlCreate/ResCreate": {
-            "type": "Interface",
-            "extends": [
                 {
                     "id": 0,
                     "type": {

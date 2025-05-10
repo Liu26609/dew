@@ -1,9 +1,10 @@
 export interface BaseRequest {
-    _user?:any
+    _token?:string
+    _player?:any
 }
 
 export interface BaseResponse {
-    
+    _token?:string
 }
 
 export interface BaseConf {

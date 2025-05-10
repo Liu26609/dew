@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏王卡片</title>
+    <script src="../res/vue2.js"></script>
+    <link rel="stylesheet" href="../css/skill.css">
+</head>
+
+<body>
+    <div id="app">
+        <img class="pos card-frame" :src="'../res/skill/frame/' + quality + '.jpg'"
+            style="width: 406.5px; height: 593.5px;">
+        <span class="pos card-name">{{name}}·{{title}}</span>
+        <img v-for="(n, index) in quality" :key="index"
+            :src="'../res/skill/star/' + (quality >= 5 ? 'rank' : 'level') + '.png'" class="pos filter"
+            :style="{ left: 30 + index * 40 + 'px', top: '70px', width: '27px' }">
+        <img class="pos filter" src="../res/skill/test.jpg" style="right: 49.5px;top: 110px;width: 307px;">
+        <div class="pos descArea" style="">
+            <div>
+                <div class="content">
+                    <span class="text-content">
+                        <span style="font-weight: bold;">【{{sys}}】</span>
+                        <span>{{getQuality(quality)}}级{{name}}血统·{{title}}({{leve}}级{{exp[0] / exp[1] * 100}}%)
+                        </span>
+                    </span>
+                </div>
+                <div class="split-line"></div>
+                <div class="content">
+                    <span class="text-content">
+                        <span style="font-weight: bold;">【成长属性】</span><span v-for="(item, index) in att"
+                            :key="index">{{item.key}}{{item.val > 0 ? '+' : ''}}{{item.val}}│</span>
+                    </span>
+                </div>
+                
+                <div class="split-line"></div>
+                <div class="content" style="text-align: center;justify-content: center;">
+                    <span class="text-content">
+                        {{desc}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let data = {
+            name: "修真",
+            sys: '魔幻本质',
+            title: "筑基期",
+            exp: [0, 100],
+            leve:'1',
+            att: [{
+                key: '最大生命值',
+                val: 100
+            }],
+            quality: 5,
+            desc: "我听到了「招灾」的回响，这是一个卑微作家的惊惶",
+        };
+        new Vue({
+            el: '#app',
+            data,
+            mounted() {
+                this.data = data;
+            },
+            methods: {
+                getQuality(quality) {
+                    // 品质映射
+                    const qualities = ['F', 'D', 'C', 'B', 'A', 'S', 'SS', 'SSS', 'SR', 'SSR'];
+                    return qualities[quality] || '未知';
+                }
+            }
+        });
+    </script>
+</body>

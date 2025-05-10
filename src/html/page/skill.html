@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,28 +13,30 @@
     <div id="app">
         <img class="pos card-frame" :src="'../res/skill/frame/' + quality + '.jpg'"
             style="width: 406.5px; height: 593.5px;">
-        <span class="pos card-name" style="top: 72px; left: 37.5px; font-size: 18px;">No.{{id}} {{name}}</span>
+        <span class="pos card-name" style="top: 32px; left: 37.5px; font-size: 21px;">No.{{id}} {{name}}</span>
         <img v-for="(n, index) in quality" :key="index"
             :src="'../res/skill/star/' + (quality >= 5 ? 'rank' : 'level') + '.png'" class="pos filter"
-            :style="{ left: 30 + index * 27 + 'px', top: '35px', width: '27px' }">
+            :style="{ left: 30 + index * 27 + 'px', top: '70px', width: '27px' }">
         <img class="pos filter" src="../res/skill/att/water.png" style="right: 29px;top: 30px;width: 33px;">
         <img class="pos filter" src="../res/skill/test.jpg" style="right: 49.5px;top: 110px;width: 307px;">
-        <div class="pos" style="width: 343.5px; height: 106.5px; bottom: 39.5px; left: 30.5px;">
+        <div class="pos descArea">
             <div>
                 <div class="content">
-                    <span class="text-content" style="font-size: 10px;">
+                    <span class="text-content bold">
                         【技能信息】
                     </span>
-                    <span class="text-content" style="font-size: 10px;">
+                    <span class="text-content">
                         <span style="color: rgb(237 0 0);">{{classType}}</span>
                         -
                         {{getQuality(quality)}}级{{type}}
-                        <span>[技能频率]{{cd > 0 ? cd : '无CD'}}回合</span>
+                        <span class="bold">[技能频率]{{cd > 0 ? cd : '无CD'}}回合</span>
                     </span>
                 </div>
+                <div class="split-line"></div>
                 <div class="content">
                     <span class="text-content" style="font-size: 10px;">
-                        【技能描述】{{desc}}
+                        <span class="bold">【技能描述】</span>
+                        {{desc}}
                     </span>
                 </div>
             </div>
