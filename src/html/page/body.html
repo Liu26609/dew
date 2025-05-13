@@ -34,7 +34,7 @@
                 <div v-for="(attribute, index) in data.attributes" :class="'attribute w-' + (index > 5 ? 5 : index)">
                     <div class="attribute-item">
                         <span class="key">{{attribute.key}}</span>
-                        <span class="value">{{attribute.val}}{{attribute.Percents ? '%' : ''}}</span>
+                        <span class="value">{{attribute.val.toFixed(2)}}{{attribute.Percents ? '%' : ''}}</span>
                     </div>
                     <div class="progress-bar">
                         <div class="progress"
