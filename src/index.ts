@@ -3,9 +3,8 @@ import puppeteer from './plugin/puppeteer'
 import { DataService } from '@koishijs/plugin-console'
 import inits from './inits'
 import server from './plugin/server'
-import { Message, UserInfo, ClientInfo } from './shared/face/IMassage'
-import { MsgMessage } from './shared/protocols/MsgMessage'
 import sessions from './plugin/sessions'
+import { ClientInfo, Message, UserInfo } from './shared/IMassage'
 export const name = 'dew-bot'
 
 export interface Config {

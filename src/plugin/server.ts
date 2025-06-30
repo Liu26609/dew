@@ -1,8 +1,8 @@
 import { HttpClient, WsClient } from "tsrpc";
-import { ServiceType, serviceProto } from "../shared/protocols/serviceProto";
 import { Context } from "koishi";
 import { console } from "./console";
 import { Config } from "..";
+import { serviceProto, ServiceType } from "../shared/serviceProto";
 class server extends console{
     private httpClient!: HttpClient<ServiceType>;
     private apiUrl!: string;

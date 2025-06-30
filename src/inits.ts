@@ -4,8 +4,8 @@ import { } from '@koishijs/plugin-console'
 import { resolve } from 'path'
 import puppeteer from "./plugin/puppeteer";
 import server from "./plugin/server";
-import { MsgMessage } from "./shared/protocols/MsgMessage";
 import sessions from "./plugin/sessions";
+import { MsgMessage } from "./shared/MsgMessage";
 export default function apply(ctx: Context, config: Config) {
   ctx.inject(['puppeteer'], (ctx) => {
     puppeteer.init(ctx,config)
