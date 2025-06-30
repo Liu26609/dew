@@ -20,7 +20,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 2,
+    "version": 3,
     "services": [
         {
             "id": 2,
@@ -59,7 +59,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "action",
                     "type": {
                         "type": "Reference",
-                        "target": "../face/IMassage/ClientAction"
+                        "target": "IMassage/ClientAction"
                     }
                 },
                 {
@@ -67,7 +67,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "Message",
                     "type": {
                         "type": "Reference",
-                        "target": "../face/IMassage/Message"
+                        "target": "IMassage/Message"
                     }
                 },
                 {
@@ -91,7 +91,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
         "base/BaseMessage": {
             "type": "Interface"
         },
-        "../face/IMassage/ClientAction": {
+        "IMassage/ClientAction": {
             "type": "Enum",
             "members": [
                 {
@@ -108,7 +108,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "../face/IMassage/Message": {
+        "IMassage/Message": {
             "type": "Interface",
             "properties": [
                 {
@@ -166,7 +166,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "UserInfo",
                     "type": {
                         "type": "Reference",
-                        "target": "../face/IMassage/UserInfo"
+                        "target": "IMassage/UserInfo"
                     }
                 },
                 {
@@ -174,7 +174,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "ClientInfo",
                     "type": {
                         "type": "Reference",
-                        "target": "../face/IMassage/ClientInfo"
+                        "target": "IMassage/ClientInfo"
                     }
                 },
                 {
@@ -182,7 +182,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "Message",
                     "type": {
                         "type": "Reference",
-                        "target": "../face/IMassage/Message"
+                        "target": "IMassage/Message"
                     }
                 }
             ]
@@ -208,7 +208,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "../face/IMassage/UserInfo": {
+        "IMassage/UserInfo": {
             "type": "Interface",
             "properties": [
                 {
@@ -244,7 +244,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "../face/IMassage/ClientInfo": {
+        "IMassage/ClientInfo": {
             "type": "Interface",
             "properties": [
                 {
