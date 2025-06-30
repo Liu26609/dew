@@ -1,4 +1,4 @@
-import { BaseRequest, BaseResponse, BaseConf } from "../base";
+import { BaseRequest, BaseResponse, BaseConf } from "./base";
 
 export interface ReqTest extends BaseRequest {
     
