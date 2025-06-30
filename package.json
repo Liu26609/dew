@@ -15,6 +15,8 @@
   "license": "MIT",
   "scripts": {
     "prepub": "npm version patch",
+    "checkorg":"npm config set registry https://registry.npmjs.org/",
+    "pub": "npm run prepub && npm publish",
     "copy-js": "robocopy ./src/html/res lib/html/res /S /E /COPYALL /R:0 /W:0 && echo res 文件已复制"
   },
   "keywords": [
