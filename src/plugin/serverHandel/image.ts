@@ -1,4 +1,4 @@
-import { MsgMessage } from "../../shared/protocols/MsgMessage";
+import { MsgMessage } from "../../shared/MsgMessage";
 import puppeteer from "../puppeteer";
 import handel_base from "./handel_base";
 

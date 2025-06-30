@@ -1,4 +1,4 @@
-import { UserInfo, ClientInfo, Message, ClientAction } from "../face/IMassage";
+import { UserInfo, ClientInfo, Message, ClientAction } from "./IMassage";
 import { BaseRequest, BaseResponse, BaseConf } from "./base";
 import { MsgMessage } from "./MsgMessage";
 

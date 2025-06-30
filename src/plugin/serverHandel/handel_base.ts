@@ -1,6 +1,6 @@
-import { MsgMessage } from "../../shared/protocols/MsgMessage";
 import { Context } from "koishi";
 import sessions from "../sessions";
+import { MsgMessage } from "../../shared/MsgMessage";
 export default class handel_base {
     ctx: Context;
     constructor(data: MsgMessage) {

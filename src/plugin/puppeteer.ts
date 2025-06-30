@@ -59,14 +59,14 @@ class puppeteer extends console{
             let sendBuff = new Uint8Array(imgBuf);
             page.close();
             let leaderboardImage;
-            if (sendBuff.length < 200 * 1024) { // 如果小于200kb
+            // if (sendBuff.length < 200 * 1024) { // 如果小于200kb
                 this.log(`not compress ${sendBuff.length / 1024}KB`);
                 leaderboardImage = h.image(sendBuff, 'image/jpeg');
-            } else {
-                let req = await server.api('open/CompressImg', { imgBuf: sendBuff });
-                this.log(`compress ${req.imgBuf.length / 1024}KB`);
-                leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
-            }
+            // } else {
+                // let req = await server.api('open/CompressImg', { imgBuf: sendBuff });
+                // this.log(`compress ${req.imgBuf.length / 1024}KB`);
+                // leaderboardImage = h.image(req.imgBuf, 'image/jpeg');
+            // }
             return leaderboardImage;
         } catch (error) {
             page.close();

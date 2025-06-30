@@ -1,4 +1,4 @@
-import { ClientAction, ClientInfo, Message } from "../face/IMassage";
+import { ClientAction, ClientInfo, Message } from "./IMassage";
 import { BaseMessage, BaseConf } from "./base";
 
 export interface MsgMessage extends BaseMessage {
