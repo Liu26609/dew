@@ -9,5 +9,5 @@ export interface ResCheck extends BaseResponse {
 }
 
 export const conf: BaseConf = {
-    
+    _notLoadPlayer:true
 }

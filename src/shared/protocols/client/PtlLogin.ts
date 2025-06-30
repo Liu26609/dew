@@ -9,5 +9,5 @@ export interface ResLogin extends BaseResponse {
 }
 
 export const conf: BaseConf = {
-    
+    _notLoadPlayer:true
 }
