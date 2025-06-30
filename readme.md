@@ -5,3 +5,5 @@
 [功能进度一览](https://docs.qq.com/mind/DWkRkWEtpT1FPQ0tT?subId=BB08J2&mode=mind)
 
 [服务器源码](https://gitee.com/ChuXuanD30/bot_server_v6)
+
+[web端源码](https://gitee.com/ChuXuanD30/bot_server_backend)
