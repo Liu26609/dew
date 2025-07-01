@@ -14,7 +14,7 @@
         <div class="equip-iconBox">
             <img class="equip-icon-border" src="../res/equip/equip_border.png">
             <img class="equip-icon-quality" :src="'../res/equip/quality/' + data.quality + '.png'">
-            <img class="equip-icon" :src="'../res/equip/icon/' + data.icon + '.png'" onerror="this.onerror=null; this.src='../res/equip/icon/none.png'">
+            <img class="equip-icon" :src="data.icon" onerror="this.onerror=null; this.src='../res/equip/icon/none.png'">
         </div>
         <div class="equip-baseInfo">
             <div class="equip-name">

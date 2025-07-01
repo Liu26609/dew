@@ -1,6 +1,6 @@
 import { Context, Schema } from 'koishi'
 import inits from './inits'
-import { sendMsg } from './msgCsl'
+import { SendMsg } from './msgCsl'
 export const name = 'dew-bot'
 
 export interface Config {
@@ -17,6 +17,6 @@ export const Config: Schema<Config> = Schema.object({
 export function apply(ctx: Context, config: Config) {
   ctx.plugin(inits, config)
   ctx.on('message', (session) => {
-    new sendMsg(session);
+    new SendMsg(session);
   })
 }
