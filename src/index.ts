@@ -1,10 +1,6 @@
 import { Context, Schema } from 'koishi'
-import puppeteer from './plugin/puppeteer'
-import { DataService } from '@koishijs/plugin-console'
 import inits from './inits'
-import server from './plugin/server'
-import sessions from './plugin/sessions'
-import { ClientInfo, Message, UserInfo } from './shared/IMassage'
+import { sendMsg } from './msgCsl'
 export const name = 'dew-bot'
 
 export interface Config {
@@ -21,49 +17,6 @@ export const Config: Schema<Config> = Schema.object({
 export function apply(ctx: Context, config: Config) {
   ctx.plugin(inits, config)
   ctx.on('message', (session) => {
-    // bot id  bot 平台
-    let botInfo: ClientInfo = {
-      id: session.bot.userId,
-      platform: session.bot.platform,
-      name: session.bot.user.name,
-      avatar: session.bot.user.avatar,
-    }
-    let content = session.content;
-    // 如果 如果消息带/ 或者空格 则去除
-    if (content.includes('/')) {
-      content = content.replace(/\//g, '').replace(/\s+/g, ' ').trim();
-    }
-    let msgInfo: Message = {
-      userId: session.author.id,
-      guildId: session.guildId,
-      msgId: session.messageId,
-      private: !session.guildId,
-      content: content,
-    }
-    let userInfo: UserInfo = {
-      id: session.author.id,
-      name: session.author.name,
-      avatar: session.author.avatar,
-      isBot: session.author.isBot,
-    }
-    sessions.set(msgInfo.userId, session)
-    console.log(sessions.size())
-    server.api('Message', {
-      UserInfo: userInfo,
-      ClientInfo: botInfo,
-      Message: msgInfo
-    })
-    // server.api('Send', {
-    //   content: ''
-    // })
-
-    // puppeteer.render('mini_texas', {}).then((e) => {
-    //   session.send(e)
-    // })
-    // if (session.content === '天王盖地虎') {
-    //   session.send('宝塔镇河妖')
-    // session.bot.sendPrivateMessage(session.userId, 'hello word')
-    // session.bot.sendMessage(session.guildId, session.messageId, 'hello word 1')
-    // }
+    new sendMsg(session);
   })
 }
