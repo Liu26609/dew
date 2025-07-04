@@ -1,7 +1,6 @@
-import { console } from './console'
 
 // 消息频率限制管理器
-export class RateLimiter extends console {
+export class RateLimiter {
   private userLastMessageTime = new Map<string, number>();
   private userBlacklist = new Map<string, number>(); // 拉黑用户列表
   private readonly COOLDOWN_TIME = 2000; // 2秒冷却时间
@@ -9,10 +8,8 @@ export class RateLimiter extends console {
   private cleanupTimer: NodeJS.Timeout | null = null;
 
   constructor(blacklistMinutes: number = 5) {
-    super()
     if(blacklistMinutes < 1) blacklistMinutes = 1;
     this.blacklistTime = blacklistMinutes * 60 * 1000;
-    this.log(`刷屏拉黑时间:${blacklistMinutes}分钟`)
   }
 
   /**
@@ -94,10 +91,6 @@ export class RateLimiter extends console {
         this.userBlacklist.delete(userId);
         cleanedCount++;
       }
-    }
-    
-    if (cleanedCount > 0) {
-      this.log(`清理了 ${cleanedCount} 条过期记录`);
     }
   }
 
