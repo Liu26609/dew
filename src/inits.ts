@@ -9,6 +9,9 @@ import { MsgMessage } from "./shared/MsgMessage";
 import { messageQueue } from "./plugin/messageQueue";
 
 export default function apply(ctx: Context, config: Config) {
+  // 初始化消息队列
+  messageQueue.init(ctx);
+  
   ctx.inject(['puppeteer'], (ctx) => {
     puppeteer.init(ctx,config)
   })
@@ -28,7 +31,6 @@ export default function apply(ctx: Context, config: Config) {
       console.error('添加消息到队列失败:', error)
     }
   }), this)
-
 
   ctx.on('dispose', () => {
     messageQueue.clearQueue();

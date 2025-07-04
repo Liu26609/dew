@@ -22,10 +22,33 @@ export class MessageQueue extends console {
   private processingTimeout: NodeJS.Timeout | null = null;
   private readonly MAX_QUEUE_SIZE = 9999; // 最大队列长度
   private readonly PROCESSING_TIMEOUT = 5000; // 5秒处理超时
+  private initialized = false;
 
   constructor() {
     super();
+  }
+
+  /**
+   * 初始化队列
+   * @param ctx Koishi上下文
+   */
+  init(ctx: Context): void {
+    super.init(ctx);
+    this.initialized = true;
     this.log(`最大队列长度:${this.MAX_QUEUE_SIZE}\n处理超时:${this.PROCESSING_TIMEOUT}ms`);
+  }
+
+  /**
+   * 安全的日志方法
+   * @param message 日志消息
+   * @param optionalParams 可选参数
+   */
+  private safeLog(message?: any, ...optionalParams: any[]): void {
+    if (this.initialized && this._log) {
+      this.log(message, ...optionalParams);
+    } else {
+      (globalThis as any).console.log(`[MessageQueue] ${message}`, ...optionalParams);
+    }
   }
 
   /**
@@ -37,7 +60,7 @@ export class MessageQueue extends console {
   addToQueue(data: MsgMessage, ctx: Context): boolean {
     // 检查队列是否已满
     if (this.queue.length >= this.MAX_QUEUE_SIZE) {
-      this.log('队列已满，丢弃消息');
+      this.safeLog('队列已满，丢弃消息');
       return false;
     }
 
@@ -51,7 +74,7 @@ export class MessageQueue extends console {
     // 添加到队列末尾
     this.queue.push(queueItem);
     
-    this.log(`消息已加入队列，当前队列长度: ${this.queue.length}`);
+    this.safeLog(`消息已加入队列，当前队列长度: ${this.queue.length}`);
     
     // 启动处理
     this.startProcessing();
@@ -85,7 +108,7 @@ export class MessageQueue extends console {
   private async processNextMessage(): Promise<void> {
     if (this.queue.length === 0) {
       this.isProcessing = false;
-      this.log('队列处理完成');
+      this.safeLog('队列处理完成');
       return;
     }
 
@@ -93,19 +116,19 @@ export class MessageQueue extends console {
     
     // 设置处理超时
     this.processingTimeout = setTimeout(() => {
-      this.log(`消息处理超时: ${item.id}`);
+      this.safeLog(`消息处理超时: ${item.id}`);
       this.processNextMessage();
     }, this.PROCESSING_TIMEOUT);
 
     try {
-      this.log(`开始处理消息: ${item.id}, 队列剩余: ${this.queue.length}`);
+      this.safeLog(`开始处理消息: ${item.id}, 队列剩余: ${this.queue.length}`);
       
       // 处理消息
       await this.processMessage(item);
       
-      this.log(`消息处理完成: ${item.id}`);
+      this.safeLog(`消息处理完成: ${item.id}`);
     } catch (error) {
-      this.log(`消息处理失败: ${item.id}, 错误: ${error}`);
+      this.safeLog(`消息处理失败: ${item.id}, 错误: ${error}`);
     } finally {
       // 清除超时
       if (this.processingTimeout) {
@@ -129,7 +152,7 @@ export class MessageQueue extends console {
       handel.set(item.ctx);
       await handel.start(item.data);
     } catch (error) {
-      this.log(`模块加载失败: ${error}`);
+      this.safeLog(`模块加载失败: ${error}`);
       throw error;
     }
   }
@@ -153,7 +176,7 @@ export class MessageQueue extends console {
    */
   clearQueue(): void {
     this.queue = [];
-    this.log('队列已清空');
+    this.safeLog('队列已清空');
   }
 }
 
