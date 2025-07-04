@@ -35,7 +35,7 @@ export class MessageQueue extends console {
   init(ctx: Context): void {
     super.init(ctx);
     this.initialized = true;
-    this.log(`最大队列长度:${this.MAX_QUEUE_SIZE}\n处理超时:${this.PROCESSING_TIMEOUT}ms`);
+    this.safeLog(`最大队列长度:${this.MAX_QUEUE_SIZE}\n处理超时:${this.PROCESSING_TIMEOUT}ms`);
   }
 
   /**
