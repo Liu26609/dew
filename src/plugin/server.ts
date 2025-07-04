@@ -104,7 +104,7 @@ class server extends console{
         let start = Date.now()
         let req = await client.callApi(apiName, posData);
         if (req.isSucc) {
-            this.log('apiReq', apiName, (Date.now() - start) / 1000, 's')
+            this.log(`[${apiName}]${(Date.now() - start) / 1000}s`)
             return req.res;
         } else {
             this.log('请求出错', apiName, req.err.message)
