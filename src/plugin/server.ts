@@ -3,31 +3,32 @@ import { Context } from "koishi";
 import { console } from "./console";
 import { Config } from "..";
 import { serviceProto, ServiceType } from "../shared/serviceProto";
-class server extends console{
+class server extends console {
     private httpClient!: HttpClient<ServiceType>;
     private apiUrl!: string;
     private wsClient!: WsClient<ServiceType>;
     private ctx!: Context;
     private onConnectedCallback?: () => void;
+    private messageListenerSetup: boolean = false; // 标记消息监听器是否已设置
     _init: boolean = false;
     constructor() {
         super()
     }
-    async init(ctx: Context,config: Config) {
-        super.init(ctx,config)
+    async init(ctx: Context, config: Config) {
+        super.init(ctx, config)
         this.ctx = ctx;
-        
+
         // 设置 dispose 事件监听器
         ctx.on('dispose', () => {
             // 修复热重载 监听残留
             this.dispose()
         })
-        
+
         // 确保重新初始化时先清理旧连接
         if (this.wsClient) {
             await this.dispose();
         }
-        
+
         // 根据服务器环境选择对应的地址
         const serverUrlMap = {
             '测试服': 'ws://127.0.0.1:3000',
@@ -35,27 +36,28 @@ class server extends console{
             '正式服': 'ws://dew-bot.cn'
         };
         const serverUrl = serverUrlMap[config.服务器环境];
-        
+
         if (!serverUrl) {
             throw new Error(`未知的服务器环境: ${config.服务器环境}`);
         }
-        
+
         this.log(`选择环境: ${config.服务器环境}`)
         this.log(`尝试连接到: ${serverUrl}`)
-        
+
         // 异步连接但不阻塞初始化
         this.setWsUrl(serverUrl).catch(error => {
             this.log('初始化连接失败:', error)
             this.log('请检查服务器地址是否正确，以及服务器是否正在运行')
         })
     }
-    
+
     // 设置连接成功的回调
     onConnected(callback: () => void) {
         this.onConnectedCallback = callback;
-        // 如果已经连接，立即调用回调
-        if (this._init && this.wsClient) {
+        // 如果已经连接且监听器未设置，立即调用回调
+        if (this._init && this.wsClient && !this.messageListenerSetup) {
             callback();
+            this.messageListenerSetup = true;
         }
     }
     // 卸载
@@ -68,8 +70,9 @@ class server extends console{
             // 清除对 wsClient 的引用
             this.wsClient = null as any;
         }
-        // 清除回调
+        // 清除回调和监听器状态
         this.onConnectedCallback = undefined;
+        this.messageListenerSetup = false;
     }
     /**
  * 设置服务器地址
@@ -127,10 +130,7 @@ class server extends console{
             }
         } else {
             this.log('断线重连成功');
-            // 调用连接成功的回调
-            if (this.onConnectedCallback) {
-                this.onConnectedCallback();
-            }
+            // 断线重连成功时不需要重新设置监听器
         }
         return res;
     }
@@ -152,10 +152,10 @@ class server extends console{
             }
 
             this.wsClient = new WsClient(serviceProto, { server: this.apiUrl });
-            
+
             let connect;
             let retryCount = 0;
-            
+
             const attemptConnect = async () => {
                 connect = await this.wsClient.connect();
                 if (connect.isSucc) {
@@ -164,9 +164,10 @@ class server extends console{
                         this.flowsResConnect(this.wsClient);
                     }
                     this.log('connect success')
-                    // 调用连接成功的回调
-                    if (this.onConnectedCallback) {
+                    // 调用连接成功的回调（仅第一次连接）
+                    if (this.onConnectedCallback && !this.messageListenerSetup) {
                         this.onConnectedCallback();
+                        this.messageListenerSetup = true;
                     }
                     resolve(true)
                 } else {
@@ -181,7 +182,7 @@ class server extends console{
                     }
                 }
             };
-            
+
             attemptConnect();
         })
     }

@@ -7,10 +7,10 @@ export default class handelr_image extends handel_base {
         super(data)
 
     }
-    start(data: MsgMessage) {
+    async start(data: MsgMessage) {
         let renderName = data.info.render;
-        puppeteer.render(renderName, data.data || {}).then((e) => {
-            this.send(data, e)
+        puppeteer.render(renderName, data.data || {}).then(async (e) => {
+            await this.send(data, e)
         })
     }
 }
