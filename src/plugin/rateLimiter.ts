@@ -6,7 +6,7 @@ export class RateLimiter {
     private blacklist: Map<string, number> = new Map();
     private cleanupInterval: any = null;
     private blacklistDuration: number; // 拉黑时长（分钟）
-    private maxMessagesPerMinute: number = 10; // 每分钟最大消息数
+    private maxMessagesPerMinute: number = 60; // 每分钟最大消息数
     private ctx?: Context;
 
     constructor(blacklistDurationMinutes: number = 5) {
