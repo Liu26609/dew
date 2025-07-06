@@ -12,18 +12,28 @@ export default function apply(ctx: Context, config: Config) {
   })
   sessions.init(ctx)
   // server.setApiUrl('http://localhost:3000')
+  
+  // 初始化服务器连接（异步）
   server.init(ctx,config)
   
-  server.lisentMsg('Message', ((data: MsgMessage) => {
+  // 设置连接成功后的回调
+  server.onConnected(() => {
     try {
-      const module = require(`./plugin/serverHandel/${data.action}`).default;
-      let handel = new module(data)
-      handel.set(ctx)
-      handel.start(data)
+      server.lisentMsg('Message', ((data: MsgMessage) => {
+        try {
+          const module = require(`./plugin/serverHandel/${data.action}`).default;
+          let handel = new module(data)
+          handel.set(ctx)
+          handel.start(data)
+        } catch (error) {
+          console.error('模块加载失败:', error)
+        }
+      }), this)
     } catch (error) {
-      console.error('模块加载失败:', error)
+      console.error('消息监听设置失败:', error)
     }
-  }), this)
+  })
+  
   // ctx.inject(['console'], (ctx) => {
   //   ctx.console.addEntry({
   //     dev: resolve(__dirname, './client/index.ts'),

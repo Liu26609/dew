@@ -92,6 +92,8 @@ export class SendMsg {
                 UserInfo: userInfo,
                 ClientInfo: botInfo,
                 Message: msgInfo
+            }).catch(error => {
+                console.error('发送消息到服务器失败:', error);
             });
         } catch (error) {
             console.error('处理消息时发生错误:', error);

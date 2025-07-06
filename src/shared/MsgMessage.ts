@@ -5,7 +5,8 @@ export interface MsgMessage extends BaseMessage {
     action:ClientAction,
     Message:Message,
     info?:any,
-    data?:any
+    data?:any,
+    _player?:any
 }
 
 export const conf: BaseConf = {

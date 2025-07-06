@@ -1,10 +1,10 @@
-import { UserInfo, ClientInfo, Message, ClientAction } from "./IMassage";
+import { UserInfo, ClientInfo, Message } from "./IMassage";
 import { BaseRequest, BaseResponse, BaseConf } from "./base";
 import { MsgMessage } from "./MsgMessage";
 
 export interface ReqMessage extends BaseRequest {
-    UserInfo:UserInfo,
-    ClientInfo:ClientInfo,
+    UserInfo:UserInfo
+    ClientInfo:ClientInfo
     Message:Message
 }
 

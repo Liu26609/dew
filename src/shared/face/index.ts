@@ -17,11 +17,11 @@ export interface Item {
     data: any;
   }
   export enum ItemType {
-    资源 = 'resource',
+    资源 = 'prop_资源',
     // 装备
     装备 = 'equipment',
     // 消耗品
-    消耗品 = 'consumable',
+    道具 = 'prop_道具',
     // 消耗品 - 不可叠加
     技能书 = 'skill_book',
     // 宠物蛋
@@ -29,11 +29,20 @@ export interface Item {
     // 血统卷轴
     血统卷轴 = 'talent_book',
     // 盲盒
-    盲盒 = 'box',
+    盲盒 = 'prop_盲盒',
+    // 形象卡
+    形象卡 = 'image_card',
+  }
+  export enum UserLevel{
+    玩家 = 0,
+    赞助会员 = 1,
+    管理员 = 2,
+    开发者 = 3,
   }
   export interface MailItem {
     title:string;
     _id: string;
+    sys:boolean;//是否是系统邮件
     read:boolean;
     from_id: string;
     to_id: string;
@@ -55,6 +64,8 @@ export interface DataEquip{
     // 装备来源
     source:string,
     desc:string,
+    // 创建者UID
+    creator:string,
     attribute: {key:string,val:number}[],
     skill:{ skillId: string; reName?: string; }[]
 }
