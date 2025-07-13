@@ -109,18 +109,51 @@ export enum quality {
   SR,
   SSR,
 }
-
-export enum qualityColor {
-  F = '#8B8B8B',    // 灰色
-  D = '#A0522D',    // 棕色
-  C = '#32CD32',    // 绿色
-  B = '#4169E1',    // 蓝色
-  A = '#9370DB',    // 紫色
-  S = '#FFD700',    // 金色
-  SS = '#FF4500',   // 橙红色
-  SSS = '#FF1493',  // 深粉色
-  SR = '#00CED1',   // 深青色
-  SSR = '#FF69B4',  // 热粉色
+//品质
+export enum qualityName {
+  F = '普通',
+  D = '高级',
+  C = '稀有',
+  B = '神器',
+  A = '史诗',
+  S = '传说',
+  // 常规顶级
+  SS = '神话',
+  SSS = '至尊',
+  SR = '永恒',
+  SSR = '太初',
+}
+// 品质渐变颜色 - 参考DNF品质颜色系统
+export enum qualityGradient {
+  F = 'linear-gradient(to bottom, #C0C0C0, #808080)',    // 普通白色渐变
+  D = 'linear-gradient(to bottom, #8B4513, #654321)',    // 普通棕色渐变
+  C = 'linear-gradient(to bottom, #32CD32, #228B22)',    // 高级绿色渐变
+  B = 'linear-gradient(to bottom, #4169E1, #0000CD)',    // 稀有蓝色渐变
+  A = 'linear-gradient(to bottom, #9370DB, #4B0082)',    // 神器紫色渐变
+  S = 'linear-gradient(to bottom, #FFD700, #FFA500)',    // 史诗橙色渐变
+  SS = 'linear-gradient(to bottom, #FF4500, #DC143C)',   // 传说红色渐变
+  SSS = 'linear-gradient(to bottom, #FF1493, #C71585)',  // 神话粉色渐变
+  SR = 'linear-gradient(to bottom, #00CED1, #008B8B)',   // 特殊青色渐变
+  SSR = 'linear-gradient(to bottom, #FF69B4, #FF1493)',  // 超稀有热粉色渐变
 }
 
-
+/**
+ * 排序枚举
+ */
+export enum sort_type {
+  
+  time_up = '时间↑',
+  time_down = '时间↓',
+  price_down = '价格↓',
+  price_up = '价格↑',
+  quality_up = '品质↑',
+  quality_down = '品质↓',
+  count_up = '数量↑',
+  count_down = '数量↓',
+}
+export interface panel_common{
+  title:string,
+  icon?:string,
+  emoji:string,
+  list:{key:string,val:string|number|undefined}[]
+}
