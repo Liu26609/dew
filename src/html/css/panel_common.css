@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 400px;
+    overflow: hidden;
+    position: relative;
+    background: #232d23;
+    min-height: 500px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+#app {
+    width: 95%;
+    margin: 10px auto;
+    padding: 15px;
+}
+
+.item-card {
+    background: #232d23;
+    border-radius: 12px;
+    border: none;
+    padding: 20px 0 20px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.item-emoji {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+}
+
+.item-icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 80px;
+}
+
+.item-icon {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    z-index: 3;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background: #fff;
+}
+
+.attr-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    min-width: 0;
+}
+
+.attr-key {
+    width: 100%;
+    color: #ffd97a;
+    font-weight: bold;
+    text-align: left;
+    line-height: 1.6;
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+.attr-value {
+    width: 100%;
+    color: #e8fbe8;
+    font-weight: 500;
+    word-break: break-all;
+    white-space: pre-line;
+    text-align: left;
+    min-width: 0;
+    line-height: 1.6;
+    font-size: 16px;
+    overflow-wrap: break-word;
+    margin-bottom: 2px;
+    background: #2a342a;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 3px solid #4a8a4a;
+    position: relative;
+}
+

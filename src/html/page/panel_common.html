@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>道具详情</title>
+    <script src="../res/vue2.js"></script>
+    <link rel="stylesheet" href="../css/panel_common.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="item-card">
+            <div class="item-icon-box">
+                <!-- 只判断icon和emoji，其他全部循环 -->
+                <img v-if="data.icon" class="item-icon" :src="data.icon" onerror="this.onerror=null; this.src='../res/item/default.png'">
+                <div v-else class="item-emoji">{{ data.emoji }}</div>
+            </div>
+            <div class="item-properties">
+                <div v-for="(item, idx) in data.list" :key="idx" class="attr-item">
+                    <div class="attr-key">{{ item.key }}</div>
+                    <div class="attr-value">{{ item.val }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    let data = {
+    "title": "道具详细",
+    "icon": "https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf",
+    "emoji": "🗡️",
+    "list": [
+        {
+            "key": "编号",
+            "val": "077"
+        },
+        {
+            "key": "名称",
+            "val": "默认装备"
+        },
+        {
+            "key": "品质",
+            "val": "永恒"
+        },
+        {
+            "key": "类型",
+            "val": "武器"
+        },
+        {
+            "key": "来源",
+            "val": "修真"
+        },
+        {
+            "key": "属性",
+            "val": "魔法攻击:515\n魔法攻击:9\n魔法攻击:9\n最大生命值:471\n魔法攻击:9\n魔法攻击:9\n"
+        },
+        {
+            "key": "描述",
+            "val": "默认装备"
+        },
+        {
+            "key": "出售数量",
+            "val": 1
+        },
+        {
+            "key": "出售价格",
+            "val": 1
+        },
+        {
+            "key": "上架时间",
+            "val": "2025/7/13 01:30:46"
+        }
+    ]
+};
+    new Vue({
+        el: '#app',
+        data: { data },
+    });
+    </script>
+</body>
+</html>
