@@ -1,3 +1,5 @@
+import { EquipAttType, ItemType, quality, qualityName, qualityGradient, sort_type } from './enums';
+
 //道具
 export interface Item {
   uuid: string
@@ -19,23 +21,6 @@ export interface Item {
   count: number;
   // 道具数据
   data: any;
-}
-export enum ItemType {
-  资源 = 'prop_资源',
-  // 装备
-  装备 = 'equipment',
-  // 消耗品
-  道具 = 'prop_道具',
-  // 消耗品 - 不可叠加
-  技能书 = 'skill_book',
-  // 宠物蛋
-  宠物蛋 = 'pet_egg',
-  // 血统卷轴
-  血统卷轴 = 'talent_book',
-  // 盲盒
-  盲盒 = 'prop_盲盒',
-  // 形象卡
-  形象卡 = 'image_card',
 }
 export enum UserLevel {
   玩家 = 0,
@@ -88,39 +73,13 @@ export interface DataEquip {
   reviewNote?: string; // 审核备注
 }
 
-export enum EquipAttType {
-  魔法传说 = '魔法传说类',
-  科技类 = '科技类',
-  辅助类 = '辅助类',
-  娱乐类 = '娱乐类',
+
+
+// 删除ItemType的本地定义
+// 删除本地ItemType枚举定义
+export interface panel_common{
+  title:string,
+  icon?:string,
+  emoji:string,
+  list:{key:string,val:string|number|undefined}[]
 }
-
-//品质
-export enum quality {
-  F,
-  D,
-  C,
-  B,
-  A,
-  S,
-  // 常规顶级
-  SS,
-  SSS,
-  SR,
-  SSR,
-}
-
-export enum qualityColor {
-  F = '#8B8B8B',    // 灰色
-  D = '#A0522D',    // 棕色
-  C = '#32CD32',    // 绿色
-  B = '#4169E1',    // 蓝色
-  A = '#9370DB',    // 紫色
-  S = '#FFD700',    // 金色
-  SS = '#FF4500',   // 橙红色
-  SSS = '#FF1493',  // 深粉色
-  SR = '#00CED1',   // 深青色
-  SSR = '#FF69B4',  // 热粉色
-}
-
-
