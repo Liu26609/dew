@@ -18,7 +18,7 @@ export const Config: Schema<Config> = Schema.object({
     Schema.const('测试服').description('本地测试服务器'),
     Schema.const('开发服').description('开发服务器'),
     Schema.const('正式服').description('正式服务器'),
-  ]).default('测试服').description('选择服务器环境'),
+  ]).default('正式服').description('选择服务器环境'),
   频率限制: Schema.number().default(5).description('频率限制后拉黑时间（分钟）'),
 })
 
