@@ -32,7 +32,7 @@ class server extends console {
         // 根据服务器环境选择对应的地址
         const serverUrlMap = {
             '测试服': 'ws://127.0.0.1:3000',
-            '开发服': 'ws://dev-bot.cn:3000',
+            '开发服': 'ws://dew-bot.cn:3000',
             '正式服': 'ws://dew-bot.cn:3000'
         };
         const serverUrl = serverUrlMap[config.服务器环境];

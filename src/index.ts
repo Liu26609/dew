@@ -24,7 +24,7 @@ export const Config: Schema<Config> = Schema.object({
 
 export function apply(ctx: Context, config: Config) {
   ctx.plugin(inits, config)
-  
+
   // 创建频率限制器实例，传入配置的拉黑时间
   const rateLimiter = new RateLimiter(config.频率限制);
   
@@ -41,7 +41,6 @@ export function apply(ctx: Context, config: Config) {
   
   ctx.on('message', (session) => {
     const userId = session.author.id;
-    
          // 检查频率限制
      if (!rateLimiter.canSendMessage(userId)) {
        // 被拉黑或触发频率限制
