@@ -24,7 +24,7 @@ export const Config: Schema<Config> = Schema.object({
 
 export function apply(ctx: Context, config: Config) {
   ctx.plugin(inits, config)
-  
+
   // 创建频率限制器实例，传入配置的拉黑时间
   const rateLimiter = new RateLimiter(config.频率限制);
   
