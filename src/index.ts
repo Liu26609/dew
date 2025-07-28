@@ -39,16 +39,29 @@ export function apply(ctx: Context, config: Config) {
     rateLimiter.stopCleanup();
   });
   
+  // 记录已提示过的用户，避免重复提示
+  const notifiedUsers = new Set<string>();
+  
   ctx.on('message', (session) => {
     const userId = session.author.id;
-         // 检查频率限制
-     if (!rateLimiter.canSendMessage(userId)) {
-       // 被拉黑或触发频率限制
-       session.send(`消息发送过于频繁，已拉黑${config.频率限制}分钟！`);
-       return;
-     }
+    
+    // 检查频率限制
+    if (!rateLimiter.canSendMessage(userId)) {
+      // 被拉黑或触发频率限制
+      // 只在首次拉黑时提示
+      if (!notifiedUsers.has(userId)) {
+        session.send(`消息发送过于频繁，已拉黑${config.频率限制}分钟！`);
+        notifiedUsers.add(userId);
+      }
+      return;
+    }
     
     // 通过频率限制，正常处理消息
+    // 如果用户之前被拉黑过，现在可以正常发送消息了，从提示列表中移除
+    if (notifiedUsers.has(userId)) {
+      notifiedUsers.delete(userId);
+    }
+    
     new SendMsg(session);
   })
 }
