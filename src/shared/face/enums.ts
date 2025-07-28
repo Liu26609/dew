@@ -57,6 +57,15 @@ export enum ItemType {
   形象卡 = 'image_card',
 }
 
+/**
+ * 排行榜类型
+ */
+export enum RankingType {
+  等级 = '等级',
+  金币 = '金币',
+  签到 = '签到次数',
+  战力 = '战力'
+}
 export enum quality {
   F,
   D,

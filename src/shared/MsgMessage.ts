@@ -3,7 +3,7 @@ import { BaseMessage, BaseConf } from "./base";
 
 export interface MsgMessage extends BaseMessage {
     action:ClientAction,
-    Message:Message,
+    Message?:Message,
     info?:any,
     data?:any,
     _player?:any

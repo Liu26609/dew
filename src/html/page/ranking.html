@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>排行榜</title>
+    <script src="../res/vue2.js"></script>
+    <link rel="stylesheet" href="../css/ranking.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="ranking-card">
+            <!-- 标题 -->
+            <div class="ranking-title">
+                <div class="title-emoji">{{ data.title.split(' ')[0] }}</div>
+                <div class="title-text">{{ data.title.split(' ').slice(1).join(' ') }}</div>
+            </div>
+
+            <!-- 表头 -->
+            <div class="ranking-header">
+                <div class="header-item rank-col">排名</div>
+                <div class="header-item player-col">玩家</div>
+                <div class="header-item score-col">{{ data.rankRankName }}</div>
+            </div>
+
+            <!-- 排行榜列表 -->
+            <div class="ranking-list">
+                                <div v-for="(item, index) in data.ranks.slice(0, 10)" :key="item.playerId" class="ranking-item"
+                     :class="{ 'my-rank': item.rank === data.myRank.rank }">
+                    <div class="rank-col">
+                        <div class="rank-number" :class="getRankClass(item.rank)">{{ item.rank }}</div>
+                    </div>
+                    <div class="player-col">
+                        <div class="player-info">
+                            <div class="player-avatar">
+                                <img v-if="item.playerAvatar" :src="item.playerAvatar" @error="handleAvatarError"
+                                    class="avatar-img">
+                                <div v-else class="player-emoji">{{ item.playerEmoji }}</div>
+                            </div>
+                            <div class="player-name">{{item.playerEmoji}}{{ item.playerName }}</div>
+                        </div>
+                    </div>
+                    <div class="score-col">
+                        <div class="score-value">{{ item.score }}</div>
+                    </div>
+                </div>
+
+                <!-- 我的排名 -->
+                <div class="my-rank-section">
+                    <div class="my-rank-divider"></div>
+                    <div class="my-rank-item">
+                        <div class="rank-col">
+                            <div class="rank-number rank-my">{{ data.myRank.rank }}</div>
+                        </div>
+                        <div class="player-col">
+                            <div class="player-info">
+                                <div class="player-avatar">
+                                    <img v-if="data.myRank.playerAvatar" :src="data.myRank.playerAvatar" 
+                                         @error="handleAvatarError" 
+                                         class="avatar-img">
+                                    <div v-else class="player-emoji">{{ data.myRank.playerEmoji }}</div>
+                                </div>
+                                <div class="player-name">{{ data.myRank.playerName }}</div>
+                            </div>
+                        </div>
+                        <div class="score-col">
+                            <div class="score-value">{{ data.myRank.score }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let data = {
+            title: '📊等级排行榜',
+            rankRankName: '等级',
+            ranks: [
+                {
+                    playerId: '01',
+                    playerName: '至尊玩家',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '👑',
+                    score: 99,
+                    rank: 1,
+                    lastUpdateTime: 1753672774016
+                },
+                {
+                    playerId: '02',
+                    playerName: '传奇战士',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '⚔️',
+                    score: 87,
+                    rank: 2,
+                    lastUpdateTime: 1753672774053
+                },
+                {
+                    playerId: '03',
+                    playerName: '魔法师',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '🧙',
+                    score: 76,
+                    rank: 3,
+                    lastUpdateTime: 1753672774054
+                },
+                {
+                    playerId: '04',
+                    playerName: '弓箭手',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '🏹',
+                    score: 65,
+                    rank: 4,
+                    lastUpdateTime: 1753672774055
+                },
+                {
+                    playerId: '05',
+                    playerName: '刺客',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '🗡️',
+                    score: 54,
+                    rank: 5,
+                    lastUpdateTime: 1753672774056
+                },
+                {
+                    playerId: '06',
+                    playerName: '牧师',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '⛪',
+                    score: 43,
+                    rank: 6,
+                    lastUpdateTime: 1753672774057
+                },
+                {
+                    playerId: '07',
+                    playerName: '骑士',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '🛡️',
+                    score: 32,
+                    rank: 7,
+                    lastUpdateTime: 1753672774058
+                },
+                {
+                    playerId: '08',
+                    playerName: '法师',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '🔮',
+                    score: 21,
+                    rank: 8,
+                    lastUpdateTime: 1753672774059
+                },
+                {
+                    playerId: '09',
+                    playerName: '盗贼',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '🦹',
+                    score: 19,
+                    rank: 9,
+                    lastUpdateTime: 1753672774060
+                },
+                {
+                    playerId: '10',
+                    playerName: '野蛮人',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '🪓',
+                    score: 18,
+                    rank: 10,
+                    lastUpdateTime: 1753672774061
+                },
+                {
+                    playerId: '11',
+                    playerName: '德鲁伊',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '🌿',
+                    score: 17,
+                    rank: 11,
+                    lastUpdateTime: 1753672774062
+                },
+                {
+                    playerId: '12',
+                    playerName: '圣骑士',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '⚜️',
+                    score: 16,
+                    rank: 12,
+                    lastUpdateTime: 1753672774063
+                },
+                {
+                    playerId: '13',
+                    playerName: '术士',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '👻',
+                    score: 15,
+                    rank: 13,
+                    lastUpdateTime: 1753672774064
+                },
+                {
+                    playerId: '14',
+                    playerName: '武僧',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '🥋',
+                    score: 14,
+                    rank: 14,
+                    lastUpdateTime: 1753672774065
+                },
+                {
+                    playerId: '15',
+                    playerName: '游侠',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '🌲',
+                    score: 13,
+                    rank: 15,
+                    lastUpdateTime: 1753672774066
+                },
+                {
+                    playerId: '16',
+                    playerName: '死灵法师',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '💀',
+                    score: 12,
+                    rank: 16,
+                    lastUpdateTime: 1753672774067
+                },
+                {
+                    playerId: '17',
+                    playerName: '吟游诗人',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '🎵',
+                    score: 11,
+                    rank: 17,
+                    lastUpdateTime: 1753672774068
+                },
+                {
+                    playerId: '18',
+                    playerName: '炼金术士',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '🧪',
+                    score: 10,
+                    rank: 18,
+                    lastUpdateTime: 1753672774069
+                },
+                {
+                    playerId: '19',
+                    playerName: '召唤师',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '🐉',
+                    score: 9,
+                    rank: 19,
+                    lastUpdateTime: 1753672774070
+                },
+                {
+                    playerId: '20',
+                    playerName: '元素使',
+                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                    playerEmoji: '⚡',
+                    score: 8,
+                    rank: 20,
+                    lastUpdateTime: 1753672774071
+                }
+            ],
+            myRank: {
+                playerId: '01',
+                playerName: '至尊玩家',
+                playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
+                playerEmoji: '👑',
+                score: 99,
+                rank: 999,
+                lastUpdateTime: 1753672774016
+            }
+        };
+
+        new Vue({
+            el: '#app',
+            data: { data },
+            methods: {
+                getRankClass(rank) {
+                    if (rank === 1) return 'rank-gold';
+                    if (rank === 2) return 'rank-silver';
+                    if (rank === 3) return 'rank-bronze';
+                    return 'rank-normal';
+                },
+                handleAvatarError(event) {
+                    event.target.style.display = 'none';
+                    event.target.nextElementSibling.style.display = 'flex';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

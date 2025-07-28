@@ -1,0 +1,245 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 500px;
+    overflow: auto;
+    position: relative;
+    background: #232d23;
+    min-height: 500px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+#app {
+    width: 95%;
+    margin: 10px auto;
+}
+
+.ranking-card {
+    background: #232d23;
+    border-radius: 12px;
+    border: none;
+    padding: 20px 0 20px 0;
+    position: relative;
+    overflow: visible;
+}
+
+/* 标题样式 */
+.ranking-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 0 20px;
+}
+
+.title-emoji {
+    font-size: 24px;
+    margin-right: 8px;
+    color: #ffd97a;
+}
+
+.title-text {
+    color: #ffd97a;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 表头样式 */
+.ranking-header {
+    display: flex;
+    background: #2a342a;
+    border-radius: 8px;
+    margin: 0 20px 15px 20px;
+    padding: 12px 15px;
+    border-left: 3px solid #4a8a4a;
+}
+
+.header-item {
+    color: #ffd97a;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rank-col {
+    width: 60px;
+    flex-shrink: 0;
+}
+
+.player-col {
+    flex: 1;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.score-col {
+    width: 80px;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+/* 排行榜列表样式 */
+.ranking-list {
+    margin: 0 20px;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    background: #2a342a;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    padding: 12px 15px;
+    border-left: 3px solid #4a8a4a;
+    transition: all 0.2s ease;
+}
+
+.ranking-item:hover {
+    background: #3a443a;
+    transform: translateX(2px);
+}
+
+.ranking-item.my-rank {
+    background: #4a8a4a;
+    border-left-color: #ffd97a;
+}
+
+.ranking-item.my-rank:hover {
+    background: #5a9a5a;
+}
+
+/* 排名样式 */
+.rank-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: #fff;
+}
+
+.rank-gold {
+    background: linear-gradient(135deg, #DAA520, #B8860B);
+    box-shadow: 0 2px 8px rgba(218, 165, 32, 0.3);
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.rank-silver {
+    background: linear-gradient(135deg, #C0C0C0, #A0A0A0);
+    box-shadow: 0 2px 8px rgba(192, 192, 192, 0.3);
+}
+
+.rank-bronze {
+    background: linear-gradient(135deg, #CD7F32, #A0522D);
+    box-shadow: 0 2px 8px rgba(205, 127, 50, 0.3);
+}
+
+.rank-normal {
+    background: linear-gradient(135deg, #4a8a4a, #3a7a3a);
+    box-shadow: 0 2px 8px rgba(74, 138, 74, 0.3);
+}
+
+/* 玩家信息样式 */
+.player-info {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.player-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 2px solid #4a8a4a;
+    overflow: hidden;
+    position: relative;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.player-emoji {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.player-name {
+    color: #e8fbe8;
+    font-weight: 500;
+    font-size: 14px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 分数样式 */
+.score-value {
+    color: #e8fbe8;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* 我的排名样式 */
+.my-rank-section {
+    margin-top: 15px;
+}
+
+.my-rank-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #4a8a4a, transparent);
+    margin: 10px 0;
+}
+
+.my-rank-item {
+    display: flex;
+    align-items: center;
+    background: #4a8a4a;
+    border-radius: 8px;
+    padding: 12px 15px;
+    border-left: 3px solid #ffd97a;
+    margin-top: 8px;
+}
+
+.rank-my {
+    background: linear-gradient(135deg, #DAA520, #B8860B);
+    box-shadow: 0 2px 8px rgba(218, 165, 32, 0.3);
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 响应式设计 */
+@media (max-width: 500px) {
+    .player-name {
+        max-width: 150px;
+    }
+    
+    .score-col {
+        width: 60px;
+    }
+    
+    .rank-col {
+        width: 50px;
+    }
+} 

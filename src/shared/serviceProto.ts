@@ -25,7 +25,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 5,
+    "version": 6,
     "services": [
         {
             "id": 2,
@@ -79,7 +79,8 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Reference",
                         "target": "IMassage/Message"
-                    }
+                    },
+                    "optional": true
                 },
                 {
                     "id": 2,

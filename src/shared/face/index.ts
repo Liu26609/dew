@@ -28,6 +28,25 @@ export enum UserLevel {
   管理员 = 2,
   开发者 = 3,
 }
+/**
+ * 排行榜数据类型
+ */
+export interface RankingItem {
+  /** 玩家ID */
+  playerId: string;
+  /** 玩家名称 */
+  playerName: string;
+  /** 玩家头像 */
+  playerAvatar: string;
+  /** 玩家emoji */
+  playerEmoji: string;
+  /** 排行分数 */
+  score: number;
+  /** 排名 */
+  rank: number;
+  /** 最后更新时间 */
+  lastUpdateTime: number;
+}
 export interface MailItem {
   title: string;
   _id: string;
