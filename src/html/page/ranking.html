@@ -34,11 +34,6 @@
                     </div>
                     <div class="player-col">
                         <div class="player-info">
-                            <div class="player-avatar">
-                                <img v-if="item.playerAvatar" :src="item.playerAvatar" @error="handleAvatarError"
-                                    class="avatar-img">
-                                <div v-else class="player-emoji">{{ item.playerEmoji }}</div>
-                            </div>
                             <div class="player-name">{{item.playerEmoji}}{{ item.playerName }}</div>
                         </div>
                     </div>
@@ -56,13 +51,7 @@
                         </div>
                         <div class="player-col">
                             <div class="player-info">
-                                <div class="player-avatar">
-                                    <img v-if="data.myRank.playerAvatar" :src="data.myRank.playerAvatar" 
-                                         @error="handleAvatarError" 
-                                         class="avatar-img">
-                                    <div v-else class="player-emoji">{{ data.myRank.playerEmoji }}</div>
-                                </div>
-                                <div class="player-name">{{ data.myRank.playerName }}</div>
+                                <div class="player-name">{{ data.myRank.playerEmoji }}{{ data.myRank.playerName }}</div>
                             </div>
                         </div>
                         <div class="score-col">
@@ -81,7 +70,6 @@
                 {
                     playerId: '01',
                     playerName: '至尊玩家',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '👑',
                     score: 99,
                     rank: 1,
@@ -90,7 +78,6 @@
                 {
                     playerId: '02',
                     playerName: '传奇战士',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '⚔️',
                     score: 87,
                     rank: 2,
@@ -99,7 +86,6 @@
                 {
                     playerId: '03',
                     playerName: '魔法师',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '🧙',
                     score: 76,
                     rank: 3,
@@ -108,7 +94,6 @@
                 {
                     playerId: '04',
                     playerName: '弓箭手',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '🏹',
                     score: 65,
                     rank: 4,
@@ -117,7 +102,6 @@
                 {
                     playerId: '05',
                     playerName: '刺客',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '🗡️',
                     score: 54,
                     rank: 5,
@@ -126,7 +110,6 @@
                 {
                     playerId: '06',
                     playerName: '牧师',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '⛪',
                     score: 43,
                     rank: 6,
@@ -135,7 +118,6 @@
                 {
                     playerId: '07',
                     playerName: '骑士',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '🛡️',
                     score: 32,
                     rank: 7,
@@ -144,7 +126,6 @@
                 {
                     playerId: '08',
                     playerName: '法师',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '🔮',
                     score: 21,
                     rank: 8,
@@ -153,7 +134,6 @@
                 {
                     playerId: '09',
                     playerName: '盗贼',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '🦹',
                     score: 19,
                     rank: 9,
@@ -162,7 +142,6 @@
                 {
                     playerId: '10',
                     playerName: '野蛮人',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '🪓',
                     score: 18,
                     rank: 10,
@@ -171,7 +150,6 @@
                 {
                     playerId: '11',
                     playerName: '德鲁伊',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '🌿',
                     score: 17,
                     rank: 11,
@@ -180,7 +158,6 @@
                 {
                     playerId: '12',
                     playerName: '圣骑士',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '⚜️',
                     score: 16,
                     rank: 12,
@@ -189,7 +166,6 @@
                 {
                     playerId: '13',
                     playerName: '术士',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '👻',
                     score: 15,
                     rank: 13,
@@ -198,7 +174,6 @@
                 {
                     playerId: '14',
                     playerName: '武僧',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '🥋',
                     score: 14,
                     rank: 14,
@@ -207,7 +182,6 @@
                 {
                     playerId: '15',
                     playerName: '游侠',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '🌲',
                     score: 13,
                     rank: 15,
@@ -216,7 +190,6 @@
                 {
                     playerId: '16',
                     playerName: '死灵法师',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '💀',
                     score: 12,
                     rank: 16,
@@ -225,7 +198,6 @@
                 {
                     playerId: '17',
                     playerName: '吟游诗人',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '🎵',
                     score: 11,
                     rank: 17,
@@ -234,7 +206,6 @@
                 {
                     playerId: '18',
                     playerName: '炼金术士',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '🧪',
                     score: 10,
                     rank: 18,
@@ -243,7 +214,6 @@
                 {
                     playerId: '19',
                     playerName: '召唤师',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '🐉',
                     score: 9,
                     rank: 19,
@@ -252,7 +222,6 @@
                 {
                     playerId: '20',
                     playerName: '元素使',
-                    playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                     playerEmoji: '⚡',
                     score: 8,
                     rank: 20,
@@ -262,7 +231,6 @@
             myRank: {
                 playerId: '01',
                 playerName: '至尊玩家',
-                playerAvatar: 'https://dew-1251587647.cos.ap-guangzhou.myqcloud.com/upload/5e7a70f5cfc840e491954253865b76cf',
                 playerEmoji: '👑',
                 score: 99,
                 rank: 999,
@@ -280,10 +248,7 @@
                     if (rank === 3) return 'rank-bronze';
                     return 'rank-normal';
                 },
-                handleAvatarError(event) {
-                    event.target.style.display = 'none';
-                    event.target.nextElementSibling.style.display = 'flex';
-                }
+
             }
         });
     </script>
