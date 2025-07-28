@@ -1,21 +1,12 @@
-export interface BaseRequest {
-    _token?:string
-    _player?:any
+import { _BaseConf, _BaseRequest, _BaseResponse } from "../face/base";
+
+export interface BaseRequest extends _BaseRequest {
 }
 
-export interface BaseResponse {
-    _token?:string
+export interface BaseResponse extends _BaseResponse {
 }
 
-export interface BaseConf {
-    /**
-     * 不加载用户数据
-     */
-    _notLoadPlayer?:boolean
-    /**
-     * 无视离线
-     */
-    _notCheckOff?:boolean
+export interface BaseConf extends _BaseConf {
 }
 
 export interface BaseMessage {
