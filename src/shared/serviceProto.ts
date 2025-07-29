@@ -25,7 +25,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 6,
+    "version": 7,
     "services": [
         {
             "id": 2,
@@ -209,6 +209,18 @@ export const serviceProto: ServiceProto<ServiceType> = {
         },
         "base/BaseRequest": {
             "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../face/base/_BaseRequest"
+                    }
+                }
+            ]
+        },
+        "../face/base/_BaseRequest": {
+            "type": "Interface",
             "properties": [
                 {
                     "id": 0,
@@ -247,14 +259,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "optional": true
                 },
                 {
-                    "id": 2,
-                    "name": "avatar",
-                    "type": {
-                        "type": "String"
-                    },
-                    "optional": true
-                },
-                {
                     "id": 3,
                     "name": "isBot",
                     "type": {
@@ -287,14 +291,6 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "String"
                     }
-                },
-                {
-                    "id": 3,
-                    "name": "avatar",
-                    "type": {
-                        "type": "String"
-                    },
-                    "optional": true
                 }
             ]
         },
@@ -318,6 +314,18 @@ export const serviceProto: ServiceProto<ServiceType> = {
             ]
         },
         "base/BaseResponse": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../face/base/_BaseResponse"
+                    }
+                }
+            ]
+        },
+        "../face/base/_BaseResponse": {
             "type": "Interface",
             "properties": [
                 {

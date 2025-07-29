@@ -36,8 +36,6 @@ export interface RankingItem {
   playerId: string;
   /** 玩家名称 */
   playerName: string;
-  /** 玩家头像 */
-  playerAvatar: string;
   /** 玩家emoji */
   playerEmoji: string;
   /** 排行分数 */
