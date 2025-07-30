@@ -33,7 +33,6 @@ export class SendMsg {
             id: session.bot.userId,
             platform: session.bot.platform,
             name: session.bot.user.name,
-            avatar: session.bot.user.avatar,
         };
     }
 
@@ -46,7 +45,6 @@ export class SendMsg {
         return {
             id: session.author.id,
             name: session.author.name,
-            avatar: session.author.avatar,
             isBot: session.author.isBot,
         };
     }
