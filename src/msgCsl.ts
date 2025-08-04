@@ -82,6 +82,12 @@ export class SendMsg {
             const userInfo = SendMsg.createUserInfo(session);
             const msgInfo = SendMsg.createMessageInfo(session, processedContent);
 
+            if(botInfo.id == userInfo.id){
+                // 防止机器人发送自身消息
+                console.log('发送者与机器人ID相同')
+                return;
+            }
+
             // 存储会话信息
             sessions.set(msgInfo.userId, session);
 
