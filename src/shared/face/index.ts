@@ -6,6 +6,18 @@ export interface Item {
   emoji: string,
   icon: string,
   /**
+   * 道具标签
+   */
+  tag?:string,
+  /**
+   * 是否可堆叠
+   */
+  stacking?:boolean,
+  /**
+   * 是否可使用堆叠使用
+   */
+  stacking_use?:boolean,
+  /**
    * 品质
    */
   quality: quality,

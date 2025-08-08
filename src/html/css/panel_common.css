@@ -95,5 +95,8 @@ body {
     border-left: 3px solid #4a8a4a;
     position: relative;
     box-sizing: border-box;
+    img{
+        width:100%
+    }
 }
 

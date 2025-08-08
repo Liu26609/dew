@@ -52,13 +52,8 @@ export enum ItemType {
   道具 = 'prop_道具',
   技能书 = 'skill_book',
   宠物蛋 = 'pet_egg',
-  血统卷轴 = 'talent_book',
-  盲盒 = 'prop_盲盒',
   形象卡 = 'image_card',
-<<<<<<< HEAD
   消耗品 = 'prop_消耗品',
-=======
->>>>>>> 93d34f4776c71109a4f6fc4f0db980551a74bc73
 }
 
 /**

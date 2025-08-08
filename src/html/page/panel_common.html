@@ -20,7 +20,7 @@
             <div class="item-properties">
                 <div v-for="(item, idx) in data.list" :key="idx" class="attr-item">
                     <div class="attr-key">{{ item.key }}</div>
-                    <div class="attr-value">{{ item.val }}</div>
+                    <div class="attr-value" v-html="item.val"></div>
                 </div>
             </div>
         </div>
