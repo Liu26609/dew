@@ -50,9 +50,6 @@ export enum ItemType {
   资源 = 'prop_资源',
   装备 = 'equipment',
   道具 = 'prop_道具',
-  技能书 = 'skill_book',
-  宠物蛋 = 'pet_egg',
-  形象卡 = 'image_card',
   消耗品 = 'prop_消耗品',
 }
 

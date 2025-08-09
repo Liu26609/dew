@@ -72,6 +72,11 @@ export interface MailItem {
 
 export interface DataEquip {
   id:string,
+  /**
+   * 强化等级
+   */
+  strengthenLevel:number,
+
   uuid: string
   emoji: string,
   icon: string,
