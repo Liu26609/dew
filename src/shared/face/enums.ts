@@ -1,50 +1,42 @@
 // 日志类型
 export enum LogType {
-    伤害 = 'damage',
-    治疗 = 'healing',
-    护盾 = 'shield',
-  }
-  // 技能目标类型
-  export enum TargetType {
-    我方不含自己 = 'ally',
-    我方 = 'ally_self',
-    敌方 = 'enemy',
-    自己 = 'self'
-  }
-  // 技能类型
-  export enum SkillType {
-    主动技能 = '主动技能',
-    被动技能 = '被动技能',
-    光环技能 = '光环技能'
-  }
-  // 被动触发时机
-  export enum PassiveTriggerType {
-    回合结束时 = '回合结束时',
-    受到伤害时 = '受到伤害时',
-    受到普通攻击时 = '受到普通攻击时',
-  }
-  // 技能分类
-  export enum EffectClassType {
-    攻击型 = '攻击型',
-    辅助型 = '辅助型',
-    防御型 = '防御型',
-    工具型 = '工具型',
-    全能型 = '全能型',
-    控制型 = '控制型',
-    回复型 = '回复型',
-    增益型 = '增益型',
-    减益型 = '减益型',
-    治疗型 = '治疗型',
-  }
+  伤害 = 'damage',
+  治疗 = 'healing',
+  护盾 = 'shield',
+}
+// 技能目标类型
+export enum TargetType {
+  我方不含自己 = 'ally',
+  我方 = 'ally_self',
+  敌方 = 'enemy',
+  自己 = 'self'
+}
+// 技能类型
+export enum SkillType {
+  主动技能 = '主动技能',
+  被动技能 = '被动技能',
+  光环技能 = '光环技能'
+}
+// 被动触发时机
+export enum PassiveTriggerType {
+  回合结束时 = '回合结束时',
+  受到伤害时 = '受到伤害时',
+  受到普通攻击时 = '受到普通攻击时',
+}
+// 技能分类
+export enum EffectClassType {
+  攻击型 = '攻击型',
+  辅助型 = '辅助型',
+  防御型 = '防御型',
+  工具型 = '工具型',
+  全能型 = '全能型',
+  控制型 = '控制型',
+  回复型 = '回复型',
+  增益型 = '增益型',
+  减益型 = '减益型',
+  治疗型 = '治疗型',
+}
 
-
-  export enum EquipAttType {
-    魔法传说 = '魔法传说类',
-    科技类 = '科技类',
-    辅助类 = '辅助类',
-    娱乐类 = '娱乐类',
-  }
-  // RPG相关枚举迁移自index.ts和rpg/types/index.ts
 
 export enum ItemType {
   资源 = 'prop_资源',
@@ -119,7 +111,7 @@ export enum 资源枚举 {
 }
 
 export enum 道具枚举 {
-  改名卡 = '1',
+  强化碎片 = '1',
   精灵球 = '2',
   复活币 = '3',
 }

@@ -1,4 +1,4 @@
-import { EquipAttType, ItemType, quality, qualityName, qualityGradient, sort_type } from './enums';
+import { ItemType, quality, qualityName, qualityGradient, sort_type } from './enums';
 
 //道具
 export interface Item {
@@ -8,15 +8,15 @@ export interface Item {
   /**
    * 道具标签
    */
-  tag?:string,
+  tag?: string,
   /**
    * 是否可堆叠
    */
-  stacking?:boolean,
+  stacking?: boolean,
   /**
    * 是否可使用堆叠使用
    */
-  stacking_use?:boolean,
+  stacking_use?: boolean,
   /**
    * 品质
    */
@@ -71,11 +71,11 @@ export interface MailItem {
 }
 
 export interface DataEquip {
-  id:string,
+  id: string,
   /**
    * 强化等级
    */
-  strengthenLevel:number,
+  strengthenLevel: number,
 
   uuid: string
   emoji: string,
@@ -88,32 +88,58 @@ export interface DataEquip {
   name: string;
   // 道具描述
   desc: string;
-  // 道具分类
+  /**
+   * 装备位置
+   */
+  solt_type: string;
+  /**
+   * 体系
+   */
+  sys: string;
+  /**
+   * 类型
+   */
   type: string;
+  /**
+   * 职业
+   */
+  job: string;
   // 数量
   count: number;
-  attType: EquipAttType,
-  // 装备来源
+  /**
+   * 装备来源 展示用 无任何实际作用
+   */
   source: string,
   // 创建者UID
   creator: string,
   attribute: { key: string, val: number }[],
-  skill: { skillId: string; reName?: string; }[],
+  skill: DataSkill[],
   createTime: number;
   updateTime: number;
-  status?: 'pending' | 'approved' | 'rejected'; // 审核状态
-  reviewer?: string; // 审核者ID
-  reviewTime?: number; // 审核时间
-  reviewNote?: string; // 审核备注
+}
+// 装备类型 体系 - 类型 - 职业
+
+
+/**
+ * 技能数据
+ */
+export interface DataSkill {
+  skillId: string;
+  reName?: string;
+  cooldown?: number;
+  level?: number;
+  maxLevel?: number;
+  useCount?: number;
+  permanentBoosts?: { [key: string]: number };
+  /**
+   * 技能描述
+   */
+  desc?: string;
 }
 
-
-
-// 删除ItemType的本地定义
-// 删除本地ItemType枚举定义
-export interface panel_common{
-  title:string,
-  icon?:string,
-  emoji:string,
-  list:{key:string,val:string|number|undefined}[]
+export interface panel_common {
+  title: string,
+  icon?: string,
+  emoji: string,
+  list: { key: string, val: string | number | undefined }[]
 }
