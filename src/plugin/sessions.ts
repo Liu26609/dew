@@ -7,7 +7,8 @@ class sessions {
     }
     init(ctx: Context) {
         ctx.on('dispose', () => {
-
+            console.log('sessions clear');
+            this.clear();
         })
     }
     /**

@@ -1,5 +1,5 @@
 import { Context } from "koishi";
-import { MsgMessage } from "../shared/MsgMessage";
+import { MsgMessage } from "../shared/bot/MsgMessage";
 
 /**
  * 消息队列项
@@ -19,7 +19,6 @@ export class MessageQueue{
   private queue: QueueItem[] = [];
   private isProcessing = false;
   private processingTimeout: any = null;
-  private readonly MAX_QUEUE_SIZE = 9999; // 最大队列长度
   private readonly PROCESSING_TIMEOUT = 5000; // 5秒处理超时
   private initialized = false;
   private ctx?: Context;
@@ -34,8 +33,13 @@ export class MessageQueue{
    */
   init(ctx: Context): void {
     this.ctx = ctx;
-    console.log('初始化消息队列')
     this.initialized = true;
+    ctx.on('dispose', () => {
+      this.dispose();
+    });
+  }
+  private dispose(): void {
+    this.clearQueue();
   }
 
 
@@ -47,10 +51,6 @@ export class MessageQueue{
    */
   addToQueue(data: MsgMessage, ctx: Context): boolean {
     // 检查队列是否已满
-    if (this.queue.length >= this.MAX_QUEUE_SIZE) {
-      return false;
-    }
-
     const queueItem: QueueItem = {
       id: this.generateQueueId(),
       data,
@@ -128,7 +128,8 @@ export class MessageQueue{
    */
   private async processMessage(item: QueueItem): Promise<void> {
     try {
-      const module = require(`./serverHandel/${item.data.action}`).default;
+      const handleType = item.data.handleType;
+      const module = require(`./serverHandel/${handleType}`).default;
       let handel = new module(item.data);
       handel.set(item.ctx);
       await handel.start(item.data);
@@ -159,7 +160,7 @@ export class MessageQueue{
     this.queue = [];
     this.isProcessing = false;
     this.processingTimeout = null;
-    console.log('队列已清空');
+    console.log('messageQueue:clear');
   }
 }
 

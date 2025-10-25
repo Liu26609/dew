@@ -1,18 +1,15 @@
 import fs from 'fs';
 import { Context, h } from 'koishi'
-import server from './server';
 const path = require('path');
-import { console } from './console';
 import { Config } from '..';
-class puppeteer extends console{
+class puppeteer{
     commonCss: string;
     pageContents = new Map<string, string>()
     private ctx: any;
     private tempDir: string;
     init(ctx: Context,config: Config) {
-        super.init(ctx)
         this.ctx = ctx;
-        this.log('初始化 puppeteer')
+        console.info('初始化 puppeteer')
         const pagesDir = path.resolve(__dirname, '../html/page');
         const files = fs.readdirSync(pagesDir);
         this.tempDir = path.resolve(path.resolve(__dirname, '../html/'), 'temp');
@@ -60,7 +57,7 @@ class puppeteer extends console{
             page.close();
             let leaderboardImage;
             // if (sendBuff.length < 200 * 1024) { // 如果小于200kb
-                this.log(`not compress ${sendBuff.length / 1024}KB`);
+                console.info(`not compress ${sendBuff.length / 1024}KB`);
                 leaderboardImage = h.image(sendBuff, 'image/jpeg');
             // } else {
                 // let req = await server.api('open/CompressImg', { imgBuf: sendBuff });
@@ -70,7 +67,7 @@ class puppeteer extends console{
             return leaderboardImage;
         } catch (error) {
             page.close();
-            this.log(error)
+            console.error(error)
         }
     }
 }

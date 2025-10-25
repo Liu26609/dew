@@ -1,9 +1,9 @@
 import { HttpClient, WsClient } from "tsrpc";
-import { Context } from "koishi";
-import { console } from "./console";
+import { Context, Session } from "koishi";
 import { Config } from "..";
-import { serviceProto, ServiceType } from "../shared/serviceProto";
-class server extends console {
+import { serviceProto, ServiceType } from "../shared/bot/serviceProto";
+import sessions from "./sessions";
+class server {
     private httpClient!: HttpClient<ServiceType>;
     private apiUrl!: string;
     private wsClient!: WsClient<ServiceType>;
@@ -12,10 +12,9 @@ class server extends console {
     private messageListenerSetup: boolean = false; // 标记消息监听器是否已设置
     _init: boolean = false;
     constructor() {
-        super()
+
     }
     async init(ctx: Context, config: Config) {
-        super.init(ctx, config)
         this.ctx = ctx;
 
         // 设置 dispose 事件监听器
@@ -29,25 +28,19 @@ class server extends console {
             await this.dispose();
         }
 
-        // 根据服务器环境选择对应的地址
-        const serverUrlMap = {
-            '测试服': 'ws://127.0.0.1:3000',
-            '开发服': 'ws://dew-bot.cn:3000',
-            '正式服': 'ws://dew-bot.cn:3000'
-        };
-        const serverUrl = serverUrlMap[config.服务器环境];
+        /** 直接使用配置中的服务器地址 **/
+        const serverUrl = config.服务器地址;
 
-        if (!serverUrl) {
-            throw new Error(`未知的服务器环境: ${config.服务器环境}`);
+        if (!serverUrl || serverUrl.trim() === '') {
+            throw new Error('服务器地址不能为空');
         }
 
-        this.log(`选择环境: ${config.服务器环境}`)
-        this.log(`尝试连接到: ${serverUrl}`)
+        console.log(`尝试连接到: ${serverUrl}`)
 
-        // 异步连接但不阻塞初始化
+        /** 异步连接但不阻塞初始化 **/
         this.setWsUrl(serverUrl).catch(error => {
-            this.log('初始化连接失败:', error)
-            this.log('请检查服务器地址是否正确，以及服务器是否正在运行')
+            console.log('初始化连接失败:', error)
+            console.log('请检查服务器地址是否正确，以及服务器是否正在运行')
         })
     }
 
@@ -62,7 +55,7 @@ class server extends console {
     }
     // 卸载
     async dispose() {
-        this.log('卸载:server')
+        console.log('卸载:server')
         this._init = false;
         if (this.wsClient) {
             this.wsClient.unlistenMsgAll(/.*/);
@@ -99,13 +92,13 @@ class server extends console {
     }
     private flowsResConnect(client: WsClient<any>) {
         if (!client || !client.flows) {
-            this.log('客户端无效，无法设置断线重连');
+            console.log('客户端无效，无法设置断线重连');
             return;
         }
         client.flows.postDisconnectFlow.push((v: { isManual: any; }) => {
             if (!v.isManual && this._init) {
                 this.connect()
-                this.log('开始断线重连')
+                console.log('开始断线重连')
             }
             // Bot_client.emit(Emitter_bot.server_off);
             return v;
@@ -113,36 +106,36 @@ class server extends console {
     }
     private async connect() {
         if (!this._init) {
-            this.log('插件已卸载，停止重连');
+            console.log('插件已卸载，停止重连');
             return;
         }
         if (!this.wsClient) {
-            this.log('WebSocket 客户端未初始化，无法重连');
+            console.log('WebSocket 客户端未初始化，无法重连');
             return;
         }
         let res = await this.wsClient.connect();
         if (!res.isSucc) {
-            this.log('重试断线准备重连');
+            console.log('重试断线准备重连');
             if (this._init) {
                 this.ctx.setTimeout(async () => {
                     this.connect()
                 }, 5000)
             }
         } else {
-            this.log('断线重连成功');
+            console.log('断线重连成功');
             // 断线重连成功时不需要重新设置监听器
         }
         return res;
     }
     lisentMsg<T extends keyof ServiceType['msg']>(msgName: T | RegExp, handler: any, self: any) {
         if (!this._init || !this.wsClient) {
-            this.log('WebSocket 未连接，无法监听消息');
+            console.log('WebSocket 未连接，无法监听消息');
             return;
         }
         return this.wsClient.listenMsg(msgName, ((data: any) => { handler.call(self, data) }))
     }
     async setWsUrl(link: string, maxRetries: number = 99999) {
-        this.log(`server link:${link}`)
+        console.log(`server link:${link}`)
         this._init = true;
         return new Promise(async (resolve, reject) => {
             this.apiUrl = link;
@@ -163,7 +156,7 @@ class server extends console {
                     if (this.wsClient) {
                         this.flowsResConnect(this.wsClient);
                     }
-                    this.log('connect success')
+                    console.log('connect success')
                     // 调用连接成功的回调（仅第一次连接）
                     if (this.onConnectedCallback && !this.messageListenerSetup) {
                         this.onConnectedCallback();
@@ -173,10 +166,10 @@ class server extends console {
                 } else {
                     retryCount++;
                     if (retryCount < maxRetries) {
-                        this.log(`连接失败，${retryCount}/${maxRetries}，5秒后重试...`);
+                        console.log(`连接失败，${retryCount}/${maxRetries}，5秒后重试...`);
                         this.ctx.setTimeout(attemptConnect, 5000);
                     } else {
-                        this.log('connect failed', connect.errMsg)
+                        console.log('connect failed', connect.errMsg)
                         this._init = false; // 连接失败时设置为未初始化状态
                         reject(connect.errMsg)
                     }
@@ -188,26 +181,46 @@ class server extends console {
     }
     async api<T extends keyof ServiceType['api']>(apiName: T, posData: ServiceType['api'][T]['req']): Promise<ServiceType['api'][T]['res'] | undefined> {
         if (!this._init) {
-            this.log('插件未初始化，无法调用 API');
+            console.log('插件未初始化，无法调用 API');
             return;
         }
         let client = this.wsClient || this.httpClient;
         if (!client) {
-            this.log('客户端未连接，无法调用 API');
+            console.log('客户端未连接，无法调用 API');
             return;
         }
         try {
             let start = Date.now()
             let req = await client.callApi(apiName, posData);
             if (req.isSucc) {
-                this.log('apiReq', apiName, (Date.now() - start) / 1000, 's')
+                console.log('apiReq', apiName, (Date.now() - start) / 1000, 's')
                 return req.res;
             } else {
-                this.log('请求出错', apiName, req.err.message)
+                console.log('请求出错', apiName, req.err.message)
             }
         } catch (error) {
-            this.log('API 调用异常:', apiName, error.message)
+            console.log('API 调用异常:', apiName, error.message)
         }
+    }
+
+
+    /**bot专属业务逻辑 */
+    uploadMessage(session: Session<never, never, Context>) {
+        /** 存储会话信息 **/
+        sessions.set(session.author.id, session);
+        /** 发送消息到服务器 **/
+        this.api('Message', {
+            bot: {
+                id: session.bot.userId,
+                platform: session.bot.platform,
+            },
+            user: {
+                id: session.author.id,
+            },
+            content: session.content,
+        }).catch(error => {
+            console.error('发送消息到服务器失败:', error);
+        });
     }
 }
 export default new server();
