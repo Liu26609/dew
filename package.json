@@ -3,8 +3,8 @@
   "description": "达尔文进化岛",
   "preview": true,
   "version": "1.0.206",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "contributors": [
     "楚轩<3245000000@qq.com>"
   ],
@@ -17,7 +17,7 @@
     "prepub": "npm version patch",
     "checkorg": "npm config set registry https://registry.npmjs.org/",
     "pub": "npm run prepub && npm publish",
-    "copy-js": "robocopy ./src/html/res lib/html/res /S /E /COPYALL /R:0 /W:0 && echo res 文件已复制"
+    "copy-js": "robocopy ./src/html/res dist/html/res /S /E /COPYALL /R:0 /W:0 && echo res 文件已复制"
   },
   "keywords": [
     "chatbot",

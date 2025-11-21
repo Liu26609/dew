@@ -7,8 +7,8 @@ export default class handelr_text extends handel_base {
         super(data)
     }
     async start(data: MsgMessage) {
-        new AnalysisMsg().parse(data)
-        // await this.send(data, data.data)
+       let content =  new AnalysisMsg().parse(data);
+        await this.send(data, content)
     }
 }
 

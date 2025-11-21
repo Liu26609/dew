@@ -13,11 +13,15 @@ export default class handel_base {
     async send(data: MsgMessage,content:any) {
         // console.log('handel_base:::send', data, content)
         // let sendInfo = data.Message;
-        // let session = sessions.get(sendInfo.userId)
+        let session = sessions.get(data.userId)
+        if(!session){
+            this.ctx.logger.info('session not found', data.userId)
+            return;
+        }
         // if(session.bot.platform){
         //     content = '\n' + content;
         // }
-        // await session.send(content)
+        await session.send(content)
     }
     start(data: MsgMessage) {
         // console.log('handel_base:::', data)

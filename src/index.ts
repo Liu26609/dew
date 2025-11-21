@@ -9,7 +9,8 @@ export interface Config {
 export const inject = ['puppeteer'];
 
 export const Config: Schema<Config> = Schema.object({
-  服务器地址: Schema.string().default('ws://127.0.0.1:3009').description('游戏服地址'),
+  // ws://127.0.0.1:3009
+  服务器地址: Schema.string().default('ws://dew-bot.cn:3009').description('游戏服地址'),
 })
 
 export function apply(ctx: Context, config: Config) {

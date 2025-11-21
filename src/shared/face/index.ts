@@ -1,6 +1,7 @@
 /** 消息类名枚举 */
 export enum MessageClassName{
-    t1
+    战斗日志,
+    技能详情
 }
 export enum MessageHandleType{
     text = 'text',
