@@ -2,7 +2,7 @@
   "name": "koishi-plugin-dew-bot",
   "description": "达尔文进化岛",
   "preview": true,
-  "version": "1.0.206",
+  "version": "1.0.207",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "contributors": [
