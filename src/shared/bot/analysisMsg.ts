@@ -21,6 +21,9 @@ export class AnalysisMsg {
                 case MessageType.line:
                     msg += `${item.content}\n`;
                     break;
+                case MessageType.error:
+                    msg += `❌出错了!错误原因:${item.content},请反馈至联系开发者\n`;
+                    break;
                 case MessageType.class:
                     msg += this.parseClass(item);
                     break;

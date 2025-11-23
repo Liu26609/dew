@@ -15,7 +15,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 7,
+    "version": 8,
     "services": [
         {
             "id": 2,
@@ -108,6 +108,13 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     }
                 },
                 {
+                    "id": 4,
+                    "type": {
+                        "type": "Reference",
+                        "target": "../face/index/IErrorMessage"
+                    }
+                },
+                {
                     "id": 2,
                     "type": {
                         "type": "Reference",
@@ -161,6 +168,10 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 {
                     "id": 3,
                     "value": 3
+                },
+                {
+                    "id": 4,
+                    "value": 4
                 }
             ]
         },
@@ -184,7 +195,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "../face/index/IClassMessage": {
+        "../face/index/IErrorMessage": {
             "type": "Interface",
             "properties": [
                 {
@@ -193,6 +204,26 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "type": {
                         "type": "Literal",
                         "literal": 2
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "content",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "../face/index/IClassMessage": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "type",
+                    "type": {
+                        "type": "Literal",
+                        "literal": 3
                     }
                 },
                 {
@@ -233,7 +264,7 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "name": "type",
                     "type": {
                         "type": "Literal",
-                        "literal": 3
+                        "literal": 4
                     }
                 },
                 {

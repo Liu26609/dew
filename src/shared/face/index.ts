@@ -11,6 +11,7 @@ export enum MessageHandleType{
 export enum MessageType{
     title,
     line,
+    error,
     class,
     image,
 }
@@ -24,6 +25,12 @@ export interface ITitleMessage {
 /** 文本行消息项 */
 export interface ILineMessage {
     type: MessageType.line;
+    content: string;
+}
+
+/** 错误消息项 */
+export interface IErrorMessage {
+    type: MessageType.error;
     content: string;
 }
 
@@ -42,7 +49,7 @@ export interface IImageMessage {
 }
 
 /** 消息项联合类型 */
-export type IMessageItem = ITitleMessage | ILineMessage | IClassMessage | IImageMessage;
+export type IMessageItem = ITitleMessage | ILineMessage | IErrorMessage | IClassMessage | IImageMessage;
 
 /** 完整消息结构 */
 export interface IMessage {
