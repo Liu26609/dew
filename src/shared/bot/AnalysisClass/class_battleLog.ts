@@ -30,9 +30,9 @@ class class_battleLog {
         /** 战斗结果 */
         result += this.formatBattleResult(battleData);
         
-        /** Flarum战斗日志链接 */
-        if (battleData.flarumUrl) {
-            result += `📋战斗日志：${battleData.flarumUrl}\n`;
+        /** NodeBB战斗日志链接 */
+        if (battleData.nodebbUrl) {
+            result += `📋战斗日志：${battleData.nodebbUrl}\n`;
         }
         
         /** 奖励信息 */
