@@ -32,7 +32,7 @@ class class_battleLog {
         
         /** NodeBB战斗日志链接 */
         if (battleData.nodebbUrl) {
-            result += `📋战斗日志：${battleData.nodebbUrl}\n`;
+            result += `⚔️战斗日志：${battleData.nodebbUrl}\n`;
         }
         
         /** 奖励信息 */
@@ -103,7 +103,7 @@ class class_battleLog {
         }
         
         /** 添加战斗收获分隔线 */
-        result += ` ┄━═🎉战斗收获═━┄\n`;
+        result += ` ┄━═🎁战斗收获═━┄\n`;
         
         /** 遍历奖励 */
         const rewardsIterator = rewards instanceof Map ? rewards.entries() : Object.entries(rewards);
