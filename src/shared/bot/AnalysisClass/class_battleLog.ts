@@ -49,7 +49,7 @@ class class_battleLog {
         const personalResult = battleData.personalResult;
         if (personalResult?.emoji && personalResult?.text) {
             result += ` ┄━═${personalResult.emoji}${personalResult.text}═━┄\n`;
-            result += `⏱️ 战斗回合：${battleData.totalRounds}\n`;
+            result += `⏱️战斗回合：${battleData.totalRounds}\n`;
             return result;
         }
 
@@ -74,7 +74,7 @@ class class_battleLog {
         }
         
         result += ` ┄━═${emoji}${winnerText}═━┄\n`;
-        result += `⏱️ 战斗回合：${battleData.totalRounds}\n`;
+        result += `⏱️战斗回合：${battleData.totalRounds}\n`;
         
         return result;
     }

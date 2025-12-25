@@ -1,12 +1,17 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { MsgMessage } from './MsgMessage';
 import { ReqMessage, ResMessage } from './PtlMessage';
+import { ReqStop, ResStop } from './server/PtlStop';
 
 export interface ServiceType {
     api: {
         "Message": {
             req: ReqMessage,
             res: ResMessage
+        },
+        "server/Stop": {
+            req: ReqStop,
+            res: ResStop
         }
     },
     msg: {
@@ -15,7 +20,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 8,
+    "version": 9,
     "services": [
         {
             "id": 2,
@@ -29,6 +34,12 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "conf": {
                 "openApi": false
             }
+        },
+        {
+            "id": 3,
+            "name": "server/Stop",
+            "type": "api",
+            "conf": {}
         }
     ],
     "types": {
@@ -360,6 +371,39 @@ export const serviceProto: ServiceProto<ServiceType> = {
         },
         "protocols/base/BaseResponse": {
             "type": "Interface"
+        },
+        "server/PtlStop/ReqStop": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "protocols/base/BaseRequest"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "reason",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "server/PtlStop/ResStop": {
+            "type": "Interface",
+            "extends": [
+                {
+                    "id": 0,
+                    "type": {
+                        "type": "Reference",
+                        "target": "protocols/base/BaseResponse"
+                    }
+                }
+            ]
         }
     }
 };
