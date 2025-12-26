@@ -35,7 +35,6 @@ export class AnalysisMsg {
         if(_haveTitle){
             msg += '┄━════════━┄'
         }
-        console.log(msg);
         return msg;
     }
     private parseClass(item:IClassMessage):string{
